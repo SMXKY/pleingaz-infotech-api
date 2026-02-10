@@ -1,5 +1,94 @@
 import express, { Request, Response, NextFunction } from "express";
 import swaggerUi from "swagger-ui-express";
-import swaggerJSDOC from "swagger-jsdoc";
 import { StatusCodes } from "http-status-codes";
 import cookieParser from "cookie-parser";
+import { globalErrorController } from "@controllers/error.controller";
+import { AppError } from "@utils/AppError.util";
+import { swaggerSpec } from "./docs/openapi";
+
+import cors, { CorsOptions } from "cors";
+
+export const app = express();
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
+const corsOptions: CorsOptions = {
+  origin: (
+    origin: string | undefined,
+    callback: (err: Error | null, allow?: boolean | string) => void
+  ) => {
+    if (!origin) return callback(null, true);
+    callback(null, origin);
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: [
+    "Origin",
+    "X-Requested-With",
+    "Content-Type",
+    "Accept",
+    "Authorization",
+  ],
+};
+
+app.use(cookieParser());
+app.use(cors(corsOptions));
+app.set("trust proxy", true);
+
+app.get("/", (req: Request, res: Response) => {
+  res.send("Pliengaz - Infotech Server is up and running.");
+});
+
+app.use(
+  express.json({
+    strict: false,
+    verify: (req, res, buf) => {
+      if (!buf.length) return;
+    },
+  })
+);
+
+const allowedIps = [
+  "123.45.67.89",
+  "98.76.54.32",
+  "127.0.0.1",
+  "31.97.113.198",
+];
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+  const clientIp =
+    req.ip || req.connection.remoteAddress || req.headers["x-forwarded-for"];
+
+  const ip = (clientIp as string).replace("::ffff:", "");
+
+  if (allowedIps.includes(ip)) {
+    next();
+  } else {
+    res.status(403).json({
+      status: "fail",
+      message: `Your IP (${ip}) is not allowed to access this server.`,
+    });
+  }
+});
+
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+  console.log(`Invalid route accessed: ${req.originalUrl}`);
+  next(
+    new AppError(
+      `${req.originalUrl} does not exist for ${req.method} requests`,
+      StatusCodes.NOT_FOUND
+    )
+  );
+});
+
+app.use(globalErrorController);
