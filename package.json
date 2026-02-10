@@ -1,0 +1,36 @@
+{
+  "name": "pleingaz-infotech",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "SMXKY",
+  "type": "typescript",
+  "main": "index.tsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@prisma/client": "^7.3.0",
+    "@socket.io/redis-adapter": "^8.3.0",
+    "argon2": "^0.44.0",
+    "axios": "^1.13.5",
+    "bullmq": "^5.67.3",
+    "connect-redis": "^9.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "csurf": "^1.11.0",
+    "express-rate-limit": "^8.2.1",
+    "express-session": "^1.19.0",
+    "helmet": "^8.1.0",
+    "ioredis": "^5.9.2",
+    "nodemailer": "^8.0.1",
+    "otplib": "^13.2.1",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
+    "pg": "^8.18.0",
+    "prisma": "^7.3.0",
+    "qrcode": "^1.5.4",
+    "speakeasy": "^2.0.0"
+  }
+}
