@@ -1,0 +1,21 @@
+{
+  "error.something_wrong": "Un problème est survenu",
+  "error.unexpected": "Une erreur inattendue s'est produite. Veuillez réessayer plus tard.",
+  "error.server_error": "Erreur serveur",
+  "error.no_stack": "Aucune trace de pile disponible",
+
+  "error.db.duplicate": "Valeur en double : un enregistrement avec {{fields}} existe déjà. Veuillez utiliser une autre valeur pour {{fields}}.",
+  "error.db.not_found": "L'enregistrement demandé n'existe pas.",
+  "error.db.invalid_reference": "Référence invalide : le {{field}} que vous essayez de lier n'existe pas.",
+  "error.db.missing_field": "Champ requis manquant : {{field}} ne peut pas être nul ou vide.",
+  "error.db.value_too_long": "Valeur trop longue pour {{field}}. Veuillez raccourcir votre saisie.",
+  "error.db.validation": "Erreur de validation : {{details}}",
+  "error.db.unavailable": "Impossible de se connecter à la base de données. Veuillez réessayer plus tard.",
+  "error.db.critical": "Une erreur critique de la base de données s'est produite. Veuillez réessayer plus tard.",
+
+  "error.auth.invalid_token": "Jeton d'authentification invalide. Veuillez vous reconnecter.",
+  "error.auth.token_expired": "Votre session a expiré. Veuillez vous reconnecter.",
+
+  "error.request.invalid_json": "JSON invalide dans le corps de la requête. Veuillez vérifier le format de votre requête.",
+  "error.request.payload_too_large": "La charge utile de la requête est trop volumineuse. Veuillez réduire la taille de votre envoi."
+}

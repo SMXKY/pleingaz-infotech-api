@@ -1,0 +1,21 @@
+{
+  "error.something_wrong": "Something went wrong",
+  "error.unexpected": "An unexpected error occurred. Please try again later.",
+  "error.server_error": "Server error",
+  "error.no_stack": "No stack trace available",
+
+  "error.db.duplicate": "Duplicate value: A record with that {{fields}} already exists. Please use a different value for {{fields}}.",
+  "error.db.not_found": "The requested record does not exist.",
+  "error.db.invalid_reference": "Invalid reference: The {{field}} you are trying to link does not exist.",
+  "error.db.missing_field": "Missing required field: {{field}} cannot be null or empty.",
+  "error.db.value_too_long": "Value too long for {{field}}. Please shorten your input.",
+  "error.db.validation": "Validation error: {{details}}",
+  "error.db.unavailable": "Unable to connect to the database. Please try again later.",
+  "error.db.critical": "A critical database error occurred. Please try again later.",
+
+  "error.auth.invalid_token": "Invalid authentication token. Please log in again.",
+  "error.auth.token_expired": "Your session has expired. Please log in again.",
+
+  "error.request.invalid_json": "Invalid JSON in request body. Please check your request format.",
+  "error.request.payload_too_large": "Request payload is too large. Please reduce the size of your upload."
+}

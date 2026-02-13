@@ -4,10 +4,19 @@ export class AppError extends Error {
   public readonly statusCode: number;
   public readonly status: string;
   public readonly isOperational: boolean;
+  public readonly messageKey: string;
+  public readonly meta?: Record<string, any>;
 
-  constructor(message: string, statusCode: number, isOperational = true) {
-    super(message);
+  constructor(
+    messageKey: string,
+    statusCode: number,
+    meta?: Record<string, any>,
+    isOperational = true
+  ) {
+    super(messageKey);
 
+    this.messageKey = messageKey;
+    this.meta = meta;
     this.statusCode = statusCode;
     this.status = statusCode >= 400 && statusCode < 500 ? "fail" : "error";
     this.isOperational = isOperational;
@@ -16,9 +25,6 @@ export class AppError extends Error {
     Error.captureStackTrace(this, this.constructor);
   }
 
-  /**
-   * Converts any error into a well-formatted AppError.
-   */
   static from(err: any): AppError {
     if (err instanceof AppError) return err;
 
@@ -28,10 +34,7 @@ export class AppError extends Error {
     ) {
       const fields =
         (err.meta?.target as string[])?.join(", ") || "unknown field";
-      return new AppError(
-        `Duplicate value: A record with that ${fields} already exists. Please use a different value for ${fields}.`,
-        409
-      );
+      return new AppError("error.db.duplicate", 409, { fields });
     }
 
     if (
@@ -40,7 +43,7 @@ export class AppError extends Error {
     ) {
       const cause =
         (err.meta?.cause as string) || "The requested record does not exist";
-      return new AppError(cause, 404);
+      return new AppError("error.db.not_found", 404, { cause });
     }
 
     if (
@@ -48,10 +51,7 @@ export class AppError extends Error {
       err.code === "P2003"
     ) {
       const field = (err.meta?.field_name as string) || "related record";
-      return new AppError(
-        `Invalid reference: The ${field} you are trying to link does not exist.`,
-        400
-      );
+      return new AppError("error.db.invalid_reference", 400, { field });
     }
 
     if (
@@ -59,10 +59,7 @@ export class AppError extends Error {
       err.code === "P2011"
     ) {
       const field = (err.meta?.constraint as string) || "required field";
-      return new AppError(
-        `Missing required field: ${field} cannot be null or empty.`,
-        400
-      );
+      return new AppError("error.db.missing_field", 400, { field });
     }
 
     if (
@@ -70,67 +67,41 @@ export class AppError extends Error {
       err.code === "P2000"
     ) {
       const field = (err.meta?.column_name as string) || "field";
-      return new AppError(
-        `Value too long for ${field}. Please shorten your input.`,
-        400
-      );
+      return new AppError("error.db.value_too_long", 400, { field });
     }
 
-    // Invalid data type / validation error in query
     if (err instanceof Prisma.PrismaClientValidationError) {
       const cleanMessage =
         err.message.split("\n").pop()?.trim() || "Invalid data provided";
-      return new AppError(`Validation error: ${cleanMessage}`, 400);
+      return new AppError("error.db.validation", 400, {
+        details: cleanMessage,
+      });
     }
 
     if (err instanceof Prisma.PrismaClientInitializationError) {
-      return new AppError(
-        "Unable to connect to the database. Please try again later.",
-        503,
-        false
-      );
+      return new AppError("error.db.unavailable", 503, undefined, false);
     }
 
     if (err instanceof Prisma.PrismaClientRustPanicError) {
-      return new AppError(
-        "A critical database error occurred. Please try again later.",
-        500,
-        false
-      );
+      return new AppError("error.db.critical", 500, undefined, false);
     }
 
-    if (err.name === "JsonWebTokenError") {
-      return new AppError(
-        "Invalid authentication token. Please log in again.",
-        401
-      );
+    if (err?.name === "JsonWebTokenError") {
+      return new AppError("error.auth.invalid_token", 401);
     }
 
-    if (err.name === "TokenExpiredError") {
-      return new AppError(
-        "Your session has expired. Please log in again.",
-        401
-      );
+    if (err?.name === "TokenExpiredError") {
+      return new AppError("error.auth.token_expired", 401);
     }
 
     if (err instanceof SyntaxError && "body" in err) {
-      return new AppError(
-        "Invalid JSON in request body. Please check your request format.",
-        400
-      );
+      return new AppError("error.request.invalid_json", 400);
     }
 
-    if (err.type === "entity.too.large") {
-      return new AppError(
-        "Request payload is too large. Please reduce the size of your upload.",
-        413
-      );
+    if (err?.type === "entity.too.large") {
+      return new AppError("error.request.payload_too_large", 413);
     }
 
-    return new AppError(
-      "An unexpected error occurred. Please try again later.",
-      500,
-      false
-    );
+    return new AppError("error.unexpected", 500, undefined, false);
   }
 }
