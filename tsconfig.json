@@ -10,6 +10,7 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
+    "moduleResolution": "node",
 
     /* Decorators for Swagger / TSOA (optional but recommended) */
     "experimentalDecorators": true,
