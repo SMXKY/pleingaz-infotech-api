@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { AppError } from "./AppError.util";
 import { StatusCodes } from "http-status-codes";
+import t from "./translate.util";
+import { Language } from "@appTypes/preferences.type";
 
 export const catchAsync = (
   func: (req: Request, res: Response, next: NextFunction) => Promise<void>
@@ -12,7 +14,7 @@ export const catchAsync = (
       const statusCode = err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR;
       const message = err.message || "error.server_error";
 
-      next(new AppError(message, statusCode));
+      next(new AppError(t(res.locals.lang as Language, message), statusCode));
     });
   };
 };
