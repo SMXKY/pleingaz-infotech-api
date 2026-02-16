@@ -4,27 +4,22 @@ const defaultDepartments = [
   {
     name: "Executive",
     code: "CEO",
-    isSystem: true,
   },
   {
     name: "Exploitation & Procurement",
     code: "EXPLOITATION",
-    isSystem: true,
   },
   {
     name: "Logistics",
     code: "LOGISTICS",
-    isSystem: true,
   },
   {
     name: "Sales & Commercial",
     code: "SALES",
-    isSystem: true,
   },
   {
     name: "Filling & Production",
     code: "FILLING",
-    isSystem: true,
   },
   {
     name: "Accounting & Finance",
@@ -34,22 +29,18 @@ const defaultDepartments = [
   {
     name: "Human Resources",
     code: "HR",
-    isSystem: true,
   },
   {
     name: "Legal",
     code: "LEGAL",
-    isSystem: true,
   },
   {
     name: "Maintenance & Technical",
     code: "MAINTENANCE",
-    isSystem: true,
   },
   {
     name: "Research & Development",
     code: "RND",
-    isSystem: true,
   },
   {
     name: "Information Technology",
@@ -57,7 +48,6 @@ const defaultDepartments = [
     isSystem: true,
   },
 ];
-
 const seedDepartments = async () => {
   console.log("🌱 Seeding departments...");
 

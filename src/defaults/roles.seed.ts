@@ -2,95 +2,104 @@ import { prisma } from "src";
 
 const defaultRoles = [
   {
-    name: "CEO",
+    name: "Directeur Général (CEO)",
     description:
-      "Chief Executive Officer - Final approvals and full system access",
+      "Chief Executive Officer - Approbations finales et accès complet au système",
     isSystem: true,
   },
   {
-    name: "Chief of Exploitation",
+    name: "Chef d’Exploitation (Chief of Exploitation)",
     description:
-      "Head of Exploitation Department - Gas purchasing and procurement management",
+      "Responsable du département Exploitation - Gestion des achats et approvisionnements en gaz",
     isSystem: true,
   },
   {
-    name: "Logistics Manager",
-    description: "Head of Logistics - Vehicle management and transportation",
+    name: "Responsable Logistique (Logistics Manager)",
+    description:
+      "Chef de la logistique - Gestion des véhicules et du transport",
     isSystem: true,
   },
   {
-    name: "Logistics Officer",
-    description: "Logistics staff - Vehicle inspection and delivery",
+    name: "Agent Logistique (Logistics Officer)",
+    description:
+      "Personnel logistique - Inspection des véhicules et livraisons",
     isSystem: true,
   },
   {
-    name: "Sales Manager",
-    description: "Head of Sales - Commercial operations management",
+    name: "Responsable Commercial (Sales Manager)",
+    description: "Chef des ventes - Gestion des opérations commerciales",
     isSystem: true,
   },
   {
-    name: "Sales Personnel",
-    description: "Sales staff - Retail and wholesale operations",
+    name: "Commercial (Sales Personnel)",
+    description:
+      "Personnel de vente - Opérations de vente au détail et en gros",
     isSystem: true,
   },
   {
-    name: "Cashier",
-    description: "Handles cash transactions and daily reconciliation",
+    name: "Caissier (Cashier)",
+    description:
+      "Gestion des transactions en espèces et rapprochement quotidien",
     isSystem: true,
   },
   {
-    name: "Sub-Cashier",
-    description: "Warehouse-level cashier - Reports to main cashier",
+    name: "Sous-Caissier (Sub-Cashier)",
+    description: "Caissier au niveau dépôt - Rapporte au caissier principal",
     isSystem: true,
   },
   {
-    name: "Filling Supervisor",
-    description: "Supervises gas filling and production operations",
+    name: "Superviseur de Remplissage (Filling Supervisor)",
+    description: "Supervision des opérations de remplissage et de production",
     isSystem: true,
   },
   {
-    name: "Filling Operator",
-    description: "Operates filling equipment and tracks bottles",
+    name: "Opérateur de Remplissage (Filling Operator)",
+    description:
+      "Opération des équipements de remplissage et suivi des bouteilles",
     isSystem: true,
   },
   {
-    name: "Accountant",
-    description: "Financial management, invoicing, payroll, and compliance",
+    name: "Comptable (Accountant)",
+    description: "Gestion financière, facturation, paie et conformité",
     isSystem: true,
   },
   {
-    name: "HR Manager",
-    description: "Head of Human Resources - Employee management",
+    name: "Responsable RH (HR Manager)",
+    description: "Chef des ressources humaines - Gestion du personnel",
     isSystem: true,
   },
   {
-    name: "HR Officer",
-    description: "HR staff - Attendance, recruitment, permissions",
+    name: "Agent RH (HR Officer)",
+    description: "Personnel RH - Présences, recrutement, autorisations",
     isSystem: true,
   },
   {
-    name: "Legal Officer",
-    description: "Legal affairs, insurance, mail management, contracts",
+    name: "Juriste (Legal Officer)",
+    description:
+      "Affaires juridiques, assurances, gestion du courrier et contrats",
     isSystem: true,
   },
   {
-    name: "Maintenance Manager",
-    description: "Head of Maintenance - Equipment and technical oversight",
+    name: "Responsable Maintenance (Maintenance Manager)",
+    description:
+      "Chef de la maintenance - Supervision des équipements et aspects techniques",
     isSystem: true,
   },
   {
-    name: "Technician",
-    description: "Technical staff - Repairs and maintenance execution",
+    name: "Technicien (Technician)",
+    description:
+      "Personnel technique - Exécution des réparations et maintenances",
     isSystem: true,
   },
   {
-    name: "R&D Officer",
-    description: "Research and Development - Project creation and monitoring",
+    name: "Agent R&D (R&D Officer)",
+    description: "Recherche et Développement - Création et suivi des projets",
     isSystem: true,
   },
   {
-    name: "System Admin",
-    description: "System administration - User management and configuration",
+    name: "Administrateur Système (System Admin)",
+    description:
+      "Administration du système - Gestion des utilisateurs et configuration",
     isSystem: true,
   },
 ];
