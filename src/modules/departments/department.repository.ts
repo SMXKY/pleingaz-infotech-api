@@ -4,6 +4,7 @@ import { Department } from "src/generated/prisma";
 
 export class DepartmentRepository extends BaseRepository<Department> {
   protected modelName = "Department";
+  protected hasSystemField = true;
 
   async findByName(name: string): Promise<Department | null> {
     return this.model.findFirst({

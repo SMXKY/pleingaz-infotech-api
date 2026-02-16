@@ -12,6 +12,8 @@ import { Prisma } from "src/generated/prisma";
 export abstract class BaseRepository<T> {
   protected prisma = prisma;
   protected abstract modelName: string;
+  protected uniqueFields: string[] = [];
+  protected hasSystemField: boolean = false;
 
   protected get model(): any {
     return (this.prisma as any)[this.modelName];
@@ -101,7 +103,15 @@ export abstract class BaseRepository<T> {
   }
 
   async update(id: string, data: Partial<T>): Promise<T> {
-    await this.findByIdOrThrow(id);
+    const record = await this.findByIdOrThrow(id);
+
+    if (this.hasSystemField && (record as any).isSystem) {
+      throw new AppError(
+        "error.db.system_record_immutable",
+        StatusCodes.FORBIDDEN
+      );
+    }
+
     return this.model.update({
       where: { id },
       data,
@@ -109,7 +119,15 @@ export abstract class BaseRepository<T> {
   }
 
   async delete(id: string): Promise<T> {
-    await this.findByIdOrThrow(id);
+    const record = await this.findByIdOrThrow(id);
+
+    if (this.hasSystemField && (record as any).isSystem) {
+      throw new AppError(
+        "error.db.system_record_immutable",
+        StatusCodes.FORBIDDEN
+      );
+    }
+
     return this.model.delete({
       where: { id },
     });
@@ -118,6 +136,13 @@ export abstract class BaseRepository<T> {
   async softDelete(id: string, uniqueFields?: string[]): Promise<T> {
     const record = await this.findByIdOrThrow(id);
     const timestamp = Date.now();
+
+    if (this.hasSystemField && (record as any).isSystem) {
+      throw new AppError(
+        "error.db.system_record_immutable",
+        StatusCodes.FORBIDDEN
+      );
+    }
 
     const updateData: Record<string, any> = {
       deletedAt: new Date(),
@@ -138,6 +163,19 @@ export abstract class BaseRepository<T> {
   }
 
   async restore(id: string): Promise<T> {
+    const record = await this.model.findUnique({ where: { id } });
+
+    if (!record) {
+      throw new AppError("error.db.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (this.hasSystemField && (record as any).isSystem) {
+      throw new AppError(
+        "error.db.system_record_immutable",
+        StatusCodes.FORBIDDEN
+      );
+    }
+
     return this.model.update({
       where: { id },
       data: { deletedAt: null },

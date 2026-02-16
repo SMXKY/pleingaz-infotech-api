@@ -22,6 +22,7 @@
   "error.role.has_users": "Ce rôle ne peut pas être supprimé car des utilisateurs y sont actuellement assignés",
   "error.validation.id_required": "L'ID est requis",
   "resource.deleted": "Ressource supprimée avec succès",
+  "error.db.system_record_immutable": "Les documents système ne peuvent pas être modifiés ou supprimés",
 
   "error.validation.department_name_too_short": "Le nom du département doit contenir au moins 3 caractères",
   "error.validation.department_code_too_short": "Le code du département doit contenir au moins 2 caractères",

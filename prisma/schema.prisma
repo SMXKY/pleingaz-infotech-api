@@ -150,6 +150,7 @@ model Department {
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   deletedAt DateTime? @map("deleted_at")
+  isSystem  Boolean?  @map("is_system")
 
   @@index([deletedAt])
   @@map("departments")
@@ -166,6 +167,7 @@ model Role {
   users           User[]
   roleOverrides   RoleOverride[]
   rolePermissions RolePermission[]
+  isSystem        Boolean?         @map("is_system")
 
   @@index([deletedAt])
   @@map("roles")
@@ -308,6 +310,7 @@ model User {
   createdPermissionOverrides  PermissionOverride[] @relation("created_permission_override")
   createdRolePermissions      RolePermission[]
   activityLogs                ActivityLog[]
+  isSystem                    Boolean?             @map("is_system")
 
   @@index([deletedAt])
   @@map("users")

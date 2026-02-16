@@ -127,7 +127,8 @@ exports.Prisma.DepartmentScalarFieldEnum = {
   code: 'code',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  deletedAt: 'deletedAt'
+  deletedAt: 'deletedAt',
+  isSystem: 'isSystem'
 };
 
 exports.Prisma.RoleScalarFieldEnum = {
@@ -137,7 +138,8 @@ exports.Prisma.RoleScalarFieldEnum = {
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  deletedAt: 'deletedAt'
+  deletedAt: 'deletedAt',
+  isSystem: 'isSystem'
 };
 
 exports.Prisma.RoleOverrideScalarFieldEnum = {
@@ -233,7 +235,8 @@ exports.Prisma.UserScalarFieldEnum = {
   roleId: 'roleId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  deletedAt: 'deletedAt'
+  deletedAt: 'deletedAt',
+  isSystem: 'isSystem'
 };
 
 exports.Prisma.UserPreferenceScalarFieldEnum = {

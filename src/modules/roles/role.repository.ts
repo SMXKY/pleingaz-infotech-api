@@ -5,6 +5,7 @@ import { User } from "src/generated/prisma";
 
 export class RoleRepository extends BaseRepository<Role> {
   protected modelName = "role";
+  protected hasSystemField = true;
 
   async findByName(name: string): Promise<Role | null> {
     return this.model.findFirst({
