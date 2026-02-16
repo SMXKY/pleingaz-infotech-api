@@ -35,21 +35,31 @@ export const logUserActivity = (
 ): void => {
   const info = getClientInfo(req);
 
-  prisma.activityLog
-    .create({
-      data: {
-        ...log,
-        ipAddress: getClientIp(req) || "0.0.0.0",
-        userAgent: `${info.browser} ${info.browserVersion || ""}`.trim(),
-        status: LogStatus.SUCCESS,
-        createdAt: new Date(),
-      },
-    })
-    .catch((error) => {
-      console.error("Activity log failed", {
-        error: error instanceof Error ? error.message : String(error),
-        requestId: log.requestId,
-        userId: log.userId,
-      });
+  const data: any = {
+    userEmail: log.userEmail,
+    operation: log.operation,
+    category: log.category,
+    tableName: log.tableName,
+    recordId: log.recordId,
+    previousState: log.previousState ?? undefined,
+    newState: log.newState ?? undefined,
+    changedFields: log.changedFields ?? [],
+    requestId: log.requestId ?? undefined,
+    metadata: log.metadata ?? undefined,
+    ipAddress: getClientIp(req) || "0.0.0.0",
+    userAgent: `${info.browser} ${info.browserVersion || ""}`.trim(),
+    status: LogStatus.SUCCESS,
+  };
+
+  if (log.userId) {
+    data.userId = log.userId;
+  }
+
+  prisma.activityLog.create({ data }).catch((error) => {
+    console.error("Activity log failed", {
+      error: error instanceof Error ? error.message : String(error),
+      requestId: log.requestId,
+      userId: log.userId,
     });
+  });
 };

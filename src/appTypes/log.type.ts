@@ -19,16 +19,16 @@ export enum LogStatus {
 }
 
 export interface LogUserActivityInput {
-  userId: string;
+  userId?: string;
   userEmail: string;
   operation: LogOperation;
   category: LogCategory;
   tableName: string;
   recordId: string;
-  previousState?: InputJsonValue;
-  newState?: InputJsonValue;
+  previousState?: InputJsonValue | null;
+  newState?: InputJsonValue | null;
   changedFields?: string[];
   userAgent?: string;
-  requestId: string;
+  requestId?: string;
   metadata?: InputJsonValue;
 }

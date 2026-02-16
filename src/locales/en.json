@@ -17,5 +17,10 @@
   "error.auth.token_expired": "Your session has expired. Please log in again.",
 
   "error.request.invalid_json": "Invalid JSON in request body. Please check your request format.",
-  "error.request.payload_too_large": "Request payload is too large. Please reduce the size of your upload."
+  "error.request.payload_too_large": "Request payload is too large. Please reduce the size of your upload.",
+
+  "error.validation.id_required": "ID is required",
+  "error.role.has_users": "Role cannot be deleted as users currently have this role",
+
+  "resource.deleted":
 }

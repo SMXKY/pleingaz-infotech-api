@@ -17,5 +17,8 @@
   "error.auth.token_expired": "Votre session a expiré. Veuillez vous reconnecter.",
 
   "error.request.invalid_json": "JSON invalide dans le corps de la requête. Veuillez vérifier le format de votre requête.",
-  "error.request.payload_too_large": "La charge utile de la requête est trop volumineuse. Veuillez réduire la taille de votre envoi."
+  "error.request.payload_too_large": "La charge utile de la requête est trop volumineuse. Veuillez réduire la taille de votre envoi.",
+
+  "error.role.has_users": "Ce rôle ne peut pas être supprimé car des utilisateurs y sont actuellement assignés",
+  "error.validation.id_required": "L'ID est requis"
 }

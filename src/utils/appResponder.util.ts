@@ -3,7 +3,8 @@ import { Response } from "express";
 export const appResponder = (
   statusCode: number,
   data: object,
-  res: Response
+  res: Response,
+  meta?: Record<string, any>
 ) => {
-  res.status(statusCode).json({ ok: true, status: "success", data });
+  res.status(statusCode).json({ success: true, data, meta });
 };

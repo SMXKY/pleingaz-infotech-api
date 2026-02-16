@@ -39,7 +39,9 @@ export const loadTranslations = async (): Promise<void> => {
 loadTranslations();
 
 const interpolate = (str: string, vars?: Record<string, string>): string =>
-  !vars ? str : str.replace(/\{(\w+)\}/g, (_, key) => vars[key] ?? `{${key}}`);
+  !vars
+    ? str
+    : str.replace(/\{\{(\w+)\}\}/g, (_, key) => vars[key] ?? `{{${key}}}`);
 
 export const t = (
   lang: Language,
