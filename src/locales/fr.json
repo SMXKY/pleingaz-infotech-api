@@ -20,5 +20,11 @@
   "error.request.payload_too_large": "La charge utile de la requête est trop volumineuse. Veuillez réduire la taille de votre envoi.",
 
   "error.role.has_users": "Ce rôle ne peut pas être supprimé car des utilisateurs y sont actuellement assignés",
-  "error.validation.id_required": "L'ID est requis"
+  "error.validation.id_required": "L'ID est requis",
+  "resource.deleted": "Ressource supprimée avec succès",
+
+  "error.validation.department_name_too_short": "Le nom du département doit contenir au moins 3 caractères",
+  "error.validation.department_code_too_short": "Le code du département doit contenir au moins 2 caractères",
+  "error.validation.department_code_too_long": "Le code du département ne doit pas dépasser 10 caractères",
+  "error.department.has_users": "Le département ne peut pas être supprimé car il contient encore des utilisateurs"
 }

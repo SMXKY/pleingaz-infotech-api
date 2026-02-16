@@ -8,6 +8,7 @@ import {
   FilterParams,
 } from "../appTypes/base.types";
 import { AppError } from "@utils/AppError.util";
+import t from "@utils/translate.util";
 
 export abstract class BaseController<T> {
   protected abstract service: BaseService<T, any, any>;
@@ -141,7 +142,11 @@ export abstract class BaseController<T> {
       }
 
       await this.service.delete(id, ctx, soft);
-      appResponder(StatusCodes.OK, { message: "resource.deleted" }, res);
+      appResponder(
+        StatusCodes.OK,
+        { message: t(res.locals.lang, "resource.deleted") },
+        res
+      );
     } catch (error) {
       next(error);
     }

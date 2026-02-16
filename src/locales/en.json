@@ -22,5 +22,10 @@
   "error.validation.id_required": "ID is required",
   "error.role.has_users": "Role cannot be deleted as users currently have this role",
 
-  "resource.deleted":
+  "resource.deleted": "Resource deleted successfully",
+
+  "error.validation.department_name_too_short": "Department name must be at least 2 characters",
+  "error.validation.department_code_too_short": "Department code must be at least 2 characters",
+  "error.validation.department_code_too_long": "Department code must not exceed 10 characters",
+  "error.department.has_users": "Department cannot be deleted because it still has users"
 }
