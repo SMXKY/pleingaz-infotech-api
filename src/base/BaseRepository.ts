@@ -115,11 +115,25 @@ export abstract class BaseRepository<T> {
     });
   }
 
-  async softDelete(id: string): Promise<T> {
-    await this.findByIdOrThrow(id);
+  async softDelete(id: string, uniqueFields?: string[]): Promise<T> {
+    const record = await this.findByIdOrThrow(id);
+    const timestamp = Date.now();
+
+    const updateData: Record<string, any> = {
+      deletedAt: new Date(),
+    };
+
+    if (uniqueFields) {
+      uniqueFields.forEach((field) => {
+        if ((record as any)[field]) {
+          updateData[field] = `${(record as any)[field]}_deleted_${timestamp}`;
+        }
+      });
+    }
+
     return this.model.update({
       where: { id },
-      data: { deletedAt: new Date() },
+      data: updateData,
     });
   }
 

@@ -55,4 +55,15 @@ export class DepartmentService extends BaseService<
   async findActiveDepartments(ctx: ServiceContext): Promise<Department[]> {
     return this.repository.findActiveDepartments();
   }
+
+  async delete(
+    id: string,
+    ctx: ServiceContext,
+    soft: boolean = true
+  ): Promise<Department> {
+    if (soft) {
+      return this.repository.softDelete(id, ["name", "code"]);
+    }
+    return this.repository.delete(id);
+  }
 }

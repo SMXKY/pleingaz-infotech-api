@@ -62,4 +62,15 @@ export class RoleService extends BaseService<
   ): Promise<Role | null> {
     return this.repository.findWithPermissions(id);
   }
+
+  async delete(
+    id: string,
+    ctx: ServiceContext,
+    soft: boolean = true
+  ): Promise<Role> {
+    if (soft) {
+      return this.repository.softDelete(id, ["name"]);
+    }
+    return this.repository.delete(id);
+  }
 }
