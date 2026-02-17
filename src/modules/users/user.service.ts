@@ -10,6 +10,7 @@ import { AppError } from "@utils/AppError.util";
 import { StatusCodes } from "http-status-codes";
 import { ServiceContext } from "@appTypes/base.types";
 import { User } from "src/generated/prisma";
+import * as bcrypt from "bcrypt";
 
 export class UserService extends BaseService<
   User,
@@ -30,6 +31,16 @@ export class UserService extends BaseService<
     data: CreateUserInput,
     ctx: ServiceContext
   ): Promise<CreateUserInput> {
+    if (data.password !== data.passwordConfirm) {
+      throw new AppError(
+        "error.validation.password_confirm_required",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    data.password = await bcrypt.hash(data.password, 12);
+    data.passwordConfirm = null;
+    data.passwordChangedAt = new Date(Date.now());
     return data;
   }
 

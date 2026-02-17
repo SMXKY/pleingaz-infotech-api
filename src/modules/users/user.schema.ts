@@ -14,7 +14,9 @@ export const createUserSchema = z
     password: z.string().min(8, "error.validation.password_too_short"),
     passwordConfirm: z
       .string()
-      .min(1, "error.validation.password_confirm_required"),
+      .min(1, "error.validation.password_confirm_required")
+      .nullable(),
+    passwordChangedAt: z.date(),
     dob: z.coerce.date().optional(),
     gender: z.enum(["M", "F"]).default("M"),
     address: z.string().optional(),
