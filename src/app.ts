@@ -9,6 +9,7 @@ import { swaggerSpec } from "./docs/openapi";
 import cors, { CorsOptions } from "cors";
 import { roleRouter } from "./modules/roles";
 import { departmentRouter } from "./modules/departments";
+import userRouter from "./modules/users/user.route";
 
 export const app = express();
 
@@ -84,6 +85,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api/v1/roles", roleRouter);
 app.use("/api/v1/departments", departmentRouter);
+app.use("/api/v1/users", userRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   console.log(`Invalid route accessed: ${req.originalUrl}`);

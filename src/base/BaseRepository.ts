@@ -162,6 +162,85 @@ export abstract class BaseRepository<T> {
     });
   }
 
+  async findDeleted(
+    options: FindManyOptions = {}
+  ): Promise<PaginatedResult<T>> {
+    const { pagination = {}, filters = {}, include, select } = options;
+
+    const page = pagination.page || 1;
+    const limit = pagination.limit || 20;
+    const skip = (page - 1) * limit;
+    const sortBy = pagination.sortBy || "deletedAt";
+    const sortOrder = pagination.sortOrder || "desc";
+
+    const where = this.buildWhereClauseDeleted(filters);
+
+    const [data, total] = await Promise.all([
+      this.model.findMany({
+        where,
+        include,
+        select,
+        skip,
+        take: limit,
+        orderBy: { [sortBy]: sortOrder },
+      }),
+      this.model.count({ where }),
+    ]);
+
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      data,
+      meta: {
+        total,
+        page,
+        limit,
+        totalPages,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+      },
+    };
+  }
+
+  async findDeletedById(
+    id: string,
+    include?: Record<string, boolean | object>
+  ): Promise<T | null> {
+    return this.model.findFirst({
+      where: { id, deletedAt: { not: null } },
+      include,
+    });
+  }
+
+  async findDeletedByIdOrThrow(
+    id: string,
+    include?: Record<string, boolean | object>
+  ): Promise<T> {
+    const record = await this.findDeletedById(id, include);
+    if (!record) {
+      throw new AppError("error.db.not_found", StatusCodes.NOT_FOUND);
+    }
+    return record;
+  }
+
+  protected buildWhereClauseDeleted(
+    filters: FilterParams
+  ): Record<string, any> {
+    const where: Record<string, any> = { deletedAt: { not: null } };
+
+    for (const [key, value] of Object.entries(filters)) {
+      if (value === undefined || value === "") continue;
+
+      if (typeof value === "string" && !this.isUuid(value)) {
+        where[key] = { contains: value, mode: "insensitive" };
+      } else {
+        where[key] = value;
+      }
+    }
+
+    return where;
+  }
+
   async restore(id: string): Promise<T> {
     const record = await this.model.findUnique({ where: { id } });
 

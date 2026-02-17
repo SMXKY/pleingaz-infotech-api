@@ -150,6 +150,21 @@ export abstract class BaseService<
     return record;
   }
 
+  async findDeleted(
+    options: FindManyOptions,
+    ctx: ServiceContext
+  ): Promise<PaginatedResult<T>> {
+    return this.repository.findDeleted(options);
+  }
+
+  async findDeletedById(
+    id: string,
+    ctx: ServiceContext,
+    include?: Record<string, boolean | object>
+  ): Promise<T> {
+    return this.repository.findDeletedByIdOrThrow(id, include);
+  }
+
   async delete(
     id: string,
     ctx: ServiceContext,

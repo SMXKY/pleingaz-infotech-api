@@ -184,6 +184,40 @@ export abstract class BaseController<T> {
     }
   };
 
+  findDeleted = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const ctx = this.getContext(req);
+      const options = this.parseFindManyOptions(req);
+      const result = await this.service.findDeleted(options, ctx);
+      appResponder(StatusCodes.OK, result.data, res, result.meta);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  findDeletedById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const ctx = this.getContext(req);
+      const include = this.parseInclude(req.query.include as string);
+      const record = await this.service.findDeletedById(
+        req.params.id as string,
+        ctx,
+        include
+      );
+      appResponder(StatusCodes.OK, record as object, res);
+    } catch (error) {
+      next(error);
+    }
+  };
+
   protected parseFindManyOptions(req: Request): FindManyOptions {
     const { page, limit, sortBy, sortOrder, include, ...filters } = req.query;
 
