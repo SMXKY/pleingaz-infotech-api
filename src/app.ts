@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import { globalErrorController } from "@controllers/error.controller";
 import { AppError } from "@utils/AppError.util";
 import { swaggerSpec } from "./docs/openapi";
+import path from "path";
 
 import cors, { CorsOptions } from "cors";
 import { roleRouter } from "./modules/roles";
@@ -82,6 +83,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   }
 });
 
+app.use("/assets", express.static(path.join(__dirname, "assets")));
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api/v1/roles", roleRouter);
 app.use("/api/v1/departments", departmentRouter);

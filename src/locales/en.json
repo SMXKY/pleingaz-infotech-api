@@ -30,5 +30,6 @@
   "error.validation.department_code_too_long": "Department code must not exceed 10 characters",
   "error.department.has_users": "Department cannot be deleted because it still has users",
 
-  "error.user.not_found": "User not found."
+  "error.user.not_found": "User not found.",
+  "error.user.user_already_exist": ""
 }

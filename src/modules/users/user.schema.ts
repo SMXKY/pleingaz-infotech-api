@@ -1,41 +1,26 @@
 import { z } from "zod";
 
-export const createUserSchema = z
-  .object({
-    email: z.string().email("error.validation.invalid_email"),
-    username: z.string().min(3, "error.validation.username_too_short"),
-    name: z.string().min(1, "error.validation.name_required"),
-    surname: z.string().min(1, "error.validation.surname_required"),
-    employeeId: z.string().min(1, "error.validation.employee_id_required"),
-    nationalIdNumber: z
-      .string()
-      .min(1, "error.validation.national_id_required"),
-    phoneNumber: z.string().optional(),
-    password: z.string().min(8, "error.validation.password_too_short"),
-    passwordConfirm: z
-      .string()
-      .min(1, "error.validation.password_confirm_required")
-      .nullable(),
-    passwordChangedAt: z.date(),
-    dob: z.coerce.date().optional(),
-    gender: z.enum(["M", "F"]).default("M"),
-    address: z.string().optional(),
-    emergencyContactName: z.string().optional(),
-    emergencyContactPhoneNumber: z.string().optional(),
-    hireDate: z.coerce.date().refine((d) => !isNaN(d.getTime()), {
-      message: "error.validation.hire_date_invalid",
-    }),
-    baseSalaryInCFA: z.number().positive().optional(),
-    bankName: z.string().optional(),
-    cnpsNumber: z.string().optional(),
-    taxId: z.string().optional(),
-    departmentId: z.string().uuid("error.validation.invalid_department_id"),
-    roleId: z.string().uuid("error.validation.invalid_role_id"),
-  })
-  .refine((data) => data.password === data.passwordConfirm, {
-    message: "error.validation.passwords_dont_match",
-    path: ["passwordConfirm"],
-  });
+export const createUserSchema = z.object({
+  email: z.string().email("error.validation.invalid_email"),
+  name: z.string().min(1, "error.validation.name_required"),
+  surname: z.string().min(1, "error.validation.surname_required"),
+  nationalIdNumber: z.string().min(1, "error.validation.national_id_required"),
+  phoneNumber: z.string().optional(),
+  dob: z.coerce.date().optional(),
+  gender: z.enum(["M", "F"]).default("M"),
+  address: z.string().optional(),
+  emergencyContactName: z.string().optional(),
+  emergencyContactPhoneNumber: z.string().optional(),
+  hireDate: z.coerce.date().refine((d) => !isNaN(d.getTime()), {
+    message: "error.validation.hire_date_invalid",
+  }),
+  baseSalaryInCFA: z.number().positive().optional(),
+  bankName: z.string().optional(),
+  cnpsNumber: z.string().optional(),
+  taxId: z.string().optional(),
+  departmentId: z.string().uuid("error.validation.invalid_department_id"),
+  roleId: z.string().uuid("error.validation.invalid_role_id"),
+});
 
 export const updateUserSchema = z.object({
   email: z.string().email("error.validation.invalid_email").optional(),

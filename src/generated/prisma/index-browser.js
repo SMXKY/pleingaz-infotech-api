@@ -268,6 +268,16 @@ exports.Prisma.ActivityLogScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.UserTokenScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  tokenHash: 'tokenHash',
+  type: 'type',
+  expiresAt: 'expiresAt',
+  usedAt: 'usedAt',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -408,6 +418,12 @@ exports.LogStatus = exports.$Enums.LogStatus = {
   SUCCESS: 'SUCCESS'
 };
 
+exports.TokenType = exports.$Enums.TokenType = {
+  PASSWORD_SETUP: 'PASSWORD_SETUP',
+  PASSWORD_RESET: 'PASSWORD_RESET',
+  EMAIL_VERIFICATION: 'EMAIL_VERIFICATION'
+};
+
 exports.Prisma.ModelName = {
   Department: 'Department',
   Role: 'Role',
@@ -418,7 +434,8 @@ exports.Prisma.ModelName = {
   RolePermission: 'RolePermission',
   User: 'User',
   UserPreference: 'UserPreference',
-  ActivityLog: 'ActivityLog'
+  ActivityLog: 'ActivityLog',
+  UserToken: 'UserToken'
 };
 
 /**

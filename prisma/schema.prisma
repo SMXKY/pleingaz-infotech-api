@@ -142,6 +142,12 @@ enum LogStatus {
   SUCCESS
 }
 
+enum TokenType {
+  PASSWORD_SETUP
+  PASSWORD_RESET
+  EMAIL_VERIFICATION
+}
+
 model Department {
   id        String    @id @default(uuid())
   name      String    @unique
@@ -270,7 +276,7 @@ model RolePermission {
 model User {
   id                          String               @id @default(uuid())
   email                       String               @unique
-  username                    String               @unique
+  username                    String?              @unique
   name                        String
   surname                     String
   employeeId                  String               @unique @map("employee_id")
@@ -278,7 +284,7 @@ model User {
   phoneNumber                 String?              @unique @map("phone_number")
   isEmailVerified             Boolean              @default(false) @map("is_email_verified")
   status                      Status               @default(ACTIVE)
-  password                    String
+  password                    String?
   passwordConfirm             String?              @map("password_confirm")
   passwordChangedAt           DateTime?            @map("password_changed_at")
   deactivatedUntil            DateTime?            @map("deactivated_until")
@@ -311,6 +317,7 @@ model User {
   createdRolePermissions      RolePermission[]
   activityLogs                ActivityLog[]
   isSystem                    Boolean?             @map("is_system")
+  UserToken                   UserToken[]
 
   @@index([deletedAt])
   @@map("users")
@@ -353,4 +360,20 @@ model ActivityLog {
   @@index([operation])
   @@index([createdAt])
   @@map("activity_logs")
+}
+
+model UserToken {
+  id        String    @id @default(uuid())
+  user      User      @relation(fields: [userId], references: [id])
+  userId    String    @map("user_id")
+  tokenHash String    @map("token_hash")
+  type      TokenType
+  expiresAt DateTime  @map("expires_at")
+  usedAt    DateTime? @map("used_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  @@index([expiresAt])
+  @@index([userId])
+  @@index([type])
+  @@map("user_tokens")
 }
