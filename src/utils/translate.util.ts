@@ -37,8 +37,7 @@ export const loadTranslations = async (): Promise<void> => {
 };
 
 loadTranslations();
-
-const interpolate = (str: string, vars?: Record<string, string>): string =>
+const interpolate = (str: string, vars?: Record<string, any>): string =>
   !vars
     ? str
     : str.replace(/\{\{(\w+)\}\}/g, (_, key) => vars[key] ?? `{{${key}}}`);

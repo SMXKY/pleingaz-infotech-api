@@ -2,7 +2,16 @@ import { PrismaClient } from "src/generated/prisma";
 
 const prisma = new PrismaClient({
   omit: {
-    user: { deletedAt: true, password: true, passwordConfirm: true },
+    user: {
+      deletedAt: true,
+      password: true,
+      passwordConfirm: true,
+      isSystem: true,
+      deactivatedUntil: true,
+      passwordChangedAt: true,
+      failedLoginAttempts: true,
+      lockedUntil: true,
+    },
     role: { deletedAt: true },
     department: { deletedAt: true },
   },

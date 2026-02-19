@@ -4,6 +4,8 @@ import { UserService } from "./user.service";
 import { appResponder } from "@utils/appResponder.util";
 import { StatusCodes } from "http-status-codes";
 import { User } from "src/generated/prisma";
+import { catchAsync } from "@utils/catchAsync.util";
+import { CreateUserInput } from "./user.schema";
 
 export class UserController extends BaseController<User> {
   protected service: UserService;
@@ -56,4 +58,15 @@ export class UserController extends BaseController<User> {
       next(error);
     }
   };
+
+  createEmployee = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const ctx = this.getContext(req);
+      const form = req.body;
+
+      const result = await this.service.createEmployee(form, ctx);
+
+      appResponder(StatusCodes.CREATED, result as CreateUserInput, res);
+    }
+  );
 }

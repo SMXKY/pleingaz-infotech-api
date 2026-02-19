@@ -31,5 +31,17 @@
   "error.department.has_users": "Department cannot be deleted because it still has users",
 
   "error.user.not_found": "User not found.",
-  "error.user.user_already_exist": ""
+  "error.config.not_found": "Configuration not found.",
+  "error.role.not_found": "Role not found.",
+  "error.department.not_found": "Department not found.",
+
+  "error.validation.invalid_email": "Please enter a valid email address.",
+  "error.validation.name_required": "First name is required.",
+  "error.validation.surname_required": "Last name is required.",
+  "error.validation.national_id_required": "National ID is required.",
+  "error.validation.hire_date_invalid": "Hire date is invalid.",
+  "error.validation.invalid_department_id": "Invalid department selected.",
+  "error.validation.invalid_role_id": "Invalid role selected.",
+
+  "error.user.already_exists": "An account is already registered with this email address."
 }

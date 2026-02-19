@@ -1,14 +1,23 @@
-import prisma from "@models/index.model";
+import { PrismaClient } from "@prisma/client";
 
-const generateEmployeeId = async (): Promise<string> => {
+type TransactionClient = Omit<
+  PrismaClient,
+  "$connect" | "$disconnect" | "$on" | "$transaction" | "$use" | "$extends"
+>;
+
+const generateEmployeeId = async (
+  tx: TransactionClient,
+  prefix: string = "INFOTECH"
+): Promise<string> => {
   const now = new Date();
   const year = now.getFullYear().toString().slice(-2);
-  const prefix = `INFOTECH-${year}`;
+  const month = (now.getMonth() + 1).toString().padStart(2, "0");
+  const fullPrefix = `${prefix}-${year}${month}`;
 
-  const lastEmployee = await prisma.user.findFirst({
+  const lastEmployee = await tx.user.findFirst({
     where: {
       employeeId: {
-        startsWith: prefix,
+        startsWith: fullPrefix,
       },
     },
     orderBy: {
@@ -22,11 +31,12 @@ const generateEmployeeId = async (): Promise<string> => {
   let sequence = 1;
 
   if (lastEmployee) {
-    const lastSequence = parseInt(lastEmployee.employeeId.split("-")[2], 10);
+    const parts = lastEmployee.employeeId.split("-");
+    const lastSequence = parseInt(parts[parts.length - 1], 10);
     sequence = lastSequence + 1;
   }
 
-  return `${prefix}-${sequence.toString().padStart(4, "0")}`;
+  return `${fullPrefix}-${sequence.toString().padStart(4, "0")}`;
 };
 
 export default generateEmployeeId;

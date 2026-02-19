@@ -7,7 +7,7 @@ const controller = new UserController();
 
 userRouter.use(getUserLanguage);
 
-userRouter.route("/").get(controller.findMany).post(controller.create);
+userRouter.route("/").get(controller.findMany).post(controller.createEmployee);
 
 userRouter.route("/active").get(controller.findActive);
 userRouter.route("/terminated").get(controller.findTerminatedUsers);

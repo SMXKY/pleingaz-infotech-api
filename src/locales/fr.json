@@ -29,5 +29,16 @@
   "error.validation.department_code_too_long": "Le code du département ne doit pas dépasser 10 caractères",
   "error.department.has_users": "Le département ne peut pas être supprimé car il contient encore des utilisateurs",
 
-  "error.user.not_found": "Utilisateur introuvable."
+  "error.config.not_found": "Configuration introuvable.",
+  "error.role.not_found": "Rôle introuvable.",
+  "error.department.not_found": "Département introuvable.",
+
+  "error.validation.invalid_email": "Veuillez saisir une adresse e-mail valide.",
+  "error.validation.name_required": "Le prénom est obligatoire.",
+  "error.validation.surname_required": "Le nom de famille est obligatoire.",
+  "error.validation.national_id_required": "La carte d'identité nationale est obligatoire.",
+  "error.validation.hire_date_invalid": "La date d'embauche est invalide.",
+  "error.validation.invalid_department_id": "Département sélectionné invalide.",
+  "error.validation.invalid_role_id": "Rôle sélectionné invalide.",
+  "error.user.already_exists": "Cette adresse email est déjà utilisée."
 }

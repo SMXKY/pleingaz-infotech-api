@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "users" ALTER COLUMN "dob" SET DATA TYPE DATE,
+ALTER COLUMN "hire_date" SET DATA TYPE DATE;

@@ -6,7 +6,13 @@ export const createUserSchema = z.object({
   surname: z.string().min(1, "error.validation.surname_required"),
   nationalIdNumber: z.string().min(1, "error.validation.national_id_required"),
   phoneNumber: z.string().optional(),
-  dob: z.coerce.date().optional(),
+  dob: z.coerce
+    .date()
+    .optional()
+    .refine((d) => !d || !isNaN(d.getTime()), {
+      message: "error.validation.invalid_dob",
+    })
+    .nullable(),
   gender: z.enum(["M", "F"]).default("M"),
   address: z.string().optional(),
   emergencyContactName: z.string().optional(),
@@ -24,7 +30,6 @@ export const createUserSchema = z.object({
 
 export const updateUserSchema = z.object({
   email: z.string().email("error.validation.invalid_email").optional(),
-  username: z.string().min(3, "error.validation.username_too_short").optional(),
   name: z.string().min(1).optional(),
   surname: z.string().min(1).optional(),
   phoneNumber: z.string().optional(),

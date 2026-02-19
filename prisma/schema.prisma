@@ -291,13 +291,13 @@ model User {
   failedLoginAttempts         Int                  @default(0) @map("failed_login_attempts")
   lockedUntil                 DateTime?            @map("locked_until")
   lastLoggedInAt              DateTime?            @map("last_logged_in_at")
-  dob                         DateTime?
+  dob                         DateTime?            @db.Date
   gender                      Gender               @default(M)
   profilePictureUrl           String?              @map("profile_picture_url")
   address                     String?
   emergencyContactName        String?              @map("emergency_contact_name")
   emergencyContactPhoneNumber String?              @map("emergency_contact_phone_number")
-  hireDate                    DateTime             @map("hire_date")
+  hireDate                    DateTime             @map("hire_date") @db.Date
   baseSalaryInCFA             Int?                 @map("base_salary_in_cfa")
   bankName                    String?              @map("bank_name")
   cnpsNumber                  String?              @map("cnps_number")
@@ -376,4 +376,21 @@ model UserToken {
   @@index([userId])
   @@index([type])
   @@map("user_tokens")
+}
+
+enum ConfigType {
+  MAIN
+}
+
+model AdminConfig {
+  id                 ConfigType @id @default(MAIN)
+  companyEmail       String     @map("company_email")
+  supportEmail       String     @map("support_email")
+  companyPhoneNumber String     @map("company_phone_number")
+  companyPrefix      String     @default("INF") @map("company_prefix")
+  logoUrl            String?    @map("logo_url")
+  createdAt          DateTime   @default(now()) @map("created_at")
+  updatedAt          DateTime   @updatedAt @map("updated_at")
+
+  @@map("admin_config")
 }

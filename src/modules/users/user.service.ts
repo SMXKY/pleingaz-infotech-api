@@ -16,12 +16,8 @@ import { readFileSync } from "fs";
 import generateEmployeeId from "./utilites/generateEmployeeId.util";
 import crypto from "crypto";
 import argon2 from "argon2";
-
-export const baseUrl = process.env.BASE_URL;
-
-if (process.env.BASE_URL) {
-  throw new Error("Base url enviroment variable not set");
-}
+import { baseUrl, frontEndUrl } from "@utils/enviromentVariablesCheck.util";
+import { sendEmail } from "@utils/sendEmail.util";
 
 export class UserService extends BaseService<
   User,
@@ -82,94 +78,136 @@ export class UserService extends BaseService<
   async createEmployee(
     form: CreateUserInput,
     ctx: ServiceContext
-  ): Promise<User> {
-    //Dont check for username, users will set their user names when seting thier passwords
+  ): Promise<Partial<User>> {
+    const config = await prisma.adminConfig.findFirst();
+    if (!config) {
+      throw new AppError(
+        "error.config.not_found",
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
+    }
+
     const userExist = await prisma.user.findUnique({
-      where: {
-        email: form.email,
-      },
+      where: { email: form.email },
     });
 
     if (userExist) {
-      throw new AppError(
-        "error.user.user_already_exist",
-        StatusCodes.BAD_REQUEST
-      );
+      throw new AppError("error.user.already_exists", StatusCodes.CONFLICT);
     }
 
     const role = await prisma.role.findUnique({
-      where: {
-        id: form.roleId,
-      },
+      where: { id: form.roleId },
     });
 
     if (!role) {
-      throw new AppError("error.role.role_not_found", StatusCodes.BAD_REQUEST);
+      throw new AppError("error.role.not_found", StatusCodes.BAD_REQUEST);
     }
 
     const department = await prisma.department.findUnique({
-      where: {
-        id: form.departmentId,
-      },
+      where: { id: form.departmentId },
     });
 
     if (!department) {
-      throw new AppError(
-        "error.department.department_not_found",
-        StatusCodes.BAD_REQUEST
-      );
+      throw new AppError("error.department.not_found", StatusCodes.BAD_REQUEST);
     }
 
-    //TODO: Create Admin Configuration Table and feature
+    const result = await prisma.$transaction(async (tx) => {
+      const user = await tx.user.create({
+        data: {
+          ...form,
+          employeeId: await generateEmployeeId(tx, config.companyPrefix),
+          dob: form.dob ? new Date(form.dob) : null,
+          hireDate: new Date(form.hireDate),
+        },
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          surname: true,
+          employeeId: true,
+          phoneNumber: true,
+          status: true,
+          gender: true,
+          address: true,
+          hireDate: true,
+          createdAt: true,
+          department: {
+            select: {
+              id: true,
+              name: true,
+              code: true,
+            },
+          },
+          role: {
+            select: {
+              id: true,
+              name: true,
+              description: true,
+            },
+          },
+        },
+      });
 
-    const user = await prisma.user.create({
-      data: {
-        ...form,
-        employeeId: await generateEmployeeId(),
-      },
-      include: {
-        department: true,
-        role: true,
-      },
+      const tokenString = crypto.randomBytes(32).toString("hex");
+      const tokenHash = await argon2.hash(tokenString);
+
+      await tx.userToken.create({
+        data: {
+          userId: user.id,
+          tokenHash,
+          type: TokenType.PASSWORD_SETUP,
+          expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+        },
+      });
+
+      const tokenUrl = `${frontEndUrl}/set-credentials?token=${tokenString}`;
+
+      const templatePath = path.join(
+        __dirname,
+        "../../public/templates/account_creation.template.html"
+      );
+
+      const emailTemplate = readFileSync(templatePath, "utf-8")
+        .replace(/{{logoUrl}}/g, config.logoUrl || `${baseUrl}/assets/logo.png`)
+        .replace(/{{employeeName}}/g, `${user.name} ${user.surname}`)
+        .replace(/{{employeeId}}/g, user.employeeId)
+        .replace(/{{employeeEmail}}/g, user.email)
+        .replace(/{{department}}/g, user.department.name)
+        .replace(/{{role}}/g, user.role.name)
+        .replace(/{{setPasswordLink}}/g, tokenUrl)
+        .replace(/{{supportEmail}}/g, config.supportEmail)
+        .replace(/{{supportPhone}}/g, config.companyPhoneNumber)
+        .replace(/{{websiteUrl}}/g, frontEndUrl)
+        .replace(/{{privacyUrl}}/g, `${frontEndUrl}/privacy`)
+        .replace(/{{termsUrl}}/g, `${frontEndUrl}/terms`)
+        .replace(/{{year}}/g, `${new Date().getFullYear()}`);
+
+      await sendEmail(
+        user.email,
+        "Bienvenue chez INFOTECH S.A - Configurez votre compte",
+        "",
+        emailTemplate
+      );
+
+      if (ctx.req) {
+        await tx.activityLog.create({
+          data: {
+            userId: ctx.userId || null,
+            userEmail: ctx.userEmail || "system",
+            operation: "CREATE",
+            category: "WRITE",
+            tableName: "users",
+            recordId: user.id,
+            newState: user,
+            changedFields: [],
+            status: "SUCCESS",
+          },
+        });
+      }
+
+      return user;
     });
 
-    const tokenString = crypto.randomBytes(32).toString("hex");
-    const tokenHash = await argon2.hash(tokenString);
-
-    const token = await prisma.userToken.create({
-        data: {
-            userId: user.id,
-            tokenHash,
-            type: TokenType.PASSWORD_SETUP,
-            expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
-        }
-    })
-
-    const tokenUrl = `${baseUrl}/auth/set-credentials/${tokenString}`;
-
-    const templatePath = path.join(
-      __dirname,
-      "../../public/templates/account_creation.template.html"
-    );
-
-    let emailTemplate = readFileSync(templatePath, "utf-8");
-
-    emailTemplate = emailTemplate
-      .replace(/{{logoUrl}}/g, `${baseUrl}/assets/logo`)
-      .replace(/{{employeeName}}/g, `${user.name} ${user.surname}`)
-      .replace(/{{employeeId}}/g, user.employeeId)
-      .replace(/{{employeeEmail}}/g, user.email)
-      .replace(/{{department}}/g, user.department.name)
-      .replace(/{{role}}/g, user.role.name)
-      .replace(/{{setPasswordLink}}/g, tokenUrl)
-      .replace(/{{supportEmail}}/g);
-      .replace(/{{supportPhone}}/g);
-      .replace(/{{websiteUrl}}/g);
-      .replace(/{{privacyUrl}}/g);
-      .replace(/{{termsUrl}}/g);
-      .replace(/{{year}}/g, `${(new Date()).getFullYear()}`);
-
-
-    return user;
+    return result;
   }
 }

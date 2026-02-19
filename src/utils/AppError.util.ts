@@ -28,58 +28,78 @@ export class AppError extends Error {
   static from(err: any): AppError {
     if (err instanceof AppError) return err;
 
-    if (
-      err instanceof Prisma.PrismaClientKnownRequestError &&
-      err.code === "P2002"
-    ) {
-      const fields =
-        (err.meta?.target as string[])?.join(", ") || "unknown field";
+    const message = err?.message || "";
+
+    if (err?.code === "P2002" || message.includes("Unique constraint failed")) {
+      const match =
+        message.match(/fields: \(`(.+?)`\)/) ||
+        message.match(/fields: `(.+?)`/) ||
+        message.match(/the fields: \(`(.+?)`\)/) ||
+        message.match(/the fields: `(.+?)`/);
+
+      const fields = match
+        ? match[1]
+        : err?.meta?.target?.join(", ") || "field";
+
       return new AppError("error.db.duplicate", 409, { fields });
     }
 
     if (
-      err instanceof Prisma.PrismaClientKnownRequestError &&
-      err.code === "P2025"
+      err?.code === "P2025" ||
+      message.includes("Record to update not found") ||
+      message.includes("Record to delete not found") ||
+      message.includes("No record found")
     ) {
-      const cause =
-        (err.meta?.cause as string) || "The requested record does not exist";
-      return new AppError("error.db.not_found", 404, { cause });
+      return new AppError("error.db.not_found", 404);
     }
 
     if (
-      err instanceof Prisma.PrismaClientKnownRequestError &&
-      err.code === "P2003"
+      err?.code === "P2003" ||
+      message.includes("Foreign key constraint failed")
     ) {
-      const field = (err.meta?.field_name as string) || "related record";
+      const match = message.match(/field: `(.+?)`/);
+      const field = match ? match[1] : err?.meta?.field_name || "reference";
       return new AppError("error.db.invalid_reference", 400, { field });
     }
 
     if (
-      err instanceof Prisma.PrismaClientKnownRequestError &&
-      err.code === "P2011"
+      err?.code === "P2011" ||
+      message.includes("Null constraint violation")
     ) {
-      const field = (err.meta?.constraint as string) || "required field";
+      const match = message.match(/column: `(.+?)`/);
+      const field = match ? match[1] : err?.meta?.constraint || "field";
       return new AppError("error.db.missing_field", 400, { field });
     }
 
     if (
-      err instanceof Prisma.PrismaClientKnownRequestError &&
-      err.code === "P2000"
+      err?.code === "P2000" ||
+      message.includes("Value out of range") ||
+      message.includes("too long")
     ) {
-      const field = (err.meta?.column_name as string) || "field";
+      const match = message.match(/column: `(.+?)`/);
+      const field = match ? match[1] : err?.meta?.column_name || "field";
       return new AppError("error.db.value_too_long", 400, { field });
     }
 
-    if (err instanceof Prisma.PrismaClientValidationError) {
-      const cleanMessage =
-        err.message.split("\n").pop()?.trim() || "Invalid data provided";
-      return new AppError("error.db.validation", 400, {
-        details: cleanMessage,
-      });
+    if (err?.code === "P2006" || message.includes("Invalid value")) {
+      return new AppError("error.db.invalid_value", 400);
     }
 
-    if (err instanceof Prisma.PrismaClientInitializationError) {
+    if (
+      err instanceof Prisma.PrismaClientInitializationError ||
+      message.includes("Can't reach database")
+    ) {
       return new AppError("error.db.unavailable", 503, undefined, false);
+    }
+
+    if (
+      err instanceof Prisma.PrismaClientValidationError ||
+      message.includes("Invalid `") ||
+      message.includes("Argument")
+    ) {
+      const lines = message.split("\n").filter((l: string) => l.trim());
+      const lastLine = lines[lines.length - 1]?.trim() || "Invalid data";
+      return new AppError("error.db.validation", 400, { details: lastLine });
     }
 
     if (err instanceof Prisma.PrismaClientRustPanicError) {
@@ -102,6 +122,6 @@ export class AppError extends Error {
       return new AppError("error.request.payload_too_large", 413);
     }
 
-    return new AppError("error.unexpected", 500, undefined, false);
+    return new AppError(err.message, err.code, undefined, false);
   }
 }

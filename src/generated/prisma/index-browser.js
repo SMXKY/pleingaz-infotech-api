@@ -278,6 +278,17 @@ exports.Prisma.UserTokenScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.AdminConfigScalarFieldEnum = {
+  id: 'id',
+  companyEmail: 'companyEmail',
+  supportEmail: 'supportEmail',
+  companyPhoneNumber: 'companyPhoneNumber',
+  companyPrefix: 'companyPrefix',
+  logoUrl: 'logoUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -424,6 +435,10 @@ exports.TokenType = exports.$Enums.TokenType = {
   EMAIL_VERIFICATION: 'EMAIL_VERIFICATION'
 };
 
+exports.ConfigType = exports.$Enums.ConfigType = {
+  MAIN: 'MAIN'
+};
+
 exports.Prisma.ModelName = {
   Department: 'Department',
   Role: 'Role',
@@ -435,7 +450,8 @@ exports.Prisma.ModelName = {
   User: 'User',
   UserPreference: 'UserPreference',
   ActivityLog: 'ActivityLog',
-  UserToken: 'UserToken'
+  UserToken: 'UserToken',
+  AdminConfig: 'AdminConfig'
 };
 
 /**
