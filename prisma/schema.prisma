@@ -363,10 +363,9 @@ model ActivityLog {
 }
 
 model UserToken {
-  id        String    @id @default(uuid())
+  id        String    @id
   user      User      @relation(fields: [userId], references: [id])
   userId    String    @map("user_id")
-  tokenHash String    @map("token_hash")
   type      TokenType
   expiresAt DateTime  @map("expires_at")
   usedAt    DateTime? @map("used_at")

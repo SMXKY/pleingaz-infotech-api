@@ -271,7 +271,6 @@ exports.Prisma.ActivityLogScalarFieldEnum = {
 exports.Prisma.UserTokenScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  tokenHash: 'tokenHash',
   type: 'type',
   expiresAt: 'expiresAt',
   usedAt: 'usedAt',

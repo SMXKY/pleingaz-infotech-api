@@ -1,11 +1,13 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, response } from "express";
 import { BaseController } from "src/base/BaseController";
 import { UserService } from "./user.service";
 import { appResponder } from "@utils/appResponder.util";
 import { StatusCodes } from "http-status-codes";
 import { User } from "src/generated/prisma";
 import { catchAsync } from "@utils/catchAsync.util";
-import { CreateUserInput } from "./user.schema";
+import { CreateUserInput, setupAccountSchema } from "./user.schema";
+import { AppError } from "@utils/AppError.util";
+import t from "@utils/translate.util";
 
 export class UserController extends BaseController<User> {
   protected service: UserService;
@@ -69,4 +71,26 @@ export class UserController extends BaseController<User> {
       appResponder(StatusCodes.CREATED, result as CreateUserInput, res);
     }
   );
+
+  setupAccountCredentials = catchAsync(async (req: Request, res: Response) => {
+    const validation = setupAccountSchema.safeParse(req.body);
+    if (!validation.success) {
+      const message = validation.error.issues[0].message;
+      throw new AppError(message, StatusCodes.BAD_REQUEST);
+    }
+
+    const ctx = this.getContext(req);
+    const result = await this.service.setupAccountCredentials(
+      validation.data,
+      ctx
+    );
+
+    appResponder(
+      StatusCodes.OK,
+      {
+        message: t(res.locals.lang, result.message),
+      },
+      res
+    );
+  });
 }

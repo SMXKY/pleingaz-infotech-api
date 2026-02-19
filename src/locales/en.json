@@ -42,6 +42,24 @@
   "error.validation.hire_date_invalid": "Hire date is invalid.",
   "error.validation.invalid_department_id": "Invalid department selected.",
   "error.validation.invalid_role_id": "Invalid role selected.",
+  "error.user.already_exists": "An account is already registered with this email address.",
 
-  "error.user.already_exists": "An account is already registered with this email address."
+  "error.token.invalid_or_expired": "The link is invalid or has expired",
+  "error.token.already_used": "This link has already been used",
+  "error.token.expired": "This link has expired",
+
+  "success.account_setup_complete": "Your account has been successfully set up",
+
+  "error.validation.password_too_short": "The password must be at least 8 characters long",
+  "error.validation.password_too_long": "The password cannot exceed 128 characters",
+  "error.validation.password_needs_uppercase": "The password must contain at least one uppercase letter",
+  "error.validation.password_needs_lowercase": "The password must contain at least one lowercase letter",
+  "error.validation.password_needs_number": "The password must contain at least one number",
+  "error.validation.password_needs_special": "The password must contain at least one special character",
+
+  "error.validation.passwords_dont_match": "Passwords do not match",
+  "error.validation.password_confirm_required": "Password confirmation is required",
+  "error.validation.username_invalid_characters": "The username contains invalid characters",
+  "error.validation.invalid_dob": "The date of birth is invalid",
+  "error.validation.current_password_required": "The current password is required"
 }

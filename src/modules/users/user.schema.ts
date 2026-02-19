@@ -48,12 +48,21 @@ export const updateUserSchema = z.object({
   status: z.enum(["ACTIVE", "TERMINATED"]).optional(),
 });
 
+export const passwordSchema = z
+  .string()
+  .min(8, "error.validation.password_too_short")
+  .max(128, "error.validation.password_too_long")
+  .regex(/[A-Z]/, "error.validation.password_needs_uppercase")
+  .regex(/[a-z]/, "error.validation.password_needs_lowercase")
+  .regex(/[0-9]/, "error.validation.password_needs_number")
+  .regex(/[^A-Za-z0-9]/, "error.validation.password_needs_special");
+
 export const changePasswordSchema = z
   .object({
     currentPassword: z
       .string()
       .min(1, "error.validation.current_password_required"),
-    newPassword: z.string().min(8, "error.validation.password_too_short"),
+    newPassword: passwordSchema,
     confirmPassword: z
       .string()
       .min(1, "error.validation.password_confirm_required"),
@@ -62,6 +71,26 @@ export const changePasswordSchema = z
     message: "error.validation.passwords_dont_match",
     path: ["confirmPassword"],
   });
+
+export const setupAccountSchema = z
+  .object({
+    token: z.string().min(1, "error.validation.token_required"),
+    username: z
+      .string()
+      .min(3, "error.validation.username_too_short")
+      .max(30, "error.validation.username_too_long")
+      .regex(/^[a-zA-Z0-9_]+$/, "error.validation.username_invalid_characters"),
+    password: passwordSchema,
+    confirmPassword: z
+      .string()
+      .min(1, "error.validation.password_confirm_required"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "error.validation.passwords_dont_match",
+    path: ["confirmPassword"],
+  });
+
+export type SetupAccountInput = z.infer<typeof setupAccountSchema>;
 
 export type CreateUserInput = z.infer<typeof createUserSchema>;
 export type UpdateUserInput = z.infer<typeof updateUserSchema>;

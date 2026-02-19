@@ -40,5 +40,24 @@
   "error.validation.hire_date_invalid": "La date d'embauche est invalide.",
   "error.validation.invalid_department_id": "Département sélectionné invalide.",
   "error.validation.invalid_role_id": "Rôle sélectionné invalide.",
-  "error.user.already_exists": "Cette adresse email est déjà utilisée."
+  "error.user.already_exists": "Cette adresse email est déjà utilisée.",
+
+  "error.token.invalid_or_expired": "Le lien est invalide ou a expiré",
+  "error.token.already_used": "Ce lien a déjà été utilisé",
+  "error.token.expired": "Ce lien a expiré",
+
+  "success.account_setup_complete": "Votre compte a été configuré avec succès",
+
+  "error.validation.password_too_short": "Le mot de passe doit contenir au moins 8 caractères",
+  "error.validation.password_too_long": "Le mot de passe ne peut pas dépasser 128 caractères",
+  "error.validation.password_needs_uppercase": "Le mot de passe doit contenir au moins une majuscule",
+  "error.validation.password_needs_lowercase": "Le mot de passe doit contenir au moins une minuscule",
+  "error.validation.password_needs_number": "Le mot de passe doit contenir au moins un chiffre",
+  "error.validation.password_needs_special": "Le mot de passe doit contenir au moins un caractère spécial",
+
+  "error.validation.passwords_dont_match": "Les mots de passe ne correspondent pas",
+  "error.validation.password_confirm_required": "La confirmation du mot de passe est requise",
+  "error.validation.username_invalid_characters": "Le nom d'utilisateur contient des caractères invalides",
+  "error.validation.invalid_dob": "La date de naissance est invalide",
+  "error.validation.current_password_required": "Le mot de passe actuel est requis"
 }

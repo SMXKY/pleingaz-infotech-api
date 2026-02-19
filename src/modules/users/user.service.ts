@@ -5,6 +5,8 @@ import {
   updateUserSchema,
   CreateUserInput,
   UpdateUserInput,
+  SetupAccountInput,
+  setupAccountSchema,
 } from "./user.schema";
 import { AppError } from "@utils/AppError.util";
 import { StatusCodes } from "http-status-codes";
@@ -18,6 +20,7 @@ import crypto from "crypto";
 import argon2 from "argon2";
 import { baseUrl, frontEndUrl } from "@utils/enviromentVariablesCheck.util";
 import { sendEmail } from "@utils/sendEmail.util";
+import { logUserActivity } from "@utils/logUserActivity.util";
 
 export class UserService extends BaseService<
   User,
@@ -111,6 +114,12 @@ export class UserService extends BaseService<
       throw new AppError("error.department.not_found", StatusCodes.BAD_REQUEST);
     }
 
+    const validation = createUserSchema.safeParse(form);
+    if (!validation.success) {
+      const messages = validation.error.issues.map((i) => i.message).join(", ");
+      throw new AppError(messages, StatusCodes.BAD_REQUEST);
+    }
+
     const result = await prisma.$transaction(async (tx) => {
       const user = await tx.user.create({
         data: {
@@ -148,19 +157,19 @@ export class UserService extends BaseService<
         },
       });
 
-      const tokenString = crypto.randomBytes(32).toString("hex");
-      const tokenHash = await argon2.hash(tokenString);
+      const token = crypto.randomBytes(32).toString("hex");
+      const tokenId = crypto.createHash("sha256").update(token).digest("hex");
 
       await tx.userToken.create({
         data: {
+          id: tokenId,
           userId: user.id,
-          tokenHash,
           type: TokenType.PASSWORD_SETUP,
           expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
         },
       });
 
-      const tokenUrl = `${frontEndUrl}/set-credentials?token=${tokenString}`;
+      const tokenUrl = `${frontEndUrl}/set-credentials?token=${token}`;
 
       const templatePath = path.join(
         __dirname,
@@ -209,5 +218,69 @@ export class UserService extends BaseService<
     });
 
     return result;
+  }
+
+  async setupAccountCredentials(
+    data: SetupAccountInput,
+    ctx: ServiceContext
+  ): Promise<{ message: string }> {
+    const { token, username, password } = data;
+
+    const tokenId = crypto.createHash("sha256").update(token).digest("hex");
+
+    const userToken = await prisma.userToken.findUnique({
+      where: { id: tokenId },
+    });
+
+    if (!userToken) {
+      throw new AppError(
+        "error.token.invalid_or_expired",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    if (userToken.usedAt) {
+      throw new AppError("error.token.already_used", StatusCodes.BAD_REQUEST);
+    }
+
+    if (userToken.expiresAt < new Date()) {
+      throw new AppError("error.token.expired", StatusCodes.BAD_REQUEST);
+    }
+
+    if (userToken.type !== TokenType.PASSWORD_SETUP) {
+      throw new AppError(
+        "error.token.invalid_or_expired",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    const usernameExists = await prisma.user.findUnique({
+      where: { username },
+    });
+
+    if (usernameExists) {
+      throw new AppError("error.db.duplicate", StatusCodes.CONFLICT, {
+        fields: "username",
+      });
+    }
+
+    await prisma.$transaction([
+      prisma.user.update({
+        where: { id: userToken.userId },
+        data: {
+          username,
+          password: await argon2.hash(password),
+          passwordChangedAt: new Date(),
+          status: "ACTIVE",
+          isEmailVerified: true,
+        },
+      }),
+      prisma.userToken.update({
+        where: { id: tokenId },
+        data: { usedAt: new Date() },
+      }),
+    ]);
+
+    return { message: "success.account_setup_complete" };
   }
 }
