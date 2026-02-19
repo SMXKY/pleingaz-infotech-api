@@ -90,8 +90,21 @@ export const setupAccountSchema = z
     path: ["confirmPassword"],
   });
 
-export type SetupAccountInput = z.infer<typeof setupAccountSchema>;
+export const PasswordResetSchema = z
+  .object({
+    token: z.string().min(1, "error.validation.token_required"),
+    password: passwordSchema,
+    confirmPassword: z
+      .string()
+      .min(1, "error.validation.password_confirm_required"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "error.validation.passwords_dont_match",
+    path: ["confirmPassword"],
+  });
 
+export type SetupAccountInput = z.infer<typeof setupAccountSchema>;
 export type CreateUserInput = z.infer<typeof createUserSchema>;
 export type UpdateUserInput = z.infer<typeof updateUserSchema>;
 export type ChangePasswordInput = z.infer<typeof changePasswordSchema>;
+export type ResetPasswordInput = z.infer<typeof PasswordResetSchema>;

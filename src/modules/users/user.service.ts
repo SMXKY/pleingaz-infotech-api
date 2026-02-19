@@ -7,6 +7,7 @@ import {
   UpdateUserInput,
   SetupAccountInput,
   setupAccountSchema,
+  ResetPasswordInput,
 } from "./user.schema";
 import { AppError } from "@utils/AppError.util";
 import { StatusCodes } from "http-status-codes";
@@ -24,6 +25,7 @@ import {
   EMAIL_VERIFICATION_EXPIRES_IN,
   frontEndUrl,
   MAX_LOGIN_ATTEMPTS,
+  RESET_PASSWORD_LIMIT_HOURS,
 } from "@utils/enviromentVariablesCheck.util";
 import { sendEmail } from "@utils/sendEmail.util";
 import { logUserActivity } from "@utils/logUserActivity.util";
@@ -542,5 +544,156 @@ export class UserService extends BaseService<
       },
       token: signToken(user.id),
     };
+  }
+
+  async forgotPassword(
+    email: string,
+    ctx: ServiceContext
+  ): Promise<{ message: string }> {
+    const GENERIC_RESPONSE = { message: "success.reset_token_sent" };
+
+    const user = await prisma.user.findUnique({
+      where: { email: email.trim() },
+      include: { department: true, role: true, preference: true },
+    });
+
+    if (!user) {
+      return GENERIC_RESPONSE;
+    }
+
+    if (user.status !== "ACTIVE" || !user.password) {
+      return GENERIC_RESPONSE;
+    }
+
+    await prisma.userToken.updateMany({
+      where: {
+        userId: user.id,
+        type: TokenType.PASSWORD_RESET,
+        expiresAt: { gt: new Date() },
+        usedAt: null,
+      },
+      data: {
+        usedAt: new Date(),
+      },
+    });
+
+    const config = await prisma.adminConfig.findFirst();
+    if (!config) {
+      throw new AppError(
+        "error.config.not_found",
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
+    }
+
+    const rawToken = crypto.randomBytes(32).toString("hex");
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(rawToken)
+      .digest("hex");
+
+    const expiresAt = new Date(
+      Date.now() + Number(RESET_PASSWORD_LIMIT_HOURS) * 60 * 60 * 1000
+    );
+
+    await prisma.userToken.create({
+      data: {
+        id: hashedToken,
+        userId: user.id,
+        type: TokenType.PASSWORD_RESET,
+        expiresAt,
+      },
+    });
+
+    const resetPasswordLink = `${frontEndUrl}/reset-password?token=${rawToken}`;
+
+    const requestDate = new Date().toLocaleString("fr-FR", {
+      dateStyle: "long",
+      timeStyle: "short",
+      timeZone: "Africa/Douala",
+    });
+
+    const language = user.preference?.language.toLocaleLowerCase() ?? "fr";
+    const templateFile = `password-reset.${language}.template.html`;
+
+    const templatePath = path.join(
+      __dirname,
+      "../../public/templates",
+      templateFile
+    );
+
+    const emailHtml = readFileSync(templatePath, "utf-8")
+      .replace(/{{logoUrl}}/g, config.logoUrl || `${baseUrl}/assets/logo.png`)
+      .replace(/{{employeeName}}/g, `${user.name} ${user.surname}`)
+      .replace(/{{employeeId}}/g, user.employeeId)
+      .replace(/{{employeeEmail}}/g, user.email)
+      .replace(/{{requestDate}}/g, requestDate)
+      .replace(/{{resetPasswordLink}}/g, resetPasswordLink)
+      .replace(/{{expiryHours}}/g, String(RESET_PASSWORD_LIMIT_HOURS))
+      .replace(/{{supportEmail}}/g, config.supportEmail)
+      .replace(/{{supportPhone}}/g, config.companyPhoneNumber)
+      .replace(/{{websiteUrl}}/g, frontEndUrl)
+      .replace(/{{privacyUrl}}/g, `${frontEndUrl}/privacy`)
+      .replace(/{{termsUrl}}/g, `${frontEndUrl}/terms`)
+      .replace(/{{year}}/g, String(new Date().getFullYear()));
+
+    await sendEmail(
+      user.email,
+      "INFOTECH S.A — Réinitialisation de votre mot de passe",
+      "",
+      emailHtml
+    );
+
+    return GENERIC_RESPONSE;
+  }
+
+  async resetPassword(
+    data: ResetPasswordInput,
+    ctx: ServiceContext
+  ): Promise<{ message: string }> {
+    const { password, token } = data;
+
+    const tokenId = crypto.createHash("sha256").update(token).digest("hex");
+
+    const userToken = await prisma.userToken.findUnique({
+      where: { id: tokenId },
+    });
+
+    if (!userToken) {
+      throw new AppError(
+        "error.token.invalid_or_expired",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    if (userToken.usedAt) {
+      throw new AppError("error.token.already_used", StatusCodes.BAD_REQUEST);
+    }
+
+    if (userToken.expiresAt < new Date()) {
+      throw new AppError("error.token.expired", StatusCodes.BAD_REQUEST);
+    }
+
+    if (userToken.type !== TokenType.PASSWORD_RESET) {
+      throw new AppError(
+        "error.token.invalid_or_expired",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    await prisma.$transaction([
+      prisma.user.update({
+        where: { id: userToken.userId },
+        data: {
+          password: await argon2.hash(password),
+          passwordChangedAt: new Date(),
+        },
+      }),
+      prisma.userToken.update({
+        where: { id: tokenId },
+        data: { usedAt: new Date() },
+      }),
+    ]);
+
+    return { message: "success.password.reset" };
   }
 }

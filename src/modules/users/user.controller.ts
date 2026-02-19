@@ -5,7 +5,11 @@ import { appResponder } from "@utils/appResponder.util";
 import { StatusCodes } from "http-status-codes";
 import { User } from "src/generated/prisma";
 import { catchAsync } from "@utils/catchAsync.util";
-import { CreateUserInput, setupAccountSchema } from "./user.schema";
+import {
+  CreateUserInput,
+  PasswordResetSchema,
+  setupAccountSchema,
+} from "./user.schema";
 import { AppError } from "@utils/AppError.util";
 import t from "@utils/translate.util";
 
@@ -111,5 +115,44 @@ export class UserController extends BaseController<User> {
     const ctx = this.getContext(req);
     const result = await this.service.login(req.body, ctx);
     appResponder(StatusCodes.OK, result, res);
+  });
+
+  forgotPassword = catchAsync(async (req: Request, res: Response) => {
+    const ctx = this.getContext(req);
+    const email = req.body.email;
+
+    if (!email) {
+      throw new AppError(
+        "error.validation.invalid_email",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+    const result = await this.service.forgotPassword(email, ctx);
+    appResponder(
+      StatusCodes.OK,
+      {
+        message: t(res.locals.lang, result.message),
+      },
+      res
+    );
+  });
+
+  resetPassword = catchAsync(async (req: Request, res: Response) => {
+    const validation = PasswordResetSchema.safeParse(req.body);
+    if (!validation.success) {
+      const message = validation.error.issues[0].message;
+      throw new AppError(message, StatusCodes.BAD_REQUEST);
+    }
+
+    const ctx = this.getContext(req);
+    const result = await this.service.resetPassword(validation.data, ctx);
+
+    appResponder(
+      StatusCodes.OK,
+      {
+        message: t(res.locals.lang, result.message),
+      },
+      res
+    );
   });
 }

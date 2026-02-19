@@ -30,6 +30,10 @@ if (!process.env.MAX_LOGIN_ATTEMPTS) {
   throw new Error("MAX_LOGIN_ATTEMPTS enviroment variable not set");
 }
 
+if (!process.env.RESET_PASSWORD_LIMIT_HOURS) {
+  throw new Error("RESET_PASSWORD_LIMIT_HOURS enviroment variable not set");
+}
+
 export const baseUrl = process.env.BASE_URL;
 export const frontEndUrl = process.env.FRONTEND_URL;
 export const ACCOUNT_LOGIN_WAIT_TIME_HOURS =
@@ -40,3 +44,5 @@ export const PASSWORD_RESET_EXPIRES_IN = process.env.PASSWORD_RESET_EXPIRES_IN;
 export const EMAIL_VERIFICATION_EXPIRES_IN =
   process.env.EMAIL_VERIFICATION_EXPIRES_IN;
 export const MAX_LOGIN_ATTEMPTS = process.env.MAX_LOGIN_ATTEMPTS;
+export const RESET_PASSWORD_LIMIT_HOURS =
+  process.env.RESET_PASSWORD_LIMIT_HOURS;

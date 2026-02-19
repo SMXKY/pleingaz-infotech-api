@@ -9,6 +9,8 @@ userRouter.use(getUserLanguage);
 
 userRouter.route("/").get(controller.findMany).post(controller.createEmployee);
 
+userRouter.post("/forgot-password", controller.forgotPassword);
+userRouter.post("/reset-password", controller.resetPassword);
 userRouter.post("/login", controller.login);
 userRouter.post("/resend-invite/:userId", controller.createSetupToken);
 userRouter.post("/setup-account", controller.setupAccountCredentials);

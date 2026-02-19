@@ -78,5 +78,7 @@
   "error.auth.no_token": "Please log in to access this resource",
   "error.auth.user_not_found": "This user no longer exists",
   "error.auth.password_changed": "Password changed. Please log in again",
-  "error.config.jwt_secret_missing": "Server configuration missing"
+  "error.config.jwt_secret_missing": "Server configuration missing",
+  "success.reset_token_sent": "If an account with this email exists, a password reset link has been sent to the registered email address.",
+  "success.password.reset": "Your password has been successfully reset. You can now log in with your new password."
 }
