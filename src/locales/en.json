@@ -65,5 +65,11 @@
 
   "error.user.already_active": "This user has already set up their account",
   "error.token.valid_token_exists": "A valid setup link already exists for this user",
-  "success.setup_token_sent": "The setup link has been sent by email"
+  "success.setup_token_sent": "The setup link has been sent by email",
+
+  "error.auth.invalid_credentials": "Email/username and password are required",
+  "error.auth.incorrect_credentials": "Email/username or password is incorrect",
+  "error.auth.account_locked": "Account locked. Try again in {{minutes}} minutes",
+  "error.auth.account_not_active": "This account is not active",
+  "error.auth.account_temporarily_not_active": "This account is temporarily not active"
 }

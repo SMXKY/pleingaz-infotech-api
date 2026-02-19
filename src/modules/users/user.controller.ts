@@ -106,4 +106,10 @@ export class UserController extends BaseController<User> {
       res
     );
   });
+
+  login = catchAsync(async (req: Request, res: Response) => {
+    const ctx = this.getContext(req);
+    const result = await this.service.login(req.body, ctx);
+    appResponder(StatusCodes.OK, result, res);
+  });
 }

@@ -157,7 +157,8 @@ exports.Prisma.RoleOverrideScalarFieldEnum = {
 
 exports.Prisma.PermissionScalarFieldEnum = {
   id: 'id',
-  name: 'name',
+  engName: 'engName',
+  frName: 'frName',
   code: 'code',
   description: 'description',
   module: 'module',

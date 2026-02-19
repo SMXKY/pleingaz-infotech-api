@@ -18,9 +18,18 @@ import { readFileSync } from "fs";
 import generateEmployeeId from "./utilites/generateEmployeeId.util";
 import crypto from "crypto";
 import argon2 from "argon2";
-import { baseUrl, frontEndUrl } from "@utils/enviromentVariablesCheck.util";
+import {
+  ACCOUNT_LOGIN_WAIT_TIME_HOURS,
+  baseUrl,
+  EMAIL_VERIFICATION_EXPIRES_IN,
+  frontEndUrl,
+  MAX_LOGIN_ATTEMPTS,
+} from "@utils/enviromentVariablesCheck.util";
 import { sendEmail } from "@utils/sendEmail.util";
 import { logUserActivity } from "@utils/logUserActivity.util";
+import getUserPermissions from "./utilites/getUserPermissions.util";
+import { id } from "zod/v4/locales";
+import signToken from "./utilites/signToken.util";
 
 export class UserService extends BaseService<
   User,
@@ -157,6 +166,12 @@ export class UserService extends BaseService<
         },
       });
 
+      await tx.userPreference.create({
+        data: {
+          userId: user.id,
+        },
+      });
+
       const token = crypto.randomBytes(32).toString("hex");
       const tokenId = crypto.createHash("sha256").update(token).digest("hex");
 
@@ -165,7 +180,9 @@ export class UserService extends BaseService<
           id: tokenId,
           userId: user.id,
           type: TokenType.PASSWORD_SETUP,
-          expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+          expiresAt: new Date(
+            Date.now() + Number(EMAIL_VERIFICATION_EXPIRES_IN) * 60 * 60 * 1000
+          ),
         },
       });
 
@@ -371,5 +388,159 @@ export class UserService extends BaseService<
     );
 
     return { message: "success.setup_token_sent" };
+  }
+
+  async login(
+    credentials: { login: string; password: string },
+    ctx: ServiceContext
+  ): Promise<{ user: any; token: string }> {
+    const { login, password } = credentials;
+
+    if (!login || !password) {
+      throw new AppError(
+        "error.auth.invalid_credentials",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    const user = await prisma.user.findFirst({
+      where: {
+        OR: [{ username: login }, { email: login }],
+        deletedAt: null,
+      },
+      select: {
+        id: true,
+        email: true,
+        username: true,
+        name: true,
+        surname: true,
+        employeeId: true,
+        phoneNumber: true,
+        status: true,
+        gender: true,
+        address: true,
+        hireDate: true,
+        createdAt: true,
+        password: true,
+        failedLoginAttempts: true,
+        deactivatedUntil: true,
+        lockedUntil: true,
+        department: {
+          select: {
+            id: true,
+            name: true,
+            code: true,
+          },
+        },
+        role: {
+          select: {
+            id: true,
+            name: true,
+            description: true,
+          },
+        },
+      },
+    });
+
+    if (!user) {
+      throw new AppError(
+        "error.auth.incorrect_credentials",
+        StatusCodes.UNAUTHORIZED
+      );
+    }
+
+    if (user.lockedUntil && user.lockedUntil.getTime() > Date.now()) {
+      const remainingMinutes = Math.ceil(
+        (user.lockedUntil.getTime() - Date.now()) / (60 * 1000)
+      );
+      throw new AppError("error.auth.account_locked", StatusCodes.FORBIDDEN, {
+        minutes: remainingMinutes,
+      });
+    }
+
+    if (!user.password) {
+      throw new AppError(
+        "error.auth.incorrect_credentials",
+        StatusCodes.UNAUTHORIZED
+      );
+    }
+
+    if (user.status !== "ACTIVE") {
+      throw new AppError(
+        "error.auth.account_not_active",
+        StatusCodes.FORBIDDEN
+      );
+    }
+
+    if (user.deactivatedUntil && user.deactivatedUntil.getTime() > Date.now()) {
+      throw new AppError(
+        "error.auth.account_temporarily_not_active",
+        StatusCodes.FORBIDDEN
+      );
+    }
+
+    const isPasswordCorrect = await argon2.verify(user.password, password);
+
+    if (!isPasswordCorrect) {
+      const newAttempts = user.failedLoginAttempts + 1;
+      const shouldLock = newAttempts >= Number(MAX_LOGIN_ATTEMPTS);
+
+      await prisma.user.update({
+        where: { id: user.id },
+        data: {
+          failedLoginAttempts: newAttempts,
+          ...(shouldLock && {
+            lockedUntil: new Date(
+              Date.now() +
+                Number(ACCOUNT_LOGIN_WAIT_TIME_HOURS) * 60 * 60 * 1000
+            ),
+          }),
+        },
+      });
+
+      if (shouldLock) {
+        throw new AppError("error.auth.account_locked", StatusCodes.FORBIDDEN, {
+          minutes: Number(ACCOUNT_LOGIN_WAIT_TIME_HOURS) * 60,
+        });
+      }
+
+      throw new AppError(
+        "error.auth.incorrect_credentials",
+        StatusCodes.UNAUTHORIZED
+      );
+    }
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        failedLoginAttempts: 0,
+        lockedUntil: null,
+        lastLoggedInAt: new Date(),
+      },
+    });
+
+    const [permissions, preferences] = await Promise.all([
+      getUserPermissions(user.id),
+      prisma.userPreference.findUnique({
+        where: { userId: user.id },
+      }),
+    ]);
+
+    const {
+      password: _password,
+      failedLoginAttempts: _attempts,
+      lockedUntil: _locked,
+      deactivatedUntil: _deactivaed,
+      ...safeUser
+    } = user;
+
+    return {
+      user: {
+        ...safeUser,
+        permissions,
+        preferences,
+      },
+      token: signToken(user.id),
+    };
   }
 }

@@ -201,7 +201,8 @@ model RoleOverride {
 
 model Permission {
   id                  String               @id @default(uuid())
-  name                String               @unique
+  engName             String               @unique
+  frName              String               @unique
   code                String               @unique
   description         String?
   module              PermissionModule

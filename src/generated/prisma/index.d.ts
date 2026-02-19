@@ -5710,7 +5710,8 @@ export namespace Prisma {
 
   export type PermissionMinAggregateOutputType = {
     id: string | null
-    name: string | null
+    engName: string | null
+    frName: string | null
     code: string | null
     description: string | null
     module: $Enums.PermissionModule | null
@@ -5724,7 +5725,8 @@ export namespace Prisma {
 
   export type PermissionMaxAggregateOutputType = {
     id: string | null
-    name: string | null
+    engName: string | null
+    frName: string | null
     code: string | null
     description: string | null
     module: $Enums.PermissionModule | null
@@ -5738,7 +5740,8 @@ export namespace Prisma {
 
   export type PermissionCountAggregateOutputType = {
     id: number
-    name: number
+    engName: number
+    frName: number
     code: number
     description: number
     module: number
@@ -5754,7 +5757,8 @@ export namespace Prisma {
 
   export type PermissionMinAggregateInputType = {
     id?: true
-    name?: true
+    engName?: true
+    frName?: true
     code?: true
     description?: true
     module?: true
@@ -5768,7 +5772,8 @@ export namespace Prisma {
 
   export type PermissionMaxAggregateInputType = {
     id?: true
-    name?: true
+    engName?: true
+    frName?: true
     code?: true
     description?: true
     module?: true
@@ -5782,7 +5787,8 @@ export namespace Prisma {
 
   export type PermissionCountAggregateInputType = {
     id?: true
-    name?: true
+    engName?: true
+    frName?: true
     code?: true
     description?: true
     module?: true
@@ -5869,7 +5875,8 @@ export namespace Prisma {
 
   export type PermissionGroupByOutputType = {
     id: string
-    name: string
+    engName: string
+    frName: string
     code: string
     description: string | null
     module: $Enums.PermissionModule
@@ -5900,7 +5907,8 @@ export namespace Prisma {
 
   export type PermissionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
+    engName?: boolean
+    frName?: boolean
     code?: boolean
     description?: boolean
     module?: boolean
@@ -5919,7 +5927,8 @@ export namespace Prisma {
 
   export type PermissionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
+    engName?: boolean
+    frName?: boolean
     code?: boolean
     description?: boolean
     module?: boolean
@@ -5933,7 +5942,8 @@ export namespace Prisma {
 
   export type PermissionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
+    engName?: boolean
+    frName?: boolean
     code?: boolean
     description?: boolean
     module?: boolean
@@ -5947,7 +5957,8 @@ export namespace Prisma {
 
   export type PermissionSelectScalar = {
     id?: boolean
-    name?: boolean
+    engName?: boolean
+    frName?: boolean
     code?: boolean
     description?: boolean
     module?: boolean
@@ -5959,7 +5970,7 @@ export namespace Prisma {
     deletedAt?: boolean
   }
 
-  export type PermissionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "code" | "description" | "module" | "submodule" | "action" | "isWildcard" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["permission"]>
+  export type PermissionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "engName" | "frName" | "code" | "description" | "module" | "submodule" | "action" | "isWildcard" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["permission"]>
   export type PermissionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     implies?: boolean | Permission$impliesArgs<ExtArgs>
     impliedBy?: boolean | Permission$impliedByArgs<ExtArgs>
@@ -5980,7 +5991,8 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      name: string
+      engName: string
+      frName: string
       code: string
       description: string | null
       module: $Enums.PermissionModule
@@ -6418,7 +6430,8 @@ export namespace Prisma {
    */
   interface PermissionFieldRefs {
     readonly id: FieldRef<"Permission", 'String'>
-    readonly name: FieldRef<"Permission", 'String'>
+    readonly engName: FieldRef<"Permission", 'String'>
+    readonly frName: FieldRef<"Permission", 'String'>
     readonly code: FieldRef<"Permission", 'String'>
     readonly description: FieldRef<"Permission", 'String'>
     readonly module: FieldRef<"Permission", 'PermissionModule'>
@@ -16415,7 +16428,8 @@ export namespace Prisma {
 
   export const PermissionScalarFieldEnum: {
     id: 'id',
-    name: 'name',
+    engName: 'engName',
+    frName: 'frName',
     code: 'code',
     description: 'description',
     module: 'module',
@@ -17100,7 +17114,8 @@ export namespace Prisma {
     OR?: PermissionWhereInput[]
     NOT?: PermissionWhereInput | PermissionWhereInput[]
     id?: StringFilter<"Permission"> | string
-    name?: StringFilter<"Permission"> | string
+    engName?: StringFilter<"Permission"> | string
+    frName?: StringFilter<"Permission"> | string
     code?: StringFilter<"Permission"> | string
     description?: StringNullableFilter<"Permission"> | string | null
     module?: EnumPermissionModuleFilter<"Permission"> | $Enums.PermissionModule
@@ -17118,7 +17133,8 @@ export namespace Prisma {
 
   export type PermissionOrderByWithRelationInput = {
     id?: SortOrder
-    name?: SortOrder
+    engName?: SortOrder
+    frName?: SortOrder
     code?: SortOrder
     description?: SortOrderInput | SortOrder
     module?: SortOrder
@@ -17136,7 +17152,8 @@ export namespace Prisma {
 
   export type PermissionWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    name?: string
+    engName?: string
+    frName?: string
     code?: string
     AND?: PermissionWhereInput | PermissionWhereInput[]
     OR?: PermissionWhereInput[]
@@ -17153,11 +17170,12 @@ export namespace Prisma {
     impliedBy?: PermissionImpliesListRelationFilter
     permissionOverrides?: PermissionOverrideListRelationFilter
     rolePermissions?: RolePermissionListRelationFilter
-  }, "id" | "name" | "code">
+  }, "id" | "engName" | "frName" | "code">
 
   export type PermissionOrderByWithAggregationInput = {
     id?: SortOrder
-    name?: SortOrder
+    engName?: SortOrder
+    frName?: SortOrder
     code?: SortOrder
     description?: SortOrderInput | SortOrder
     module?: SortOrder
@@ -17177,7 +17195,8 @@ export namespace Prisma {
     OR?: PermissionScalarWhereWithAggregatesInput[]
     NOT?: PermissionScalarWhereWithAggregatesInput | PermissionScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Permission"> | string
-    name?: StringWithAggregatesFilter<"Permission"> | string
+    engName?: StringWithAggregatesFilter<"Permission"> | string
+    frName?: StringWithAggregatesFilter<"Permission"> | string
     code?: StringWithAggregatesFilter<"Permission"> | string
     description?: StringNullableWithAggregatesFilter<"Permission"> | string | null
     module?: EnumPermissionModuleWithAggregatesFilter<"Permission"> | $Enums.PermissionModule
@@ -18201,7 +18220,8 @@ export namespace Prisma {
 
   export type PermissionCreateInput = {
     id?: string
-    name: string
+    engName: string
+    frName: string
     code: string
     description?: string | null
     module: $Enums.PermissionModule
@@ -18219,7 +18239,8 @@ export namespace Prisma {
 
   export type PermissionUncheckedCreateInput = {
     id?: string
-    name: string
+    engName: string
+    frName: string
     code: string
     description?: string | null
     module: $Enums.PermissionModule
@@ -18237,7 +18258,8 @@ export namespace Prisma {
 
   export type PermissionUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    engName?: StringFieldUpdateOperationsInput | string
+    frName?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     module?: EnumPermissionModuleFieldUpdateOperationsInput | $Enums.PermissionModule
@@ -18255,7 +18277,8 @@ export namespace Prisma {
 
   export type PermissionUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    engName?: StringFieldUpdateOperationsInput | string
+    frName?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     module?: EnumPermissionModuleFieldUpdateOperationsInput | $Enums.PermissionModule
@@ -18273,7 +18296,8 @@ export namespace Prisma {
 
   export type PermissionCreateManyInput = {
     id?: string
-    name: string
+    engName: string
+    frName: string
     code: string
     description?: string | null
     module: $Enums.PermissionModule
@@ -18287,7 +18311,8 @@ export namespace Prisma {
 
   export type PermissionUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    engName?: StringFieldUpdateOperationsInput | string
+    frName?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     module?: EnumPermissionModuleFieldUpdateOperationsInput | $Enums.PermissionModule
@@ -18301,7 +18326,8 @@ export namespace Prisma {
 
   export type PermissionUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    engName?: StringFieldUpdateOperationsInput | string
+    frName?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     module?: EnumPermissionModuleFieldUpdateOperationsInput | $Enums.PermissionModule
@@ -19484,7 +19510,8 @@ export namespace Prisma {
 
   export type PermissionCountOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
+    engName?: SortOrder
+    frName?: SortOrder
     code?: SortOrder
     description?: SortOrder
     module?: SortOrder
@@ -19498,7 +19525,8 @@ export namespace Prisma {
 
   export type PermissionMaxOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
+    engName?: SortOrder
+    frName?: SortOrder
     code?: SortOrder
     description?: SortOrder
     module?: SortOrder
@@ -19512,7 +19540,8 @@ export namespace Prisma {
 
   export type PermissionMinOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
+    engName?: SortOrder
+    frName?: SortOrder
     code?: SortOrder
     description?: SortOrder
     module?: SortOrder
@@ -22730,7 +22759,8 @@ export namespace Prisma {
 
   export type PermissionCreateWithoutImpliesInput = {
     id?: string
-    name: string
+    engName: string
+    frName: string
     code: string
     description?: string | null
     module: $Enums.PermissionModule
@@ -22747,7 +22777,8 @@ export namespace Prisma {
 
   export type PermissionUncheckedCreateWithoutImpliesInput = {
     id?: string
-    name: string
+    engName: string
+    frName: string
     code: string
     description?: string | null
     module: $Enums.PermissionModule
@@ -22769,7 +22800,8 @@ export namespace Prisma {
 
   export type PermissionCreateWithoutImpliedByInput = {
     id?: string
-    name: string
+    engName: string
+    frName: string
     code: string
     description?: string | null
     module: $Enums.PermissionModule
@@ -22786,7 +22818,8 @@ export namespace Prisma {
 
   export type PermissionUncheckedCreateWithoutImpliedByInput = {
     id?: string
-    name: string
+    engName: string
+    frName: string
     code: string
     description?: string | null
     module: $Enums.PermissionModule
@@ -22819,7 +22852,8 @@ export namespace Prisma {
 
   export type PermissionUpdateWithoutImpliesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    engName?: StringFieldUpdateOperationsInput | string
+    frName?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     module?: EnumPermissionModuleFieldUpdateOperationsInput | $Enums.PermissionModule
@@ -22836,7 +22870,8 @@ export namespace Prisma {
 
   export type PermissionUncheckedUpdateWithoutImpliesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    engName?: StringFieldUpdateOperationsInput | string
+    frName?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     module?: EnumPermissionModuleFieldUpdateOperationsInput | $Enums.PermissionModule
@@ -22864,7 +22899,8 @@ export namespace Prisma {
 
   export type PermissionUpdateWithoutImpliedByInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    engName?: StringFieldUpdateOperationsInput | string
+    frName?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     module?: EnumPermissionModuleFieldUpdateOperationsInput | $Enums.PermissionModule
@@ -22881,7 +22917,8 @@ export namespace Prisma {
 
   export type PermissionUncheckedUpdateWithoutImpliedByInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    engName?: StringFieldUpdateOperationsInput | string
+    frName?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     module?: EnumPermissionModuleFieldUpdateOperationsInput | $Enums.PermissionModule
@@ -22991,7 +23028,8 @@ export namespace Prisma {
 
   export type PermissionCreateWithoutPermissionOverridesInput = {
     id?: string
-    name: string
+    engName: string
+    frName: string
     code: string
     description?: string | null
     module: $Enums.PermissionModule
@@ -23008,7 +23046,8 @@ export namespace Prisma {
 
   export type PermissionUncheckedCreateWithoutPermissionOverridesInput = {
     id?: string
-    name: string
+    engName: string
+    frName: string
     code: string
     description?: string | null
     module: $Enums.PermissionModule
@@ -23233,7 +23272,8 @@ export namespace Prisma {
 
   export type PermissionUpdateWithoutPermissionOverridesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    engName?: StringFieldUpdateOperationsInput | string
+    frName?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     module?: EnumPermissionModuleFieldUpdateOperationsInput | $Enums.PermissionModule
@@ -23250,7 +23290,8 @@ export namespace Prisma {
 
   export type PermissionUncheckedUpdateWithoutPermissionOverridesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    engName?: StringFieldUpdateOperationsInput | string
+    frName?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     module?: EnumPermissionModuleFieldUpdateOperationsInput | $Enums.PermissionModule
@@ -23397,7 +23438,8 @@ export namespace Prisma {
 
   export type PermissionCreateWithoutRolePermissionsInput = {
     id?: string
-    name: string
+    engName: string
+    frName: string
     code: string
     description?: string | null
     module: $Enums.PermissionModule
@@ -23414,7 +23456,8 @@ export namespace Prisma {
 
   export type PermissionUncheckedCreateWithoutRolePermissionsInput = {
     id?: string
-    name: string
+    engName: string
+    frName: string
     code: string
     description?: string | null
     module: $Enums.PermissionModule
@@ -23577,7 +23620,8 @@ export namespace Prisma {
 
   export type PermissionUpdateWithoutRolePermissionsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    engName?: StringFieldUpdateOperationsInput | string
+    frName?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     module?: EnumPermissionModuleFieldUpdateOperationsInput | $Enums.PermissionModule
@@ -23594,7 +23638,8 @@ export namespace Prisma {
 
   export type PermissionUncheckedUpdateWithoutRolePermissionsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    engName?: StringFieldUpdateOperationsInput | string
+    frName?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     module?: EnumPermissionModuleFieldUpdateOperationsInput | $Enums.PermissionModule

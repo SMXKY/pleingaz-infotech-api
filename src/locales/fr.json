@@ -63,5 +63,11 @@
 
   "error.user.already_active": "Cet utilisateur a déjà configuré son compte",
   "error.token.valid_token_exists": "Un lien de configuration valide existe déjà pour cet utilisateur",
-  "success.setup_token_sent": "Le lien de configuration a été envoyé par email"
+  "success.setup_token_sent": "Le lien de configuration a été envoyé par email",
+
+  "error.auth.invalid_credentials": "Email/nom d'utilisateur et mot de passe requis",
+  "error.auth.incorrect_credentials": "Email/nom d'utilisateur ou mot de passe incorrect",
+  "error.auth.account_locked": "Compte verrouillé. Réessayez dans {{minutes}} minutes",
+  "error.auth.account_not_active": "Ce compte n'est pas actif",
+  "error.auth.account_temporarily_not_active": "Ce compte est temporairement inactif"
 }
