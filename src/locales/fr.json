@@ -69,5 +69,12 @@
   "error.auth.incorrect_credentials": "Email/nom d'utilisateur ou mot de passe incorrect",
   "error.auth.account_locked": "Compte verrouillé. Réessayez dans {{minutes}} minutes",
   "error.auth.account_not_active": "Ce compte n'est pas actif",
-  "error.auth.account_temporarily_not_active": "Ce compte est temporairement inactif"
+  "error.auth.account_temporarily_not_active": "Ce compte est temporairement inactif",
+  "error.auth.not_authenticated": "Utilisateur non authentifié",
+  "error.auth.insufficient_permissions": "Permissions insuffisantes pour l'utilisateur",
+
+  "error.auth.no_token": "Veuillez vous connecter pour accéder à cette ressource",
+  "error.auth.user_not_found": "Cet utilisateur n'existe plus",
+  "error.auth.password_changed": "Mot de passe modifié. Veuillez vous reconnecter",
+  "error.config.jwt_secret_missing": "Configuration serveur manquante"
 }
