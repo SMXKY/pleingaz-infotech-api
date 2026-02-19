@@ -61,5 +61,9 @@
   "error.validation.password_confirm_required": "Password confirmation is required",
   "error.validation.username_invalid_characters": "The username contains invalid characters",
   "error.validation.invalid_dob": "The date of birth is invalid",
-  "error.validation.current_password_required": "The current password is required"
+  "error.validation.current_password_required": "The current password is required",
+
+  "error.user.already_active": "This user has already set up their account",
+  "error.token.valid_token_exists": "A valid setup link already exists for this user",
+  "success.setup_token_sent": "The setup link has been sent by email"
 }

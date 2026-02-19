@@ -93,4 +93,17 @@ export class UserController extends BaseController<User> {
       res
     );
   });
+
+  createSetupToken = catchAsync(async (req: Request, res: Response) => {
+    const { userId } = req.params;
+    const ctx = this.getContext(req);
+    const result = await this.service.createSetupToken(userId as string, ctx);
+    appResponder(
+      StatusCodes.OK,
+      {
+        message: t(res.locals.lang, result.message),
+      },
+      res
+    );
+  });
 }

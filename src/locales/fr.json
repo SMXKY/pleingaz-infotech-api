@@ -59,5 +59,9 @@
   "error.validation.password_confirm_required": "La confirmation du mot de passe est requise",
   "error.validation.username_invalid_characters": "Le nom d'utilisateur contient des caractères invalides",
   "error.validation.invalid_dob": "La date de naissance est invalide",
-  "error.validation.current_password_required": "Le mot de passe actuel est requis"
+  "error.validation.current_password_required": "Le mot de passe actuel est requis",
+
+  "error.user.already_active": "Cet utilisateur a déjà configuré son compte",
+  "error.token.valid_token_exists": "Un lien de configuration valide existe déjà pour cet utilisateur",
+  "success.setup_token_sent": "Le lien de configuration a été envoyé par email"
 }

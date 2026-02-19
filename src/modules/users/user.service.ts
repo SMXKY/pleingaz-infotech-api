@@ -283,4 +283,93 @@ export class UserService extends BaseService<
 
     return { message: "success.account_setup_complete" };
   }
+
+  async createSetupToken(
+    userId: string,
+    ctx: ServiceContext
+  ): Promise<{ message: string }> {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new AppError("error.user.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (user.status === "ACTIVE" && user.password) {
+      throw new AppError("error.user.already_active", StatusCodes.BAD_REQUEST);
+    }
+
+    const existingToken = await prisma.userToken.findFirst({
+      where: {
+        userId,
+        type: TokenType.PASSWORD_SETUP,
+        expiresAt: { gt: new Date() },
+        usedAt: null,
+      },
+    });
+
+    if (existingToken) {
+      throw new AppError(
+        "error.token.valid_token_exists",
+        StatusCodes.CONFLICT
+      );
+    }
+
+    const config = await prisma.adminConfig.findFirst();
+    if (!config) {
+      throw new AppError(
+        "error.config.not_found",
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
+    }
+
+    const token = crypto.randomBytes(32).toString("hex");
+    const tokenId = crypto.createHash("sha256").update(token).digest("hex");
+
+    await prisma.userToken.create({
+      data: {
+        id: tokenId,
+        userId,
+        type: TokenType.PASSWORD_SETUP,
+        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      },
+    });
+
+    const tokenUrl = `${frontEndUrl}/set-credentials?token=${token}`;
+
+    const templatePath = path.join(
+      __dirname,
+      "../../public/templates/account_creation.template.html"
+    );
+
+    const userWithRelations = await prisma.user.findUnique({
+      where: { id: userId },
+      include: { department: true, role: true },
+    });
+
+    const emailTemplate = readFileSync(templatePath, "utf-8")
+      .replace(/{{logoUrl}}/g, config.logoUrl || `${baseUrl}/assets/logo.png`)
+      .replace(/{{employeeName}}/g, `${user.name} ${user.surname}`)
+      .replace(/{{employeeId}}/g, user.employeeId)
+      .replace(/{{employeeEmail}}/g, user.email)
+      .replace(/{{department}}/g, userWithRelations?.department?.name || "")
+      .replace(/{{role}}/g, userWithRelations?.role?.name || "")
+      .replace(/{{setPasswordLink}}/g, tokenUrl)
+      .replace(/{{supportEmail}}/g, config.supportEmail)
+      .replace(/{{supportPhone}}/g, config.companyPhoneNumber)
+      .replace(/{{websiteUrl}}/g, frontEndUrl)
+      .replace(/{{privacyUrl}}/g, `${frontEndUrl}/privacy`)
+      .replace(/{{termsUrl}}/g, `${frontEndUrl}/terms`)
+      .replace(/{{year}}/g, `${new Date().getFullYear()}`);
+
+    await sendEmail(
+      user.email,
+      "INFOTECH S.A - Nouveau lien de configuration de compte",
+      "",
+      emailTemplate
+    );
+
+    return { message: "success.setup_token_sent" };
+  }
 }
