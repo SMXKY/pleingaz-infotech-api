@@ -87,5 +87,8 @@
   "success.user.role_change": "Le rôle de l'utilisateur a été mis à jour avec succès.",
   "error.user.role_already_assigned": "Ce rôle est déjà attribué à l'utilisateur.",
   "error.user.account_terminated": "Ce compte a été résilié et ne peut pas effectuer cette action.",
-  "error.req.invalid_request_body": "Corps de requête invalide. Veuillez vérifier les données envoyées."
+  "error.req.invalid_request_body": "Corps de requête invalide. Veuillez vérifier les données envoyées.",
+  "error.auth.user_no_longer_exist": "Cet utilisateur n'existe plus.",
+  "error.auth.incorrect_password": "Mot de passe incorrect.",
+  "success.user.changed_password": "Votre mot de passe a été modifié avec succès."
 }

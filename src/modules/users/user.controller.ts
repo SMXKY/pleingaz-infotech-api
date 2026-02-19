@@ -6,6 +6,7 @@ import { StatusCodes } from "http-status-codes";
 import { User } from "src/generated/prisma";
 import { catchAsync } from "@utils/catchAsync.util";
 import {
+  changePasswordSchema,
   CreateUserInput,
   PasswordResetSchema,
   setupAccountSchema,
@@ -203,4 +204,23 @@ export class UserController extends BaseController<User> {
       );
     }
   );
+
+  changePassword = catchAsync(async (req: Request, res: Response) => {
+    const validation = changePasswordSchema.safeParse(req.body);
+    if (!validation.success) {
+      const message = validation.error.issues[0].message;
+      throw new AppError(message, StatusCodes.BAD_REQUEST);
+    }
+
+    const ctx = this.getContext(req);
+    const result = await this.service.changePassword(validation.data, ctx, res);
+
+    appResponder(
+      StatusCodes.OK,
+      {
+        message: t(res.locals.lang, result.message),
+      },
+      res
+    );
+  });
 }

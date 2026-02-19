@@ -8,6 +8,7 @@ import {
   SetupAccountInput,
   setupAccountSchema,
   ResetPasswordInput,
+  ChangePasswordInput,
 } from "./user.schema";
 import { AppError } from "@utils/AppError.util";
 import { StatusCodes } from "http-status-codes";
@@ -32,6 +33,7 @@ import { logUserActivity } from "@utils/logUserActivity.util";
 import getUserPermissions from "./utilites/getUserPermissions.util";
 import { id } from "zod/v4/locales";
 import signToken from "./utilites/signToken.util";
+import { Response } from "express";
 import { UserStatus } from "@appTypes/user.types";
 
 export class UserService extends BaseService<
@@ -814,5 +816,61 @@ export class UserService extends BaseService<
     });
 
     return { message: "success.user.role_change" };
+  }
+
+  async changePassword(
+    credentials: ChangePasswordInput,
+    ctx: ServiceContext,
+    res: Response
+  ): Promise<{ message: string }> {
+    const { currentPassword, newPassword, confirmPassword } = credentials;
+    const user = res.locals.user;
+
+    const userWithPassword = await prisma.user.findUnique({
+      where: {
+        id: user.id,
+      },
+      select: {
+        password: true,
+      },
+    });
+
+    if (!userWithPassword) {
+      throw new AppError(
+        "error.auth.user_no_longer_exist",
+        StatusCodes.NOT_FOUND
+      );
+    }
+
+    if (!userWithPassword.password) {
+      throw new AppError(
+        "error.auth.account_not_active",
+        StatusCodes.NOT_FOUND
+      );
+    }
+
+    const isPasswordCorrect = await argon2.verify(
+      userWithPassword.password,
+      currentPassword
+    );
+
+    if (!isPasswordCorrect) {
+      throw new AppError(
+        "error.auth.incorrect_password",
+        StatusCodes.UNAUTHORIZED
+      );
+    }
+
+    await prisma.$transaction([
+      prisma.user.update({
+        where: { id: user.id },
+        data: {
+          password: await argon2.hash(newPassword),
+          passwordChangedAt: new Date(),
+        },
+      }),
+    ]);
+
+    return { message: "success.user.changed_password" };
   }
 }

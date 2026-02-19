@@ -1,20 +1,23 @@
 import { Router } from "express";
 import { UserController } from "./user.controller";
 import getUserLanguage from "@middlewares/getUserLanguage.middleware";
+import protect from "@middlewares/protect.middleware";
 
 const userRouter = Router();
 const controller = new UserController();
 
-userRouter.use(getUserLanguage);
+userRouter.post("/login", getUserLanguage, controller.login);
+userRouter.post("/forgot-password", getUserLanguage, controller.forgotPassword);
+userRouter.post("/reset-password", getUserLanguage, controller.resetPassword);
+userRouter.use(getUserLanguage, protect);
 
 userRouter.route("/").get(controller.findMany).post(controller.createEmployee);
 
 userRouter.patch("/change-role", controller.changeRole);
 userRouter.patch("/activate/:userId", controller.activateAccount);
 userRouter.patch("/terminate/:userId", controller.terminateAccount);
-userRouter.post("/forgot-password", controller.forgotPassword);
-userRouter.post("/reset-password", controller.resetPassword);
-userRouter.post("/login", controller.login);
+userRouter.patch("/change-password", controller.changePassword);
+
 userRouter.post("/resend-invite/:userId", controller.createSetupToken);
 userRouter.post("/setup-account", controller.setupAccountCredentials);
 userRouter.route("/active").get(controller.findActive);

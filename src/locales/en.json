@@ -89,5 +89,8 @@
   "success.user.role_change": "The user's role has been successfully updated.",
   "error.user.role_already_assigned": "This role is already assigned to the user.",
   "error.user.account_terminated": "This account has been terminated and cannot perform this action.",
-  "error.req.invalid_request_body": "Invalid request body. Please check the submitted data."
+  "error.req.invalid_request_body": "Invalid request body. Please check the submitted data.",
+  "error.auth.user_no_longer_exist": "This user no longer exists.",
+  "error.auth.incorrect_password": "Incorrect password.",
+  "success.user.changed_password": "Your password has been successfully changed."
 }
