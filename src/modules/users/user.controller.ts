@@ -11,6 +11,8 @@ import {
   CreateUserInput,
   PasswordResetSchema,
   setupAccountSchema,
+  updateMeSchema,
+  updateUserSchema,
 } from "./user.schema";
 import { AppError } from "@utils/AppError.util";
 import t from "@utils/translate.util";
@@ -249,5 +251,18 @@ export class UserController extends BaseController<User> {
 
   findMe = catchAsync(async (req: Request, res: Response) => {
     appResponder(StatusCodes.OK, res.locals.user, res);
+  });
+
+  updateMe = catchAsync(async (req: Request, res: Response) => {
+    const validation = updateMeSchema.safeParse(req.body);
+    if (!validation.success) {
+      const message = validation.error.issues[0].message;
+      throw new AppError(message, StatusCodes.BAD_REQUEST);
+    }
+
+    const ctx = this.getContext(req);
+    const result = await this.service.updateMe(validation.data, ctx, res);
+
+    appResponder(StatusCodes.OK, result, res);
   });
 }

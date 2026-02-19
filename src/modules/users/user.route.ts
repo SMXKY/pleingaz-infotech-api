@@ -9,11 +9,11 @@ const controller = new UserController();
 userRouter.post("/login", getUserLanguage, controller.login);
 userRouter.post("/forgot-password", getUserLanguage, controller.forgotPassword);
 userRouter.post("/reset-password", getUserLanguage, controller.resetPassword);
-userRouter.use(getUserLanguage, protect);
+userRouter.use(protect, getUserLanguage);
 
 userRouter.route("/").get(controller.findMany).post(controller.createEmployee);
 
-userRouter.route("/me").get(controller.findMe);
+userRouter.route("/me").get(controller.findMe).patch(controller.updateMe);
 
 userRouter.patch("/change-role", controller.changeRole);
 userRouter.patch("/activate/:userId", controller.activateAccount);

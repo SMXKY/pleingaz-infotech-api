@@ -10,6 +10,7 @@ import {
   ResetPasswordInput,
   ChangePasswordInput,
   ChangeUserCredentialsInput,
+  UpdateMeInput,
 } from "./user.schema";
 import { AppError } from "@utils/AppError.util";
 import { StatusCodes } from "http-status-codes";
@@ -35,7 +36,7 @@ import getUserPermissions from "./utilites/getUserPermissions.util";
 import { id } from "zod/v4/locales";
 import signToken from "./utilites/signToken.util";
 import { Response } from "express";
-import { UserStatus } from "@appTypes/user.types";
+import { UpdateMeResult, UserStatus } from "@appTypes/user.types";
 
 export class UserService extends BaseService<
   User,
@@ -924,5 +925,72 @@ export class UserService extends BaseService<
     ]);
 
     return { message: "success.user.credentials_changed" };
+  }
+
+  async updateMe(
+    data: UpdateMeInput,
+    ctx: ServiceContext,
+    res: Response
+  ): Promise<Partial<UpdateMeResult>> {
+    const userId = res.locals.user.id as string;
+    const { preferences, ...userFields } = data;
+
+    const [updatedUser, updatedPreferences] = await prisma.$transaction(
+      async (tx) => {
+        const user = await tx.user.update({
+          where: { id: userId },
+          data: userFields,
+          select: {
+            id: true,
+            name: true,
+            surname: true,
+            email: true,
+            username: true,
+            employeeId: true,
+            phoneNumber: true,
+            address: true,
+            gender: true,
+            dob: true,
+            status: true,
+            isEmailVerified: true,
+            roleId: true,
+            departmentId: true,
+            emergencyContactName: true,
+            emergencyContactPhoneNumber: true,
+            passwordChangedAt: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        });
+
+        const prefs = await tx.userPreference.upsert({
+          where: { userId },
+          create: {
+            userId,
+            language: preferences?.language,
+            currency: preferences?.currency,
+          },
+          update: {
+            ...(preferences?.language !== undefined && {
+              language: preferences.language,
+            }),
+            ...(preferences?.currency !== undefined && {
+              currency: preferences.currency,
+            }),
+          },
+          select: {
+            language: true,
+            currency: true,
+          },
+        });
+
+        return [user, prefs] as const;
+      }
+    );
+
+    return {
+      ...updatedUser,
+      preferences: updatedPreferences,
+    };
   }
 }

@@ -1,3 +1,4 @@
+import { UserCurrency, UserLanguage, UserStatus } from "@appTypes/user.types";
 import { z } from "zod";
 
 export const createUserSchema = z.object({
@@ -122,6 +123,19 @@ export const ChangeUserCredentialsSchema = z
     path: ["confirmPassword"],
   });
 
+export const userPreferenceSchema = z.object({
+  language: z.nativeEnum(UserLanguage).optional(),
+  currency: z.nativeEnum(UserCurrency).optional(),
+});
+
+export const updateMeSchema = z.object({
+  phoneNumber: z.string().optional(),
+  address: z.string().optional(),
+  emergencyContactName: z.string().optional(),
+  emergencyContactPhoneNumber: z.string().optional(),
+  preferences: userPreferenceSchema.optional(),
+});
+
 export type SetupAccountInput = z.infer<typeof setupAccountSchema>;
 export type CreateUserInput = z.infer<typeof createUserSchema>;
 export type UpdateUserInput = z.infer<typeof updateUserSchema>;
@@ -130,3 +144,4 @@ export type ResetPasswordInput = z.infer<typeof PasswordResetSchema>;
 export type ChangeUserCredentialsInput = z.infer<
   typeof ChangeUserCredentialsSchema
 >;
+export type UpdateMeInput = z.infer<typeof updateMeSchema>;
