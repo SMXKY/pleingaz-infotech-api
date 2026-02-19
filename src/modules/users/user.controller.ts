@@ -246,4 +246,8 @@ export class UserController extends BaseController<User> {
       res
     );
   });
+
+  findMe = catchAsync(async (req: Request, res: Response) => {
+    appResponder(StatusCodes.OK, res.locals.user, res);
+  });
 }

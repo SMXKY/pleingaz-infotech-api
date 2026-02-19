@@ -13,6 +13,8 @@ userRouter.use(getUserLanguage, protect);
 
 userRouter.route("/").get(controller.findMany).post(controller.createEmployee);
 
+userRouter.route("/me").get(controller.findMe);
+
 userRouter.patch("/change-role", controller.changeRole);
 userRouter.patch("/activate/:userId", controller.activateAccount);
 userRouter.patch("/terminate/:userId", controller.terminateAccount);
