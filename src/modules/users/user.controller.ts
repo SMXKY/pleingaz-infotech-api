@@ -181,4 +181,26 @@ export class UserController extends BaseController<User> {
       res
     );
   });
+
+  changeRole = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const ctx = this.getContext(req);
+      if (!req.body.userId || !req.body.roleId) {
+        return next(
+          new AppError(
+            "error.req.invalid_request_body",
+            StatusCodes.BAD_REQUEST
+          )
+        );
+      }
+      const result = await this.service.chageRole(req.body, ctx);
+      appResponder(
+        StatusCodes.OK,
+        {
+          message: t(res.locals.lang, result.message),
+        },
+        res
+      );
+    }
+  );
 }

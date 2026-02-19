@@ -763,4 +763,56 @@ export class UserService extends BaseService<
 
     return { message: "success.user.unterminate" };
   }
+
+  async chageRole(
+    data: { roleId: string; userId: string },
+    ctx: ServiceContext
+  ): Promise<{ message: string }> {
+    const { userId, roleId } = data;
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      throw new AppError("error.user.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (user.roleId === roleId) {
+      throw new AppError(
+        "error.user.role_already_assigned",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    if (user.status === UserStatus.TERMINATED) {
+      throw new AppError(
+        "error.user.account_terminated",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    const role = await prisma.role.findUnique({
+      where: {
+        id: roleId,
+      },
+    });
+
+    if (!role) {
+      throw new AppError("error.role.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        roleId: roleId,
+      },
+    });
+
+    return { message: "success.user.role_change" };
+  }
 }

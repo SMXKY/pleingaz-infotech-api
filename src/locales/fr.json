@@ -83,5 +83,9 @@
   "error.user.account_already_terminated": "Ce compte a déjà été résilié.",
   "success.user.terminate": "Le compte a été résilié avec succès.",
   "error.user.account_already_active": "Ce compte est déjà actif.",
-  "success.user.unterminate": "Le compte a été réactivé avec succès."
+  "success.user.unterminate": "Le compte a été réactivé avec succès.",
+  "success.user.role_change": "Le rôle de l'utilisateur a été mis à jour avec succès.",
+  "error.user.role_already_assigned": "Ce rôle est déjà attribué à l'utilisateur.",
+  "error.user.account_terminated": "Ce compte a été résilié et ne peut pas effectuer cette action.",
+  "error.req.invalid_request_body": "Corps de requête invalide. Veuillez vérifier les données envoyées."
 }

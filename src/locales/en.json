@@ -85,5 +85,9 @@
   "error.user.account_already_terminated": "This account has already been terminated.",
   "success.user.terminate": "The account has been successfully terminated.",
   "error.user.account_already_active": "This account is already active.",
-  "success.user.unterminate": "The account has been successfully reactivated."
+  "success.user.unterminate": "The account has been successfully reactivated.",
+  "success.user.role_change": "The user's role has been successfully updated.",
+  "error.user.role_already_assigned": "This role is already assigned to the user.",
+  "error.user.account_terminated": "This account has been terminated and cannot perform this action.",
+  "error.req.invalid_request_body": "Invalid request body. Please check the submitted data."
 }

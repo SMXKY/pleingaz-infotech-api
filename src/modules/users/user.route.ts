@@ -9,6 +9,7 @@ userRouter.use(getUserLanguage);
 
 userRouter.route("/").get(controller.findMany).post(controller.createEmployee);
 
+userRouter.patch("/change-role", controller.changeRole);
 userRouter.patch("/activate/:userId", controller.activateAccount);
 userRouter.patch("/terminate/:userId", controller.terminateAccount);
 userRouter.post("/forgot-password", controller.forgotPassword);
