@@ -92,5 +92,7 @@
   "error.req.invalid_request_body": "Invalid request body. Please check the submitted data.",
   "error.auth.user_no_longer_exist": "This user no longer exists.",
   "error.auth.incorrect_password": "Incorrect password.",
-  "success.user.changed_password": "Your password has been successfully changed."
+  "success.user.changed_password": "Your password has been successfully changed.",
+  "error.validation.user_id_required": "User ID is required.",
+  "success.user.credentials_changed": "User credentials have been successfully updated."
 }

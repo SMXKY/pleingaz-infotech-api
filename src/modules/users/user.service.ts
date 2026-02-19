@@ -9,6 +9,7 @@ import {
   setupAccountSchema,
   ResetPasswordInput,
   ChangePasswordInput,
+  ChangeUserCredentialsInput,
 } from "./user.schema";
 import { AppError } from "@utils/AppError.util";
 import { StatusCodes } from "http-status-codes";
@@ -872,5 +873,56 @@ export class UserService extends BaseService<
     ]);
 
     return { message: "success.user.changed_password" };
+  }
+
+  async changeUserCredentials(
+    data: ChangeUserCredentialsInput,
+    ctx: ServiceContext
+  ): Promise<{ message: string }> {
+    const { username, password, email, userId } = data;
+
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+      throw new AppError("error.user.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (user.status === UserStatus.TERMINATED) {
+      throw new AppError(
+        "error.user.account_terminated",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    const usernameExists = await prisma.user.findUnique({
+      where: { username },
+    });
+
+    if (usernameExists) {
+      throw new AppError("error.db.duplicate", StatusCodes.CONFLICT, {
+        fields: "username",
+      });
+    }
+
+    const userExist = await prisma.user.findUnique({
+      where: { email: data.email },
+    });
+
+    if (userExist) {
+      throw new AppError("error.user.already_exists", StatusCodes.CONFLICT);
+    }
+
+    await prisma.$transaction([
+      prisma.user.update({
+        where: { id: userId },
+        data: {
+          username,
+          email,
+          password: await argon2.hash(password),
+          passwordChangedAt: new Date(),
+        },
+      }),
+    ]);
+
+    return { message: "success.user.credentials_changed" };
   }
 }

@@ -17,6 +17,7 @@ userRouter.patch("/change-role", controller.changeRole);
 userRouter.patch("/activate/:userId", controller.activateAccount);
 userRouter.patch("/terminate/:userId", controller.terminateAccount);
 userRouter.patch("/change-password", controller.changePassword);
+userRouter.patch("/change-credentials", controller.changeUserCredentials);
 
 userRouter.post("/resend-invite/:userId", controller.createSetupToken);
 userRouter.post("/setup-account", controller.setupAccountCredentials);

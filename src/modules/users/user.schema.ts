@@ -103,8 +103,30 @@ export const PasswordResetSchema = z
     path: ["confirmPassword"],
   });
 
+export const ChangeUserCredentialsSchema = z
+  .object({
+    email: z.string().email("error.validation.invalid_email"),
+    userId: z.string().min(1, "error.validation.user_id_required"),
+    username: z
+      .string()
+      .min(3, "error.validation.username_too_short")
+      .max(30, "error.validation.username_too_long")
+      .regex(/^[a-zA-Z0-9_]+$/, "error.validation.username_invalid_characters"),
+    password: passwordSchema,
+    confirmPassword: z
+      .string()
+      .min(1, "error.validation.password_confirm_required"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "error.validation.passwords_dont_match",
+    path: ["confirmPassword"],
+  });
+
 export type SetupAccountInput = z.infer<typeof setupAccountSchema>;
 export type CreateUserInput = z.infer<typeof createUserSchema>;
 export type UpdateUserInput = z.infer<typeof updateUserSchema>;
 export type ChangePasswordInput = z.infer<typeof changePasswordSchema>;
 export type ResetPasswordInput = z.infer<typeof PasswordResetSchema>;
+export type ChangeUserCredentialsInput = z.infer<
+  typeof ChangeUserCredentialsSchema
+>;
