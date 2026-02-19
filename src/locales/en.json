@@ -80,5 +80,10 @@
   "error.auth.password_changed": "Password changed. Please log in again",
   "error.config.jwt_secret_missing": "Server configuration missing",
   "success.reset_token_sent": "If an account with this email exists, a password reset link has been sent to the registered email address.",
-  "success.password.reset": "Your password has been successfully reset. You can now log in with your new password."
+  "success.password.reset": "Your password has been successfully reset. You can now log in with your new password.",
+
+  "error.user.account_already_terminated": "This account has already been terminated.",
+  "success.user.terminate": "The account has been successfully terminated.",
+  "error.user.account_already_active": "This account is already active.",
+  "success.user.unterminate": "The account has been successfully reactivated."
 }

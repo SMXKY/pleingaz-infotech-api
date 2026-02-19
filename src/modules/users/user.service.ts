@@ -32,6 +32,7 @@ import { logUserActivity } from "@utils/logUserActivity.util";
 import getUserPermissions from "./utilites/getUserPermissions.util";
 import { id } from "zod/v4/locales";
 import signToken from "./utilites/signToken.util";
+import { UserStatus } from "@appTypes/user.types";
 
 export class UserService extends BaseService<
   User,
@@ -695,5 +696,71 @@ export class UserService extends BaseService<
     ]);
 
     return { message: "success.password.reset" };
+  }
+
+  async terminateUser(
+    userId: string,
+    ctx: ServiceContext
+  ): Promise<{ message: string }> {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      throw new AppError("error.user.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (user.status === UserStatus.TERMINATED) {
+      throw new AppError(
+        "error.user.account_already_terminated",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    await prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        status: UserStatus.TERMINATED,
+      },
+    });
+
+    return { message: "success.user.terminate" };
+  }
+
+  async activateAccount(
+    userId: string,
+    ctx: ServiceContext
+  ): Promise<{ message: string }> {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      throw new AppError("error.user.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (user.status === UserStatus.ACTIVE) {
+      throw new AppError(
+        "error.user.account_already_active",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    await prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        status: UserStatus.ACTIVE,
+      },
+    });
+
+    return { message: "success.user.unterminate" };
   }
 }
