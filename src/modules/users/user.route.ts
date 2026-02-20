@@ -2,9 +2,12 @@ import { Router } from "express";
 import { UserController } from "./user.controller";
 import getUserLanguage from "@middlewares/getUserLanguage.middleware";
 import protect from "@middlewares/protect.middleware";
+import multer from "multer";
+import { handleFilesMiddleware } from "@middlewares/handleFiles.middleware";
 
 const userRouter = Router();
 const controller = new UserController();
+const upload = multer({ dest: "../../upload" });
 
 userRouter.post("/login", getUserLanguage, controller.login);
 userRouter.post("/forgot-password", getUserLanguage, controller.forgotPassword);
@@ -14,6 +17,13 @@ userRouter.use(protect, getUserLanguage);
 userRouter.route("/").get(controller.findMany).post(controller.createEmployee);
 
 userRouter.route("/me").get(controller.findMe).patch(controller.updateMe);
+userRouter
+  .route("/me/profile-picture")
+  .patch(
+    upload.array("img", 1),
+    handleFilesMiddleware,
+    controller.changeMyProfilePicture
+  );
 
 userRouter.patch("/change-role", controller.changeRole);
 userRouter.patch("/activate/:userId", controller.activateAccount);

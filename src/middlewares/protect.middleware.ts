@@ -6,6 +6,7 @@ import prisma from "@models/index.model";
 import getUserPermissions from "src/modules/users/utilites/getUserPermissions.util";
 import { catchAsync } from "@utils/catchAsync.util";
 import { JWT_SECRET } from "@utils/enviromentVariablesCheck.util";
+import { applyFtpUrlTransform } from "@utils/applyFtpUrl.util";
 
 const protect = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -51,6 +52,7 @@ const protect = catchAsync(
         status: true,
         gender: true,
         passwordChangedAt: true,
+        profilePictureUrl: true,
         department: {
           select: {
             id: true,
@@ -99,6 +101,7 @@ const protect = catchAsync(
 
     res.locals.user = {
       ...safeUser,
+      profilePictureUrl: applyFtpUrlTransform(user.profilePictureUrl),
       permissions: await getUserPermissions(user.id),
     };
 

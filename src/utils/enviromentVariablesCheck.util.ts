@@ -34,6 +34,10 @@ if (!process.env.RESET_PASSWORD_LIMIT_HOURS) {
   throw new Error("RESET_PASSWORD_LIMIT_HOURS enviroment variable not set");
 }
 
+if (!process.env.FTP_BASE_URL) {
+  throw new Error("FTP_BASE_URL enviroment variable not set");
+}
+
 export const baseUrl = process.env.BASE_URL;
 export const frontEndUrl = process.env.FRONTEND_URL;
 export const ACCOUNT_LOGIN_WAIT_TIME_HOURS =
@@ -46,3 +50,4 @@ export const EMAIL_VERIFICATION_EXPIRES_IN =
 export const MAX_LOGIN_ATTEMPTS = process.env.MAX_LOGIN_ATTEMPTS;
 export const RESET_PASSWORD_LIMIT_HOURS =
   process.env.RESET_PASSWORD_LIMIT_HOURS;
+export const FTP_BASE_URL = process.env.FTP_BASE_URL;

@@ -265,4 +265,11 @@ export class UserController extends BaseController<User> {
 
     appResponder(StatusCodes.OK, result, res);
   });
+
+  changeMyProfilePicture = catchAsync(async (req: Request, res: Response) => {
+    const ctx = this.getContext(req);
+    const result = await this.service.updateMyProfilePicture(ctx, res, req);
+
+    appResponder(StatusCodes.OK, result, res);
+  });
 }

@@ -35,8 +35,10 @@ import { logUserActivity } from "@utils/logUserActivity.util";
 import getUserPermissions from "./utilites/getUserPermissions.util";
 import { id } from "zod/v4/locales";
 import signToken from "./utilites/signToken.util";
-import { Response } from "express";
+import { Response, Request } from "express";
 import { UpdateMeResult, UserStatus } from "@appTypes/user.types";
+import { applyFtpUrlTransform } from "@utils/applyFtpUrl.util";
+import { deleteFilesFromFTP, handleFileUploads } from "@services/ftp.service";
 
 export class UserService extends BaseService<
   User,
@@ -432,6 +434,7 @@ export class UserService extends BaseService<
         failedLoginAttempts: true,
         deactivatedUntil: true,
         lockedUntil: true,
+        profilePictureUrl: true,
         department: {
           select: {
             id: true,
@@ -546,6 +549,9 @@ export class UserService extends BaseService<
         ...safeUser,
         permissions,
         preferences,
+        profilePictureUrl: user.profilePictureUrl
+          ? applyFtpUrlTransform(user.profilePictureUrl)
+          : "",
       },
       token: signToken(user.id),
     };
@@ -935,6 +941,18 @@ export class UserService extends BaseService<
     const userId = res.locals.user.id as string;
     const { preferences, ...userFields } = data;
 
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+      throw new AppError("error.user.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (user.status === UserStatus.TERMINATED) {
+      throw new AppError(
+        "error.user.account_terminated",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
     const [updatedUser, updatedPreferences] = await prisma.$transaction(
       async (tx) => {
         const user = await tx.user.update({
@@ -992,5 +1010,56 @@ export class UserService extends BaseService<
       ...updatedUser,
       preferences: updatedPreferences,
     };
+  }
+
+  async updateMyProfilePicture(
+    ctx: ServiceContext,
+    res: Response,
+    req: Request
+  ): Promise<{ url: string }> {
+    const userId = res.locals.user.id as string;
+
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+      throw new AppError("error.user.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (user.status === UserStatus.TERMINATED) {
+      throw new AppError(
+        "error.user.account_terminated",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    const fileUrls = await handleFileUploads(req, 20, [
+      ".png",
+      ".jpg",
+      ".jpeg",
+    ]);
+
+    if (!fileUrls || fileUrls.length === 0) {
+      throw new AppError(
+        "error.user.profile_picture_required",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    const oldPP = user.profilePictureUrl;
+
+    try {
+      await prisma.user.update({
+        where: { id: userId },
+        data: { profilePictureUrl: fileUrls[0] },
+      });
+    } catch (err) {
+      await deleteFilesFromFTP([fileUrls[0]]).catch(() => {});
+      throw err;
+    }
+
+    if (oldPP) {
+      await deleteFilesFromFTP([oldPP]).catch(() => {});
+    }
+
+    return { url: applyFtpUrlTransform(fileUrls[0]) };
   }
 }
