@@ -18,7 +18,6 @@ type PermissionSeed = {
 };
 
 export const permissions: PermissionSeed[] = [
-  //User Module
   {
     code: "can_read_user",
     engName: "Read User",
@@ -54,5 +53,14 @@ export const permissions: PermissionSeed[] = [
     submodule: PermissionSubmodule.USERS,
     action: PermissionAction.DELETE,
     riskLevel: PermissionRiskLevel.HIGH,
+  },
+  {
+    code: "can_create_user",
+    engName: "Create User",
+    frName: "Créer un utilisateur",
+    module: PermissionModule.USER_MANAGEMENT,
+    submodule: PermissionSubmodule.USERS,
+    action: PermissionAction.CREATE,
+    riskLevel: PermissionRiskLevel.MEDIUM,
   },
 ];
