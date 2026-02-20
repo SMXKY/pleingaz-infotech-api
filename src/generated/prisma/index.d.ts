@@ -111,6 +111,16 @@ export const Currency: {
 export type Currency = (typeof Currency)[keyof typeof Currency]
 
 
+export const PermissionRiskLevel: {
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH',
+  CRITICAL: 'CRITICAL'
+};
+
+export type PermissionRiskLevel = (typeof PermissionRiskLevel)[keyof typeof PermissionRiskLevel]
+
+
 export const PermissionModule: {
   EXPLOITATION: 'EXPLOITATION',
   LOGISTICS: 'LOGISTICS',
@@ -121,7 +131,8 @@ export const PermissionModule: {
   LEGAL: 'LEGAL',
   MAINTENANCE_TECHNICAL: 'MAINTENANCE_TECHNICAL',
   RESEARCH_DEVELOPMENT: 'RESEARCH_DEVELOPMENT',
-  ADMIN: 'ADMIN'
+  ADMIN: 'ADMIN',
+  USER_MANAGEMENT: 'USER_MANAGEMENT'
 };
 
 export type PermissionModule = (typeof PermissionModule)[keyof typeof PermissionModule]
@@ -255,6 +266,10 @@ export const Language: typeof $Enums.Language
 export type Currency = $Enums.Currency
 
 export const Currency: typeof $Enums.Currency
+
+export type PermissionRiskLevel = $Enums.PermissionRiskLevel
+
+export const PermissionRiskLevel: typeof $Enums.PermissionRiskLevel
 
 export type PermissionModule = $Enums.PermissionModule
 
@@ -5721,6 +5736,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     deletedAt: Date | null
+    riskLevel: $Enums.PermissionRiskLevel | null
   }
 
   export type PermissionMaxAggregateOutputType = {
@@ -5736,6 +5752,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     deletedAt: Date | null
+    riskLevel: $Enums.PermissionRiskLevel | null
   }
 
   export type PermissionCountAggregateOutputType = {
@@ -5751,6 +5768,7 @@ export namespace Prisma {
     createdAt: number
     updatedAt: number
     deletedAt: number
+    riskLevel: number
     _all: number
   }
 
@@ -5768,6 +5786,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     deletedAt?: true
+    riskLevel?: true
   }
 
   export type PermissionMaxAggregateInputType = {
@@ -5783,6 +5802,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     deletedAt?: true
+    riskLevel?: true
   }
 
   export type PermissionCountAggregateInputType = {
@@ -5798,6 +5818,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     deletedAt?: true
+    riskLevel?: true
     _all?: true
   }
 
@@ -5886,6 +5907,7 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
+    riskLevel: $Enums.PermissionRiskLevel
     _count: PermissionCountAggregateOutputType | null
     _min: PermissionMinAggregateOutputType | null
     _max: PermissionMaxAggregateOutputType | null
@@ -5918,6 +5940,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     deletedAt?: boolean
+    riskLevel?: boolean
     implies?: boolean | Permission$impliesArgs<ExtArgs>
     impliedBy?: boolean | Permission$impliedByArgs<ExtArgs>
     permissionOverrides?: boolean | Permission$permissionOverridesArgs<ExtArgs>
@@ -5938,6 +5961,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     deletedAt?: boolean
+    riskLevel?: boolean
   }, ExtArgs["result"]["permission"]>
 
   export type PermissionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5953,6 +5977,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     deletedAt?: boolean
+    riskLevel?: boolean
   }, ExtArgs["result"]["permission"]>
 
   export type PermissionSelectScalar = {
@@ -5968,9 +5993,10 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     deletedAt?: boolean
+    riskLevel?: boolean
   }
 
-  export type PermissionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "engName" | "frName" | "code" | "description" | "module" | "submodule" | "action" | "isWildcard" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["permission"]>
+  export type PermissionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "engName" | "frName" | "code" | "description" | "module" | "submodule" | "action" | "isWildcard" | "createdAt" | "updatedAt" | "deletedAt" | "riskLevel", ExtArgs["result"]["permission"]>
   export type PermissionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     implies?: boolean | Permission$impliesArgs<ExtArgs>
     impliedBy?: boolean | Permission$impliedByArgs<ExtArgs>
@@ -6002,6 +6028,7 @@ export namespace Prisma {
       createdAt: Date
       updatedAt: Date
       deletedAt: Date | null
+      riskLevel: $Enums.PermissionRiskLevel
     }, ExtArgs["result"]["permission"]>
     composites: {}
   }
@@ -6441,6 +6468,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"Permission", 'DateTime'>
     readonly updatedAt: FieldRef<"Permission", 'DateTime'>
     readonly deletedAt: FieldRef<"Permission", 'DateTime'>
+    readonly riskLevel: FieldRef<"Permission", 'PermissionRiskLevel'>
   }
     
 
@@ -16438,7 +16466,8 @@ export namespace Prisma {
     isWildcard: 'isWildcard',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    deletedAt: 'deletedAt'
+    deletedAt: 'deletedAt',
+    riskLevel: 'riskLevel'
   };
 
   export type PermissionScalarFieldEnum = (typeof PermissionScalarFieldEnum)[keyof typeof PermissionScalarFieldEnum]
@@ -16707,6 +16736,20 @@ export namespace Prisma {
    * Reference to a field of type 'PermissionAction[]'
    */
   export type ListEnumPermissionActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PermissionAction[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'PermissionRiskLevel'
+   */
+  export type EnumPermissionRiskLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PermissionRiskLevel'>
+    
+
+
+  /**
+   * Reference to a field of type 'PermissionRiskLevel[]'
+   */
+  export type ListEnumPermissionRiskLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PermissionRiskLevel[]'>
     
 
 
@@ -17125,6 +17168,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Permission"> | Date | string
     updatedAt?: DateTimeFilter<"Permission"> | Date | string
     deletedAt?: DateTimeNullableFilter<"Permission"> | Date | string | null
+    riskLevel?: EnumPermissionRiskLevelFilter<"Permission"> | $Enums.PermissionRiskLevel
     implies?: PermissionImpliesListRelationFilter
     impliedBy?: PermissionImpliesListRelationFilter
     permissionOverrides?: PermissionOverrideListRelationFilter
@@ -17144,6 +17188,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deletedAt?: SortOrderInput | SortOrder
+    riskLevel?: SortOrder
     implies?: PermissionImpliesOrderByRelationAggregateInput
     impliedBy?: PermissionImpliesOrderByRelationAggregateInput
     permissionOverrides?: PermissionOverrideOrderByRelationAggregateInput
@@ -17166,6 +17211,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Permission"> | Date | string
     updatedAt?: DateTimeFilter<"Permission"> | Date | string
     deletedAt?: DateTimeNullableFilter<"Permission"> | Date | string | null
+    riskLevel?: EnumPermissionRiskLevelFilter<"Permission"> | $Enums.PermissionRiskLevel
     implies?: PermissionImpliesListRelationFilter
     impliedBy?: PermissionImpliesListRelationFilter
     permissionOverrides?: PermissionOverrideListRelationFilter
@@ -17185,6 +17231,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deletedAt?: SortOrderInput | SortOrder
+    riskLevel?: SortOrder
     _count?: PermissionCountOrderByAggregateInput
     _max?: PermissionMaxOrderByAggregateInput
     _min?: PermissionMinOrderByAggregateInput
@@ -17206,6 +17253,7 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Permission"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Permission"> | Date | string
     deletedAt?: DateTimeNullableWithAggregatesFilter<"Permission"> | Date | string | null
+    riskLevel?: EnumPermissionRiskLevelWithAggregatesFilter<"Permission"> | $Enums.PermissionRiskLevel
   }
 
   export type PermissionImpliesWhereInput = {
@@ -18231,6 +18279,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
+    riskLevel?: $Enums.PermissionRiskLevel
     implies?: PermissionImpliesCreateNestedManyWithoutPermissionInput
     impliedBy?: PermissionImpliesCreateNestedManyWithoutImpliedPermissionInput
     permissionOverrides?: PermissionOverrideCreateNestedManyWithoutPermissionInput
@@ -18250,6 +18299,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
+    riskLevel?: $Enums.PermissionRiskLevel
     implies?: PermissionImpliesUncheckedCreateNestedManyWithoutPermissionInput
     impliedBy?: PermissionImpliesUncheckedCreateNestedManyWithoutImpliedPermissionInput
     permissionOverrides?: PermissionOverrideUncheckedCreateNestedManyWithoutPermissionInput
@@ -18269,6 +18319,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    riskLevel?: EnumPermissionRiskLevelFieldUpdateOperationsInput | $Enums.PermissionRiskLevel
     implies?: PermissionImpliesUpdateManyWithoutPermissionNestedInput
     impliedBy?: PermissionImpliesUpdateManyWithoutImpliedPermissionNestedInput
     permissionOverrides?: PermissionOverrideUpdateManyWithoutPermissionNestedInput
@@ -18288,6 +18339,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    riskLevel?: EnumPermissionRiskLevelFieldUpdateOperationsInput | $Enums.PermissionRiskLevel
     implies?: PermissionImpliesUncheckedUpdateManyWithoutPermissionNestedInput
     impliedBy?: PermissionImpliesUncheckedUpdateManyWithoutImpliedPermissionNestedInput
     permissionOverrides?: PermissionOverrideUncheckedUpdateManyWithoutPermissionNestedInput
@@ -18307,6 +18359,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
+    riskLevel?: $Enums.PermissionRiskLevel
   }
 
   export type PermissionUpdateManyMutationInput = {
@@ -18322,6 +18375,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    riskLevel?: EnumPermissionRiskLevelFieldUpdateOperationsInput | $Enums.PermissionRiskLevel
   }
 
   export type PermissionUncheckedUpdateManyInput = {
@@ -18337,6 +18391,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    riskLevel?: EnumPermissionRiskLevelFieldUpdateOperationsInput | $Enums.PermissionRiskLevel
   }
 
   export type PermissionImpliesCreateInput = {
@@ -19488,6 +19543,13 @@ export namespace Prisma {
     not?: NestedEnumPermissionActionFilter<$PrismaModel> | $Enums.PermissionAction
   }
 
+  export type EnumPermissionRiskLevelFilter<$PrismaModel = never> = {
+    equals?: $Enums.PermissionRiskLevel | EnumPermissionRiskLevelFieldRefInput<$PrismaModel>
+    in?: $Enums.PermissionRiskLevel[] | ListEnumPermissionRiskLevelFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PermissionRiskLevel[] | ListEnumPermissionRiskLevelFieldRefInput<$PrismaModel>
+    not?: NestedEnumPermissionRiskLevelFilter<$PrismaModel> | $Enums.PermissionRiskLevel
+  }
+
   export type PermissionImpliesListRelationFilter = {
     every?: PermissionImpliesWhereInput
     some?: PermissionImpliesWhereInput
@@ -19521,6 +19583,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deletedAt?: SortOrder
+    riskLevel?: SortOrder
   }
 
   export type PermissionMaxOrderByAggregateInput = {
@@ -19536,6 +19599,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deletedAt?: SortOrder
+    riskLevel?: SortOrder
   }
 
   export type PermissionMinOrderByAggregateInput = {
@@ -19551,6 +19615,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deletedAt?: SortOrder
+    riskLevel?: SortOrder
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -19599,6 +19664,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumPermissionActionFilter<$PrismaModel>
     _max?: NestedEnumPermissionActionFilter<$PrismaModel>
+  }
+
+  export type EnumPermissionRiskLevelWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PermissionRiskLevel | EnumPermissionRiskLevelFieldRefInput<$PrismaModel>
+    in?: $Enums.PermissionRiskLevel[] | ListEnumPermissionRiskLevelFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PermissionRiskLevel[] | ListEnumPermissionRiskLevelFieldRefInput<$PrismaModel>
+    not?: NestedEnumPermissionRiskLevelWithAggregatesFilter<$PrismaModel> | $Enums.PermissionRiskLevel
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPermissionRiskLevelFilter<$PrismaModel>
+    _max?: NestedEnumPermissionRiskLevelFilter<$PrismaModel>
   }
 
   export type PermissionScalarRelationFilter = {
@@ -20581,6 +20656,10 @@ export namespace Prisma {
     set?: $Enums.PermissionAction
   }
 
+  export type EnumPermissionRiskLevelFieldUpdateOperationsInput = {
+    set?: $Enums.PermissionRiskLevel
+  }
+
   export type PermissionImpliesUpdateManyWithoutPermissionNestedInput = {
     create?: XOR<PermissionImpliesCreateWithoutPermissionInput, PermissionImpliesUncheckedCreateWithoutPermissionInput> | PermissionImpliesCreateWithoutPermissionInput[] | PermissionImpliesUncheckedCreateWithoutPermissionInput[]
     connectOrCreate?: PermissionImpliesCreateOrConnectWithoutPermissionInput | PermissionImpliesCreateOrConnectWithoutPermissionInput[]
@@ -21428,6 +21507,13 @@ export namespace Prisma {
     not?: NestedEnumPermissionActionFilter<$PrismaModel> | $Enums.PermissionAction
   }
 
+  export type NestedEnumPermissionRiskLevelFilter<$PrismaModel = never> = {
+    equals?: $Enums.PermissionRiskLevel | EnumPermissionRiskLevelFieldRefInput<$PrismaModel>
+    in?: $Enums.PermissionRiskLevel[] | ListEnumPermissionRiskLevelFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PermissionRiskLevel[] | ListEnumPermissionRiskLevelFieldRefInput<$PrismaModel>
+    not?: NestedEnumPermissionRiskLevelFilter<$PrismaModel> | $Enums.PermissionRiskLevel
+  }
+
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -21473,6 +21559,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumPermissionActionFilter<$PrismaModel>
     _max?: NestedEnumPermissionActionFilter<$PrismaModel>
+  }
+
+  export type NestedEnumPermissionRiskLevelWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PermissionRiskLevel | EnumPermissionRiskLevelFieldRefInput<$PrismaModel>
+    in?: $Enums.PermissionRiskLevel[] | ListEnumPermissionRiskLevelFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PermissionRiskLevel[] | ListEnumPermissionRiskLevelFieldRefInput<$PrismaModel>
+    not?: NestedEnumPermissionRiskLevelWithAggregatesFilter<$PrismaModel> | $Enums.PermissionRiskLevel
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPermissionRiskLevelFilter<$PrismaModel>
+    _max?: NestedEnumPermissionRiskLevelFilter<$PrismaModel>
   }
 
   export type NestedEnumStatusFilter<$PrismaModel = never> = {
@@ -22770,6 +22866,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
+    riskLevel?: $Enums.PermissionRiskLevel
     impliedBy?: PermissionImpliesCreateNestedManyWithoutImpliedPermissionInput
     permissionOverrides?: PermissionOverrideCreateNestedManyWithoutPermissionInput
     rolePermissions?: RolePermissionCreateNestedManyWithoutPermissionInput
@@ -22788,6 +22885,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
+    riskLevel?: $Enums.PermissionRiskLevel
     impliedBy?: PermissionImpliesUncheckedCreateNestedManyWithoutImpliedPermissionInput
     permissionOverrides?: PermissionOverrideUncheckedCreateNestedManyWithoutPermissionInput
     rolePermissions?: RolePermissionUncheckedCreateNestedManyWithoutPermissionInput
@@ -22811,6 +22909,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
+    riskLevel?: $Enums.PermissionRiskLevel
     implies?: PermissionImpliesCreateNestedManyWithoutPermissionInput
     permissionOverrides?: PermissionOverrideCreateNestedManyWithoutPermissionInput
     rolePermissions?: RolePermissionCreateNestedManyWithoutPermissionInput
@@ -22829,6 +22928,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
+    riskLevel?: $Enums.PermissionRiskLevel
     implies?: PermissionImpliesUncheckedCreateNestedManyWithoutPermissionInput
     permissionOverrides?: PermissionOverrideUncheckedCreateNestedManyWithoutPermissionInput
     rolePermissions?: RolePermissionUncheckedCreateNestedManyWithoutPermissionInput
@@ -22863,6 +22963,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    riskLevel?: EnumPermissionRiskLevelFieldUpdateOperationsInput | $Enums.PermissionRiskLevel
     impliedBy?: PermissionImpliesUpdateManyWithoutImpliedPermissionNestedInput
     permissionOverrides?: PermissionOverrideUpdateManyWithoutPermissionNestedInput
     rolePermissions?: RolePermissionUpdateManyWithoutPermissionNestedInput
@@ -22881,6 +22982,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    riskLevel?: EnumPermissionRiskLevelFieldUpdateOperationsInput | $Enums.PermissionRiskLevel
     impliedBy?: PermissionImpliesUncheckedUpdateManyWithoutImpliedPermissionNestedInput
     permissionOverrides?: PermissionOverrideUncheckedUpdateManyWithoutPermissionNestedInput
     rolePermissions?: RolePermissionUncheckedUpdateManyWithoutPermissionNestedInput
@@ -22910,6 +23012,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    riskLevel?: EnumPermissionRiskLevelFieldUpdateOperationsInput | $Enums.PermissionRiskLevel
     implies?: PermissionImpliesUpdateManyWithoutPermissionNestedInput
     permissionOverrides?: PermissionOverrideUpdateManyWithoutPermissionNestedInput
     rolePermissions?: RolePermissionUpdateManyWithoutPermissionNestedInput
@@ -22928,6 +23031,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    riskLevel?: EnumPermissionRiskLevelFieldUpdateOperationsInput | $Enums.PermissionRiskLevel
     implies?: PermissionImpliesUncheckedUpdateManyWithoutPermissionNestedInput
     permissionOverrides?: PermissionOverrideUncheckedUpdateManyWithoutPermissionNestedInput
     rolePermissions?: RolePermissionUncheckedUpdateManyWithoutPermissionNestedInput
@@ -23039,6 +23143,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
+    riskLevel?: $Enums.PermissionRiskLevel
     implies?: PermissionImpliesCreateNestedManyWithoutPermissionInput
     impliedBy?: PermissionImpliesCreateNestedManyWithoutImpliedPermissionInput
     rolePermissions?: RolePermissionCreateNestedManyWithoutPermissionInput
@@ -23057,6 +23162,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
+    riskLevel?: $Enums.PermissionRiskLevel
     implies?: PermissionImpliesUncheckedCreateNestedManyWithoutPermissionInput
     impliedBy?: PermissionImpliesUncheckedCreateNestedManyWithoutImpliedPermissionInput
     rolePermissions?: RolePermissionUncheckedCreateNestedManyWithoutPermissionInput
@@ -23283,6 +23389,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    riskLevel?: EnumPermissionRiskLevelFieldUpdateOperationsInput | $Enums.PermissionRiskLevel
     implies?: PermissionImpliesUpdateManyWithoutPermissionNestedInput
     impliedBy?: PermissionImpliesUpdateManyWithoutImpliedPermissionNestedInput
     rolePermissions?: RolePermissionUpdateManyWithoutPermissionNestedInput
@@ -23301,6 +23408,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    riskLevel?: EnumPermissionRiskLevelFieldUpdateOperationsInput | $Enums.PermissionRiskLevel
     implies?: PermissionImpliesUncheckedUpdateManyWithoutPermissionNestedInput
     impliedBy?: PermissionImpliesUncheckedUpdateManyWithoutImpliedPermissionNestedInput
     rolePermissions?: RolePermissionUncheckedUpdateManyWithoutPermissionNestedInput
@@ -23449,6 +23557,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
+    riskLevel?: $Enums.PermissionRiskLevel
     implies?: PermissionImpliesCreateNestedManyWithoutPermissionInput
     impliedBy?: PermissionImpliesCreateNestedManyWithoutImpliedPermissionInput
     permissionOverrides?: PermissionOverrideCreateNestedManyWithoutPermissionInput
@@ -23467,6 +23576,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
+    riskLevel?: $Enums.PermissionRiskLevel
     implies?: PermissionImpliesUncheckedCreateNestedManyWithoutPermissionInput
     impliedBy?: PermissionImpliesUncheckedCreateNestedManyWithoutImpliedPermissionInput
     permissionOverrides?: PermissionOverrideUncheckedCreateNestedManyWithoutPermissionInput
@@ -23631,6 +23741,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    riskLevel?: EnumPermissionRiskLevelFieldUpdateOperationsInput | $Enums.PermissionRiskLevel
     implies?: PermissionImpliesUpdateManyWithoutPermissionNestedInput
     impliedBy?: PermissionImpliesUpdateManyWithoutImpliedPermissionNestedInput
     permissionOverrides?: PermissionOverrideUpdateManyWithoutPermissionNestedInput
@@ -23649,6 +23760,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    riskLevel?: EnumPermissionRiskLevelFieldUpdateOperationsInput | $Enums.PermissionRiskLevel
     implies?: PermissionImpliesUncheckedUpdateManyWithoutPermissionNestedInput
     impliedBy?: PermissionImpliesUncheckedUpdateManyWithoutImpliedPermissionNestedInput
     permissionOverrides?: PermissionOverrideUncheckedUpdateManyWithoutPermissionNestedInput

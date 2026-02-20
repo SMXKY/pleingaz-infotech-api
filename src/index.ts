@@ -11,6 +11,7 @@ process.on("uncaughtException", (err) => {
 });
 
 import { PrismaPg } from "@prisma/adapter-pg";
+import { seedDefaultRecords } from "./defaults";
 
 const connectionString = `${process.env.DATABASE_URL}`;
 
@@ -23,6 +24,12 @@ prisma
   .catch((err: any) => {
     console.error("Error connecting to database: ", err);
     process.exit(1);
+  })
+  .then(async () => {
+    await seedDefaultRecords();
+  })
+  .catch((err) => {
+    console.log("Error seeding default records: ", err);
   });
 
 const port: number = Number(process.env.PORT) || 3000;

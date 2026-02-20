@@ -167,7 +167,8 @@ exports.Prisma.PermissionScalarFieldEnum = {
   isWildcard: 'isWildcard',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  deletedAt: 'deletedAt'
+  deletedAt: 'deletedAt',
+  riskLevel: 'riskLevel'
 };
 
 exports.Prisma.PermissionImpliesScalarFieldEnum = {
@@ -324,7 +325,8 @@ exports.PermissionModule = exports.$Enums.PermissionModule = {
   LEGAL: 'LEGAL',
   MAINTENANCE_TECHNICAL: 'MAINTENANCE_TECHNICAL',
   RESEARCH_DEVELOPMENT: 'RESEARCH_DEVELOPMENT',
-  ADMIN: 'ADMIN'
+  ADMIN: 'ADMIN',
+  USER_MANAGEMENT: 'USER_MANAGEMENT'
 };
 
 exports.PermissionSubmodule = exports.$Enums.PermissionSubmodule = {
@@ -388,6 +390,13 @@ exports.PermissionAction = exports.$Enums.PermissionAction = {
   REJECT: 'REJECT',
   EXPORT: 'EXPORT',
   IMPORT: 'IMPORT'
+};
+
+exports.PermissionRiskLevel = exports.$Enums.PermissionRiskLevel = {
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH',
+  CRITICAL: 'CRITICAL'
 };
 
 exports.Status = exports.$Enums.Status = {

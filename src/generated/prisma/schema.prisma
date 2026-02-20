@@ -29,6 +29,13 @@ enum Currency {
   USD
 }
 
+enum PermissionRiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
 enum PermissionModule {
   EXPLOITATION
   LOGISTICS
@@ -40,6 +47,7 @@ enum PermissionModule {
   MAINTENANCE_TECHNICAL
   RESEARCH_DEVELOPMENT
   ADMIN
+  USER_MANAGEMENT
 }
 
 enum PermissionSubmodule {
@@ -216,6 +224,7 @@ model Permission {
   impliedBy           PermissionImplies[]  @relation("implied_permission")
   permissionOverrides PermissionOverride[]
   rolePermissions     RolePermission[]
+  riskLevel           PermissionRiskLevel  @default(LOW) @map("risk_level")
 
   @@index([deletedAt])
   @@map("permissions")
