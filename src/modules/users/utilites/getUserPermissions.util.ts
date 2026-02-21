@@ -1,6 +1,6 @@
 import prisma from "@models/index.model";
 
-const permissionCache = new Map<
+export const permissionCache = new Map<
   string,
   { permissions: string[]; expiresAt: number }
 >();
@@ -38,7 +38,10 @@ const getUserPermissions = async (
       select: { code: true },
     }),
     prisma.rolePermission.findMany({
-      where: { roleId: user.roleId },
+      where: {
+        roleId: user.roleId,
+        role: { isActive: true, deletedAt: null },
+      },
       include: { permission: { select: { code: true } } },
     }),
     prisma.roleOverride.findMany({

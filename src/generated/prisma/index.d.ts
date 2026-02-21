@@ -187,7 +187,8 @@ export const PermissionSubmodule: {
   ROLES: 'ROLES',
   PERMISSIONS: 'PERMISSIONS',
   SYSTEM_CONFIG: 'SYSTEM_CONFIG',
-  AUDIT_LOGS: 'AUDIT_LOGS'
+  AUDIT_LOGS: 'AUDIT_LOGS',
+  DEPARTMENTS: 'DEPARTMENTS'
 };
 
 export type PermissionSubmodule = (typeof PermissionSubmodule)[keyof typeof PermissionSubmodule]
@@ -201,7 +202,8 @@ export const PermissionAction: {
   APPROVE: 'APPROVE',
   REJECT: 'REJECT',
   EXPORT: 'EXPORT',
-  IMPORT: 'IMPORT'
+  IMPORT: 'IMPORT',
+  RESTORE: 'RESTORE'
 };
 
 export type PermissionAction = (typeof PermissionAction)[keyof typeof PermissionAction]

@@ -119,6 +119,7 @@ enum PermissionSubmodule {
   PERMISSIONS
   SYSTEM_CONFIG
   AUDIT_LOGS
+  DEPARTMENTS
 }
 
 enum PermissionAction {
@@ -130,6 +131,7 @@ enum PermissionAction {
   REJECT
   EXPORT
   IMPORT
+  RESTORE
 }
 
 enum LogOperation {

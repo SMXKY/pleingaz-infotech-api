@@ -6,7 +6,6 @@ const prisma = new PrismaClient({
       deletedAt: true,
       password: true,
       passwordConfirm: true,
-      deactivatedUntil: true,
       passwordChangedAt: true,
       failedLoginAttempts: true,
       lockedUntil: true,

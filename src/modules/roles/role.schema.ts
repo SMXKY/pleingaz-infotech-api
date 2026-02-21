@@ -12,5 +12,21 @@ export const updateRoleSchema = z.object({
   isActive: z.boolean().optional(),
 });
 
+export const assignUserRoleSchema = z.object({
+  roleId: z.string().uuid("error.validation.invalid_role_id"),
+  userId: z.string().uuid("error.validation.invalid_user_id"),
+});
+
+export const assignRolePermissionSchema = z.object({
+  roleId: z.string().uuid("error.validation.invalid_role_id"),
+  permissionIds: z
+    .array(z.string().uuid("error.validation.invalid_permission_id"))
+    .min(1, "error.validation.at_least_one_permission_required"),
+});
+
 export type CreateRoleInput = z.infer<typeof createRoleSchema>;
 export type UpdateRoleInput = z.infer<typeof updateRoleSchema>;
+export type AssignUserRoleInput = z.infer<typeof assignUserRoleSchema>;
+export type AssignRolePermissionInput = z.infer<
+  typeof assignRolePermissionSchema
+>;

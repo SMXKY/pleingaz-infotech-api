@@ -47,6 +47,7 @@
   "error.token.invalid_or_expired": "The link is invalid or has expired",
   "error.token.already_used": "This link has already been used",
   "error.token.expired": "This link has expired",
+  "error.role.role_id_required": "Role ID is required.",
 
   "success.account_setup_complete": "Your account has been successfully set up",
 
@@ -94,5 +95,27 @@
   "error.auth.incorrect_password": "Incorrect password.",
   "success.user.changed_password": "Your password has been successfully changed.",
   "error.validation.user_id_required": "User ID is required.",
-  "success.user.credentials_changed": "User credentials have been successfully updated."
+  "success.user.credentials_changed": "User credentials have been successfully updated.",
+
+  "error.validation.invalid_user_id": "Invalid user ID.",
+  "error.validation.invalid_permission_id": "Invalid permission ID.",
+  "error.validation.at_least_one_permission_required": "At least one permission must be provided.",
+  "error.role.system_role_immutable": "This system role cannot be modified.",
+  "error.role.already_disabled": "This role is already disabled.",
+  "success.role.disabled": "Role disabled successfully.",
+  "error.role.already_enabled": "This role is already enabled.",
+  "success.role.enabled": "Role enabled successfully.",
+  "error.role.inactive": "This role is inactive.",
+  "error.permission.one_or_more_not_found": "One or more permissions were not found.",
+  "success.role.assigned_permissions": "Permissions assigned to role successfully.",
+  "error.user.terminated": "This user account has been terminated.",
+  "error.user.already_has_role": "This user already has a role assigned.",
+  "success.role.assigned_to_user": "Role assigned to user successfully.",
+
+  "error.user.deactivation_date_must_be_future": "Deactivation date must be in the future.",
+  "error.user.system_user_immutable": "This system user cannot be modified.",
+  "error.user.account_already_deactivated": "This account is already deactivated.",
+  "success.user.deactivated": "User account deactivated successfully.",
+  "error.user.account_not_deactivated": "This account is not deactivated.",
+  "success.user.reactivated": "User account reactivated successfully."
 }

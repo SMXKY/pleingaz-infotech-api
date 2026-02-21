@@ -53,6 +53,7 @@ const protect = catchAsync(
         gender: true,
         passwordChangedAt: true,
         profilePictureUrl: true,
+        deactivatedUntil: true,
         department: {
           select: {
             id: true,
@@ -79,6 +80,13 @@ const protect = catchAsync(
     if (user.status !== "ACTIVE") {
       return next(
         new AppError("error.auth.account_not_active", StatusCodes.FORBIDDEN)
+      );
+    }
+
+    if (user.deactivatedUntil && user.deactivatedUntil.getTime() > Date.now()) {
+      throw new AppError(
+        "error.auth.account_temporarily_not_active",
+        StatusCodes.FORBIDDEN
       );
     }
 

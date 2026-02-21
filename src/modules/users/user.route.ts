@@ -14,11 +14,13 @@ const upload = multer({ dest: "../../upload" });
 userRouter.post("/login", getUserLanguage, controller.login);
 userRouter.post("/forgot-password", getUserLanguage, controller.forgotPassword);
 userRouter.post("/reset-password", getUserLanguage, controller.resetPassword);
+userRouter.post("/setup-account", controller.setupAccountCredentials);
+
 userRouter.use(protect, getUserLanguage);
 
 userRouter
   .route("/")
-  .get(controller.findMany)
+  .get(restrictTo(allPermissions.users.readAllUsers), controller.findMany)
   .post(restrictTo(allPermissions.users.createUser), controller.createEmployee);
 
 userRouter.route("/me").get(controller.findMe).patch(controller.updateMe);
@@ -29,24 +31,66 @@ userRouter
     handleFilesMiddleware,
     controller.changeMyProfilePicture
   );
-
-userRouter.patch("/change-role", controller.changeRole);
-userRouter.patch("/activate/:userId", controller.activateAccount);
-userRouter.patch("/terminate/:userId", controller.terminateAccount);
 userRouter.patch("/change-password", controller.changePassword);
-userRouter.patch("/change-credentials", controller.changeUserCredentials);
 
-userRouter.post("/resend-invite/:userId", controller.createSetupToken);
-userRouter.post("/setup-account", controller.setupAccountCredentials);
-userRouter.route("/active").get(controller.findActive);
-userRouter.route("/terminated").get(controller.findTerminatedUsers);
+userRouter
+  .route("/active")
+  .get(restrictTo(allPermissions.users.readAllUsers), controller.findActive);
+userRouter
+  .route("/terminated")
+  .get(
+    restrictTo(allPermissions.users.readAllUsers),
+    controller.findTerminatedUsers
+  );
+userRouter.patch(
+  "/change-role",
+  restrictTo(allPermissions.users.changeUserRole),
+  controller.changeRole
+);
+userRouter.patch(
+  "/activate/:userId",
+  restrictTo(allPermissions.users.activateUser),
+  controller.activateAccount
+);
+userRouter.patch(
+  "/terminate/:userId",
+  restrictTo(allPermissions.users.terminateUser),
+  controller.terminateAccount
+);
+userRouter.patch(
+  "/change-credentials",
+  restrictTo(allPermissions.users.changeUserCredentials),
+  controller.changeUserCredentials
+);
+userRouter.post(
+  "/deactivate",
+  restrictTo(allPermissions.users.deactivateUser),
+  controller.temporarilyDeactivateAccount
+);
+userRouter.patch(
+  "/reactivate/:id",
+  restrictTo(allPermissions.users.reactivateUser),
+  controller.reactivateAccount
+);
+userRouter.post(
+  "/resend-invite/:userId",
+  restrictTo(allPermissions.users.resendUserInvite),
+  controller.createSetupToken
+);
 
 userRouter
   .route("/:id")
-  .get(controller.findById)
-  .patch(controller.update)
-  .delete(controller.delete);
-userRouter.route("/:username").get(controller.findByUserName);
-userRouter.route("/:id/restore").get(controller.restore);
+  .get(restrictTo(allPermissions.users.readUser), controller.findById)
+  .patch(restrictTo(allPermissions.users.updateUser), controller.update)
+  .delete(restrictTo(allPermissions.users.deleteUser), controller.delete);
+userRouter
+  .route("/:username")
+  .get(restrictTo(allPermissions.users.readUser), controller.findByUserName);
+userRouter
+  .route("/:id/restore")
+  .patch(restrictTo(allPermissions.users.restoreUser), controller.restore);
+userRouter
+  .route("/:id/restore")
+  .get(restrictTo(allPermissions.users.restoreUser), controller.findDeleted);
 
 export default userRouter;

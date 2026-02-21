@@ -30,7 +30,6 @@ export const createUserSchema = z.object({
 });
 
 export const updateUserSchema = z.object({
-  email: z.string().email("error.validation.invalid_email").optional(),
   name: z.string().min(1).optional(),
   surname: z.string().min(1).optional(),
   phoneNumber: z.string().optional(),
@@ -40,12 +39,6 @@ export const updateUserSchema = z.object({
   emergencyContactName: z.string().optional(),
   emergencyContactPhoneNumber: z.string().optional(),
   hireDate: z.coerce.date().optional(),
-  baseSalaryInCFA: z.number().positive().optional(),
-  bankName: z.string().optional(),
-  cnpsNumber: z.string().optional(),
-  taxId: z.string().optional(),
-  departmentId: z.string().uuid().optional(),
-  roleId: z.string().uuid().optional(),
   status: z.enum(["ACTIVE", "TERMINATED"]).optional(),
 });
 
@@ -136,6 +129,13 @@ export const updateMeSchema = z.object({
   preferences: userPreferenceSchema.optional(),
 });
 
+export const userDeactivateSchema = z.object({
+  userId: z.string().min(1, "error.validation.user_id_required"),
+  date: z.coerce.date().refine((d) => !d || !isNaN(d.getTime()), {
+    message: "error.validation.invalid_dob",
+  }),
+});
+
 export type SetupAccountInput = z.infer<typeof setupAccountSchema>;
 export type CreateUserInput = z.infer<typeof createUserSchema>;
 export type UpdateUserInput = z.infer<typeof updateUserSchema>;
@@ -145,3 +145,4 @@ export type ChangeUserCredentialsInput = z.infer<
   typeof ChangeUserCredentialsSchema
 >;
 export type UpdateMeInput = z.infer<typeof updateMeSchema>;
+export type UserDeactivateInput = z.infer<typeof userDeactivateSchema>;

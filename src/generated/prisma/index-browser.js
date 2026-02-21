@@ -378,7 +378,8 @@ exports.PermissionSubmodule = exports.$Enums.PermissionSubmodule = {
   ROLES: 'ROLES',
   PERMISSIONS: 'PERMISSIONS',
   SYSTEM_CONFIG: 'SYSTEM_CONFIG',
-  AUDIT_LOGS: 'AUDIT_LOGS'
+  AUDIT_LOGS: 'AUDIT_LOGS',
+  DEPARTMENTS: 'DEPARTMENTS'
 };
 
 exports.PermissionAction = exports.$Enums.PermissionAction = {
@@ -389,7 +390,8 @@ exports.PermissionAction = exports.$Enums.PermissionAction = {
   APPROVE: 'APPROVE',
   REJECT: 'REJECT',
   EXPORT: 'EXPORT',
-  IMPORT: 'IMPORT'
+  IMPORT: 'IMPORT',
+  RESTORE: 'RESTORE'
 };
 
 exports.PermissionRiskLevel = exports.$Enums.PermissionRiskLevel = {

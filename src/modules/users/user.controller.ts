@@ -13,6 +13,7 @@ import {
   setupAccountSchema,
   updateMeSchema,
   updateUserSchema,
+  userDeactivateSchema,
 } from "./user.schema";
 import { AppError } from "@utils/AppError.util";
 import t from "@utils/translate.util";
@@ -272,4 +273,55 @@ export class UserController extends BaseController<User> {
 
     appResponder(StatusCodes.OK, result, res);
   });
+
+  temporarilyDeactivateAccount = catchAsync(
+    async (req: Request, res: Response) => {
+      const validation = userDeactivateSchema.safeParse(req.body);
+      if (!validation.success) {
+        const message = validation.error.issues[0].message;
+        throw new AppError(message, StatusCodes.BAD_REQUEST);
+      }
+
+      const ctx = this.getContext(req);
+      const result = await this.service.temporarilyDeactivateAccount(
+        validation.data,
+        ctx
+      );
+
+      appResponder(
+        StatusCodes.CREATED,
+        {
+          message: t(res.locals.lang, result.message),
+        },
+        res
+      );
+    }
+  );
+
+  reactivateAccount = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+      if (!req.params.id) {
+        return next(
+          new AppError(
+            "error.validation.invalid_user_id",
+            StatusCodes.BAD_REQUEST
+          )
+        );
+      }
+
+      const ctx = this.getContext(req);
+      const result = await this.service.reactivateAccount(
+        req.params.id as string,
+        ctx
+      );
+
+      appResponder(
+        StatusCodes.CREATED,
+        {
+          message: t(res.locals.lang, result.message),
+        },
+        res
+      );
+    }
+  );
 }

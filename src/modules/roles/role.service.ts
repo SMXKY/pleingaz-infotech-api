@@ -5,11 +5,16 @@ import {
   updateRoleSchema,
   CreateRoleInput,
   UpdateRoleInput,
+  AssignRolePermissionInput,
 } from "./role.schema";
 import { AppError } from "@utils/AppError.util";
 import { StatusCodes } from "http-status-codes";
 import { ServiceContext } from "@appTypes/base.types";
 import { Role } from "src/generated/prisma";
+import { prisma } from "src";
+import { permissionCache } from "../users/utilites/getUserPermissions.util";
+import { UserStatus } from "@appTypes/user.types";
+import { Response } from "express";
 
 export class RoleService extends BaseService<
   Role,
@@ -72,5 +77,215 @@ export class RoleService extends BaseService<
       return this.repository.softDelete(id, ["name"]);
     }
     return this.repository.delete(id);
+  }
+
+  async disableRole(
+    id: string,
+    ctx: ServiceContext
+  ): Promise<{ message: string }> {
+    if (!id) {
+      throw new AppError(
+        "error.role.role_id_required",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    const role = await prisma.role.findUnique({
+      where: { id, deletedAt: null },
+      include: {
+        users: {
+          where: { deletedAt: null },
+          select: { id: true },
+        },
+      },
+    });
+
+    if (!role) {
+      throw new AppError("error.role.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (role.isSystem) {
+      throw new AppError(
+        "error.role.system_role_immutable",
+        StatusCodes.FORBIDDEN
+      );
+    }
+
+    if (!role.isActive) {
+      throw new AppError("error.role.already_disabled", StatusCodes.CONFLICT);
+    }
+
+    await prisma.role.update({
+      where: { id: role.id },
+      data: { isActive: false },
+    });
+
+    for (const user of role.users) {
+      permissionCache.delete(user.id);
+    }
+
+    return { message: "success.role.disabled" };
+  }
+
+  async enableRole(
+    id: string,
+    ctx: ServiceContext
+  ): Promise<{ message: string }> {
+    const role = await prisma.role.findUnique({
+      where: { id, deletedAt: null },
+      include: {
+        users: {
+          where: { deletedAt: null },
+          select: { id: true },
+        },
+      },
+    });
+
+    if (!role) {
+      throw new AppError("error.role.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (role.isSystem) {
+      throw new AppError(
+        "error.role.system_role_immutable",
+        StatusCodes.FORBIDDEN
+      );
+    }
+
+    if (role.isActive) {
+      throw new AppError("error.role.already_enabled", StatusCodes.CONFLICT);
+    }
+
+    await prisma.role.update({
+      where: { id: role.id },
+      data: { isActive: true },
+    });
+
+    for (const user of role.users) {
+      permissionCache.delete(user.id);
+    }
+
+    return { message: "success.role.enabled" };
+  }
+
+  async assignRolePermissions(
+    data: AssignRolePermissionInput,
+    ctx: ServiceContext,
+    res: Response
+  ): Promise<{ message: string }> {
+    const { permissionIds, roleId } = data;
+
+    const role = await prisma.role.findUnique({
+      where: { id: roleId, deletedAt: null },
+    });
+
+    if (!role) {
+      throw new AppError("error.role.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (role.isSystem) {
+      throw new AppError(
+        "error.role.system_role_immutable",
+        StatusCodes.FORBIDDEN
+      );
+    }
+
+    if (!role.isActive) {
+      throw new AppError("error.role.inactive", StatusCodes.CONFLICT);
+    }
+
+    const permissions = await prisma.permission.findMany({
+      where: { id: { in: permissionIds }, deletedAt: null },
+      select: { id: true },
+    });
+
+    if (permissions.length !== permissionIds.length) {
+      throw new AppError(
+        "error.permission.one_or_more_not_found",
+        StatusCodes.NOT_FOUND
+      );
+    }
+
+    const previousState = await prisma.rolePermission.findMany({
+      where: { roleId, deletedAt: null },
+      select: { permissionId: true },
+    });
+
+    await prisma.$transaction(
+      permissionIds.map((permissionId) =>
+        prisma.rolePermission.upsert({
+          where: { roleId_permissionId: { roleId, permissionId } },
+          create: { roleId, permissionId, createdById: res.locals.user.id },
+          update: { deletedAt: null },
+        })
+      )
+    );
+
+    const affectedUsers = await prisma.user.findMany({
+      where: { roleId, deletedAt: null },
+      select: { id: true },
+    });
+
+    for (const user of affectedUsers) {
+      permissionCache.delete(user.id);
+    }
+
+    return { message: "success.role.assigned_permissions" };
+  }
+
+  async assignUserRole(
+    data: { userId: string; roleId: string },
+    ctx: ServiceContext
+  ): Promise<{ message: string }> {
+    const { userId, roleId } = data;
+
+    const [user, role] = await Promise.all([
+      prisma.user.findUnique({
+        where: { id: userId, deletedAt: null },
+        select: { id: true, roleId: true, status: true, isSystem: true },
+      }),
+      prisma.role.findUnique({
+        where: { id: roleId, deletedAt: null },
+        select: { id: true, isActive: true },
+      }),
+    ]);
+
+    if (!user) {
+      throw new AppError("error.user.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (user.isSystem) {
+      throw new AppError(
+        "error.user.system_user_immutable",
+        StatusCodes.FORBIDDEN
+      );
+    }
+
+    if (user.status === UserStatus.TERMINATED) {
+      throw new AppError("error.user.terminated", StatusCodes.CONFLICT);
+    }
+
+    if (!role) {
+      throw new AppError("error.role.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (!role.isActive) {
+      throw new AppError("error.role.inactive", StatusCodes.CONFLICT);
+    }
+
+    if (user.roleId === roleId) {
+      throw new AppError("error.user.already_has_role", StatusCodes.CONFLICT);
+    }
+
+    const previousRoleId = user.roleId;
+
+    await prisma.user.update({
+      where: { id: userId },
+      data: { roleId },
+    });
+
+    permissionCache.delete(userId);
+
+    return { message: "success.role.assigned_to_user" };
   }
 }

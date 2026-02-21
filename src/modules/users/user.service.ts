@@ -11,6 +11,7 @@ import {
   ChangePasswordInput,
   ChangeUserCredentialsInput,
   UpdateMeInput,
+  UserDeactivateInput,
 } from "./user.schema";
 import { AppError } from "@utils/AppError.util";
 import { StatusCodes } from "http-status-codes";
@@ -32,7 +33,9 @@ import {
 } from "@utils/enviromentVariablesCheck.util";
 import { sendEmail } from "@utils/sendEmail.util";
 import { logUserActivity } from "@utils/logUserActivity.util";
-import getUserPermissions from "./utilites/getUserPermissions.util";
+import getUserPermissions, {
+  permissionCache,
+} from "./utilites/getUserPermissions.util";
 import { id } from "zod/v4/locales";
 import signToken from "./utilites/signToken.util";
 import { Response, Request } from "express";
@@ -1006,6 +1009,8 @@ export class UserService extends BaseService<
       }
     );
 
+    permissionCache.delete(userId);
+
     return {
       ...updatedUser,
       preferences: updatedPreferences,
@@ -1061,5 +1066,119 @@ export class UserService extends BaseService<
     }
 
     return { url: applyFtpUrlTransform(fileUrls[0]) };
+  }
+
+  async temporarilyDeactivateAccount(
+    data: UserDeactivateInput,
+    ctx: ServiceContext
+  ): Promise<{ message: string }> {
+    const { userId, date } = data;
+
+    if (new Date(date) <= new Date()) {
+      throw new AppError(
+        "error.user.deactivation_date_must_be_future",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId, deletedAt: null },
+      select: {
+        deactivatedUntil: true,
+        status: true,
+        isSystem: true,
+      },
+    });
+
+    if (!user) {
+      throw new AppError("error.user.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (user.isSystem) {
+      throw new AppError(
+        "error.user.system_user_immutable",
+        StatusCodes.FORBIDDEN
+      );
+    }
+
+    if (user.status === UserStatus.TERMINATED) {
+      throw new AppError(
+        "error.user.account_already_terminated",
+        StatusCodes.CONFLICT
+      );
+    }
+
+    if (user.deactivatedUntil && user.deactivatedUntil > new Date()) {
+      throw new AppError(
+        "error.user.account_already_deactivated",
+        StatusCodes.CONFLICT
+      );
+    }
+
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        deactivatedUntil: new Date(date),
+      },
+    });
+
+    permissionCache.delete(userId);
+
+    return { message: "success.user.deactivated" };
+  }
+
+  async reactivateAccount(
+    userId: string,
+    ctx: ServiceContext
+  ): Promise<{ message: string }> {
+    const user = await prisma.user.findUnique({
+      where: { id: userId, deletedAt: null },
+      select: {
+        deactivatedUntil: true,
+        status: true,
+        isSystem: true,
+      },
+    });
+
+    if (!user) {
+      throw new AppError("error.user.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (user.isSystem) {
+      throw new AppError(
+        "error.user.system_user_immutable",
+        StatusCodes.FORBIDDEN
+      );
+    }
+
+    if (user.status === UserStatus.TERMINATED) {
+      throw new AppError(
+        "error.user.account_already_terminated",
+        StatusCodes.CONFLICT
+      );
+    }
+
+    if (!user.deactivatedUntil || user.deactivatedUntil <= new Date()) {
+      throw new AppError(
+        "error.user.account_not_deactivated",
+        StatusCodes.CONFLICT
+      );
+    }
+
+    const previousState = {
+      status: user.status,
+      deactivatedUntil: user.deactivatedUntil,
+    };
+
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        deactivatedUntil: null,
+      },
+    });
+
+    permissionCache.delete(userId);
+
+    return { message: "success.user.reactivated" };
   }
 }

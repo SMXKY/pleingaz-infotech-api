@@ -90,5 +90,28 @@
   "error.req.invalid_request_body": "Corps de requête invalide. Veuillez vérifier les données envoyées.",
   "error.auth.user_no_longer_exist": "Cet utilisateur n'existe plus.",
   "error.auth.incorrect_password": "Mot de passe incorrect.",
-  "success.user.changed_password": "Votre mot de passe a été modifié avec succès."
+  "success.user.changed_password": "Votre mot de passe a été modifié avec succès.",
+
+  "error.role.role_id_required": "L'identifiant du rôle est requis.",
+  "error.validation.invalid_user_id": "Identifiant utilisateur invalide.",
+  "error.validation.invalid_permission_id": "Identifiant de permission invalide.",
+  "error.validation.at_least_one_permission_required": "Au moins une permission doit être fournie.",
+  "error.role.system_role_immutable": "Ce rôle système ne peut pas être modifié.",
+  "error.role.already_disabled": "Ce rôle est déjà désactivé.",
+  "success.role.disabled": "Rôle désactivé avec succès.",
+  "error.role.already_enabled": "Ce rôle est déjà activé.",
+  "success.role.enabled": "Rôle activé avec succès.",
+  "error.role.inactive": "Ce rôle est inactif.",
+  "error.permission.one_or_more_not_found": "Une ou plusieurs permissions sont introuvables.",
+  "success.role.assigned_permissions": "Permissions attribuées au rôle avec succès.",
+  "error.user.terminated": "Ce compte utilisateur a été résilié.",
+  "error.user.already_has_role": "Cet utilisateur a déjà un rôle attribué.",
+  "success.role.assigned_to_user": "Rôle attribué à l'utilisateur avec succès.",
+
+  "error.user.deactivation_date_must_be_future": "La date de désactivation doit être dans le futur.",
+  "error.user.system_user_immutable": "Cet utilisateur système ne peut pas être modifié.",
+  "error.user.account_already_deactivated": "Ce compte est déjà désactivé.",
+  "success.user.deactivated": "Compte utilisateur désactivé avec succès.",
+  "error.user.account_not_deactivated": "Ce compte n'est pas désactivé.",
+  "success.user.reactivated": "Compte utilisateur réactivé avec succès."
 }
