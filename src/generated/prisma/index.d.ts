@@ -203,7 +203,8 @@ export const PermissionAction: {
   REJECT: 'REJECT',
   EXPORT: 'EXPORT',
   IMPORT: 'IMPORT',
-  RESTORE: 'RESTORE'
+  RESTORE: 'RESTORE',
+  ADMIN: 'ADMIN'
 };
 
 export type PermissionAction = (typeof PermissionAction)[keyof typeof PermissionAction]

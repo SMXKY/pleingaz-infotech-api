@@ -391,7 +391,8 @@ exports.PermissionAction = exports.$Enums.PermissionAction = {
   REJECT: 'REJECT',
   EXPORT: 'EXPORT',
   IMPORT: 'IMPORT',
-  RESTORE: 'RESTORE'
+  RESTORE: 'RESTORE',
+  ADMIN: 'ADMIN'
 };
 
 exports.PermissionRiskLevel = exports.$Enums.PermissionRiskLevel = {
