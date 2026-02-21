@@ -19,7 +19,7 @@ export class PermissionController extends BaseController<Permission> {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const ctx = this.getContext(req);
+      const ctx = this.getContext(req, res);
       const Permissions = await this.service.findWildCardPermissions(ctx);
       appResponder(StatusCodes.OK, Permissions, res);
     } catch (error) {

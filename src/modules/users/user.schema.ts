@@ -122,6 +122,12 @@ export const userPreferenceSchema = z.object({
 });
 
 export const updateMeSchema = z.object({
+  name: z.string().min(1, "error.validation.name_required").optional(),
+  surname: z.string().min(1, "error.validation.surname_required").optional(),
+  nationalIdNumber: z
+    .string()
+    .min(1, "error.validation.national_id_required")
+    .optional(),
   phoneNumber: z.string().optional(),
   address: z.string().optional(),
   emergencyContactName: z.string().optional(),

@@ -427,7 +427,12 @@ exports.LogOperation = exports.$Enums.LogOperation = {
   CREATE: 'CREATE',
   READ: 'READ',
   UPDATE: 'UPDATE',
-  DELETE: 'DELETE'
+  DELETE: 'DELETE',
+  AUTH: 'AUTH',
+  FORGOT_PASSWORD: 'FORGOT_PASSWORD',
+  RESET_PASSWORD: 'RESET_PASSWORD',
+  CHANGE_PASSWORD: 'CHANGE_PASSWORD',
+  CHANGE_USER_CREDENTIALS: 'CHANGE_USER_CREDENTIALS'
 };
 
 exports.LogCategory = exports.$Enums.LogCategory = {

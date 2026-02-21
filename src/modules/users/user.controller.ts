@@ -32,7 +32,7 @@ export class UserController extends BaseController<User> {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const ctx = this.getContext(req);
+      const ctx = this.getContext(req, res);
       const users = await this.service.findActiveUsers(ctx);
       appResponder(StatusCodes.OK, users, res);
     } catch (error) {
@@ -47,7 +47,7 @@ export class UserController extends BaseController<User> {
   ): Promise<void> => {
     try {
       const username = req.params.username;
-      const ctx = this.getContext(req);
+      const ctx = this.getContext(req, res);
       const user = await this.service.findByUsername(username as string);
 
       appResponder(StatusCodes.OK, user as object, res);
@@ -62,7 +62,7 @@ export class UserController extends BaseController<User> {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const ctx = this.getContext(req);
+      const ctx = this.getContext(req, res);
       const users = await this.service.findTerminatedUsers(ctx);
       appResponder(StatusCodes.OK, users, res);
     } catch (error) {
@@ -72,7 +72,7 @@ export class UserController extends BaseController<User> {
 
   createEmployee = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
-      const ctx = this.getContext(req);
+      const ctx = this.getContext(req, res);
       const form = req.body;
 
       const result = await this.service.createEmployee(form, ctx);
@@ -88,7 +88,7 @@ export class UserController extends BaseController<User> {
       throw new AppError(message, StatusCodes.BAD_REQUEST);
     }
 
-    const ctx = this.getContext(req);
+    const ctx = this.getContext(req, res);
     const result = await this.service.setupAccountCredentials(
       validation.data,
       ctx
@@ -105,7 +105,7 @@ export class UserController extends BaseController<User> {
 
   createSetupToken = catchAsync(async (req: Request, res: Response) => {
     const { userId } = req.params;
-    const ctx = this.getContext(req);
+    const ctx = this.getContext(req, res);
     const result = await this.service.createSetupToken(userId as string, ctx);
     appResponder(
       StatusCodes.OK,
@@ -117,13 +117,13 @@ export class UserController extends BaseController<User> {
   });
 
   login = catchAsync(async (req: Request, res: Response) => {
-    const ctx = this.getContext(req);
+    const ctx = this.getContext(req, res);
     const result = await this.service.login(req.body, ctx);
     appResponder(StatusCodes.OK, result, res);
   });
 
   forgotPassword = catchAsync(async (req: Request, res: Response) => {
-    const ctx = this.getContext(req);
+    const ctx = this.getContext(req, res);
     const email = req.body.email;
 
     if (!email) {
@@ -149,7 +149,7 @@ export class UserController extends BaseController<User> {
       throw new AppError(message, StatusCodes.BAD_REQUEST);
     }
 
-    const ctx = this.getContext(req);
+    const ctx = this.getContext(req, res);
     const result = await this.service.resetPassword(validation.data, ctx);
 
     appResponder(
@@ -163,7 +163,7 @@ export class UserController extends BaseController<User> {
 
   terminateAccount = catchAsync(async (req: Request, res: Response) => {
     const { userId } = req.params;
-    const ctx = this.getContext(req);
+    const ctx = this.getContext(req, res);
     const result = await this.service.terminateUser(userId as string, ctx);
     appResponder(
       StatusCodes.OK,
@@ -176,7 +176,7 @@ export class UserController extends BaseController<User> {
 
   activateAccount = catchAsync(async (req: Request, res: Response) => {
     const { userId } = req.params;
-    const ctx = this.getContext(req);
+    const ctx = this.getContext(req, res);
     const result = await this.service.activateAccount(userId as string, ctx);
     appResponder(
       StatusCodes.OK,
@@ -189,7 +189,7 @@ export class UserController extends BaseController<User> {
 
   changeRole = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
-      const ctx = this.getContext(req);
+      const ctx = this.getContext(req, res);
       if (!req.body.userId || !req.body.roleId) {
         return next(
           new AppError(
@@ -216,7 +216,7 @@ export class UserController extends BaseController<User> {
       throw new AppError(message, StatusCodes.BAD_REQUEST);
     }
 
-    const ctx = this.getContext(req);
+    const ctx = this.getContext(req, res);
     const result = await this.service.changePassword(validation.data, ctx, res);
 
     appResponder(
@@ -235,7 +235,7 @@ export class UserController extends BaseController<User> {
       throw new AppError(message, StatusCodes.BAD_REQUEST);
     }
 
-    const ctx = this.getContext(req);
+    const ctx = this.getContext(req, res);
     const result = await this.service.changeUserCredentials(
       validation.data,
       ctx
@@ -261,14 +261,14 @@ export class UserController extends BaseController<User> {
       throw new AppError(message, StatusCodes.BAD_REQUEST);
     }
 
-    const ctx = this.getContext(req);
+    const ctx = this.getContext(req, res);
     const result = await this.service.updateMe(validation.data, ctx, res);
 
     appResponder(StatusCodes.OK, result, res);
   });
 
   changeMyProfilePicture = catchAsync(async (req: Request, res: Response) => {
-    const ctx = this.getContext(req);
+    const ctx = this.getContext(req, res);
     const result = await this.service.updateMyProfilePicture(ctx, res, req);
 
     appResponder(StatusCodes.OK, result, res);
@@ -282,7 +282,7 @@ export class UserController extends BaseController<User> {
         throw new AppError(message, StatusCodes.BAD_REQUEST);
       }
 
-      const ctx = this.getContext(req);
+      const ctx = this.getContext(req, res);
       const result = await this.service.temporarilyDeactivateAccount(
         validation.data,
         ctx
@@ -309,7 +309,7 @@ export class UserController extends BaseController<User> {
         );
       }
 
-      const ctx = this.getContext(req);
+      const ctx = this.getContext(req, res);
       const result = await this.service.reactivateAccount(
         req.params.id as string,
         ctx

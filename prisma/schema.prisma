@@ -140,6 +140,11 @@ enum LogOperation {
   READ
   UPDATE
   DELETE
+  AUTH
+  FORGOT_PASSWORD
+  RESET_PASSWORD
+  CHANGE_PASSWORD
+  CHANGE_USER_CREDENTIALS
 }
 
 enum LogCategory {
@@ -352,7 +357,7 @@ model ActivityLog {
   id            String       @id @default(uuid())
   user          User?        @relation(fields: [userId], references: [id])
   userId        String?      @map("user_id")
-  userEmail     String       @map("user_email")
+  userEmail     String?      @map("user_email")
   operation     LogOperation
   category      LogCategory
   tableName     String       @map("table_name")

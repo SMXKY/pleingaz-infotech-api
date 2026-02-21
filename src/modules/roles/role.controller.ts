@@ -23,7 +23,7 @@ export class RoleController extends BaseController<Role> {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const ctx = this.getContext(req);
+      const ctx = this.getContext(req, res);
       const roles = await this.service.findActiveRoles(ctx);
       appResponder(StatusCodes.OK, roles, res);
     } catch (error) {
@@ -37,7 +37,7 @@ export class RoleController extends BaseController<Role> {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const ctx = this.getContext(req);
+      const ctx = this.getContext(req, res);
       const role = await this.service.findWithPermissions(
         req.params.id as string,
         ctx
@@ -50,7 +50,7 @@ export class RoleController extends BaseController<Role> {
 
   disableRole = catchAsync(async (req: Request, res: Response) => {
     const { id } = req.params;
-    const ctx = this.getContext(req);
+    const ctx = this.getContext(req, res);
     const result = await this.service.disableRole(id as string, ctx);
     appResponder(
       StatusCodes.OK,
@@ -63,7 +63,7 @@ export class RoleController extends BaseController<Role> {
 
   enableRole = catchAsync(async (req: Request, res: Response) => {
     const { id } = req.params;
-    const ctx = this.getContext(req);
+    const ctx = this.getContext(req, res);
     const result = await this.service.enableRole(id as string, ctx);
     appResponder(
       StatusCodes.OK,
@@ -81,7 +81,7 @@ export class RoleController extends BaseController<Role> {
       throw new AppError(message, StatusCodes.BAD_REQUEST);
     }
 
-    const ctx = this.getContext(req);
+    const ctx = this.getContext(req, res);
     const result = await this.service.assignRolePermissions(
       validation.data,
       ctx,

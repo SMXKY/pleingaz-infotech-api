@@ -214,7 +214,12 @@ export const LogOperation: {
   CREATE: 'CREATE',
   READ: 'READ',
   UPDATE: 'UPDATE',
-  DELETE: 'DELETE'
+  DELETE: 'DELETE',
+  AUTH: 'AUTH',
+  FORGOT_PASSWORD: 'FORGOT_PASSWORD',
+  RESET_PASSWORD: 'RESET_PASSWORD',
+  CHANGE_PASSWORD: 'CHANGE_PASSWORD',
+  CHANGE_USER_CREDENTIALS: 'CHANGE_USER_CREDENTIALS'
 };
 
 export type LogOperation = (typeof LogOperation)[keyof typeof LogOperation]
@@ -13270,7 +13275,7 @@ export namespace Prisma {
   export type ActivityLogGroupByOutputType = {
     id: string
     userId: string | null
-    userEmail: string
+    userEmail: string | null
     operation: $Enums.LogOperation
     category: $Enums.LogCategory
     tableName: string
@@ -13406,7 +13411,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string | null
-      userEmail: string
+      userEmail: string | null
       operation: $Enums.LogOperation
       category: $Enums.LogCategory
       tableName: string
@@ -17782,7 +17787,7 @@ export namespace Prisma {
     NOT?: ActivityLogWhereInput | ActivityLogWhereInput[]
     id?: StringFilter<"ActivityLog"> | string
     userId?: StringNullableFilter<"ActivityLog"> | string | null
-    userEmail?: StringFilter<"ActivityLog"> | string
+    userEmail?: StringNullableFilter<"ActivityLog"> | string | null
     operation?: EnumLogOperationFilter<"ActivityLog"> | $Enums.LogOperation
     category?: EnumLogCategoryFilter<"ActivityLog"> | $Enums.LogCategory
     tableName?: StringFilter<"ActivityLog"> | string
@@ -17803,7 +17808,7 @@ export namespace Prisma {
   export type ActivityLogOrderByWithRelationInput = {
     id?: SortOrder
     userId?: SortOrderInput | SortOrder
-    userEmail?: SortOrder
+    userEmail?: SortOrderInput | SortOrder
     operation?: SortOrder
     category?: SortOrder
     tableName?: SortOrder
@@ -17827,7 +17832,7 @@ export namespace Prisma {
     OR?: ActivityLogWhereInput[]
     NOT?: ActivityLogWhereInput | ActivityLogWhereInput[]
     userId?: StringNullableFilter<"ActivityLog"> | string | null
-    userEmail?: StringFilter<"ActivityLog"> | string
+    userEmail?: StringNullableFilter<"ActivityLog"> | string | null
     operation?: EnumLogOperationFilter<"ActivityLog"> | $Enums.LogOperation
     category?: EnumLogCategoryFilter<"ActivityLog"> | $Enums.LogCategory
     tableName?: StringFilter<"ActivityLog"> | string
@@ -17848,7 +17853,7 @@ export namespace Prisma {
   export type ActivityLogOrderByWithAggregationInput = {
     id?: SortOrder
     userId?: SortOrderInput | SortOrder
-    userEmail?: SortOrder
+    userEmail?: SortOrderInput | SortOrder
     operation?: SortOrder
     category?: SortOrder
     tableName?: SortOrder
@@ -17874,7 +17879,7 @@ export namespace Prisma {
     NOT?: ActivityLogScalarWhereWithAggregatesInput | ActivityLogScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"ActivityLog"> | string
     userId?: StringNullableWithAggregatesFilter<"ActivityLog"> | string | null
-    userEmail?: StringWithAggregatesFilter<"ActivityLog"> | string
+    userEmail?: StringNullableWithAggregatesFilter<"ActivityLog"> | string | null
     operation?: EnumLogOperationWithAggregatesFilter<"ActivityLog"> | $Enums.LogOperation
     category?: EnumLogCategoryWithAggregatesFilter<"ActivityLog"> | $Enums.LogCategory
     tableName?: StringWithAggregatesFilter<"ActivityLog"> | string
@@ -18973,7 +18978,7 @@ export namespace Prisma {
 
   export type ActivityLogCreateInput = {
     id?: string
-    userEmail: string
+    userEmail?: string | null
     operation: $Enums.LogOperation
     category: $Enums.LogCategory
     tableName: string
@@ -18994,7 +18999,7 @@ export namespace Prisma {
   export type ActivityLogUncheckedCreateInput = {
     id?: string
     userId?: string | null
-    userEmail: string
+    userEmail?: string | null
     operation: $Enums.LogOperation
     category: $Enums.LogCategory
     tableName: string
@@ -19013,7 +19018,7 @@ export namespace Prisma {
 
   export type ActivityLogUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userEmail?: StringFieldUpdateOperationsInput | string
+    userEmail?: NullableStringFieldUpdateOperationsInput | string | null
     operation?: EnumLogOperationFieldUpdateOperationsInput | $Enums.LogOperation
     category?: EnumLogCategoryFieldUpdateOperationsInput | $Enums.LogCategory
     tableName?: StringFieldUpdateOperationsInput | string
@@ -19034,7 +19039,7 @@ export namespace Prisma {
   export type ActivityLogUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
-    userEmail?: StringFieldUpdateOperationsInput | string
+    userEmail?: NullableStringFieldUpdateOperationsInput | string | null
     operation?: EnumLogOperationFieldUpdateOperationsInput | $Enums.LogOperation
     category?: EnumLogCategoryFieldUpdateOperationsInput | $Enums.LogCategory
     tableName?: StringFieldUpdateOperationsInput | string
@@ -19054,7 +19059,7 @@ export namespace Prisma {
   export type ActivityLogCreateManyInput = {
     id?: string
     userId?: string | null
-    userEmail: string
+    userEmail?: string | null
     operation: $Enums.LogOperation
     category: $Enums.LogCategory
     tableName: string
@@ -19073,7 +19078,7 @@ export namespace Prisma {
 
   export type ActivityLogUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userEmail?: StringFieldUpdateOperationsInput | string
+    userEmail?: NullableStringFieldUpdateOperationsInput | string | null
     operation?: EnumLogOperationFieldUpdateOperationsInput | $Enums.LogOperation
     category?: EnumLogCategoryFieldUpdateOperationsInput | $Enums.LogCategory
     tableName?: StringFieldUpdateOperationsInput | string
@@ -19093,7 +19098,7 @@ export namespace Prisma {
   export type ActivityLogUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
-    userEmail?: StringFieldUpdateOperationsInput | string
+    userEmail?: NullableStringFieldUpdateOperationsInput | string | null
     operation?: EnumLogOperationFieldUpdateOperationsInput | $Enums.LogOperation
     category?: EnumLogCategoryFieldUpdateOperationsInput | $Enums.LogCategory
     tableName?: StringFieldUpdateOperationsInput | string
@@ -24115,7 +24120,7 @@ export namespace Prisma {
 
   export type ActivityLogCreateWithoutUserInput = {
     id?: string
-    userEmail: string
+    userEmail?: string | null
     operation: $Enums.LogOperation
     category: $Enums.LogCategory
     tableName: string
@@ -24134,7 +24139,7 @@ export namespace Prisma {
 
   export type ActivityLogUncheckedCreateWithoutUserInput = {
     id?: string
-    userEmail: string
+    userEmail?: string | null
     operation: $Enums.LogOperation
     category: $Enums.LogCategory
     tableName: string
@@ -24384,7 +24389,7 @@ export namespace Prisma {
     NOT?: ActivityLogScalarWhereInput | ActivityLogScalarWhereInput[]
     id?: StringFilter<"ActivityLog"> | string
     userId?: StringNullableFilter<"ActivityLog"> | string | null
-    userEmail?: StringFilter<"ActivityLog"> | string
+    userEmail?: StringNullableFilter<"ActivityLog"> | string | null
     operation?: EnumLogOperationFilter<"ActivityLog"> | $Enums.LogOperation
     category?: EnumLogCategoryFilter<"ActivityLog"> | $Enums.LogCategory
     tableName?: StringFilter<"ActivityLog"> | string
@@ -25622,7 +25627,7 @@ export namespace Prisma {
 
   export type ActivityLogCreateManyUserInput = {
     id?: string
-    userEmail: string
+    userEmail?: string | null
     operation: $Enums.LogOperation
     category: $Enums.LogCategory
     tableName: string
@@ -25826,7 +25831,7 @@ export namespace Prisma {
 
   export type ActivityLogUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userEmail?: StringFieldUpdateOperationsInput | string
+    userEmail?: NullableStringFieldUpdateOperationsInput | string | null
     operation?: EnumLogOperationFieldUpdateOperationsInput | $Enums.LogOperation
     category?: EnumLogCategoryFieldUpdateOperationsInput | $Enums.LogCategory
     tableName?: StringFieldUpdateOperationsInput | string
@@ -25845,7 +25850,7 @@ export namespace Prisma {
 
   export type ActivityLogUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userEmail?: StringFieldUpdateOperationsInput | string
+    userEmail?: NullableStringFieldUpdateOperationsInput | string | null
     operation?: EnumLogOperationFieldUpdateOperationsInput | $Enums.LogOperation
     category?: EnumLogCategoryFieldUpdateOperationsInput | $Enums.LogCategory
     tableName?: StringFieldUpdateOperationsInput | string
@@ -25864,7 +25869,7 @@ export namespace Prisma {
 
   export type ActivityLogUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userEmail?: StringFieldUpdateOperationsInput | string
+    userEmail?: NullableStringFieldUpdateOperationsInput | string | null
     operation?: EnumLogOperationFieldUpdateOperationsInput | $Enums.LogOperation
     category?: EnumLogCategoryFieldUpdateOperationsInput | $Enums.LogCategory
     tableName?: StringFieldUpdateOperationsInput | string

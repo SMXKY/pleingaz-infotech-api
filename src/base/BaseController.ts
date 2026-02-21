@@ -13,11 +13,11 @@ import t from "@utils/translate.util";
 export abstract class BaseController<T> {
   protected abstract service: BaseService<T, any, any>;
 
-  protected getContext(req: Request): ServiceContext {
+  protected getContext(req: Request, res: Response): ServiceContext {
     return {
       req,
-      userId: (req as any).user?.id,
-      userEmail: (req as any).user?.email,
+      userId: res.locals.user?.id,
+      userEmail: res.locals.user?.email,
       requestId: req.headers["x-request-id"] as string,
     };
   }
@@ -28,7 +28,7 @@ export abstract class BaseController<T> {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const ctx = this.getContext(req);
+      const ctx = this.getContext(req, res);
       const record = await this.service.create(req.body, ctx);
       appResponder(StatusCodes.CREATED, record as object, res);
     } catch (error) {
@@ -42,7 +42,7 @@ export abstract class BaseController<T> {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const ctx = this.getContext(req);
+      const ctx = this.getContext(req, res);
       const include = this.parseInclude(req.query.include as string);
 
       const rawId = req.params.id;
@@ -75,7 +75,7 @@ export abstract class BaseController<T> {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const ctx = this.getContext(req);
+      const ctx = this.getContext(req, res);
       const options = this.parseFindManyOptions(req);
       const result = await this.service.findMany(options, ctx);
       appResponder(StatusCodes.OK, result.data, res, result.meta);
@@ -90,7 +90,7 @@ export abstract class BaseController<T> {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const ctx = this.getContext(req);
+      const ctx = this.getContext(req, res);
 
       const rawId = req.params.id;
 
@@ -121,7 +121,7 @@ export abstract class BaseController<T> {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const ctx = this.getContext(req);
+      const ctx = this.getContext(req, res);
       const soft = req.query.hard !== "true";
 
       const rawId = req.params.id;
@@ -158,7 +158,7 @@ export abstract class BaseController<T> {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const ctx = this.getContext(req);
+      const ctx = this.getContext(req, res);
 
       const rawId = req.params.id;
 
@@ -190,7 +190,7 @@ export abstract class BaseController<T> {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const ctx = this.getContext(req);
+      const ctx = this.getContext(req, res);
       const options = this.parseFindManyOptions(req);
       const result = await this.service.findDeleted(options, ctx);
       appResponder(StatusCodes.OK, result.data, res, result.meta);
@@ -205,7 +205,7 @@ export abstract class BaseController<T> {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const ctx = this.getContext(req);
+      const ctx = this.getContext(req, res);
       const include = this.parseInclude(req.query.include as string);
       const record = await this.service.findDeletedById(
         req.params.id as string,

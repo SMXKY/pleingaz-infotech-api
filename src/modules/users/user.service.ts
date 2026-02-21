@@ -42,6 +42,7 @@ import { Response, Request } from "express";
 import { UpdateMeResult, UserStatus } from "@appTypes/user.types";
 import { applyFtpUrlTransform } from "@utils/applyFtpUrl.util";
 import { deleteFilesFromFTP, handleFileUploads } from "@services/ftp.service";
+import { LogCategory, LogOperation } from "@appTypes/log.type";
 
 export class UserService extends BaseService<
   User,
@@ -246,6 +247,17 @@ export class UserService extends BaseService<
       return user;
     });
 
+    this.log(ctx.req as Request, {
+      operation: LogOperation.CREATE,
+      category: LogCategory.WRITE,
+      recordId: result.id,
+      previousState: null,
+      newState: result,
+      changedFields: [],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
+    });
+
     return result;
   }
 
@@ -356,7 +368,7 @@ export class UserService extends BaseService<
     const token = crypto.randomBytes(32).toString("hex");
     const tokenId = crypto.createHash("sha256").update(token).digest("hex");
 
-    await prisma.userToken.create({
+    const userToken = await prisma.userToken.create({
       data: {
         id: tokenId,
         userId,
@@ -398,6 +410,20 @@ export class UserService extends BaseService<
       "",
       emailTemplate
     );
+
+    this.log(ctx.req as Request, {
+      operation: LogOperation.CREATE,
+      category: LogCategory.WRITE,
+      recordId: userToken.id,
+      previousState: null,
+      newState: {
+        type: userToken.type,
+        userId: userToken.userId,
+      },
+      changedFields: [],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
+    });
 
     return { message: "success.setup_token_sent" };
   }
@@ -547,6 +573,17 @@ export class UserService extends BaseService<
       ...safeUser
     } = user;
 
+    this.log(ctx.req as Request, {
+      operation: LogOperation.AUTH,
+      category: LogCategory.WRITE,
+      recordId: safeUser.id,
+      previousState: null,
+      newState: null,
+      changedFields: [],
+      userId: ctx.userId,
+      userEmail: user.email || "system",
+    });
+
     return {
       user: {
         ...safeUser,
@@ -609,7 +646,7 @@ export class UserService extends BaseService<
       Date.now() + Number(RESET_PASSWORD_LIMIT_HOURS) * 60 * 60 * 1000
     );
 
-    await prisma.userToken.create({
+    const userToken = await prisma.userToken.create({
       data: {
         id: hashedToken,
         userId: user.id,
@@ -656,6 +693,20 @@ export class UserService extends BaseService<
       "",
       emailHtml
     );
+
+    this.log(ctx.req as Request, {
+      operation: LogOperation.FORGOT_PASSWORD,
+      category: LogCategory.WRITE,
+      recordId: userToken.id,
+      previousState: null,
+      newState: {
+        userId: userToken.userId,
+        type: userToken.type,
+      },
+      changedFields: [],
+      userId: ctx.userId,
+      userEmail: user.email || "system",
+    });
 
     return GENERIC_RESPONSE;
   }
@@ -708,6 +759,21 @@ export class UserService extends BaseService<
       }),
     ]);
 
+    this.log(ctx.req as Request, {
+      operation: LogOperation.RESET_PASSWORD,
+      category: LogCategory.WRITE,
+      recordId: userToken.id,
+      previousState: {
+        usedAt: userToken.usedAt,
+      },
+      newState: {
+        usedAt: new Date(),
+      },
+      changedFields: ["usedAt"],
+      userId: userToken.userId,
+      userEmail: ctx.userEmail || "system",
+    });
+
     return { message: "success.password.reset" };
   }
 
@@ -741,6 +807,21 @@ export class UserService extends BaseService<
       },
     });
 
+    this.log(ctx.req as Request, {
+      operation: LogOperation.UPDATE,
+      category: LogCategory.WRITE,
+      recordId: userId,
+      previousState: {
+        status: user.status,
+      },
+      newState: {
+        status: UserStatus.TERMINATED,
+      },
+      changedFields: ["status"],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
+    });
+
     return { message: "success.user.terminate" };
   }
 
@@ -772,6 +853,21 @@ export class UserService extends BaseService<
       data: {
         status: UserStatus.ACTIVE,
       },
+    });
+
+    this.log(ctx.req as Request, {
+      operation: LogOperation.UPDATE,
+      category: LogCategory.WRITE,
+      recordId: userId,
+      previousState: {
+        status: user.status,
+      },
+      newState: {
+        status: UserStatus.ACTIVE,
+      },
+      changedFields: ["status"],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
     });
 
     return { message: "success.user.unterminate" };
@@ -817,6 +913,8 @@ export class UserService extends BaseService<
       throw new AppError("error.role.not_found", StatusCodes.NOT_FOUND);
     }
 
+    const previousRoleId = user.roleId;
+
     await prisma.user.update({
       where: {
         id: userId,
@@ -824,6 +922,21 @@ export class UserService extends BaseService<
       data: {
         roleId: roleId,
       },
+    });
+
+    this.log(ctx.req as Request, {
+      operation: LogOperation.UPDATE,
+      category: LogCategory.WRITE,
+      recordId: role.id,
+      previousState: {
+        roleId: previousRoleId,
+      },
+      newState: {
+        roleId: roleId,
+      },
+      changedFields: ["roleId"],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
     });
 
     return { message: "success.user.role_change" };
@@ -882,6 +995,17 @@ export class UserService extends BaseService<
       }),
     ]);
 
+    this.log(ctx.req as Request, {
+      operation: LogOperation.CHANGE_PASSWORD,
+      category: LogCategory.WRITE,
+      recordId: res.locals.id,
+      previousState: null,
+      newState: null,
+      changedFields: ["password"],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
+    });
+
     return { message: "success.user.changed_password" };
   }
 
@@ -921,7 +1045,7 @@ export class UserService extends BaseService<
       throw new AppError("error.user.already_exists", StatusCodes.CONFLICT);
     }
 
-    await prisma.$transaction([
+    const [newUser] = await prisma.$transaction([
       prisma.user.update({
         where: { id: userId },
         data: {
@@ -932,6 +1056,23 @@ export class UserService extends BaseService<
         },
       }),
     ]);
+
+    this.log(ctx.req as Request, {
+      operation: LogOperation.CHANGE_USER_CREDENTIALS,
+      category: LogCategory.WRITE,
+      recordId: user.id,
+      previousState: {
+        email: user.email,
+        username: user.username,
+      },
+      newState: {
+        email: newUser.email,
+        username: newUser.username,
+      },
+      changedFields: ["password", "email", "username"],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
+    });
 
     return { message: "success.user.credentials_changed" };
   }
@@ -1011,6 +1152,22 @@ export class UserService extends BaseService<
 
     permissionCache.delete(userId);
 
+    this.log(ctx.req as Request, {
+      operation: LogOperation.UPDATE,
+      category: LogCategory.WRITE,
+      recordId: user.id,
+      previousState: {
+        ...data,
+      },
+      newState: {
+        ...updatedUser,
+        prferences: updatedPreferences,
+      },
+      changedFields: [""],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
+    });
+
     return {
       ...updatedUser,
       preferences: updatedPreferences,
@@ -1050,9 +1207,10 @@ export class UserService extends BaseService<
     }
 
     const oldPP = user.profilePictureUrl;
+    let updatedUser;
 
     try {
-      await prisma.user.update({
+      updatedUser = await prisma.user.update({
         where: { id: userId },
         data: { profilePictureUrl: fileUrls[0] },
       });
@@ -1064,6 +1222,21 @@ export class UserService extends BaseService<
     if (oldPP) {
       await deleteFilesFromFTP([oldPP]).catch(() => {});
     }
+
+    this.log(ctx.req as Request, {
+      operation: LogOperation.UPDATE,
+      category: LogCategory.WRITE,
+      recordId: user.id,
+      previousState: {
+        profilePictureUrl: oldPP,
+      },
+      newState: {
+        profilePictureUrl: updatedUser.profilePictureUrl,
+      },
+      changedFields: ["profilePictureUrl"],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
+    });
 
     return { url: applyFtpUrlTransform(fileUrls[0]) };
   }
@@ -1084,6 +1257,7 @@ export class UserService extends BaseService<
     const user = await prisma.user.findUnique({
       where: { id: userId, deletedAt: null },
       select: {
+        id: true,
         deactivatedUntil: true,
         status: true,
         isSystem: true,
@@ -1115,7 +1289,7 @@ export class UserService extends BaseService<
       );
     }
 
-    await prisma.user.update({
+    const updatedUser = await prisma.user.update({
       where: { id: userId },
       data: {
         deactivatedUntil: new Date(date),
@@ -1123,6 +1297,21 @@ export class UserService extends BaseService<
     });
 
     permissionCache.delete(userId);
+
+    this.log(ctx.req as Request, {
+      operation: LogOperation.UPDATE,
+      category: LogCategory.WRITE,
+      recordId: user.id,
+      previousState: {
+        deactivatedUntil: user.deactivatedUntil,
+      },
+      newState: {
+        deactivatedUntil: updatedUser.deactivatedUntil,
+      },
+      changedFields: ["deactivatedUntil"],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
+    });
 
     return { message: "success.user.deactivated" };
   }
@@ -1134,6 +1323,7 @@ export class UserService extends BaseService<
     const user = await prisma.user.findUnique({
       where: { id: userId, deletedAt: null },
       select: {
+        id: true,
         deactivatedUntil: true,
         status: true,
         isSystem: true,
@@ -1170,7 +1360,7 @@ export class UserService extends BaseService<
       deactivatedUntil: user.deactivatedUntil,
     };
 
-    await prisma.user.update({
+    const updatedUser = await prisma.user.update({
       where: { id: userId },
       data: {
         deactivatedUntil: null,
@@ -1178,6 +1368,21 @@ export class UserService extends BaseService<
     });
 
     permissionCache.delete(userId);
+
+    this.log(ctx.req as Request, {
+      operation: LogOperation.UPDATE,
+      category: LogCategory.WRITE,
+      recordId: user.id,
+      previousState: {
+        deactivatedUntil: user.deactivatedUntil,
+      },
+      newState: {
+        deactivatedUntil: updatedUser.deactivatedUntil,
+      },
+      changedFields: ["deactivatedUntil"],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
+    });
 
     return { message: "success.user.reactivated" };
   }

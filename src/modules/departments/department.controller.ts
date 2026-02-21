@@ -19,7 +19,7 @@ export class DepartmentController extends BaseController<Department> {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const ctx = this.getContext(req);
+      const ctx = this.getContext(req, res);
       const roles = await this.service.findActiveDepartments(ctx);
       appResponder(StatusCodes.OK, roles, res);
     } catch (error) {

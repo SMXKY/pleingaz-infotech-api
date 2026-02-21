@@ -14,7 +14,8 @@ import { Role } from "src/generated/prisma";
 import { prisma } from "src";
 import { permissionCache } from "../users/utilites/getUserPermissions.util";
 import { UserStatus } from "@appTypes/user.types";
-import { Response } from "express";
+import { Request, Response } from "express";
+import { LogCategory, LogOperation } from "@appTypes/log.type";
 
 export class RoleService extends BaseService<
   Role,
@@ -115,7 +116,9 @@ export class RoleService extends BaseService<
       throw new AppError("error.role.already_disabled", StatusCodes.CONFLICT);
     }
 
-    await prisma.role.update({
+    const previousState = { ...role };
+
+    const newState = await prisma.role.update({
       where: { id: role.id },
       data: { isActive: false },
     });
@@ -123,6 +126,17 @@ export class RoleService extends BaseService<
     for (const user of role.users) {
       permissionCache.delete(user.id);
     }
+
+    this.log(ctx.req as Request, {
+      operation: LogOperation.UPDATE,
+      category: LogCategory.WRITE,
+      recordId: role.id,
+      previousState: previousState,
+      newState: newState,
+      changedFields: ["isActive"],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
+    });
 
     return { message: "success.role.disabled" };
   }
@@ -156,7 +170,9 @@ export class RoleService extends BaseService<
       throw new AppError("error.role.already_enabled", StatusCodes.CONFLICT);
     }
 
-    await prisma.role.update({
+    const previousState = { ...role };
+
+    const newState = await prisma.role.update({
       where: { id: role.id },
       data: { isActive: true },
     });
@@ -164,6 +180,17 @@ export class RoleService extends BaseService<
     for (const user of role.users) {
       permissionCache.delete(user.id);
     }
+
+    this.log(ctx.req as Request, {
+      operation: LogOperation.UPDATE,
+      category: LogCategory.WRITE,
+      recordId: role.id,
+      previousState: previousState,
+      newState: newState,
+      changedFields: ["isActive"],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
+    });
 
     return { message: "success.role.enabled" };
   }
@@ -230,6 +257,17 @@ export class RoleService extends BaseService<
       permissionCache.delete(user.id);
     }
 
+    this.log(ctx.req as Request, {
+      operation: LogOperation.CREATE,
+      category: LogCategory.WRITE,
+      recordId: role.id,
+      previousState: null,
+      newState: null,
+      changedFields: [""],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
+    });
+
     return { message: "success.role.assigned_permissions" };
   }
 
@@ -285,6 +323,21 @@ export class RoleService extends BaseService<
     });
 
     permissionCache.delete(userId);
+
+    this.log(ctx.req as Request, {
+      operation: LogOperation.UPDATE,
+      category: LogCategory.WRITE,
+      recordId: role.id,
+      previousState: {
+        roleId: previousRoleId,
+      },
+      newState: {
+        roleId: roleId,
+      },
+      changedFields: [""],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
+    });
 
     return { message: "success.role.assigned_to_user" };
   }
