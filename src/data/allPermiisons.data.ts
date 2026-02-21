@@ -14,6 +14,10 @@ export const allPermissions = {
     reactivateUser: "can_reactivate_user",
     resendUserInvite: "can_resend_user_invite",
     restoreUser: "can_restore_user",
+
+    readUserPayroll: "can_read_user_payroll",
+    readAllUsersPayroll: "can_read_all_users_payroll",
+    updateUserPayroll: "can_update_user_payroll",
   },
   departments: {
     createDepartment: "can_create_department",

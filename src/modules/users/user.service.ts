@@ -12,11 +12,12 @@ import {
   ChangeUserCredentialsInput,
   UpdateMeInput,
   UserDeactivateInput,
+  UpdateUserPayrollDataInput,
 } from "./user.schema";
 import { AppError } from "@utils/AppError.util";
 import { StatusCodes } from "http-status-codes";
-import { ServiceContext } from "@appTypes/base.types";
-import { $Enums, TokenType, User } from "src/generated/prisma";
+import { FindManyOptions, ServiceContext } from "@appTypes/base.types";
+import { $Enums, Status, TokenType, User } from "src/generated/prisma";
 import { prisma } from "src";
 import path from "path";
 import { readFileSync } from "fs";
@@ -1385,5 +1386,289 @@ export class UserService extends BaseService<
     });
 
     return { message: "success.user.reactivated" };
+  }
+
+  async getMyPayrollData(
+    ctx: ServiceContext
+  ): Promise<Partial<UpdateMeResult>> {
+    const userId = ctx.userId!;
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId, deletedAt: null },
+      select: {
+        baseSalaryInCFA: true,
+        bankName: true,
+        cnpsNumber: true,
+        taxId: true,
+        status: true,
+        id: true,
+      },
+    });
+
+    if (!user) {
+      throw new AppError("error.user.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (user.status === Status.TERMINATED) {
+      throw new AppError(
+        "error.user.account_terminated",
+        StatusCodes.FORBIDDEN
+      );
+    }
+
+    this.log(ctx.req as Request, {
+      operation: LogOperation.READ,
+      category: LogCategory.SENSITIVE_READ,
+      recordId: user.id,
+      previousState: null,
+      newState: null,
+      changedFields: [],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
+    });
+
+    const { status, id, ...safeUser } = user;
+    return safeUser;
+  }
+
+  async getUserPayrollData(
+    userId: string,
+    ctx: ServiceContext
+  ): Promise<Partial<UpdateMeResult>> {
+    const user = await prisma.user.findUnique({
+      where: { id: userId, deletedAt: null },
+      select: {
+        baseSalaryInCFA: true,
+        bankName: true,
+        cnpsNumber: true,
+        taxId: true,
+        status: true,
+        id: true,
+      },
+    });
+
+    if (!user) {
+      throw new AppError("error.user.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (user.status === Status.TERMINATED) {
+      throw new AppError(
+        "error.user.account_terminated",
+        StatusCodes.FORBIDDEN
+      );
+    }
+
+    this.log(ctx.req as Request, {
+      operation: LogOperation.READ,
+      category: LogCategory.SENSITIVE_READ,
+      recordId: user.id,
+      previousState: null,
+      newState: null,
+      changedFields: [],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
+    });
+
+    const { status, id, ...safeUser } = user;
+    return safeUser;
+  }
+
+  async getAllUserPayrollData(
+    options: FindManyOptions,
+    ctx: ServiceContext
+  ): Promise<{ users: Partial<User>[]; meta: any }> {
+    options.select = {
+      baseSalaryInCFA: true,
+      bankName: true,
+      cnpsNumber: true,
+      taxId: true,
+      id: true,
+      email: true,
+      username: true,
+      name: true,
+      surname: true,
+      employeeId: true,
+      phoneNumber: true,
+      gender: true,
+      address: true,
+      hireDate: true,
+    };
+
+    const result = await this.repository.findMany(options);
+
+    this.log(ctx.req as Request, {
+      operation: LogOperation.READ,
+      category: LogCategory.SENSITIVE_READ,
+      recordId: "bulk_payroll_read",
+      previousState: null,
+      newState: null,
+      changedFields: [],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
+    });
+
+    return {
+      users: result.data,
+      meta: result.meta,
+    };
+  }
+
+  async updateUserPayrollData(
+    data: UpdateUserPayrollDataInput,
+    ctx: ServiceContext
+  ): Promise<Partial<User>> {
+    const {
+      userId,
+      baseSalaryInCFA,
+      bankName,
+      cnpsNumber,
+      taxId,
+      login,
+      password,
+    } = data;
+
+    const authUser = await prisma.user.findFirst({
+      where: {
+        OR: [{ username: login }, { email: login }],
+        deletedAt: null,
+      },
+      select: {
+        id: true,
+        password: true,
+        status: true,
+        failedLoginAttempts: true,
+        deactivatedUntil: true,
+        lockedUntil: true,
+      },
+    });
+
+    if (!authUser || !authUser.password) {
+      throw new AppError(
+        "error.auth.incorrect_credentials",
+        StatusCodes.UNAUTHORIZED
+      );
+    }
+
+    if (authUser.status !== Status.ACTIVE) {
+      throw new AppError(
+        "error.auth.account_not_active",
+        StatusCodes.FORBIDDEN
+      );
+    }
+
+    if (authUser.lockedUntil && authUser.lockedUntil.getTime() > Date.now()) {
+      const remainingMinutes = Math.ceil(
+        (authUser.lockedUntil.getTime() - Date.now()) / (60 * 1000)
+      );
+      throw new AppError("error.auth.account_locked", StatusCodes.FORBIDDEN, {
+        minutes: remainingMinutes,
+      });
+    }
+
+    if (
+      authUser.deactivatedUntil &&
+      authUser.deactivatedUntil.getTime() > Date.now()
+    ) {
+      throw new AppError(
+        "error.auth.account_temporarily_not_active",
+        StatusCodes.FORBIDDEN
+      );
+    }
+
+    const isPasswordCorrect = await argon2.verify(authUser.password, password);
+
+    if (!isPasswordCorrect) {
+      const newAttempts = authUser.failedLoginAttempts + 1;
+      const shouldLock = newAttempts >= Number(MAX_LOGIN_ATTEMPTS);
+
+      await prisma.user.update({
+        where: { id: authUser.id },
+        data: {
+          failedLoginAttempts: newAttempts,
+          ...(shouldLock && {
+            lockedUntil: new Date(
+              Date.now() +
+                Number(ACCOUNT_LOGIN_WAIT_TIME_HOURS) * 60 * 60 * 1000
+            ),
+          }),
+        },
+      });
+
+      throw new AppError(
+        shouldLock
+          ? "error.auth.account_locked"
+          : "error.auth.incorrect_credentials",
+        shouldLock ? StatusCodes.FORBIDDEN : StatusCodes.UNAUTHORIZED,
+        shouldLock
+          ? { minutes: Number(ACCOUNT_LOGIN_WAIT_TIME_HOURS) * 60 }
+          : undefined
+      );
+    }
+
+    await prisma.user.update({
+      where: { id: authUser.id },
+      data: { failedLoginAttempts: 0 },
+    });
+
+    const targetUser = await prisma.user.findUnique({
+      where: { id: userId, deletedAt: null },
+      select: {
+        baseSalaryInCFA: true,
+        bankName: true,
+        cnpsNumber: true,
+        taxId: true,
+        status: true,
+        id: true,
+      },
+    });
+
+    if (!targetUser) {
+      throw new AppError("error.user.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (targetUser.status === Status.TERMINATED) {
+      throw new AppError(
+        "error.user.account_terminated",
+        StatusCodes.FORBIDDEN
+      );
+    }
+
+    const previousState = {
+      baseSalaryInCFA: targetUser.baseSalaryInCFA,
+      bankName: targetUser.bankName,
+      cnpsNumber: targetUser.cnpsNumber,
+      taxId: targetUser.taxId,
+    };
+
+    const updatePayload = {
+      ...(baseSalaryInCFA !== undefined && { baseSalaryInCFA }),
+      ...(bankName !== undefined && { bankName }),
+      ...(cnpsNumber !== undefined && { cnpsNumber }),
+      ...(taxId !== undefined && { taxId }),
+    };
+
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: updatePayload,
+      select: {
+        baseSalaryInCFA: true,
+        bankName: true,
+        cnpsNumber: true,
+        taxId: true,
+      },
+    });
+
+    this.log(ctx.req as Request, {
+      operation: LogOperation.UPDATE,
+      category: LogCategory.WRITE,
+      recordId: userId,
+      previousState,
+      newState: updatedUser,
+      changedFields: Object.keys(updatePayload),
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
+    });
+
+    return updatedUser;
   }
 }

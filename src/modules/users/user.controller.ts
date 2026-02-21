@@ -12,6 +12,7 @@ import {
   PasswordResetSchema,
   setupAccountSchema,
   updateMeSchema,
+  UpdateUserPayrollDataSchema,
   updateUserSchema,
   userDeactivateSchema,
 } from "./user.schema";
@@ -324,4 +325,45 @@ export class UserController extends BaseController<User> {
       );
     }
   );
+
+  getMyPayrollData = catchAsync(async (req: Request, res: Response) => {
+    const ctx = this.getContext(req, res);
+    const result = await this.service.getMyPayrollData(ctx);
+
+    appResponder(StatusCodes.OK, result, res);
+  });
+
+  getUserPayrollData = catchAsync(async (req: Request, res: Response) => {
+    const ctx = this.getContext(req, res);
+    const result = await this.service.getUserPayrollData(
+      req.params.id as string,
+      ctx
+    );
+
+    appResponder(StatusCodes.OK, result, res);
+  });
+
+  getAllUserPayrollData = catchAsync(async (req: Request, res: Response) => {
+    const ctx = this.getContext(req, res);
+    const options = this.parseFindManyOptions(req);
+    const result = await this.service.getAllUserPayrollData(options, ctx);
+
+    appResponder(StatusCodes.OK, result, res);
+  });
+
+  updateUserPayrollData = catchAsync(async (req: Request, res: Response) => {
+    const validation = UpdateUserPayrollDataSchema.safeParse(req.body);
+    if (!validation.success) {
+      const message = validation.error.issues[0].message;
+      throw new AppError(message, StatusCodes.BAD_REQUEST);
+    }
+
+    const ctx = this.getContext(req, res);
+    const result = await this.service.updateUserPayrollData(
+      validation.data,
+      ctx
+    );
+
+    appResponder(StatusCodes.OK, result, res);
+  });
 }

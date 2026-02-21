@@ -29,6 +29,16 @@ export const createUserSchema = z.object({
   roleId: z.string().uuid("error.validation.invalid_role_id"),
 });
 
+export const UpdateUserPayrollDataSchema = z.object({
+  userId: z.string(),
+  baseSalaryInCFA: z.number().positive(),
+  bankName: z.string(),
+  cnpsNumber: z.string(),
+  taxId: z.string(),
+  login: z.string(),
+  password: z.string(),
+});
+
 export const updateUserSchema = z.object({
   name: z.string().min(1).optional(),
   surname: z.string().min(1).optional(),
@@ -152,3 +162,6 @@ export type ChangeUserCredentialsInput = z.infer<
 >;
 export type UpdateMeInput = z.infer<typeof updateMeSchema>;
 export type UserDeactivateInput = z.infer<typeof userDeactivateSchema>;
+export type UpdateUserPayrollDataInput = z.infer<
+  typeof UpdateUserPayrollDataSchema
+>;

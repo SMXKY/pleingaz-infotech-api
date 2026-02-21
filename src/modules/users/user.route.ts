@@ -78,6 +78,26 @@ userRouter.post(
   controller.createSetupToken
 );
 
+userRouter.get("/payroll/me", controller.getMyPayrollData);
+
+userRouter.get(
+  "/payroll/:id",
+  restrictTo(allPermissions.users.readUserPayroll),
+  controller.getUserPayrollData
+);
+
+userRouter.get(
+  "/payroll",
+  restrictTo(allPermissions.users.readAllUsersPayroll),
+  controller.getAllUserPayrollData
+);
+
+userRouter.patch(
+  "/payroll",
+  restrictTo(allPermissions.users.updateUserPayroll),
+  controller.updateUserPayrollData
+);
+
 userRouter
   .route("/:id")
   .get(restrictTo(allPermissions.users.readUser), controller.findById)
