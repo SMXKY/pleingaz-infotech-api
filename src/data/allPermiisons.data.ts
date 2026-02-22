@@ -44,6 +44,8 @@ export const allPermissions = {
     disableRole: "can_disable_role",
     enableRole: "can_enable_role",
     assignPermissions: "can_assign_role_permissions",
+    createRoleOverride: "can_create_role_override",
+    revokeRoleOverride: "can_revoke_role_override",
   },
   activityLogs: {
     readActivityLog: "can_read_activityLog",

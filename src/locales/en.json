@@ -126,5 +126,11 @@
   "success.user.role_revoked": "User role revoked successfully.",
   "error.user.suspension_reason_invalid_length": "Suspension reason must be between 10 and 255 characters.",
   "error.user.not_suspended": "This user is not suspended.",
-  "success.user.reinstated": "User reinstated successfully."
+  "success.user.reinstated": "User reinstated successfully.",
+
+  "error.validation.role_override_message": "The role override message must be between 10 and 255 characters.",
+  "error.role.override_already_active": "A role override is already active for this user.",
+  "success.role.override_assigned_to_user": "Role override assigned to user successfully.",
+  "error.role.override_not_found": "No active role override was found for this user.",
+  "success.role.override_revoked": "Role override revoked successfully."
 }

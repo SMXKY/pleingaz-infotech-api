@@ -6,11 +6,12 @@ import {
   CreateRoleInput,
   UpdateRoleInput,
   AssignRolePermissionInput,
+  RoleOverideInput,
 } from "./role.schema";
 import { AppError } from "@utils/AppError.util";
 import { StatusCodes } from "http-status-codes";
 import { ServiceContext } from "@appTypes/base.types";
-import { Role } from "src/generated/prisma";
+import { Role, Status } from "src/generated/prisma";
 import { prisma } from "src";
 import { permissionCache } from "../users/utilites/getUserPermissions.util";
 import { UserStatus } from "@appTypes/user.types";
@@ -340,5 +341,153 @@ export class RoleService extends BaseService<
     });
 
     return { message: "success.role.assigned_to_user" };
+  }
+
+  async roleOverride(
+    data: RoleOverideInput,
+    ctx: ServiceContext,
+    res: Response
+  ): Promise<{ message: string }> {
+    const { userId, roleId, reason, expiresAt } = data;
+
+    const [user, role] = await Promise.all([
+      prisma.user.findUnique({
+        where: { id: userId, deletedAt: null },
+        select: { id: true, roleId: true, status: true, isSystem: true },
+      }),
+      prisma.role.findUnique({
+        where: { id: roleId, deletedAt: null },
+        select: { id: true, name: true, isActive: true },
+      }),
+    ]);
+
+    if (!user) {
+      throw new AppError("error.user.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (user.isSystem) {
+      throw new AppError(
+        "error.user.system_user_immutable",
+        StatusCodes.FORBIDDEN
+      );
+    }
+
+    if (user.status === UserStatus.TERMINATED) {
+      throw new AppError("error.user.terminated", StatusCodes.CONFLICT);
+    }
+
+    if (user.status === Status.SUSPENDED) {
+      throw new AppError("error.user.account_suspended", StatusCodes.CONFLICT);
+    }
+
+    if (!role) {
+      throw new AppError("error.role.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (!role.isActive) {
+      throw new AppError("error.role.inactive", StatusCodes.CONFLICT);
+    }
+
+    if (user.roleId === roleId) {
+      throw new AppError("error.user.already_has_role", StatusCodes.CONFLICT);
+    }
+
+    const existingOverride = await prisma.roleOverride.findFirst({
+      where: {
+        userId,
+        roleId,
+        isGranted: true,
+        deletedAt: null,
+        OR: [{ expiresAt: null }, { expiresAt: { gt: new Date() } }],
+      },
+    });
+
+    if (existingOverride) {
+      throw new AppError(
+        "error.role.override_already_active",
+        StatusCodes.CONFLICT
+      );
+    }
+
+    await prisma.roleOverride.deleteMany({
+      where: {
+        userId,
+        roleId,
+        expiresAt: { lte: new Date() },
+      },
+    });
+
+    await prisma.roleOverride.create({
+      data: {
+        roleId,
+        userId,
+        reason,
+        expiresAt: expiresAt || null,
+        isGranted: true,
+        createdById: ctx.userId || res.locals.user.id,
+      },
+    });
+
+    permissionCache.delete(userId);
+
+    this.log(ctx.req as Request, {
+      operation: LogOperation.CREATE,
+      category: LogCategory.WRITE,
+      recordId: userId,
+      previousState: null,
+      newState: { roleId, roleName: role.name, expiresAt: expiresAt || null },
+      changedFields: ["roleOverride"],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
+    });
+
+    return { message: "success.role.override_assigned_to_user" };
+  }
+
+  async revokeRoleOverride(
+    data: { userId: string; roleId: string },
+    ctx: ServiceContext
+  ): Promise<{ message: string }> {
+    const { userId, roleId } = data;
+
+    const override = await prisma.roleOverride.findFirst({
+      where: {
+        userId,
+        roleId,
+        isGranted: true,
+        deletedAt: null,
+        OR: [{ expiresAt: null }, { expiresAt: { gt: new Date() } }],
+      },
+    });
+
+    if (!override) {
+      throw new AppError(
+        "error.role.override_not_found",
+        StatusCodes.NOT_FOUND
+      );
+    }
+
+    await prisma.roleOverride.update({
+      where: { id: override.id },
+      data: {
+        isGranted: false,
+        deletedAt: new Date(),
+      },
+    });
+
+    permissionCache.delete(userId);
+
+    this.log(ctx.req as Request, {
+      operation: LogOperation.UPDATE,
+      category: LogCategory.WRITE,
+      recordId: userId,
+      previousState: { roleId, isGranted: true },
+      newState: { roleId, isGranted: false },
+      changedFields: ["roleOverride"],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
+    });
+
+    return { message: "success.role.override_revoked" };
   }
 }

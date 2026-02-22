@@ -6,7 +6,7 @@ import { StatusCodes } from "http-status-codes";
 import { Role } from "src/generated/prisma";
 import { catchAsync } from "@utils/catchAsync.util";
 import t from "@utils/translate.util";
-import { assignRolePermissionSchema } from "./role.schema";
+import { assignRolePermissionSchema, roleOverideSchema } from "./role.schema";
 import { AppError } from "@utils/AppError.util";
 
 export class RoleController extends BaseController<Role> {
@@ -96,4 +96,45 @@ export class RoleController extends BaseController<Role> {
       res
     );
   });
+
+  roleOverride = catchAsync(async (req: Request, res: Response) => {
+    const validation = roleOverideSchema.safeParse(req.body);
+    if (!validation.success) {
+      const message = validation.error.issues[0].message;
+      throw new AppError(message, StatusCodes.BAD_REQUEST);
+    }
+
+    const ctx = this.getContext(req, res);
+    const result = await this.service.roleOverride(validation.data, ctx, res);
+
+    appResponder(
+      StatusCodes.CREATED,
+      {
+        message: t(res.locals.lang, result.message),
+      },
+      res
+    );
+  });
+
+  revokeRoleOverride = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const ctx = this.getContext(req, res);
+      if (!req.body.userId || !req.body.roleId) {
+        return next(
+          new AppError(
+            "error.req.invalid_request_body",
+            StatusCodes.BAD_REQUEST
+          )
+        );
+      }
+      const result = await this.service.revokeRoleOverride(req.body, ctx);
+      appResponder(
+        StatusCodes.OK,
+        {
+          message: t(res.locals.lang, result.message),
+        },
+        res
+      );
+    }
+  );
 }

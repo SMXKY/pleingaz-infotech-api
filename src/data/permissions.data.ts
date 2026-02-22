@@ -505,6 +505,24 @@ export const permissions: PermissionSeed[] = [
     action: PermissionAction.UPDATE,
     riskLevel: PermissionRiskLevel.HIGH,
   },
+  {
+    code: "can_create_role_override",
+    engName: "Create Role Override",
+    frName: "Créer une dérogation de rôle",
+    module: PermissionModule.HUMAN_RESOURCES,
+    submodule: PermissionSubmodule.USERS,
+    action: PermissionAction.CREATE,
+    riskLevel: PermissionRiskLevel.HIGH,
+  },
+  {
+    code: "can_revoke_role_override",
+    engName: "Revoke Role Override",
+    frName: "Révoquer le dérogation de rôle",
+    module: PermissionModule.HUMAN_RESOURCES,
+    submodule: PermissionSubmodule.USERS,
+    action: PermissionAction.UPDATE,
+    riskLevel: PermissionRiskLevel.HIGH,
+  },
 ];
 
 console.log("Total Number of Permissions: ", permissions.length, " 🔥");

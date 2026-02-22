@@ -123,5 +123,11 @@
   "success.user.role_revoked": "Le rôle de l'utilisateur a été révoqué avec succès.",
   "error.user.suspension_reason_invalid_length": "La raison de la suspension doit contenir entre 10 et 255 caractères.",
   "error.user.not_suspended": "Cet utilisateur n'est pas suspendu.",
-  "success.user.reinstated": "L'utilisateur a été rétabli avec succès."
+  "success.user.reinstated": "L'utilisateur a été rétabli avec succès.",
+
+  "error.validation.role_override_message": "Le message de remplacement du rôle doit contenir entre 10 et 255 caractères.",
+  "error.role.override_already_active": "Un remplacement de rôle est déjà actif pour cet utilisateur.",
+  "success.role.override_assigned_to_user": "Remplacement de rôle attribué à l'utilisateur avec succès.",
+  "error.role.override_not_found": "Aucun remplacement de rôle actif n'a été trouvé pour cet utilisateur.",
+  "success.role.override_revoked": "Remplacement de rôle révoqué avec succès."
 }

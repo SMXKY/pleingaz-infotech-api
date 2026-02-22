@@ -10,6 +10,34 @@ const controller = new RoleController();
 
 roleRouter.use(protect, getUserLanguage);
 
+roleRouter.patch(
+  "/disable/:id",
+  restrictTo(allPermissions.roles.disableRole),
+  controller.disableRole
+);
+roleRouter.patch(
+  "/enable/:id",
+  restrictTo(allPermissions.roles.enableRole),
+  controller.enableRole
+);
+roleRouter.post(
+  "/assign-permissions",
+  restrictTo(allPermissions.roles.assignPermissions),
+  controller.assignRolePermissions
+);
+
+roleRouter.post(
+  "/override",
+  restrictTo(allPermissions.roles.createRoleOverride),
+  controller.roleOverride
+);
+
+roleRouter.patch(
+  "/revoke-overide",
+  restrictTo(allPermissions.roles.revokeRoleOverride),
+  controller.revokeRoleOverride
+);
+
 roleRouter.get(
   "/active",
   restrictTo(allPermissions.roles.readAllRoles),
@@ -54,21 +82,6 @@ roleRouter.get(
   "/:id/restore",
   restrictTo(allPermissions.roles.restoreRole),
   controller.findDeleted
-);
-roleRouter.patch(
-  "/disable/:id",
-  restrictTo(allPermissions.roles.disableRole),
-  controller.disableRole
-);
-roleRouter.patch(
-  "/enable/:id",
-  restrictTo(allPermissions.roles.enableRole),
-  controller.enableRole
-);
-roleRouter.post(
-  "/assign-permissions",
-  restrictTo(allPermissions.roles.assignPermissions),
-  controller.assignRolePermissions
 );
 
 export default roleRouter;
