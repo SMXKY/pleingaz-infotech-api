@@ -285,6 +285,24 @@ export const permissions: PermissionSeed[] = [
     riskLevel: PermissionRiskLevel.HIGH,
   },
   {
+    code: "can_suspend_user",
+    engName: "Suspend User",
+    frName: "Suspendre un utilisateur",
+    module: PermissionModule.HUMAN_RESOURCES,
+    submodule: PermissionSubmodule.USERS,
+    action: PermissionAction.UPDATE,
+    riskLevel: PermissionRiskLevel.HIGH,
+  },
+  {
+    code: "can_reinstate_user",
+    engName: "Reinstate User",
+    frName: "Rétablir un utilisateur",
+    module: PermissionModule.HUMAN_RESOURCES,
+    submodule: PermissionSubmodule.USERS,
+    action: PermissionAction.UPDATE,
+    riskLevel: PermissionRiskLevel.HIGH,
+  },
+  {
     code: "can_change_user_department",
     engName: "Change User Department",
     frName: "Changer le département d'un utilisateur",
@@ -488,3 +506,5 @@ export const permissions: PermissionSeed[] = [
     riskLevel: PermissionRiskLevel.HIGH,
   },
 ];
+
+console.log("Total Number of Permissions: ", permissions.length, " 🔥");

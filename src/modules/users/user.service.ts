@@ -1769,4 +1769,240 @@ export class UserService extends BaseService<
 
     return { message: "success.user.department_change" };
   }
+
+  async revokeUserRole(
+    data: { userId: string; suspensionReason: string },
+    ctx: ServiceContext
+  ): Promise<{ message: string }> {
+    const { userId, suspensionReason } = data;
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        preference: true,
+      },
+    });
+
+    if (!user) {
+      throw new AppError("error.user.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (user.isSystem) {
+      throw new AppError(
+        "error.user.system_user_immutable",
+        StatusCodes.FORBIDDEN
+      );
+    }
+
+    if (user.status === UserStatus.TERMINATED) {
+      throw new AppError(
+        "error.user.account_terminated",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    if (user.status === Status.SUSPENDED) {
+      throw new AppError(
+        "error.user.already_suspended",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    if (
+      !suspensionReason ||
+      typeof suspensionReason !== "string" ||
+      suspensionReason.trim().length < 10 ||
+      suspensionReason.trim().length > 255
+    ) {
+      throw new AppError(
+        "error.user.suspension_reason_invalid_length",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    const previousState = {
+      status: user.status,
+      suspensionReason: user.suspensionReason,
+    };
+
+    await prisma.$transaction([
+      prisma.user.update({
+        where: { id: userId },
+        data: {
+          status: Status.SUSPENDED,
+          suspensionReason,
+        },
+      }),
+      prisma.permissionOverride.updateMany({
+        where: { userId, deletedAt: null },
+        data: { deletedAt: new Date() },
+      }),
+    ]);
+
+    permissionCache.delete(userId);
+
+    this.log(ctx.req as Request, {
+      operation: LogOperation.UPDATE,
+      category: LogCategory.WRITE,
+      recordId: user.employeeId,
+      previousState,
+      newState: {
+        status: Status.SUSPENDED,
+        suspensionReason,
+      },
+      changedFields: ["status", "permissionOverrides", "suspensionReason"],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
+    });
+
+    const config = await prisma.adminConfig.findFirst();
+    if (!config) {
+      throw new AppError(
+        "error.config.not_found",
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
+    }
+
+    const language = user.preference?.language.toLocaleLowerCase() ?? "fr";
+    const templateFile = `account_suspension.template.${language}.html`;
+
+    const templatePath = path.join(
+      __dirname,
+      "../../public/templates",
+      templateFile
+    );
+
+    const emailHtml = readFileSync(templatePath, "utf-8")
+      .replace(/{{logoUrl}}/g, config.logoUrl || `${baseUrl}/assets/logo.png`)
+      .replace(/{{employeeName}}/g, `${user.name} ${user.surname}`)
+      .replace(/{{employeeId}}/g, user.employeeId)
+      .replace(/{{employeeEmail}}/g, user.email)
+      .replace(
+        /{{suspendedAt}}/g,
+        new Date().toLocaleDateString(language, { dateStyle: "long" })
+      )
+      .replace(/{{supportEmail}}/g, config.supportEmail)
+      .replace(/{{supportPhone}}/g, config.companyPhoneNumber)
+      .replace(/{{websiteUrl}}/g, frontEndUrl)
+      .replace(/{{privacyUrl}}/g, `${frontEndUrl}/privacy`)
+      .replace(/{{termsUrl}}/g, `${frontEndUrl}/terms`)
+      .replace(/{{year}}/g, String(new Date().getFullYear()));
+
+    const subject =
+      user.preference?.language?.toLowerCase() === "fr"
+        ? "Notification de suspension de compte - INFOTECH S.A"
+        : "Account Suspension Notice - INFOTECH S.A";
+
+    await sendEmail(user.email, subject, "", emailHtml);
+
+    return { message: "success.user.role_revoked" };
+  }
+
+  async reinstateUser(
+    data: { userId: string },
+    ctx: ServiceContext
+  ): Promise<{ message: string }> {
+    const { userId } = data;
+
+    const [user] = await Promise.all([
+      prisma.user.findUnique({
+        where: { id: userId },
+        include: { preference: true, role: true },
+      }),
+    ]);
+
+    if (!user) {
+      throw new AppError("error.user.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (user.isSystem) {
+      throw new AppError(
+        "error.user.system_user_immutable",
+        StatusCodes.FORBIDDEN
+      );
+    }
+
+    if (user.status === UserStatus.TERMINATED) {
+      throw new AppError(
+        "error.user.account_terminated",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    if (user.status !== Status.SUSPENDED) {
+      throw new AppError("error.user.not_suspended", StatusCodes.BAD_REQUEST);
+    }
+
+    const previousState = {
+      status: user.status,
+      suspensionReason: user.suspensionReason,
+    };
+
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        status: UserStatus.ACTIVE,
+        suspensionReason: null,
+      },
+    });
+
+    permissionCache.delete(userId);
+    this.log(ctx.req as Request, {
+      operation: LogOperation.UPDATE,
+      category: LogCategory.WRITE,
+      recordId: user.employeeId,
+      previousState,
+      newState: {
+        status: UserStatus.ACTIVE,
+        suspensionReason: null,
+      },
+      changedFields: ["status", "suspensionReason"],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
+    });
+
+    const config = await prisma.adminConfig.findFirst();
+    if (!config) {
+      throw new AppError(
+        "error.config.not_found",
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
+    }
+
+    const language = user.preference?.language.toLocaleLowerCase() ?? "fr";
+    const templateFile = `account_reinstated.template.${language}.html`;
+
+    const templatePath = path.join(
+      __dirname,
+      "../../public/templates",
+      templateFile
+    );
+
+    const emailHtml = readFileSync(templatePath, "utf-8")
+      .replace(/{{logoUrl}}/g, config.logoUrl || `${baseUrl}/assets/logo.png`)
+      .replace(/{{employeeName}}/g, `${user.name} ${user.surname}`)
+      .replace(/{{employeeId}}/g, user.employeeId)
+      .replace(/{{employeeEmail}}/g, user.email)
+      .replace(
+        /{{reinstatedAt}}/g,
+        new Date().toLocaleDateString(language, { dateStyle: "long" })
+      )
+      .replace(/{{role}}/g, user.role.name)
+      .replace(/{{loginUrl}}/g, frontEndUrl)
+      .replace(/{{supportEmail}}/g, config.supportEmail)
+      .replace(/{{supportPhone}}/g, config.companyPhoneNumber)
+      .replace(/{{websiteUrl}}/g, frontEndUrl)
+      .replace(/{{privacyUrl}}/g, `${frontEndUrl}/privacy`)
+      .replace(/{{termsUrl}}/g, `${frontEndUrl}/terms`)
+      .replace(/{{year}}/g, String(new Date().getFullYear()));
+
+    const subject =
+      user.preference?.language?.toLowerCase() === "fr"
+        ? "Rétablissement du compte - INFOTECH S.A"
+        : "Account Reinstatement - INFOTECH S.A";
+
+    await sendEmail(user.email, subject, "", emailHtml);
+
+    return { message: "success.user.reinstated" };
+  }
 }

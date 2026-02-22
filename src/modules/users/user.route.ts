@@ -103,6 +103,17 @@ userRouter.patch(
   controller.updateUserPayrollData
 );
 
+userRouter.patch(
+  "/suspend",
+  restrictTo(allPermissions.users.revokeUserRole),
+  controller.revokeUserRole
+);
+userRouter.patch(
+  "/reinstate/:id",
+  restrictTo(allPermissions.users.reinstateUser),
+  controller.reinstateUser
+);
+
 userRouter
   .route("/:id")
   .get(restrictTo(allPermissions.users.readUser), controller.findById)

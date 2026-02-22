@@ -80,7 +80,8 @@ export type AdminConfig = $Result.DefaultSelection<Prisma.$AdminConfigPayload>
 export namespace $Enums {
   export const Status: {
   ACTIVE: 'ACTIVE',
-  TERMINATED: 'TERMINATED'
+  TERMINATED: 'TERMINATED',
+  SUSPENDED: 'SUSPENDED'
 };
 
 export type Status = (typeof Status)[keyof typeof Status]
@@ -10368,6 +10369,7 @@ export namespace Prisma {
     updatedAt: Date | null
     deletedAt: Date | null
     isSystem: boolean | null
+    suspensionReason: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -10405,6 +10407,7 @@ export namespace Prisma {
     updatedAt: Date | null
     deletedAt: Date | null
     isSystem: boolean | null
+    suspensionReason: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -10442,6 +10445,7 @@ export namespace Prisma {
     updatedAt: number
     deletedAt: number
     isSystem: number
+    suspensionReason: number
     _all: number
   }
 
@@ -10491,6 +10495,7 @@ export namespace Prisma {
     updatedAt?: true
     deletedAt?: true
     isSystem?: true
+    suspensionReason?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -10528,6 +10533,7 @@ export namespace Prisma {
     updatedAt?: true
     deletedAt?: true
     isSystem?: true
+    suspensionReason?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -10565,6 +10571,7 @@ export namespace Prisma {
     updatedAt?: true
     deletedAt?: true
     isSystem?: true
+    suspensionReason?: true
     _all?: true
   }
 
@@ -10689,6 +10696,7 @@ export namespace Prisma {
     updatedAt: Date
     deletedAt: Date | null
     isSystem: boolean | null
+    suspensionReason: string | null
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -10745,6 +10753,7 @@ export namespace Prisma {
     updatedAt?: boolean
     deletedAt?: boolean
     isSystem?: boolean
+    suspensionReason?: boolean
     department?: boolean | DepartmentDefaultArgs<ExtArgs>
     role?: boolean | RoleDefaultArgs<ExtArgs>
     preference?: boolean | User$preferenceArgs<ExtArgs>
@@ -10793,6 +10802,7 @@ export namespace Prisma {
     updatedAt?: boolean
     deletedAt?: boolean
     isSystem?: boolean
+    suspensionReason?: boolean
     department?: boolean | DepartmentDefaultArgs<ExtArgs>
     role?: boolean | RoleDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -10832,6 +10842,7 @@ export namespace Prisma {
     updatedAt?: boolean
     deletedAt?: boolean
     isSystem?: boolean
+    suspensionReason?: boolean
     department?: boolean | DepartmentDefaultArgs<ExtArgs>
     role?: boolean | RoleDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -10871,9 +10882,10 @@ export namespace Prisma {
     updatedAt?: boolean
     deletedAt?: boolean
     isSystem?: boolean
+    suspensionReason?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "name" | "surname" | "employeeId" | "nationalIdNumber" | "phoneNumber" | "isEmailVerified" | "status" | "password" | "passwordConfirm" | "passwordChangedAt" | "deactivatedUntil" | "failedLoginAttempts" | "lockedUntil" | "lastLoggedInAt" | "dob" | "gender" | "profilePictureUrl" | "address" | "emergencyContactName" | "emergencyContactPhoneNumber" | "hireDate" | "baseSalaryInCFA" | "bankName" | "cnpsNumber" | "taxId" | "departmentId" | "roleId" | "createdAt" | "updatedAt" | "deletedAt" | "isSystem", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "name" | "surname" | "employeeId" | "nationalIdNumber" | "phoneNumber" | "isEmailVerified" | "status" | "password" | "passwordConfirm" | "passwordChangedAt" | "deactivatedUntil" | "failedLoginAttempts" | "lockedUntil" | "lastLoggedInAt" | "dob" | "gender" | "profilePictureUrl" | "address" | "emergencyContactName" | "emergencyContactPhoneNumber" | "hireDate" | "baseSalaryInCFA" | "bankName" | "cnpsNumber" | "taxId" | "departmentId" | "roleId" | "createdAt" | "updatedAt" | "deletedAt" | "isSystem" | "suspensionReason", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     department?: boolean | DepartmentDefaultArgs<ExtArgs>
     role?: boolean | RoleDefaultArgs<ExtArgs>
@@ -10945,6 +10957,7 @@ export namespace Prisma {
       updatedAt: Date
       deletedAt: Date | null
       isSystem: boolean | null
+      suspensionReason: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -11412,6 +11425,7 @@ export namespace Prisma {
     readonly updatedAt: FieldRef<"User", 'DateTime'>
     readonly deletedAt: FieldRef<"User", 'DateTime'>
     readonly isSystem: FieldRef<"User", 'Boolean'>
+    readonly suspensionReason: FieldRef<"User", 'String'>
   }
     
 
@@ -16558,7 +16572,8 @@ export namespace Prisma {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     deletedAt: 'deletedAt',
-    isSystem: 'isSystem'
+    isSystem: 'isSystem',
+    suspensionReason: 'suspensionReason'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -17531,6 +17546,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     deletedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     isSystem?: BoolNullableFilter<"User"> | boolean | null
+    suspensionReason?: StringNullableFilter<"User"> | string | null
     department?: XOR<DepartmentScalarRelationFilter, DepartmentWhereInput>
     role?: XOR<RoleScalarRelationFilter, RoleWhereInput>
     preference?: XOR<UserPreferenceNullableScalarRelationFilter, UserPreferenceWhereInput> | null
@@ -17578,6 +17594,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     deletedAt?: SortOrderInput | SortOrder
     isSystem?: SortOrderInput | SortOrder
+    suspensionReason?: SortOrderInput | SortOrder
     department?: DepartmentOrderByWithRelationInput
     role?: RoleOrderByWithRelationInput
     preference?: UserPreferenceOrderByWithRelationInput
@@ -17628,6 +17645,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     deletedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     isSystem?: BoolNullableFilter<"User"> | boolean | null
+    suspensionReason?: StringNullableFilter<"User"> | string | null
     department?: XOR<DepartmentScalarRelationFilter, DepartmentWhereInput>
     role?: XOR<RoleScalarRelationFilter, RoleWhereInput>
     preference?: XOR<UserPreferenceNullableScalarRelationFilter, UserPreferenceWhereInput> | null
@@ -17675,6 +17693,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     deletedAt?: SortOrderInput | SortOrder
     isSystem?: SortOrderInput | SortOrder
+    suspensionReason?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -17720,6 +17739,7 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     deletedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     isSystem?: BoolNullableWithAggregatesFilter<"User"> | boolean | null
+    suspensionReason?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type UserPreferenceWhereInput = {
@@ -18659,6 +18679,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
     department: DepartmentCreateNestedOneWithoutUsersInput
     role: RoleCreateNestedOneWithoutUsersInput
     preference?: UserPreferenceCreateNestedOneWithoutUserInput
@@ -18706,6 +18727,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
     preference?: UserPreferenceUncheckedCreateNestedOneWithoutUserInput
     roleOverrides?: RoleOverrideUncheckedCreateNestedManyWithoutUserInput
     createdRoleOverrides?: RoleOverrideUncheckedCreateNestedManyWithoutCreatedByInput
@@ -18749,6 +18771,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutUsersNestedInput
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     preference?: UserPreferenceUpdateOneWithoutUserNestedInput
@@ -18796,6 +18819,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
     preference?: UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
     roleOverrides?: RoleOverrideUncheckedUpdateManyWithoutUserNestedInput
     createdRoleOverrides?: RoleOverrideUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -18841,6 +18865,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -18876,6 +18901,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -18913,6 +18939,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserPreferenceCreateInput = {
@@ -19905,6 +19932,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     deletedAt?: SortOrder
     isSystem?: SortOrder
+    suspensionReason?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
@@ -19947,6 +19975,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     deletedAt?: SortOrder
     isSystem?: SortOrder
+    suspensionReason?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -19984,6 +20013,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     deletedAt?: SortOrder
     isSystem?: SortOrder
+    suspensionReason?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
@@ -21843,6 +21873,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
     role: RoleCreateNestedOneWithoutUsersInput
     preference?: UserPreferenceCreateNestedOneWithoutUserInput
     roleOverrides?: RoleOverrideCreateNestedManyWithoutUserInput
@@ -21888,6 +21919,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
     preference?: UserPreferenceUncheckedCreateNestedOneWithoutUserInput
     roleOverrides?: RoleOverrideUncheckedCreateNestedManyWithoutUserInput
     createdRoleOverrides?: RoleOverrideUncheckedCreateNestedManyWithoutCreatedByInput
@@ -21962,6 +21994,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     deletedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     isSystem?: BoolNullableFilter<"User"> | boolean | null
+    suspensionReason?: StringNullableFilter<"User"> | string | null
   }
 
   export type UserCreateWithoutRoleInput = {
@@ -21997,6 +22030,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
     department: DepartmentCreateNestedOneWithoutUsersInput
     preference?: UserPreferenceCreateNestedOneWithoutUserInput
     roleOverrides?: RoleOverrideCreateNestedManyWithoutUserInput
@@ -22042,6 +22076,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
     preference?: UserPreferenceUncheckedCreateNestedOneWithoutUserInput
     roleOverrides?: RoleOverrideUncheckedCreateNestedManyWithoutUserInput
     createdRoleOverrides?: RoleOverrideUncheckedCreateNestedManyWithoutCreatedByInput
@@ -22265,6 +22300,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
     department: DepartmentCreateNestedOneWithoutUsersInput
     role: RoleCreateNestedOneWithoutUsersInput
     preference?: UserPreferenceCreateNestedOneWithoutUserInput
@@ -22311,6 +22347,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
     preference?: UserPreferenceUncheckedCreateNestedOneWithoutUserInput
     createdRoleOverrides?: RoleOverrideUncheckedCreateNestedManyWithoutCreatedByInput
     permissionOverrides?: PermissionOverrideUncheckedCreateNestedManyWithoutUserInput
@@ -22358,6 +22395,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
     department: DepartmentCreateNestedOneWithoutUsersInput
     role: RoleCreateNestedOneWithoutUsersInput
     preference?: UserPreferenceCreateNestedOneWithoutUserInput
@@ -22404,6 +22442,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
     preference?: UserPreferenceUncheckedCreateNestedOneWithoutUserInput
     roleOverrides?: RoleOverrideUncheckedCreateNestedManyWithoutUserInput
     permissionOverrides?: PermissionOverrideUncheckedCreateNestedManyWithoutUserInput
@@ -22499,6 +22538,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutUsersNestedInput
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     preference?: UserPreferenceUpdateOneWithoutUserNestedInput
@@ -22545,6 +22585,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
     preference?: UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
     createdRoleOverrides?: RoleOverrideUncheckedUpdateManyWithoutCreatedByNestedInput
     permissionOverrides?: PermissionOverrideUncheckedUpdateManyWithoutUserNestedInput
@@ -22598,6 +22639,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutUsersNestedInput
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     preference?: UserPreferenceUpdateOneWithoutUserNestedInput
@@ -22644,6 +22686,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
     preference?: UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
     roleOverrides?: RoleOverrideUncheckedUpdateManyWithoutUserNestedInput
     permissionOverrides?: PermissionOverrideUncheckedUpdateManyWithoutUserNestedInput
@@ -23079,6 +23122,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
     department: DepartmentCreateNestedOneWithoutUsersInput
     role: RoleCreateNestedOneWithoutUsersInput
     preference?: UserPreferenceCreateNestedOneWithoutUserInput
@@ -23125,6 +23169,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
     preference?: UserPreferenceUncheckedCreateNestedOneWithoutUserInput
     roleOverrides?: RoleOverrideUncheckedCreateNestedManyWithoutUserInput
     createdRoleOverrides?: RoleOverrideUncheckedCreateNestedManyWithoutCreatedByInput
@@ -23215,6 +23260,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
     department: DepartmentCreateNestedOneWithoutUsersInput
     role: RoleCreateNestedOneWithoutUsersInput
     preference?: UserPreferenceCreateNestedOneWithoutUserInput
@@ -23261,6 +23307,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
     preference?: UserPreferenceUncheckedCreateNestedOneWithoutUserInput
     roleOverrides?: RoleOverrideUncheckedCreateNestedManyWithoutUserInput
     createdRoleOverrides?: RoleOverrideUncheckedCreateNestedManyWithoutCreatedByInput
@@ -23319,6 +23366,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutUsersNestedInput
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     preference?: UserPreferenceUpdateOneWithoutUserNestedInput
@@ -23365,6 +23413,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
     preference?: UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
     roleOverrides?: RoleOverrideUncheckedUpdateManyWithoutUserNestedInput
     createdRoleOverrides?: RoleOverrideUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -23467,6 +23516,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutUsersNestedInput
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     preference?: UserPreferenceUpdateOneWithoutUserNestedInput
@@ -23513,6 +23563,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
     preference?: UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
     roleOverrides?: RoleOverrideUncheckedUpdateManyWithoutUserNestedInput
     createdRoleOverrides?: RoleOverrideUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -23629,6 +23680,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
     department: DepartmentCreateNestedOneWithoutUsersInput
     role: RoleCreateNestedOneWithoutUsersInput
     preference?: UserPreferenceCreateNestedOneWithoutUserInput
@@ -23675,6 +23727,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
     preference?: UserPreferenceUncheckedCreateNestedOneWithoutUserInput
     roleOverrides?: RoleOverrideUncheckedCreateNestedManyWithoutUserInput
     createdRoleOverrides?: RoleOverrideUncheckedCreateNestedManyWithoutCreatedByInput
@@ -23819,6 +23872,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutUsersNestedInput
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     preference?: UserPreferenceUpdateOneWithoutUserNestedInput
@@ -23865,6 +23919,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
     preference?: UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
     roleOverrides?: RoleOverrideUncheckedUpdateManyWithoutUserNestedInput
     createdRoleOverrides?: RoleOverrideUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -24468,6 +24523,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
     department: DepartmentCreateNestedOneWithoutUsersInput
     role: RoleCreateNestedOneWithoutUsersInput
     roleOverrides?: RoleOverrideCreateNestedManyWithoutUserInput
@@ -24514,6 +24570,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
     roleOverrides?: RoleOverrideUncheckedCreateNestedManyWithoutUserInput
     createdRoleOverrides?: RoleOverrideUncheckedCreateNestedManyWithoutCreatedByInput
     permissionOverrides?: PermissionOverrideUncheckedCreateNestedManyWithoutUserInput
@@ -24572,6 +24629,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutUsersNestedInput
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     roleOverrides?: RoleOverrideUpdateManyWithoutUserNestedInput
@@ -24618,6 +24676,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
     roleOverrides?: RoleOverrideUncheckedUpdateManyWithoutUserNestedInput
     createdRoleOverrides?: RoleOverrideUncheckedUpdateManyWithoutCreatedByNestedInput
     permissionOverrides?: PermissionOverrideUncheckedUpdateManyWithoutUserNestedInput
@@ -24660,6 +24719,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
     department: DepartmentCreateNestedOneWithoutUsersInput
     role: RoleCreateNestedOneWithoutUsersInput
     preference?: UserPreferenceCreateNestedOneWithoutUserInput
@@ -24706,6 +24766,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
     preference?: UserPreferenceUncheckedCreateNestedOneWithoutUserInput
     roleOverrides?: RoleOverrideUncheckedCreateNestedManyWithoutUserInput
     createdRoleOverrides?: RoleOverrideUncheckedCreateNestedManyWithoutCreatedByInput
@@ -24764,6 +24825,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutUsersNestedInput
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     preference?: UserPreferenceUpdateOneWithoutUserNestedInput
@@ -24810,6 +24872,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
     preference?: UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
     roleOverrides?: RoleOverrideUncheckedUpdateManyWithoutUserNestedInput
     createdRoleOverrides?: RoleOverrideUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -24852,6 +24915,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
     department: DepartmentCreateNestedOneWithoutUsersInput
     role: RoleCreateNestedOneWithoutUsersInput
     preference?: UserPreferenceCreateNestedOneWithoutUserInput
@@ -24898,6 +24962,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
     preference?: UserPreferenceUncheckedCreateNestedOneWithoutUserInput
     roleOverrides?: RoleOverrideUncheckedCreateNestedManyWithoutUserInput
     createdRoleOverrides?: RoleOverrideUncheckedCreateNestedManyWithoutCreatedByInput
@@ -24956,6 +25021,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutUsersNestedInput
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     preference?: UserPreferenceUpdateOneWithoutUserNestedInput
@@ -25002,6 +25068,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
     preference?: UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
     roleOverrides?: RoleOverrideUncheckedUpdateManyWithoutUserNestedInput
     createdRoleOverrides?: RoleOverrideUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -25045,6 +25112,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
   }
 
   export type UserUpdateWithoutDepartmentInput = {
@@ -25080,6 +25148,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     preference?: UserPreferenceUpdateOneWithoutUserNestedInput
     roleOverrides?: RoleOverrideUpdateManyWithoutUserNestedInput
@@ -25125,6 +25194,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
     preference?: UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
     roleOverrides?: RoleOverrideUncheckedUpdateManyWithoutUserNestedInput
     createdRoleOverrides?: RoleOverrideUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -25169,6 +25239,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserCreateManyRoleInput = {
@@ -25205,6 +25276,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     isSystem?: boolean | null
+    suspensionReason?: string | null
   }
 
   export type RoleOverrideCreateManyRoleInput = {
@@ -25261,6 +25333,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutUsersNestedInput
     preference?: UserPreferenceUpdateOneWithoutUserNestedInput
     roleOverrides?: RoleOverrideUpdateManyWithoutUserNestedInput
@@ -25306,6 +25379,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
     preference?: UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
     roleOverrides?: RoleOverrideUncheckedUpdateManyWithoutUserNestedInput
     createdRoleOverrides?: RoleOverrideUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -25350,6 +25424,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type RoleOverrideUpdateWithoutRoleInput = {

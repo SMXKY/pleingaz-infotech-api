@@ -238,7 +238,8 @@ exports.Prisma.UserScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt',
-  isSystem: 'isSystem'
+  isSystem: 'isSystem',
+  suspensionReason: 'suspensionReason'
 };
 
 exports.Prisma.UserPreferenceScalarFieldEnum = {
@@ -405,7 +406,8 @@ exports.PermissionRiskLevel = exports.$Enums.PermissionRiskLevel = {
 
 exports.Status = exports.$Enums.Status = {
   ACTIVE: 'ACTIVE',
-  TERMINATED: 'TERMINATED'
+  TERMINATED: 'TERMINATED',
+  SUSPENDED: 'SUSPENDED'
 };
 
 exports.Gender = exports.$Enums.Gender = {

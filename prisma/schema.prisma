@@ -11,6 +11,7 @@ generator client {
 enum Status {
   ACTIVE
   TERMINATED
+  SUSPENDED
 }
 
 enum Gender {
@@ -337,6 +338,7 @@ model User {
   activityLogs                ActivityLog[]
   isSystem                    Boolean?             @map("is_system")
   UserToken                   UserToken[]
+  suspensionReason            String?              @map("suspension_reason")
 
   @@index([deletedAt])
   @@map("users")

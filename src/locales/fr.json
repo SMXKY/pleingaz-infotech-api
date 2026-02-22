@@ -116,5 +116,12 @@
   "success.user.reactivated": "Compte utilisateur réactivé avec succès.",
 
   "error.user.department_already_assigned": "L'utilisateur est déjà affecté à ce département.",
-  "success.user.department_change": "Le département de l'utilisateur a été mis à jour avec succès."
+  "success.user.department_change": "Le département de l'utilisateur a été mis à jour avec succès.",
+
+  "error.user.account_suspended": "Ce compte a été suspendu.",
+  "error.user.already_suspended": "Cet utilisateur est déjà suspendu.",
+  "success.user.role_revoked": "Le rôle de l'utilisateur a été révoqué avec succès.",
+  "error.user.suspension_reason_invalid_length": "La raison de la suspension doit contenir entre 10 et 255 caractères.",
+  "error.user.not_suspended": "Cet utilisateur n'est pas suspendu.",
+  "success.user.reinstated": "L'utilisateur a été rétabli avec succès."
 }

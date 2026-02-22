@@ -7,6 +7,7 @@ import getUserPermissions from "src/modules/users/utilites/getUserPermissions.ut
 import { catchAsync } from "@utils/catchAsync.util";
 import { JWT_SECRET } from "@utils/enviromentVariablesCheck.util";
 import { applyFtpUrlTransform } from "@utils/applyFtpUrl.util";
+import { Status } from "src/generated/prisma";
 
 const protect = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -77,7 +78,7 @@ const protect = catchAsync(
       );
     }
 
-    if (user.status !== "ACTIVE") {
+    if (user.status === Status.TERMINATED) {
       return next(
         new AppError("error.auth.account_not_active", StatusCodes.FORBIDDEN)
       );

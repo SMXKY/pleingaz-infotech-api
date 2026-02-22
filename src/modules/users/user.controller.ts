@@ -390,4 +390,53 @@ export class UserController extends BaseController<User> {
       );
     }
   );
+
+  revokeUserRole = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const ctx = this.getContext(req, res);
+      if (!req.body.userId || !req.body.suspensionReason) {
+        return next(
+          new AppError(
+            "error.req.invalid_request_body",
+            StatusCodes.BAD_REQUEST
+          )
+        );
+      }
+      const result = await this.service.revokeUserRole(req.body, ctx);
+      appResponder(
+        StatusCodes.OK,
+        {
+          message: t(res.locals.lang, result.message),
+        },
+        res
+      );
+    }
+  );
+
+  reinstateUser = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const ctx = this.getContext(req, res);
+      if (!(req.params.id as string)) {
+        return next(
+          new AppError(
+            "error.req.invalid_request_body",
+            StatusCodes.BAD_REQUEST
+          )
+        );
+      }
+      const result = await this.service.reinstateUser(
+        {
+          userId: req.params.id as string,
+        },
+        ctx
+      );
+      appResponder(
+        StatusCodes.OK,
+        {
+          message: t(res.locals.lang, result.message),
+        },
+        res
+      );
+    }
+  );
 }

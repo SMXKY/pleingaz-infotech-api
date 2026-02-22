@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Account Suspended — INFOTECH S.A</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
+          "Segoe UI", Roboto, sans-serif;
+        background-color: #f0f4f8;
+        color: #1a202c;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        min-height: 100vh;
+      }
+      .email-wrapper {
+        width: 100%;
+        min-height: 100vh;
+        padding: 40px 20px;
+        background-color: #f0f4f8;
+      }
+      .email-container {
+        max-width: 580px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      }
+      .email-header {
+        background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+        padding: 40px 40px 48px;
+        text-align: center;
+        position: relative;
+      }
+      .email-header::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 24px;
+        background: #ffffff;
+        border-radius: 24px 24px 0 0;
+      }
+      .logo-container {
+        display: inline-block;
+        background: white;
+        padding: 12px 24px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+      }
+      .logo-image {
+        height: 60px;
+        width: auto;
+        display: block;
+      }
+      .header-badge {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .email-body {
+        padding: 32px 40px 40px;
+      }
+      .welcome-title {
+        font-size: 26px;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 8px;
+        letter-spacing: -0.5px;
+      }
+      .welcome-subtitle {
+        font-size: 16px;
+        color: #6b7280;
+        margin-bottom: 28px;
+      }
+      .greeting {
+        font-size: 15px;
+        color: #374151;
+        margin-bottom: 20px;
+      }
+      .greeting strong {
+        color: #111827;
+      }
+      .message-text {
+        font-size: 15px;
+        color: #4b5563;
+        margin-bottom: 16px;
+        line-height: 1.7;
+      }
+      .info-card {
+        background: linear-gradient(135deg, #fef2f2 0%, #fff7ed 100%);
+        border: 1px solid #fecaca;
+        border-radius: 12px;
+        padding: 24px;
+        margin: 28px 0;
+      }
+      .info-card-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: #dc2626;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 16px;
+      }
+      .info-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px dashed #e5e7eb;
+      }
+      .info-row:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .info-label {
+        font-size: 13px;
+        color: #6b7280;
+        font-weight: 500;
+      }
+      .info-value {
+        font-size: 14px;
+        color: #111827;
+        font-weight: 600;
+      }
+      .divider {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #e5e7eb, transparent);
+        margin: 32px 0;
+      }
+      .help-section {
+        background: #f9fafb;
+        border-radius: 10px;
+        padding: 20px 24px;
+        margin-top: 28px;
+      }
+      .help-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 8px;
+      }
+      .help-text {
+        font-size: 13px;
+        color: #6b7280;
+        line-height: 1.6;
+      }
+      .help-text a {
+        color: #dc2626;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .email-footer {
+        background: #111827;
+        padding: 32px 40px;
+        text-align: center;
+      }
+      .footer-logo {
+        margin-bottom: 16px;
+      }
+      .footer-logo-image {
+        height: 44px;
+        width: auto;
+      }
+      .footer-tagline {
+        font-size: 13px;
+        color: #9ca3af;
+        margin-bottom: 20px;
+      }
+      .footer-links {
+        margin-bottom: 20px;
+      }
+      .footer-links a {
+        color: #d1d5db;
+        text-decoration: none;
+        font-size: 13px;
+        margin: 0 12px;
+      }
+      .footer-legal {
+        font-size: 12px;
+        color: #6b7280;
+        line-height: 1.7;
+      }
+      .footer-legal a {
+        color: #9ca3af;
+        text-decoration: none;
+      }
+      @media only screen and (max-width: 600px) {
+        .email-wrapper {
+          padding: 20px 12px;
+        }
+        .email-header {
+          padding: 32px 24px 40px;
+        }
+        .email-body {
+          padding: 24px;
+        }
+        .email-footer {
+          padding: 28px 24px;
+        }
+        .welcome-title {
+          font-size: 22px;
+        }
+        .logo-image {
+          height: 48px;
+        }
+        .info-row {
+          flex-direction: column;
+          gap: 4px;
+        }
+        .footer-links a {
+          display: block;
+          margin: 8px 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-wrapper">
+      <div class="email-container">
+        <div class="email-header">
+          <div class="logo-container">
+            <img src="{{logoUrl}}" alt="INFOTECH S.A" class="logo-image" />
+          </div>
+          <br />
+          <div class="header-badge">PLEINGAZ</div>
+        </div>
+
+        <div class="email-body">
+          <h1 class="welcome-title">Account Suspended ⚠️</h1>
+          <p class="welcome-subtitle">
+            Your access has been temporarily restricted
+          </p>
+
+          <p class="greeting">Hello <strong>{{employeeName}}</strong>,</p>
+
+          <p class="message-text">
+            Your PLEINGAZ account has been suspended by an administrator. During
+            this period, your access to system resources is restricted.
+          </p>
+          <p class="message-text">
+            For any questions regarding this suspension, please contact your
+            manager or the IT department directly.
+          </p>
+
+          <div class="info-card">
+            <div class="info-card-title">Suspension Details</div>
+            <div class="info-row">
+              <span class="info-label">Employee ID</span>
+              <span class="info-value">{{employeeId}}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Suspended On</span>
+              <span class="info-value">{{suspendedAt}}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Status</span>
+              <span class="info-value">Account Suspended</span>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="help-section">
+            <p class="help-title">Need help?</p>
+            <p class="help-text">
+              Contact the IT department at
+              <a href="mailto:{{supportEmail}}">{{supportEmail}}</a> or call
+              <a href="tel:{{supportPhone}}">{{supportPhone}}</a>.
+            </p>
+          </div>
+        </div>
+
+        <div class="email-footer">
+          <div class="footer-logo">
+            <img
+              src="{{logoUrl}}"
+              alt="INFOTECH S.A"
+              class="footer-logo-image"
+            />
+          </div>
+          <p class="footer-tagline">Quality gas distribution in Cameroon</p>
+          <div class="footer-links">
+            <a href="{{websiteUrl}}">Website</a>
+            <a href="{{privacyUrl}}">Privacy Policy</a>
+            <a href="{{termsUrl}}">Terms of Use</a>
+          </div>
+          <p class="footer-legal">
+            © {{year}} INFOTECH S.A. All rights reserved.<br />
+            Douala, Cameroon<br /><br />
+            This email was sent to
+            <a href="mailto:{{employeeEmail}}">{{employeeEmail}}</a>.<br />
+            If you believe you received this email in error, please contact
+            support.
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

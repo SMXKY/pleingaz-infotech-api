@@ -119,5 +119,12 @@
   "error.user.account_not_deactivated": "This account is not deactivated.",
   "success.user.reactivated": "User account reactivated successfully.",
   "error.user.department_already_assigned": "User is already assigned to this department.",
-  "success.user.department_change": "User department updated successfully."
+  "success.user.department_change": "User department updated successfully.",
+
+  "error.user.account_suspended": "This account has been suspended.",
+  "error.user.already_suspended": "This user is already suspended.",
+  "success.user.role_revoked": "User role revoked successfully.",
+  "error.user.suspension_reason_invalid_length": "Suspension reason must be between 10 and 255 characters.",
+  "error.user.not_suspended": "This user is not suspended.",
+  "success.user.reinstated": "User reinstated successfully."
 }
