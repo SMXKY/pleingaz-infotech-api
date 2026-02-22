@@ -33,7 +33,7 @@ roleRouter.post(
 );
 
 roleRouter.patch(
-  "/revoke-overide",
+  "/revoke-override",
   restrictTo(allPermissions.roles.revokeRoleOverride),
   controller.revokeRoleOverride
 );

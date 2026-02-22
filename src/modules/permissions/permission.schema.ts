@@ -118,6 +118,21 @@ export const updatePermissionSchema = z.object({
   riskLevel: PermissionRiskLevelEnum.optional(),
 });
 
+export const permissionOverideSchema = z.object({
+  permissionId: z.string().uuid("error.validation.invalid_role_id"),
+  userId: z.string().uuid("error.validation.invalid_user_id"),
+  reason: z
+    .string()
+    .min(10, "error.validation.role_override_message")
+    .max(255, "error.validation.role_override_message"),
+  expiresAt: z.coerce
+    .date()
+    .refine((d) => !d || !isNaN(d.getTime()), {
+      message: "error.validation.invalid_dob",
+    })
+    .optional(),
+});
+
 export type CreatePermissionInput = z.infer<typeof createPermissionSchema>;
 export type UpdatePermissionInput = z.infer<typeof updatePermissionSchema>;
 
@@ -125,3 +140,4 @@ export type PermissionModule = z.infer<typeof PermissionModuleEnum>;
 export type PermissionSubmodule = z.infer<typeof PermissionSubmoduleEnum>;
 export type PermissionAction = z.infer<typeof PermissionActionEnum>;
 export type PermissionRiskLevel = z.infer<typeof PermissionRiskLevelEnum>;
+export type PermissionOverideInput = z.infer<typeof permissionOverideSchema>;

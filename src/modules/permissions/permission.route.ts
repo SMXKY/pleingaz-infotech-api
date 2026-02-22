@@ -20,6 +20,19 @@ permissionRouter.get(
   restrictTo(allPermissions.permissions.readAllpermissions),
   controller.findWildCards
 );
+
+permissionRouter.post(
+  "/override",
+  restrictTo(allPermissions.permissions.createPermissionOverride),
+  controller.permissionOverride
+);
+
+permissionRouter.patch(
+  "/revoke-override",
+  restrictTo(allPermissions.permissions.revokePermissionOverride),
+  controller.revokePermissionOverride
+);
+
 permissionRouter.get(
   "/:id",
   restrictTo(allPermissions.permissions.readAllpermissions),

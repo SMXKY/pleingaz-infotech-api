@@ -129,5 +129,11 @@
   "error.role.override_already_active": "Un remplacement de rôle est déjà actif pour cet utilisateur.",
   "success.role.override_assigned_to_user": "Remplacement de rôle attribué à l'utilisateur avec succès.",
   "error.role.override_not_found": "Aucun remplacement de rôle actif n'a été trouvé pour cet utilisateur.",
-  "success.role.override_revoked": "Remplacement de rôle révoqué avec succès."
+  "success.role.override_revoked": "Remplacement de rôle révoqué avec succès.",
+
+  "error.validation.permission_override_message": "Le message de remplacement de permission doit comporter entre 10 et 255 caractères.",
+  "error.permission.override_already_active": "Une substitution de permission est déjà active pour cet utilisateur.",
+  "success.permission.override_assigned_to_user": "Substitution de permission attribuée à l'utilisateur avec succès.",
+  "error.permission.override_not_found": "Aucune substitution de permission active n'a été trouvée pour cet utilisateur.",
+  "success.permission.override_revoked": "Substitution de permission révoquée avec succès."
 }

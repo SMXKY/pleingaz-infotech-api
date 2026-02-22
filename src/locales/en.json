@@ -132,5 +132,11 @@
   "error.role.override_already_active": "A role override is already active for this user.",
   "success.role.override_assigned_to_user": "Role override assigned to user successfully.",
   "error.role.override_not_found": "No active role override was found for this user.",
-  "success.role.override_revoked": "Role override revoked successfully."
+  "success.role.override_revoked": "Role override revoked successfully.",
+
+  "error.validation.permission_override_message": "The permission override message must be between 10 and 255 characters.",
+  "error.permission.override_already_active": "A permission override is already active for this user.",
+  "success.permission.override_assigned_to_user": "permission override assigned to user successfully.",
+  "error.permission.override_not_found": "No active permission override was found for this user.",
+  "success.permission.override_revoked": "permission override revoked successfully."
 }

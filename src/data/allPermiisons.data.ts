@@ -33,6 +33,8 @@ export const allPermissions = {
   permissions: {
     readpermission: "human_resources.can_read_permission",
     readAllpermissions: "human_resources.can_read_all_permissions",
+    createPermissionOverride: "human_resources.can_create_permission_override",
+    revokePermissionOverride: "human_resources.can_revoke_permission_override",
   },
   roles: {
     createRole: "human_resources.can_create_role",

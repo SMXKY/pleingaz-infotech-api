@@ -305,6 +305,24 @@ export const permissions: PermissionSeed[] = [
     action: PermissionAction.UPDATE,
     riskLevel: PermissionRiskLevel.HIGH,
   },
+  {
+    code: "human_resources.can_create_permission_override",
+    engName: "Create Permission Override",
+    frName: "Créer une dérogation de permission",
+    module: PermissionModule.HUMAN_RESOURCES,
+    submodule: PermissionSubmodule.USERS,
+    action: PermissionAction.CREATE,
+    riskLevel: PermissionRiskLevel.HIGH,
+  },
+  {
+    code: "human_resources.can_revoke_permission_override",
+    engName: "Revoke Permission Override",
+    frName: "Révoquer la dérogation de permission",
+    module: PermissionModule.HUMAN_RESOURCES,
+    submodule: PermissionSubmodule.USERS,
+    action: PermissionAction.UPDATE,
+    riskLevel: PermissionRiskLevel.HIGH,
+  },
 
   // ─── HUMAN RESOURCES - PAYROLL ───────────────────────────────────────────────
   {
