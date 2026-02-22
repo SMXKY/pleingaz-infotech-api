@@ -285,6 +285,15 @@ export const permissions: PermissionSeed[] = [
     riskLevel: PermissionRiskLevel.HIGH,
   },
   {
+    code: "can_change_user_department",
+    engName: "Change User Department",
+    frName: "Changer le département d'un utilisateur",
+    module: PermissionModule.HUMAN_RESOURCES,
+    submodule: PermissionSubmodule.USERS,
+    action: PermissionAction.UPDATE,
+    riskLevel: PermissionRiskLevel.MEDIUM,
+  },
+  {
     code: "can_read_department",
     engName: "Read Department",
     frName: "Lire un département",

@@ -16,7 +16,11 @@ import {
 } from "./user.schema";
 import { AppError } from "@utils/AppError.util";
 import { StatusCodes } from "http-status-codes";
-import { FindManyOptions, ServiceContext } from "@appTypes/base.types";
+import {
+  FindManyOptions,
+  PaginatedResult,
+  ServiceContext,
+} from "@appTypes/base.types";
 import { $Enums, Status, TokenType, User } from "src/generated/prisma";
 import { prisma } from "src";
 import path from "path";
@@ -76,6 +80,26 @@ export class UserService extends BaseService<
 
   protected async beforeDelete(id: string, ctx: ServiceContext): Promise<void> {
     return;
+  }
+
+  async findById(
+    id: string,
+    ctx: ServiceContext,
+    include?: Record<string, boolean | object>
+  ): Promise<User> {
+    const record = await this.repository.findByIdOrThrow(id, {
+      department: true,
+      role: true,
+    });
+    return record;
+  }
+
+  async findMany(
+    options: FindManyOptions,
+    ctx: ServiceContext
+  ): Promise<PaginatedResult<User>> {
+    options.include = { department: true, role: true };
+    return this.repository.findMany(options);
   }
 
   async findByUsername(username: string): Promise<User | null> {
@@ -910,6 +934,13 @@ export class UserService extends BaseService<
       );
     }
 
+    if (user.isSystem) {
+      throw new AppError(
+        "error.user.system_user_immutable",
+        StatusCodes.FORBIDDEN
+      );
+    }
+
     const role = await prisma.role.findUnique({
       where: {
         id: roleId,
@@ -1676,5 +1707,66 @@ export class UserService extends BaseService<
     });
 
     return updatedUser;
+  }
+
+  async changeUserDepartment(
+    data: { departmentId: string; userId: string },
+    ctx: ServiceContext
+  ): Promise<{ message: string }> {
+    const { userId, departmentId } = data;
+
+    const [user, department] = await Promise.all([
+      prisma.user.findUnique({ where: { id: userId } }),
+      prisma.department.findUnique({ where: { id: departmentId } }),
+    ]);
+
+    if (!user) {
+      throw new AppError("error.user.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (!department) {
+      throw new AppError("error.department.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    if (user.status === UserStatus.TERMINATED) {
+      throw new AppError(
+        "error.user.account_terminated",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    if (user.departmentId === departmentId) {
+      throw new AppError(
+        "error.user.department_already_assigned",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    if (user.isSystem) {
+      throw new AppError(
+        "error.user.system_user_immutable",
+        StatusCodes.FORBIDDEN
+      );
+    }
+
+    const previousDepartmentId = user.departmentId;
+
+    await prisma.user.update({
+      where: { id: userId },
+      data: { departmentId },
+    });
+
+    this.log(ctx.req as Request, {
+      operation: LogOperation.UPDATE,
+      category: LogCategory.WRITE,
+      recordId: userId,
+      previousState: { departmentId: previousDepartmentId },
+      newState: { departmentId },
+      changedFields: ["departmentId"],
+      userId: ctx.userId,
+      userEmail: ctx.userEmail || "system",
+    });
+
+    return { message: "success.user.department_change" };
   }
 }

@@ -113,5 +113,8 @@
   "error.user.account_already_deactivated": "Ce compte est déjà désactivé.",
   "success.user.deactivated": "Compte utilisateur désactivé avec succès.",
   "error.user.account_not_deactivated": "Ce compte n'est pas désactivé.",
-  "success.user.reactivated": "Compte utilisateur réactivé avec succès."
+  "success.user.reactivated": "Compte utilisateur réactivé avec succès.",
+
+  "error.user.department_already_assigned": "L'utilisateur est déjà affecté à ce département.",
+  "success.user.department_change": "Le département de l'utilisateur a été mis à jour avec succès."
 }

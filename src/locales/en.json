@@ -117,5 +117,7 @@
   "error.user.account_already_deactivated": "This account is already deactivated.",
   "success.user.deactivated": "User account deactivated successfully.",
   "error.user.account_not_deactivated": "This account is not deactivated.",
-  "success.user.reactivated": "User account reactivated successfully."
+  "success.user.reactivated": "User account reactivated successfully.",
+  "error.user.department_already_assigned": "User is already assigned to this department.",
+  "success.user.department_change": "User department updated successfully."
 }

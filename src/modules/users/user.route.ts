@@ -48,6 +48,11 @@ userRouter.patch(
   controller.changeRole
 );
 userRouter.patch(
+  "/change-department",
+  restrictTo(allPermissions.users.changeUserDepartment),
+  controller.changeUserDepartment
+);
+userRouter.patch(
   "/activate/:userId",
   restrictTo(allPermissions.users.activateUser),
   controller.activateAccount

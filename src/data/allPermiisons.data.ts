@@ -18,6 +18,7 @@ export const allPermissions = {
     readUserPayroll: "can_read_user_payroll",
     readAllUsersPayroll: "can_read_all_users_payroll",
     updateUserPayroll: "can_update_user_payroll",
+    changeUserDepartment: "can_change_user_department",
   },
   departments: {
     createDepartment: "can_create_department",

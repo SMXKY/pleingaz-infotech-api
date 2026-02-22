@@ -366,4 +366,28 @@ export class UserController extends BaseController<User> {
 
     appResponder(StatusCodes.OK, result, res);
   });
+
+  changeUserDepartment = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const ctx = this.getContext(req, res);
+      if (!req.body.userId || !req.body.departmentId) {
+        return next(
+          new AppError(
+            "error.req.invalid_request_body",
+            StatusCodes.BAD_REQUEST
+          )
+        );
+      }
+
+      const result = await this.service.changeUserDepartment(req.body, ctx);
+
+      appResponder(
+        StatusCodes.OK,
+        {
+          message: t(res.locals.lang, result.message),
+        },
+        res
+      );
+    }
+  );
 }
