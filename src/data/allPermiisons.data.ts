@@ -57,6 +57,11 @@ export const allPermissions = {
     readAdminConfig: "admin.can_read_adminConfig",
     updateAdminConfig: "admin.can_update_adminConfig",
   },
+  permissionOverrides: {
+    readPermissionOverride: "human_resources.can_read_permission_override",
+    readAllPermissionOverrides:
+      "human_resources.can_read_all_permission_overrides",
+  },
 } as const;
 
 export default allPermissions;

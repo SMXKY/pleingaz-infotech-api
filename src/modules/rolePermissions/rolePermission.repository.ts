@@ -1,18 +1,18 @@
 import prisma from "@models/index.model";
 import { BaseRepository } from "src/base/BaseRepository";
-import { Permission } from "src/generated/prisma";
+import { RolePermission } from "src/generated/prisma";
 
-export class PermissionRepository extends BaseRepository<Permission> {
-  protected modelName = "Permission";
+export class RolePermissionRepository extends BaseRepository<RolePermission> {
+  protected modelName = "RolePermission";
   protected hasSystemField = true;
 
-  async findByCode(code: string): Promise<Permission | null> {
+  async findByCode(code: string): Promise<RolePermission | null> {
     return this.model.findFirst({
       where: { code, deletedAt: null },
     });
   }
 
-  async findWildCardPermissions(): Promise<Permission[]> {
+  async findWildCardRolePermissions(): Promise<RolePermission[]> {
     return this.model.findMany({
       where: { isWildcard: true, deletedAt: null },
     });

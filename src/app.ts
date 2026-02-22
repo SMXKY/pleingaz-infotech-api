@@ -11,9 +11,11 @@ import cors, { CorsOptions } from "cors";
 import { roleRouter } from "./modules/roles";
 import { departmentRouter } from "./modules/departments";
 import userRouter from "./modules/users/user.route";
-import permissionRouter from "./modules/permissions/permission.route";
+import permissionRouter from "./modules/permissionOverrides/permissionOverride.route";
 import activityLogRouter from "./modules/activityLogs/activityLogs.route";
 import adminConfigRouter from "./modules/adminConfig/adminConfig.route";
+import { PermissionOverrideRouter } from "./modules/permissionOverrides/indext";
+import { rolePermissionRouter } from "./modules/rolePermissions/indext";
 
 export const app = express();
 
@@ -94,6 +96,8 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/permissions", permissionRouter);
 app.use("/api/v1/activity-logs", activityLogRouter);
 app.use("/api/v1/admin-config", adminConfigRouter);
+app.use("/api/v1/permission-overrides", PermissionOverrideRouter);
+app.use("/api/v1/role-permissions", rolePermissionRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   console.log(`Invalid route accessed: ${req.originalUrl}`);

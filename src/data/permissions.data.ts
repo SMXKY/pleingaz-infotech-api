@@ -343,6 +343,24 @@ export const permissions: PermissionSeed[] = [
     action: PermissionAction.READ,
     riskLevel: PermissionRiskLevel.CRITICAL,
   },
+  {
+    code: "human_resources.can_read_permission_override",
+    engName: "Read Permission Override",
+    frName: "Lire la dérogation de permission",
+    module: PermissionModule.HUMAN_RESOURCES,
+    submodule: PermissionSubmodule.USERS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.MEDIUM,
+  },
+  {
+    code: "human_resources.can_read_all_permission_overrides",
+    engName: "Read All Permission Overrides",
+    frName: "Lire toutes les dérogations de permission",
+    module: PermissionModule.HUMAN_RESOURCES,
+    submodule: PermissionSubmodule.USERS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.HIGH,
+  },
 
   // ─── ACCOUNTING - PAYROLL ─────────────────────────────────────────────────────
   {
