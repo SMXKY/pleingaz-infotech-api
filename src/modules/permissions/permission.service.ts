@@ -17,7 +17,7 @@ export class PermissionService extends BaseService<
   UpdatePermissionInput
 > {
   protected repository: PermissionRepository;
-  protected tableName = "Permissions";
+  protected tableName = "permissions";
   protected createSchema = createPermissionSchema;
   protected updateSchema = updatePermissionSchema;
 

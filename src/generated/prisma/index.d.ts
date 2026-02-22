@@ -188,7 +188,8 @@ export const PermissionSubmodule: {
   PERMISSIONS: 'PERMISSIONS',
   SYSTEM_CONFIG: 'SYSTEM_CONFIG',
   AUDIT_LOGS: 'AUDIT_LOGS',
-  DEPARTMENTS: 'DEPARTMENTS'
+  DEPARTMENTS: 'DEPARTMENTS',
+  ADMINISTRATION: 'ADMINISTRATION'
 };
 
 export type PermissionSubmodule = (typeof PermissionSubmodule)[keyof typeof PermissionSubmodule]

@@ -120,6 +120,7 @@ enum PermissionSubmodule {
   SYSTEM_CONFIG
   AUDIT_LOGS
   DEPARTMENTS
+  ADMINISTRATION
 }
 
 enum PermissionAction {

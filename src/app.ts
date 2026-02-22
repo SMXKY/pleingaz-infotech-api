@@ -13,6 +13,7 @@ import { departmentRouter } from "./modules/departments";
 import userRouter from "./modules/users/user.route";
 import permissionRouter from "./modules/permissions/permission.route";
 import activityLogRouter from "./modules/activityLogs/activityLogs.route";
+import adminConfigRouter from "./modules/adminConfig/adminConfig.route";
 
 export const app = express();
 
@@ -92,6 +93,7 @@ app.use("/api/v1/departments", departmentRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/permissions", permissionRouter);
 app.use("/api/v1/activity-logs", activityLogRouter);
+app.use("/api/v1/admin-config", adminConfigRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   console.log(`Invalid route accessed: ${req.originalUrl}`);

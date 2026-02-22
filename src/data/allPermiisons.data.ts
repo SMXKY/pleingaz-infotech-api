@@ -47,6 +47,10 @@ export const allPermissions = {
     readActivityLog: "can_read_activityLog",
     readAllActivityLogs: "can_read_all_activityLogs",
   },
+  adminConfigs: {
+    readAdminConfig: "can_read_adminConfig",
+    updateAdminConfig: "can_update_adminConfig",
+  },
 } as const;
 
 export default allPermissions;

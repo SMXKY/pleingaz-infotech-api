@@ -379,7 +379,8 @@ exports.PermissionSubmodule = exports.$Enums.PermissionSubmodule = {
   PERMISSIONS: 'PERMISSIONS',
   SYSTEM_CONFIG: 'SYSTEM_CONFIG',
   AUDIT_LOGS: 'AUDIT_LOGS',
-  DEPARTMENTS: 'DEPARTMENTS'
+  DEPARTMENTS: 'DEPARTMENTS',
+  ADMINISTRATION: 'ADMINISTRATION'
 };
 
 exports.PermissionAction = exports.$Enums.PermissionAction = {

@@ -469,4 +469,22 @@ export const permissions: PermissionSeed[] = [
     action: PermissionAction.READ,
     riskLevel: PermissionRiskLevel.LOW,
   },
+  {
+    code: "can_read_adminConfig",
+    engName: "Read Admin Configuration",
+    frName: "Lire la configuration administrateur",
+    module: PermissionModule.ADMIN,
+    submodule: PermissionSubmodule.ADMINISTRATION,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.LOW,
+  },
+  {
+    code: "can_update_adminConfig",
+    engName: "Update Admin Configuration",
+    frName: "Mettre à jour la configuration administrateur",
+    module: PermissionModule.ADMIN,
+    submodule: PermissionSubmodule.ADMINISTRATION,
+    action: PermissionAction.UPDATE,
+    riskLevel: PermissionRiskLevel.HIGH,
+  },
 ];
