@@ -96,7 +96,13 @@ export class UserService extends BaseService<
     soft: boolean = true
   ): Promise<User> {
     if (soft) {
-      return this.repository.softDelete(id, ["name"]);
+      return this.repository.softDelete(id, [
+        "email",
+        "username",
+        "employeeId",
+        "nationalIdNumber",
+        "phoneNumber",
+      ]);
     }
     return this.repository.delete(id);
   }

@@ -442,4 +442,22 @@ export const permissions: PermissionSeed[] = [
     action: PermissionAction.UPDATE,
     riskLevel: PermissionRiskLevel.CRITICAL,
   },
+  {
+    code: "can_read_activityLog",
+    engName: "Read Activity Log",
+    frName: "Lire un journal d'activité",
+    module: PermissionModule.ADMIN,
+    submodule: PermissionSubmodule.AUDIT_LOGS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.LOW,
+  },
+  {
+    code: "can_read_all_activityLogs",
+    engName: "Read All Activity Logs",
+    frName: "Lire tous les journaux d'activité",
+    module: PermissionModule.ADMIN,
+    submodule: PermissionSubmodule.AUDIT_LOGS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.LOW,
+  },
 ];

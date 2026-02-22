@@ -42,6 +42,10 @@ export const allPermissions = {
     enableRole: "can_enable_role",
     assignPermissions: "can_assign_role_permissions",
   },
+  activityLogs: {
+    readActivityLog: "can_read_activityLog",
+    readAllActivityLogs: "can_read_all_activityLogs",
+  },
 } as const;
 
 export default allPermissions;
