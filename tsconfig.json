@@ -28,7 +28,8 @@
       "@cron-jobs/*": ["src/cron-jobs/*"],
       "@defaults/*": ["src/defaults/*"],
       "@public/*": ["src/public/*"],
-      "@appTypes/*": ["src/appTypes/*"]
+      "@appTypes/*": ["src/appTypes/*"],
+      "@locales/*": ["src/locales/*"]
     },
 
     /* Source maps for debugging */

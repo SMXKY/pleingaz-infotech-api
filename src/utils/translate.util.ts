@@ -9,7 +9,10 @@ const translations: Record<Language, Translations> = {
   [Language.FR]: {},
 };
 
-const localesDir = path.join(__dirname, "../locales");
+const localesDir =
+  process.env.NODE_ENV === "development"
+    ? path.join(__dirname, "../locales")
+    : path.join(__dirname, "locales");
 
 export const loadTranslations = async (): Promise<void> => {
   const files = await readdir(localesDir);
