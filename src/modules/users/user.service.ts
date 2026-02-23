@@ -133,12 +133,15 @@ export class UserService extends BaseService<
 
   async createEmployee(
     form: CreateUserInput,
+
     ctx: ServiceContext
   ): Promise<Partial<User>> {
     const config = await prisma.adminConfig.findFirst();
+
     if (!config) {
       throw new AppError(
         "error.config.not_found",
+
         StatusCodes.INTERNAL_SERVER_ERROR
       );
     }
@@ -168,8 +171,10 @@ export class UserService extends BaseService<
     }
 
     const validation = createUserSchema.safeParse(form);
+
     if (!validation.success) {
       const messages = validation.error.issues.map((i) => i.message).join(", ");
+
       throw new AppError(messages, StatusCodes.BAD_REQUEST);
     }
 
@@ -177,33 +182,53 @@ export class UserService extends BaseService<
       const user = await tx.user.create({
         data: {
           ...form,
+
           employeeId: await generateEmployeeId(tx, config.companyPrefix),
+
           dob: form.dob ? new Date(form.dob) : null,
+
           hireDate: new Date(form.hireDate),
         },
+
         select: {
           id: true,
+
           email: true,
+
           name: true,
+
           surname: true,
+
           employeeId: true,
+
           phoneNumber: true,
+
           status: true,
+
           gender: true,
+
           address: true,
+
           hireDate: true,
+
           createdAt: true,
+
           department: {
             select: {
               id: true,
+
               name: true,
+
               code: true,
             },
           },
+
           role: {
             select: {
               id: true,
+
               name: true,
+
               description: true,
             },
           },
@@ -214,14 +239,18 @@ export class UserService extends BaseService<
         data: {
           userId: user.id,
         },
+
         select: {
           id: true,
+
           language: true,
         },
       });
 
       const token = crypto.randomBytes(32).toString("hex");
+
       const tokenId = crypto.createHash("sha256").update(token).digest("hex");
+
       const expiresAt = new Date(
         Date.now() +
           (Number(EMAIL_VERIFICATION_EXPIRES_IN) || 24) * 60 * 60 * 1000
@@ -230,27 +259,79 @@ export class UserService extends BaseService<
       await tx.userToken.create({
         data: {
           id: tokenId,
+
           userId: user.id,
+
           type: TokenType.PASSWORD_SETUP,
+
           expiresAt,
         },
       });
 
       const tokenUrl = `${frontEndUrl}/set-credentials?token=${token}`;
 
-      // ... email template and sending logic stays the same ...
+      const templatePath = path.join(
+        __dirname,
+
+        "../../public/templates/account_creation.template.html"
+      );
+
+      const emailTemplate = readFileSync(templatePath, "utf-8")
+        .replace(/{{logoUrl}}/g, config.logoUrl || `${baseUrl}/assets/logo.png`)
+
+        .replace(/{{employeeName}}/g, `${user.name} ${user.surname}`)
+
+        .replace(/{{employeeId}}/g, user.employeeId)
+
+        .replace(/{{employeeEmail}}/g, user.email)
+
+        .replace(/{{department}}/g, user.department.name)
+
+        .replace(/{{role}}/g, user.role.name)
+
+        .replace(/{{setPasswordLink}}/g, tokenUrl)
+
+        .replace(/{{supportEmail}}/g, config.supportEmail)
+
+        .replace(/{{supportPhone}}/g, config.companyPhoneNumber)
+
+        .replace(/{{websiteUrl}}/g, frontEndUrl)
+
+        .replace(/{{privacyUrl}}/g, `${frontEndUrl}/privacy`)
+
+        .replace(/{{termsUrl}}/g, `${frontEndUrl}/terms`)
+
+        .replace(/{{year}}/g, `${new Date().getFullYear()}`);
+
+      await sendEmail(
+        user.email,
+
+        "Bienvenue chez INFOTECH S.A - Configurez votre compte",
+
+        `Bienvenue ${user.name} ${user.surname}! Configurez votre compte ici: ${tokenUrl}`,
+
+        emailTemplate
+      );
 
       if (ctx.req) {
         await tx.activityLog.create({
           data: {
             userId: ctx.userId || null,
+
             userEmail: ctx.userEmail || "system",
+
             operation: "CREATE",
+
             category: "WRITE",
+
             tableName: "users",
+
             recordId: user.id,
+
             newState: user,
+
             changedFields: [],
+
             status: "SUCCESS",
           },
         });
@@ -258,9 +339,12 @@ export class UserService extends BaseService<
 
       return {
         ...user,
+
         preference,
+
         setupToken: {
           type: TokenType.PASSWORD_SETUP,
+
           expiresAt,
         },
       };
@@ -268,18 +352,24 @@ export class UserService extends BaseService<
 
     this.log(ctx.req as Request, {
       operation: LogOperation.CREATE,
+
       category: LogCategory.WRITE,
+
       recordId: result.id,
+
       previousState: null,
+
       newState: result,
+
       changedFields: [],
+
       userId: ctx.userId,
+
       userEmail: ctx.userEmail || "system",
     });
 
     return result;
   }
-
   async setupAccountCredentials(
     data: SetupAccountInput,
     ctx: ServiceContext

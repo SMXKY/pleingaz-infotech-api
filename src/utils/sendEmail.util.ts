@@ -7,14 +7,17 @@ export const sendEmail = async (
   text: string,
   html: string
 ) => {
+  console.log(
+    `[Email] Using Brevo, API key exists: ${!!process.env.BREVO_API_KEY}`
+  );
   if (process.env.NODE_ENV === "production") {
     try {
       const response = await axios.post(
         "https://api.brevo.com/v3/smtp/email",
         {
           sender: {
-            name: "PLEINGAZ-INFOTECH",
-            email: "smookeymykomhr@gmail.com",
+            name: "INFOTECH S.A",
+            email: "no-reply@tallamichael.online",
           },
           to: [{ email: to }],
           subject,
@@ -30,11 +33,14 @@ export const sendEmail = async (
       );
 
       console.log(
-        `Email sent to ${to} successfully. ID: ${response.data.messageId}`
+        `[Email] Sent successfully to ${to}. ID: ${response.data.messageId}`
       );
       return response.data;
     } catch (err: any) {
-      console.error("Brevo error:", err.response?.data || err);
+      console.error(
+        "[Email] Brevo error:",
+        err.response?.data || err.message || err
+      );
       throw err;
     }
   } else {
