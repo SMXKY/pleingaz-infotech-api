@@ -271,9 +271,10 @@ export class UserService extends BaseService<
       const tokenUrl = `${frontEndUrl}/set-credentials?token=${token}`;
 
       const templatePath = path.join(
-        __dirname,
-
-        "../../public/templates/account_creation.template.html"
+        process.cwd(),
+        process.env.NODE_ENV === "development"
+          ? "src/public/templates/account_creation.template.html"
+          : "dist/public/templates/account_creation.template.html"
       );
 
       const emailTemplate = readFileSync(templatePath, "utf-8")
@@ -488,10 +489,16 @@ export class UserService extends BaseService<
 
     const tokenUrl = `${frontEndUrl}/set-credentials?token=${token}`;
 
-    const templatePath = path.join(
-      __dirname,
-      "../../public/templates/account_creation.template.html"
-    );
+    const templatePath =
+      process.env.NODE_ENV === "development"
+        ? path.join(
+            __dirname,
+            "../../public/templates/account_creation.template.html"
+          )
+        : path.join(
+            process.cwd(),
+            "dist/public/templates/account_creation.template.html"
+          );
 
     const userWithRelations = await prisma.user.findUnique({
       where: { id: userId },
@@ -775,11 +782,10 @@ export class UserService extends BaseService<
     const language = user.preference?.language.toLocaleLowerCase() ?? "fr";
     const templateFile = `password-reset.${language}.template.html`;
 
-    const templatePath = path.join(
-      __dirname,
-      "../../public/templates",
-      templateFile
-    );
+    const templatePath =
+      process.env.NODE_ENV === "development"
+        ? path.join(__dirname, "../../public/templates", templateFile)
+        : path.join(process.cwd(), "dist/public/templates", templateFile);
 
     const emailHtml = readFileSync(templatePath, "utf-8")
       .replace(/{{logoUrl}}/g, config.logoUrl || `${baseUrl}/assets/logo.png`)
@@ -1944,11 +1950,10 @@ export class UserService extends BaseService<
     const language = user.preference?.language.toLocaleLowerCase() ?? "fr";
     const templateFile = `account_suspension.template.${language}.html`;
 
-    const templatePath = path.join(
-      __dirname,
-      "../../public/templates",
-      templateFile
-    );
+    const templatePath =
+      process.env.NODE_ENV === "development"
+        ? path.join(__dirname, "../../public/templates", templateFile)
+        : path.join(process.cwd(), "dist/public/templates", templateFile);
 
     const emailHtml = readFileSync(templatePath, "utf-8")
       .replace(/{{logoUrl}}/g, config.logoUrl || `${baseUrl}/assets/logo.png`)
@@ -2050,11 +2055,10 @@ export class UserService extends BaseService<
     const language = user.preference?.language.toLocaleLowerCase() ?? "fr";
     const templateFile = `account_reinstated.template.${language}.html`;
 
-    const templatePath = path.join(
-      __dirname,
-      "../../public/templates",
-      templateFile
-    );
+    const templatePath =
+      process.env.NODE_ENV === "development"
+        ? path.join(__dirname, "../../public/templates", templateFile)
+        : path.join(process.cwd(), "dist/public/templates", templateFile);
 
     const emailHtml = readFileSync(templatePath, "utf-8")
       .replace(/{{logoUrl}}/g, config.logoUrl || `${baseUrl}/assets/logo.png`)
