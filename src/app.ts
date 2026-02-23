@@ -30,14 +30,7 @@ export const app = express();
 // });
 
 const corsOptions: CorsOptions = {
-  origin: (
-    origin: string | undefined,
-    callback: (err: Error | null, allow?: boolean) => void
-  ) => {
-    // Allow requests with no origin (mobile apps, curl, Postman)
-    // OR allow any origin (for now during development)
-    callback(null, true);
-  },
+  origin: true, // This allows all origins - simpler than the callback
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: [
@@ -49,8 +42,10 @@ const corsOptions: CorsOptions = {
   ],
 };
 
-app.use(cookieParser());
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
+app.use(cookieParser());
+
 app.set("trust proxy", true);
 
 app.get("/", (req: Request, res: Response) => {
