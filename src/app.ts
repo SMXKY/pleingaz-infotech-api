@@ -41,10 +41,13 @@ const corsOptions: CorsOptions = {
     "Authorization",
   ],
 };
-
-app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
-app.use(cookieParser());
+app.use(
+  cors({
+    origin: "*",
+    credentials: false,
+  })
+);
+// app.use(cookieParser());
 
 app.set("trust proxy", true);
 
