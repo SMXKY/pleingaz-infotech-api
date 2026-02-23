@@ -10,7 +10,7 @@ import path from "path";
 import cors, { CorsOptions } from "cors";
 import { roleRouter } from "./modules/roles";
 import { departmentRouter } from "./modules/departments";
-import userRouter from "./modules/users/user.route";
+import { userRouter } from "./modules/users";
 import activityLogRouter from "./modules/activityLogs/activityLogs.route";
 import adminConfigRouter from "./modules/adminConfig/adminConfig.route";
 import { PermissionOverrideRouter } from "./modules/permissionOverrides/indext";

@@ -12,13 +12,15 @@ const controller = new UserController();
 const upload = multer({ dest: "../../upload" });
 
 userRouter.post("/login", getUserLanguage, controller.login);
-userRouter.post("/forgot-password", getUserLanguage, controller.forgotPassword);
-userRouter.post("/reset-password", getUserLanguage, controller.resetPassword);
-userRouter.post(
-  "/setup-account",
-  getUserLanguage,
-  controller.setupAccountCredentials
-);
+userRouter
+  .route("/forgot-password")
+  .post(getUserLanguage, controller.forgotPassword);
+userRouter
+  .route("/reset-password")
+  .post(getUserLanguage, controller.resetPassword);
+userRouter
+  .route("/setup-account")
+  .post(getUserLanguage, controller.setupAccountCredentials);
 
 userRouter.use(protect, getUserLanguage);
 
