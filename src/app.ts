@@ -90,6 +90,13 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 app.use("/assets", express.static(path.join(__dirname, "assets")));
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.get("/docs.json", (req, res) => {
+  res.setHeader(
+    "Content-Disposition",
+    "attachment; filename=openapi-spec.json"
+  );
+  res.json(swaggerSpec);
+});
 app.use("/api/v1/roles", roleRouter);
 app.use("/api/v1/departments", departmentRouter);
 app.use("/api/v1/users", userRouter);
