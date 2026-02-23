@@ -42,6 +42,7 @@
     "http-status-codes": "^2.3.0",
     "ioredis": "^5.9.2",
     "jsonwebtoken": "^9.0.3",
+    "module-alias": "^2.3.4",
     "multer": "^2.0.2",
     "nodemailer": "^8.0.1",
     "otplib": "^13.2.1",
@@ -87,5 +88,38 @@
     "tsc-alias": "^1.8.16",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3"
+  },
+  "_moduleAliases": {
+    "@": "dist",
+    "@controllers/*": [
+      "src/controllers/*"
+    ],
+    "@services/*": [
+      "src/services/*"
+    ],
+    "@routes/*": [
+      "src/routes/*"
+    ],
+    "@middlewares/*": [
+      "src/middlewares/*"
+    ],
+    "@models/*": [
+      "src/models/*"
+    ],
+    "@utils/*": [
+      "src/utils/*"
+    ],
+    "@cron-jobs/*": [
+      "src/cron-jobs/*"
+    ],
+    "@defaults/*": [
+      "src/defaults/*"
+    ],
+    "@public/*": [
+      "src/public/*"
+    ],
+    "@appTypes/*": [
+      "src/appTypes/*"
+    ]
   }
 }
