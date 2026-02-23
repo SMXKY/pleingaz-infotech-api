@@ -72,21 +72,21 @@ const allowedIps = [
   "31.97.113.198",
 ];
 
-app.use((req: Request, res: Response, next: NextFunction) => {
-  const clientIp =
-    req.ip || req.connection.remoteAddress || req.headers["x-forwarded-for"];
+// app.use((req: Request, res: Response, next: NextFunction) => {
+//   const clientIp =
+//     req.ip || req.connection.remoteAddress || req.headers["x-forwarded-for"];
 
-  const ip = (clientIp as string).replace("::ffff:", "");
+//   const ip = (clientIp as string).replace("::ffff:", "");
 
-  if (allowedIps.includes(ip)) {
-    next();
-  } else {
-    res.status(403).json({
-      status: "fail",
-      message: `Your IP (${ip}) is not allowed to access this server.`,
-    });
-  }
-});
+//   if (allowedIps.includes(ip)) {
+//     next();
+//   } else {
+//     res.status(403).json({
+//       status: "fail",
+//       message: `Your IP (${ip}) is not allowed to access this server.`,
+//     });
+//   }
+// });
 
 app.use("/assets", express.static(path.join(__dirname, "assets")));
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
