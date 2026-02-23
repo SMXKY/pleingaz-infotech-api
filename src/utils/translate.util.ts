@@ -39,7 +39,6 @@ export const loadTranslations = async (): Promise<void> => {
   }
 };
 
-loadTranslations();
 const interpolate = (str: string, vars?: Record<string, any>): string =>
   !vars
     ? str

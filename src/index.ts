@@ -12,6 +12,7 @@ process.on("uncaughtException", (err) => {
 
 import { PrismaPg } from "@prisma/adapter-pg";
 import { seedDefaultRecords } from "./defaults";
+import { loadTranslations } from "@utils/translate.util";
 
 const connectionString = `${process.env.DATABASE_URL}`;
 
@@ -26,6 +27,7 @@ prisma
     process.exit(1);
   })
   .then(async () => {
+    await loadTranslations();
     await seedDefaultRecords();
   })
   .catch((err) => {
