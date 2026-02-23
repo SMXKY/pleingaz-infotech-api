@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    /* Language & Environment */
+    "target": "ES2020",
+    "module": "commonjs",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+
+    /* Decorators for Swagger / TSOA (optional but recommended) */
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    /* Path aliases for cleaner imports */
+    "baseUrl": "./",
+    "paths": {
+      "@controllers/*": ["src/controllers/*"],
+      "@services/*": ["src/services/*"],
+      "@routes/*": ["src/routes/*"],
+      "@middlewares/*": ["src/middlewares/*"],
+      "@models/*": ["src/models/*"],
+      "@utils/*": ["src/utils/*"],
+      "@cron-jobs/*": ["src/cron-jobs/*"],
+      "@defaults/*": ["src/defaults/*"],
+      "@public/*": ["src/public/*"],
+      "@appTypes/*": ["src/appTypes/*"]
+    },
+
+    /* Source maps for debugging */
+    "sourceMap": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "tests"]
+}

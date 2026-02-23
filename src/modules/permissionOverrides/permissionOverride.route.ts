@@ -3,23 +3,25 @@ import { PermissionOverrideController } from "./permissionOverride.controller";
 import getUserLanguage from "@middlewares/getUserLanguage.middleware";
 import protect from "@middlewares/protect.middleware";
 import restrictTo from "@middlewares/restrictTo.middleware";
-import allPermissions from "src/data/allPermiisons.data";
+import allPermissionOverrides from "src/data/allPermiisons.data";
 
-const permissionRouter = Router();
+const permissionOverrideRouter = Router();
 const controller = new PermissionOverrideController();
 
-permissionRouter.use(protect, getUserLanguage);
+permissionOverrideRouter.use(protect, getUserLanguage);
 
-permissionRouter.get(
+permissionOverrideRouter.get(
   "/",
-  restrictTo(allPermissions.permissionOverrides.readAllPermissionOverrides),
+  restrictTo(
+    allPermissionOverrides.permissionOverrides.readAllPermissionOverrides
+  ),
   controller.findMany
 );
 
-permissionRouter.get(
+permissionOverrideRouter.get(
   "/:id",
-  restrictTo(allPermissions.permissionOverrides.readPermissionOverride),
+  restrictTo(allPermissionOverrides.permissionOverrides.readPermissionOverride),
   controller.findById
 );
 
-export default permissionRouter;
+export default permissionOverrideRouter;

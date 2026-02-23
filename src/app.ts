@@ -11,11 +11,11 @@ import cors, { CorsOptions } from "cors";
 import { roleRouter } from "./modules/roles";
 import { departmentRouter } from "./modules/departments";
 import userRouter from "./modules/users/user.route";
-import permissionRouter from "./modules/permissionOverrides/permissionOverride.route";
 import activityLogRouter from "./modules/activityLogs/activityLogs.route";
 import adminConfigRouter from "./modules/adminConfig/adminConfig.route";
 import { PermissionOverrideRouter } from "./modules/permissionOverrides/indext";
 import { rolePermissionRouter } from "./modules/rolePermissions/indext";
+import permissionRouter from "./modules/permissions/permission.route";
 
 export const app = express();
 
