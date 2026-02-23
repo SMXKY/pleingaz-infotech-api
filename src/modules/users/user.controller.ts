@@ -9,6 +9,7 @@ import {
   changePasswordSchema,
   ChangeUserCredentialsSchema,
   CreateUserInput,
+  createUserSchema,
   PasswordResetSchema,
   setupAccountSchema,
   updateMeSchema,
@@ -74,9 +75,13 @@ export class UserController extends BaseController<User> {
   createEmployee = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
       const ctx = this.getContext(req, res);
-      const form = req.body;
+      const validation = createUserSchema.safeParse(req.body);
+      if (!validation.success) {
+        const message = validation.error.issues[0].message;
+        throw new AppError(message, StatusCodes.BAD_REQUEST);
+      }
 
-      const result = await this.service.createEmployee(form, ctx);
+      const result = await this.service.createEmployee(validation.data, ctx);
 
       appResponder(StatusCodes.CREATED, result as CreateUserInput, res);
     }

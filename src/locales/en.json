@@ -138,5 +138,6 @@
   "error.permission.override_already_active": "A permission override is already active for this user.",
   "success.permission.override_assigned_to_user": "permission override assigned to user successfully.",
   "error.permission.override_not_found": "No active permission override was found for this user.",
-  "success.permission.override_revoked": "permission override revoked successfully."
+  "success.permission.override_revoked": "permission override revoked successfully.",
+  "error.db.invalid_value": ""
 }

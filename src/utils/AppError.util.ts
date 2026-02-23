@@ -82,6 +82,7 @@ export class AppError extends Error {
     }
 
     if (err?.code === "P2006" || message.includes("Invalid value")) {
+      console.log(err);
       return new AppError("error.db.invalid_value", 400);
     }
 
