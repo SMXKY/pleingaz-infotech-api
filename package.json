@@ -16,7 +16,7 @@
     "build:compile": "npx prisma generate && tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
     "ensure:dirs": "mkdirp dist/public dist/generated",
     "build:copy": "npm run ensure:dirs && cpy 'src/public/**' dist/public --parents && cpy 'src/generated/**' dist/generated --parents && copyfiles -V -u 1 'src/**/*.{hbs,ejs,html}' dist/",
-    "build": "npx prisma generate && npx tsc && npx tsc-alias && cp -r src/public dist/ && cp -r src/generated dist/ && pm2 restart pleingaz-api",
+    "build": "npx prisma generate && npx tsup src/index.ts --out-dir dist && cp -r src/public dist/ && cp -r src/generated dist/ && cp -r src/assets dist/ && cp -r src/locales dist/ && pm2 restart pleingaz-api",
     "build:prod": "NODE_ENV=production npm run build",
     "postbuild": "npm run build:verify",
     "build:verify": "node -e \"if (!require('fs').existsSync('./dist/public') && !require('fs').existsSync('./dist/generated')) { console.error('Build failed: dist directories not found'); process.exit(1); }\""
