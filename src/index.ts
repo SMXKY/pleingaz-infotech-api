@@ -1,9 +1,9 @@
 import * as dotEnv from "dotenv";
+dotEnv.config();
+
 import { PrismaClient } from "./generated/prisma/client";
 
 import { app } from "./app";
-
-dotEnv.config();
 
 process.on("uncaughtException", (err) => {
   console.log("Uncaught Excetion Error...❌❌");
