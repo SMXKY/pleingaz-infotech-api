@@ -2,7 +2,6 @@ import * as dotEnv from "dotenv";
 import { PrismaClient } from "./generated/prisma/client";
 
 import { app } from "./app";
-import "module-alias/register";
 
 dotEnv.config();
 
