@@ -58,12 +58,16 @@ export const sendEmail = async (
 
         secure: false,
       });
+      const safeText =
+        text && text.trim().length > 0
+          ? text
+          : "Please view this email in an HTML-compatible email client.";
 
       const info = await transporter.sendMail({
         from: '"PLEINGAZ-INFOTECH" <no-reply@pleingaz.com>',
         to,
         subject,
-        text,
+        text: safeText,
         html,
       });
 
