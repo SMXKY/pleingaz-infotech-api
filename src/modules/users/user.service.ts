@@ -268,7 +268,7 @@ export class UserService extends BaseService<
         },
       });
 
-      const tokenUrl = `${frontEndUrl}/set-credentials?token=${token}`;
+      const tokenUrl = `${frontEndUrl}/setup-account?token=${token}`;
 
       const templatePath = path.join(
         process.cwd(),
