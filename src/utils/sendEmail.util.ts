@@ -12,6 +12,11 @@ export const sendEmail = async (
   );
   if (process.env.NODE_ENV === "production") {
     try {
+      const safeText =
+        text && text.trim().length > 0
+          ? text
+          : "Please view this email in an HTML-compatible email client.";
+
       const response = await axios.post(
         "https://api.brevo.com/v3/smtp/email",
         {
@@ -22,7 +27,7 @@ export const sendEmail = async (
           to: [{ email: to }],
           subject,
           htmlContent: html,
-          textContent: text,
+          textContent: safeText,
         },
         {
           headers: {
