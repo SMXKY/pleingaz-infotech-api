@@ -26,7 +26,7 @@ export class ActivityLogRepository extends BaseRepository<ActivityLog> {
   protected override buildWhereClause(
     filters: FilterParams
   ): Record<string, any> {
-    const where: Record<string, any> = {}; // no deletedAt filter
+    const where: Record<string, any> = {}; 
 
     for (const [key, value] of Object.entries(filters)) {
       if (value === undefined || value === "") continue;

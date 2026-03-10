@@ -291,6 +291,444 @@ exports.Prisma.AdminConfigScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.FinanceSettingsScalarFieldEnum = {
+  id: 'id',
+  vatPct: 'vatPct',
+  regulatoryTax: 'regulatoryTax',
+  updatedById: 'updatedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.NumberSequenceScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  prefix: 'prefix',
+  currentYear: 'currentYear',
+  currentNumber: 'currentNumber',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SupplierScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  fullName: 'fullName',
+  type: 'type',
+  category: 'category',
+  tier: 'tier',
+  isPreferred: 'isPreferred',
+  isVerifiedPartner: 'isVerifiedPartner',
+  isActive: 'isActive',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.SupplierPaymentMethodScalarFieldEnum = {
+  id: 'id',
+  supplierId: 'supplierId',
+  method: 'method',
+  label: 'label',
+  currency: 'currency',
+  bankName: 'bankName',
+  accountNumber: 'accountNumber',
+  accountName: 'accountName',
+  swiftBic: 'swiftBic',
+  iban: 'iban',
+  mobileMoneyProvider: 'mobileMoneyProvider',
+  mobileMoneyNumber: 'mobileMoneyNumber',
+  mobileMoneyName: 'mobileMoneyName',
+  isDefault: 'isDefault',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.SupplierCommercialTermsScalarFieldEnum = {
+  id: 'id',
+  supplierId: 'supplierId',
+  paymentTerms: 'paymentTerms',
+  paymentProcess: 'paymentProcess',
+  minOrderQuantity: 'minOrderQuantity',
+  minOrderUnit: 'minOrderUnit',
+  defaultCurrency: 'defaultCurrency',
+  creditLimit: 'creditLimit',
+  agreedLeadTimeDays: 'agreedLeadTimeDays',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.SupplierAddressScalarFieldEnum = {
+  id: 'id',
+  supplierId: 'supplierId',
+  addressType: 'addressType',
+  label: 'label',
+  addressLine1: 'addressLine1',
+  addressLine2: 'addressLine2',
+  city: 'city',
+  region: 'region',
+  country: 'country',
+  longitude: 'longitude',
+  latitude: 'latitude',
+  isDefault: 'isDefault',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.SupplierContactScalarFieldEnum = {
+  id: 'id',
+  supplierId: 'supplierId',
+  name: 'name',
+  title: 'title',
+  department: 'department',
+  email: 'email',
+  phoneNumber: 'phoneNumber',
+  isPrimary: 'isPrimary',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.SupplierPerformanceMetricsScalarFieldEnum = {
+  id: 'id',
+  supplierId: 'supplierId',
+  rating: 'rating',
+  totalOrders: 'totalOrders',
+  completedOrders: 'completedOrders',
+  onTimeDeliveries: 'onTimeDeliveries',
+  onTimeDeliveryPct: 'onTimeDeliveryPct',
+  avgLeadTimeDays: 'avgLeadTimeDays',
+  totalSpendCfa: 'totalSpendCfa',
+  lastOrderDate: 'lastOrderDate',
+  lastCalculatedAt: 'lastCalculatedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.ExploitationDepotScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  type: 'type',
+  category: 'category',
+  description: 'description',
+  addressLine1: 'addressLine1',
+  addressLine2: 'addressLine2',
+  city: 'city',
+  region: 'region',
+  country: 'country',
+  longitude: 'longitude',
+  latitude: 'latitude',
+  contactName: 'contactName',
+  contactTitle: 'contactTitle',
+  contactPhoneNumber: 'contactPhoneNumber',
+  contactEmail: 'contactEmail',
+  hasPortAccess: 'hasPortAccess',
+  storageCapacityTons: 'storageCapacityTons',
+  tankCount: 'tankCount',
+  supportedProductTypes: 'supportedProductTypes',
+  transitDaysFromMain: 'transitDaysFromMain',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.ExploitationDriverScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  licenseNumber: 'licenseNumber',
+  licenseType: 'licenseType',
+  licenseExpiryDate: 'licenseExpiryDate',
+  isCertified: 'isCertified',
+  certificationExpiryDate: 'certificationExpiryDate',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.TankerScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  model: 'model',
+  licensePlate: 'licensePlate',
+  type: 'type',
+  totalCapacityLiters: 'totalCapacityLiters',
+  totalCapacityTons: 'totalCapacityTons',
+  safetyFactorPct: 'safetyFactorPct',
+  currentLocation: 'currentLocation',
+  depotId: 'depotId',
+  status: 'status',
+  lastServicedAt: 'lastServicedAt',
+  nextServiceDueAt: 'nextServiceDueAt',
+  driverId: 'driverId',
+  isCertified: 'isCertified',
+  certificationExpiryDate: 'certificationExpiryDate',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.GasPurchaseOrderScalarFieldEnum = {
+  id: 'id',
+  reference: 'reference',
+  status: 'status',
+  priority: 'priority',
+  collectionDate: 'collectionDate',
+  arrivalDate: 'arrivalDate',
+  requestedDate: 'requestedDate',
+  paymentStatus: 'paymentStatus',
+  notes: 'notes',
+  internalNotes: 'internalNotes',
+  emailSentAt: 'emailSentAt',
+  currency: 'currency',
+  vatPct: 'vatPct',
+  regulatoryTaxPct: 'regulatoryTaxPct',
+  subTotal: 'subTotal',
+  vatAmount: 'vatAmount',
+  regulatoryTaxAmt: 'regulatoryTaxAmt',
+  total: 'total',
+  totalInCfa: 'totalInCfa',
+  supplierId: 'supplierId',
+  depotId: 'depotId',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.GasPurchaseOrderTankerScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  tankerId: 'tankerId',
+  driverId: 'driverId',
+  collectionDate: 'collectionDate',
+  actualFillTons: 'actualFillTons',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.GasPurchaseOrderItemScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  grade: 'grade',
+  quantity: 'quantity',
+  unit: 'unit',
+  unitPrice: 'unitPrice',
+  lineTotal: 'lineTotal',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.GasBottleTypeScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  capacityGrams: 'capacityGrams',
+  capacityKg: 'capacityKg',
+  size: 'size',
+  category: 'category',
+  accessoryCategoryId: 'accessoryCategoryId',
+  description: 'description',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.GasBottlePurchaseOrderScalarFieldEnum = {
+  id: 'id',
+  reference: 'reference',
+  status: 'status',
+  requestedDeliveryDate: 'requestedDeliveryDate',
+  actualDeliveryDate: 'actualDeliveryDate',
+  paymentStatus: 'paymentStatus',
+  notes: 'notes',
+  internalNotes: 'internalNotes',
+  emailSentAt: 'emailSentAt',
+  currency: 'currency',
+  vatPct: 'vatPct',
+  subTotal: 'subTotal',
+  vatAmount: 'vatAmount',
+  shippingCost: 'shippingCost',
+  total: 'total',
+  supplierId: 'supplierId',
+  depotId: 'depotId',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.GasBottlePurchaseOrderItemScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  bottleTypeId: 'bottleTypeId',
+  quantity: 'quantity',
+  unitPrice: 'unitPrice',
+  lineTotal: 'lineTotal',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AccessoryCategoryScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  icon: 'icon',
+  compatibleBottleSizes: 'compatibleBottleSizes',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.AccessoryItemScalarFieldEnum = {
+  id: 'id',
+  categoryId: 'categoryId',
+  sku: 'sku',
+  name: 'name',
+  description: 'description',
+  color: 'color',
+  material: 'material',
+  complianceStandard: 'complianceStandard',
+  usageType: 'usageType',
+  defaultCurrency: 'defaultCurrency',
+  unitPrice: 'unitPrice',
+  reorderLevel: 'reorderLevel',
+  currentStock: 'currentStock',
+  isHighPriority: 'isHighPriority',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.AccessoryPurchaseOrderScalarFieldEnum = {
+  id: 'id',
+  reference: 'reference',
+  status: 'status',
+  transportMode: 'transportMode',
+  estimatedTransitDays: 'estimatedTransitDays',
+  estimatedArrivalDate: 'estimatedArrivalDate',
+  actualArrivalDate: 'actualArrivalDate',
+  preferredCarrier: 'preferredCarrier',
+  logisticsNotes: 'logisticsNotes',
+  notes: 'notes',
+  internalNotes: 'internalNotes',
+  emailSentAt: 'emailSentAt',
+  currency: 'currency',
+  vatPct: 'vatPct',
+  subTotal: 'subTotal',
+  vatAmount: 'vatAmount',
+  freightFees: 'freightFees',
+  customsDuties: 'customsDuties',
+  insuranceAmount: 'insuranceAmount',
+  hasInsurance: 'hasInsurance',
+  totalEstimate: 'totalEstimate',
+  paymentStatus: 'paymentStatus',
+  supplierId: 'supplierId',
+  depotId: 'depotId',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.AccessoryPurchaseOrderItemScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  itemId: 'itemId',
+  quantity: 'quantity',
+  unitPrice: 'unitPrice',
+  lineTotal: 'lineTotal',
+  isHighPriority: 'isHighPriority',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ExploitationInvoiceScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  refTable: 'refTable',
+  orderId: 'orderId',
+  invoiceNumber: 'invoiceNumber',
+  invoiceDate: 'invoiceDate',
+  dueDate: 'dueDate',
+  currency: 'currency',
+  vatPct: 'vatPct',
+  vatAmount: 'vatAmount',
+  subTotal: 'subTotal',
+  total: 'total',
+  totalInCfa: 'totalInCfa',
+  status: 'status',
+  amountPaid: 'amountPaid',
+  paidAt: 'paidAt',
+  notes: 'notes',
+  createdById: 'createdById',
+  paidById: 'paidById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.ExploitationDocumentScalarFieldEnum = {
+  id: 'id',
+  refTable: 'refTable',
+  recordId: 'recordId',
+  type: 'type',
+  name: 'name',
+  url: 'url',
+  fileType: 'fileType',
+  sizeBytes: 'sizeBytes',
+  uploadedById: 'uploadedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ApprovalScalarFieldEnum = {
+  id: 'id',
+  entityType: 'entityType',
+  refTable: 'refTable',
+  recordId: 'recordId',
+  status: 'status',
+  currentStep: 'currentStep',
+  totalSteps: 'totalSteps',
+  requestedAt: 'requestedAt',
+  completedAt: 'completedAt',
+  requestedById: 'requestedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ApprovalStepScalarFieldEnum = {
+  id: 'id',
+  approvalId: 'approvalId',
+  step: 'step',
+  role: 'role',
+  status: 'status',
+  decidedAt: 'decidedAt',
+  notes: 'notes',
+  decidedById: 'decidedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -459,6 +897,165 @@ exports.ConfigType = exports.$Enums.ConfigType = {
   MAIN: 'MAIN'
 };
 
+exports.SequenceType = exports.$Enums.SequenceType = {
+  GAS_PO: 'GAS_PO',
+  GAS_BOTTLE_PO: 'GAS_BOTTLE_PO',
+  ACCESSORY_PO: 'ACCESSORY_PO',
+  GAS_INVOICE: 'GAS_INVOICE',
+  GAS_BOTTLE_INVOICE: 'GAS_BOTTLE_INVOICE',
+  ACCESSORY_INVOICE: 'ACCESSORY_INVOICE'
+};
+
+exports.SupplierType = exports.$Enums.SupplierType = {
+  GAS: 'GAS',
+  ACCESSORIES: 'ACCESSORIES',
+  BOTTLES: 'BOTTLES',
+  MULTIPLE: 'MULTIPLE'
+};
+
+exports.SupplierCategory = exports.$Enums.SupplierCategory = {
+  LOCAL: 'LOCAL',
+  INTERNATIONAL: 'INTERNATIONAL'
+};
+
+exports.SupplierTier = exports.$Enums.SupplierTier = {
+  STANDARD: 'STANDARD',
+  PREMIUM: 'PREMIUM'
+};
+
+exports.PaymentMethod = exports.$Enums.PaymentMethod = {
+  BANK_TRANSFER: 'BANK_TRANSFER',
+  MOBILE_MONEY: 'MOBILE_MONEY',
+  CHECK: 'CHECK',
+  CASH: 'CASH'
+};
+
+exports.MobileMoneyProvider = exports.$Enums.MobileMoneyProvider = {
+  MTN_MOBILE_MONEY: 'MTN_MOBILE_MONEY',
+  ORANGE_MONEY: 'ORANGE_MONEY'
+};
+
+exports.SupplierAddressType = exports.$Enums.SupplierAddressType = {
+  BILLING: 'BILLING',
+  WAREHOUSE: 'WAREHOUSE',
+  FACTORY: 'FACTORY',
+  PICKUP: 'PICKUP'
+};
+
+exports.DepotType = exports.$Enums.DepotType = {
+  TERMINAL: 'TERMINAL',
+  DEPOT: 'DEPOT',
+  WAREHOUSE: 'WAREHOUSE'
+};
+
+exports.DepotCategory = exports.$Enums.DepotCategory = {
+  PRIMARY_HUB: 'PRIMARY_HUB',
+  INLAND_DISTRIBUTION: 'INLAND_DISTRIBUTION'
+};
+
+exports.TankerStatus = exports.$Enums.TankerStatus = {
+  AVAILABLE: 'AVAILABLE',
+  MAINTENANCE: 'MAINTENANCE',
+  IN_TRANSIT: 'IN_TRANSIT',
+  LOADING: 'LOADING',
+  IDLE: 'IDLE'
+};
+
+exports.OrderStatus = exports.$Enums.OrderStatus = {
+  DRAFT: 'DRAFT',
+  PENDING_APPROVAL: 'PENDING_APPROVAL',
+  APPROVED: 'APPROVED',
+  FINALIZED: 'FINALIZED',
+  CONFIRMED: 'CONFIRMED',
+  IN_TRANSIT: 'IN_TRANSIT',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+};
+
+exports.OrderPriority = exports.$Enums.OrderPriority = {
+  NORMAL: 'NORMAL',
+  URGENT: 'URGENT'
+};
+
+exports.PaymentStatus = exports.$Enums.PaymentStatus = {
+  PENDING: 'PENDING',
+  PARTIAL: 'PARTIAL',
+  PAID: 'PAID'
+};
+
+exports.GasUnit = exports.$Enums.GasUnit = {
+  TONS: 'TONS',
+  LITERS: 'LITERS',
+  KG: 'KG'
+};
+
+exports.GasBottleSize = exports.$Enums.GasBottleSize = {
+  G230: 'G230',
+  G450: 'G450',
+  KG6: 'KG6',
+  KG12_5: 'KG12_5',
+  KG50: 'KG50'
+};
+
+exports.GasBottleCategory = exports.$Enums.GasBottleCategory = {
+  SMALL: 'SMALL',
+  MEDIUM: 'MEDIUM',
+  LARGE: 'LARGE'
+};
+
+exports.TransportMode = exports.$Enums.TransportMode = {
+  SEA_FREIGHT: 'SEA_FREIGHT',
+  AIR_FREIGHT: 'AIR_FREIGHT',
+  ROAD: 'ROAD'
+};
+
+exports.ExploitationInvoiceType = exports.$Enums.ExploitationInvoiceType = {
+  GAS: 'GAS',
+  GAS_BOTTLE: 'GAS_BOTTLE',
+  ACCESSORY: 'ACCESSORY'
+};
+
+exports.ExploitationInvoiceStatus = exports.$Enums.ExploitationInvoiceStatus = {
+  UNPAID: 'UNPAID',
+  PARTIAL: 'PARTIAL',
+  PAID: 'PAID'
+};
+
+exports.ExploitationDocumentType = exports.$Enums.ExploitationDocumentType = {
+  INVOICE: 'INVOICE',
+  RECEIPT: 'RECEIPT',
+  CONFIRMATION: 'CONFIRMATION',
+  SCREENSHOT: 'SCREENSHOT',
+  OTHER: 'OTHER'
+};
+
+exports.ApprovalEntityType = exports.$Enums.ApprovalEntityType = {
+  GAS_ORDER: 'GAS_ORDER',
+  ACCESSORY_ORDER: 'ACCESSORY_ORDER',
+  GAS_BOTTLE_ORDER: 'GAS_BOTTLE_ORDER',
+  VEHICLE_REPAIR: 'VEHICLE_REPAIR',
+  SPARE_PARTS: 'SPARE_PARTS',
+  DISCOUNT_REQUEST: 'DISCOUNT_REQUEST',
+  PERMISSION: 'PERMISSION',
+  MISSION: 'MISSION',
+  SALARY_ADJUSTMENT: 'SALARY_ADJUSTMENT',
+  RD_PROJECT: 'RD_PROJECT'
+};
+
+exports.ApprovalStatus = exports.$Enums.ApprovalStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+};
+
+exports.ApprovalRole = exports.$Enums.ApprovalRole = {
+  CEO: 'CEO',
+  ACCOUNTING: 'ACCOUNTING',
+  CHIEF_EXPLOITATION: 'CHIEF_EXPLOITATION',
+  DEPARTMENT_HEAD: 'DEPARTMENT_HEAD',
+  GENERAL_MANAGER: 'GENERAL_MANAGER'
+};
+
 exports.Prisma.ModelName = {
   Department: 'Department',
   Role: 'Role',
@@ -471,7 +1068,32 @@ exports.Prisma.ModelName = {
   UserPreference: 'UserPreference',
   ActivityLog: 'ActivityLog',
   UserToken: 'UserToken',
-  AdminConfig: 'AdminConfig'
+  AdminConfig: 'AdminConfig',
+  FinanceSettings: 'FinanceSettings',
+  NumberSequence: 'NumberSequence',
+  Supplier: 'Supplier',
+  SupplierPaymentMethod: 'SupplierPaymentMethod',
+  SupplierCommercialTerms: 'SupplierCommercialTerms',
+  SupplierAddress: 'SupplierAddress',
+  SupplierContact: 'SupplierContact',
+  SupplierPerformanceMetrics: 'SupplierPerformanceMetrics',
+  ExploitationDepot: 'ExploitationDepot',
+  ExploitationDriver: 'ExploitationDriver',
+  Tanker: 'Tanker',
+  GasPurchaseOrder: 'GasPurchaseOrder',
+  GasPurchaseOrderTanker: 'GasPurchaseOrderTanker',
+  GasPurchaseOrderItem: 'GasPurchaseOrderItem',
+  GasBottleType: 'GasBottleType',
+  GasBottlePurchaseOrder: 'GasBottlePurchaseOrder',
+  GasBottlePurchaseOrderItem: 'GasBottlePurchaseOrderItem',
+  AccessoryCategory: 'AccessoryCategory',
+  AccessoryItem: 'AccessoryItem',
+  AccessoryPurchaseOrder: 'AccessoryPurchaseOrder',
+  AccessoryPurchaseOrderItem: 'AccessoryPurchaseOrderItem',
+  ExploitationInvoice: 'ExploitationInvoice',
+  ExploitationDocument: 'ExploitationDocument',
+  Approval: 'Approval',
+  ApprovalStep: 'ApprovalStep'
 };
 
 /**

@@ -3,6 +3,7 @@ import { Currency, Language, User } from "src/generated/prisma";
 export enum UserStatus {
   ACTIVE = "ACTIVE",
   TERMINATED = "TERMINATED",
+  SUSPENDED = "SUSPENDED"
 }
 
 export enum UserCurrency {
