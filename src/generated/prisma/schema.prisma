@@ -26,7 +26,7 @@ enum Language {
 }
 
 enum Currency {
-  FCFA
+  XAF
   EUR
   USD
 }
@@ -361,7 +361,7 @@ model UserPreference {
   user      User     @relation(fields: [userId], references: [id])
   userId    String   @unique @map("user_id")
   language  Language @default(FR)
-  currency  Currency @default(FCFA)
+  currency  Currency @default(XAF)
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -869,7 +869,7 @@ model GasPurchaseOrder {
   notes            String?
   internalNotes    String?       @map("internal_notes")
   emailSentAt      DateTime?     @map("email_sent_at")
-  currency         Currency      @default(FCFA)
+  currency         Currency      @default(XAF)
   vatPct           Decimal       @map("vat_pct") @db.Decimal(5, 2)
   regulatoryTaxPct Decimal       @map("regulatory_tax_pct") @db.Decimal(5, 2)
   subTotal         Decimal?      @db.Decimal(15, 2)
@@ -974,7 +974,7 @@ model GasBottlePurchaseOrder {
   notes                 String?
   internalNotes         String?       @map("internal_notes")
   emailSentAt           DateTime?     @map("email_sent_at")
-  currency              Currency      @default(FCFA)
+  currency              Currency      @default(XAF)
   vatPct                Decimal       @map("vat_pct") @db.Decimal(5, 2)
   subTotal              Decimal?      @db.Decimal(15, 2)
   vatAmount             Decimal?      @map("vat_amount") @db.Decimal(15, 2)
@@ -1050,7 +1050,7 @@ model AccessoryItem {
   material           String?
   complianceStandard String?           @map("compliance_standard")
   usageType          String?           @map("usage_type")
-  defaultCurrency    Currency          @default(FCFA) @map("default_currency")
+  defaultCurrency    Currency          @default(XAF) @map("default_currency")
   unitPrice          Decimal           @db.Decimal(10, 4)
   reorderLevel       Int?              @map("reorder_level")
   currentStock       Int               @default(0) @map("current_stock")
@@ -1081,7 +1081,7 @@ model AccessoryPurchaseOrder {
   notes                String?
   internalNotes        String?       @map("internal_notes")
   emailSentAt          DateTime?     @map("email_sent_at")
-  currency             Currency      @default(FCFA)
+  currency             Currency      @default(XAF)
   vatPct               Decimal       @map("vat_pct") @db.Decimal(5, 2)
   subTotal             Decimal?      @db.Decimal(15, 2)
   vatAmount            Decimal?      @map("vat_amount") @db.Decimal(15, 2)
@@ -1140,7 +1140,7 @@ model ExploitationInvoice {
   invoiceNumber String                    @map("invoice_number")
   invoiceDate   DateTime                  @map("invoice_date") @db.Date
   dueDate       DateTime?                 @map("due_date") @db.Date
-  currency      Currency                  @default(FCFA)
+  currency      Currency                  @default(XAF)
   vatPct        Decimal?                  @map("vat_pct") @db.Decimal(5, 2)
   vatAmount     Decimal?                  @map("vat_amount") @db.Decimal(15, 2)
   subTotal      Decimal?                  @map("sub_total") @db.Decimal(15, 2)
@@ -1232,4 +1232,19 @@ model ApprovalStep {
   @@index([approvalId])
   @@index([status])
   @@map("approval_steps")
+}
+
+model ExchangeRate {
+  id            String   @id @default(uuid())
+  fromCurrency  Currency @map("from_currency")
+  toCurrency    Currency @map("to_currency")
+  rate          Decimal  @db.Decimal(15, 6)
+  effectiveDate DateTime @map("effective_date") @db.Date
+  source        String   @default("manual")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@unique([fromCurrency, toCurrency, effectiveDate])
+  @@index([effectiveDate(sort: Desc)])
+  @@index([fromCurrency, toCurrency])
+  @@map("exchange_rates")
 }

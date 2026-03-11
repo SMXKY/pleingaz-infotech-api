@@ -6,7 +6,7 @@ export const Language = {
 export type Language = (typeof Language)[keyof typeof Language];
 
 export const Currency = {
-  FCFA: "FCFA",
+  XAF: "XAF",
   EUR: "EUR",
   USD: "USD",
 } as const;

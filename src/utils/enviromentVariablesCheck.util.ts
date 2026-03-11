@@ -42,6 +42,10 @@ if (!process.env.SUPER_ADMIN_EMAIL) {
   throw new Error("SUPER_ADMIN_EMAIL enviroment variable not set");
 }
 
+if (!process.env.UNIRATEAPI_KEY) {
+  throw new Error("UNIRATEAPI KEY enviroment variable not set");
+}
+
 export const baseUrl = process.env.BASE_URL;
 export const frontEndUrl = process.env.FRONTEND_URL;
 export const ACCOUNT_LOGIN_WAIT_TIME_HOURS =
@@ -56,3 +60,4 @@ export const RESET_PASSWORD_LIMIT_HOURS =
   process.env.RESET_PASSWORD_LIMIT_HOURS;
 export const FTP_BASE_URL = process.env.FTP_BASE_URL;
 export const SUPER_ADMIN_EMAIL = process.env.SUPER_ADMIN_EMAIL;
+export const UNIRATEAPI_KEY = process.env.UNIRATEAPI_KEY;

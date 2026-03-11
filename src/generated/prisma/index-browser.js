@@ -729,6 +729,16 @@ exports.Prisma.ApprovalStepScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ExchangeRateScalarFieldEnum = {
+  id: 'id',
+  fromCurrency: 'fromCurrency',
+  toCurrency: 'toCurrency',
+  rate: 'rate',
+  effectiveDate: 'effectiveDate',
+  source: 'source',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -859,7 +869,7 @@ exports.Language = exports.$Enums.Language = {
 };
 
 exports.Currency = exports.$Enums.Currency = {
-  FCFA: 'FCFA',
+  XAF: 'XAF',
   EUR: 'EUR',
   USD: 'USD'
 };
@@ -1093,7 +1103,8 @@ exports.Prisma.ModelName = {
   ExploitationInvoice: 'ExploitationInvoice',
   ExploitationDocument: 'ExploitationDocument',
   Approval: 'Approval',
-  ApprovalStep: 'ApprovalStep'
+  ApprovalStep: 'ApprovalStep',
+  ExchangeRate: 'ExchangeRate'
 };
 
 /**

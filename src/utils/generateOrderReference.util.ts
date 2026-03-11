@@ -7,7 +7,7 @@ type SequenceResult = {
   current_year: number;
 };
 
-const generateOrderReference = async (
+const generateReference = async (
   tx: TransactionClient,
   type: SequenceType
 ): Promise<string> => {
@@ -40,4 +40,4 @@ const generateOrderReference = async (
     .padStart(3, "0")}`;
 };
 
-export default generateOrderReference;
+export default generateReference;

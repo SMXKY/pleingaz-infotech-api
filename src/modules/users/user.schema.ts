@@ -1,4 +1,5 @@
-import { UserCurrency, UserLanguage, UserStatus } from "@appTypes/user.types";
+import { Currency } from "@appTypes/preferences.type";
+import { UserLanguage, UserStatus } from "@appTypes/user.types";
 import { z } from "zod";
 
 export const createUserSchema = z.object({
@@ -128,7 +129,7 @@ export const ChangeUserCredentialsSchema = z
 
 export const userPreferenceSchema = z.object({
   language: z.nativeEnum(UserLanguage).optional(),
-  currency: z.nativeEnum(UserCurrency).optional(),
+  currency: z.nativeEnum(Currency).optional(),
 });
 
 export const updateMeSchema = z.object({

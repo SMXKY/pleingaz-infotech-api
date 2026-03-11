@@ -48,6 +48,7 @@ import { UpdateMeResult, UserStatus } from "@appTypes/user.types";
 import { applyFtpUrlTransform } from "@utils/applyFtpUrl.util";
 import { deleteFilesFromFTP, handleFileUploads } from "@services/ftp.service";
 import { LogCategory, LogOperation } from "@appTypes/log.type";
+import { Currency } from "@appTypes/preferences.type";
 
 export class UserService extends BaseService<
   User,

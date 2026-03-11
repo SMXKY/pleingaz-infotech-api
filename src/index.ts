@@ -13,6 +13,7 @@ process.on("uncaughtException", (err) => {
 import { PrismaPg } from "@prisma/adapter-pg";
 import { seedDefaultRecords } from "./defaults";
 import { loadTranslations } from "@utils/translate.util";
+import runCronJobs from "./cron-jobs";
 
 const connectionString = `${process.env.DATABASE_URL}`;
 
@@ -32,6 +33,12 @@ prisma
   })
   .catch((err) => {
     console.log("Error seeding default records: ", err);
+  })
+  .then(async () => {
+    await runCronJobs();
+  })
+  .catch((err) => {
+    console.log("Error running Cron Jobs: ", err);
   });
 
 const port: number = Number(process.env.PORT) || 3000;

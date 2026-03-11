@@ -198,6 +198,11 @@ export type Approval = $Result.DefaultSelection<Prisma.$ApprovalPayload>
  * 
  */
 export type ApprovalStep = $Result.DefaultSelection<Prisma.$ApprovalStepPayload>
+/**
+ * Model ExchangeRate
+ * 
+ */
+export type ExchangeRate = $Result.DefaultSelection<Prisma.$ExchangeRatePayload>
 
 /**
  * Enums
@@ -229,7 +234,7 @@ export type Language = (typeof Language)[keyof typeof Language]
 
 
 export const Currency: {
-  FCFA: 'FCFA',
+  XAF: 'XAF',
   EUR: 'EUR',
   USD: 'USD'
 };
@@ -1245,6 +1250,16 @@ export class PrismaClient<
     * ```
     */
   get approvalStep(): Prisma.ApprovalStepDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.exchangeRate`: Exposes CRUD operations for the **ExchangeRate** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ExchangeRates
+    * const exchangeRates = await prisma.exchangeRate.findMany()
+    * ```
+    */
+  get exchangeRate(): Prisma.ExchangeRateDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1722,7 +1737,8 @@ export namespace Prisma {
     ExploitationInvoice: 'ExploitationInvoice',
     ExploitationDocument: 'ExploitationDocument',
     Approval: 'Approval',
-    ApprovalStep: 'ApprovalStep'
+    ApprovalStep: 'ApprovalStep',
+    ExchangeRate: 'ExchangeRate'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1741,7 +1757,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "department" | "role" | "roleOverride" | "permission" | "permissionImplies" | "permissionOverride" | "rolePermission" | "user" | "userPreference" | "activityLog" | "userToken" | "adminConfig" | "financeSettings" | "numberSequence" | "supplier" | "supplierPaymentMethod" | "supplierCommercialTerms" | "supplierAddress" | "supplierContact" | "supplierPerformanceMetrics" | "exploitationDepot" | "exploitationDriver" | "tanker" | "gasPurchaseOrder" | "gasPurchaseOrderTanker" | "gasPurchaseOrderItem" | "gasBottleType" | "gasBottlePurchaseOrder" | "gasBottlePurchaseOrderItem" | "accessoryCategory" | "accessoryItem" | "accessoryPurchaseOrder" | "accessoryPurchaseOrderItem" | "exploitationInvoice" | "exploitationDocument" | "approval" | "approvalStep"
+      modelProps: "department" | "role" | "roleOverride" | "permission" | "permissionImplies" | "permissionOverride" | "rolePermission" | "user" | "userPreference" | "activityLog" | "userToken" | "adminConfig" | "financeSettings" | "numberSequence" | "supplier" | "supplierPaymentMethod" | "supplierCommercialTerms" | "supplierAddress" | "supplierContact" | "supplierPerformanceMetrics" | "exploitationDepot" | "exploitationDriver" | "tanker" | "gasPurchaseOrder" | "gasPurchaseOrderTanker" | "gasPurchaseOrderItem" | "gasBottleType" | "gasBottlePurchaseOrder" | "gasBottlePurchaseOrderItem" | "accessoryCategory" | "accessoryItem" | "accessoryPurchaseOrder" | "accessoryPurchaseOrderItem" | "exploitationInvoice" | "exploitationDocument" | "approval" | "approvalStep" | "exchangeRate"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -4483,6 +4499,80 @@ export namespace Prisma {
           }
         }
       }
+      ExchangeRate: {
+        payload: Prisma.$ExchangeRatePayload<ExtArgs>
+        fields: Prisma.ExchangeRateFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ExchangeRateFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExchangeRatePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ExchangeRateFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExchangeRatePayload>
+          }
+          findFirst: {
+            args: Prisma.ExchangeRateFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExchangeRatePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ExchangeRateFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExchangeRatePayload>
+          }
+          findMany: {
+            args: Prisma.ExchangeRateFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExchangeRatePayload>[]
+          }
+          create: {
+            args: Prisma.ExchangeRateCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExchangeRatePayload>
+          }
+          createMany: {
+            args: Prisma.ExchangeRateCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ExchangeRateCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExchangeRatePayload>[]
+          }
+          delete: {
+            args: Prisma.ExchangeRateDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExchangeRatePayload>
+          }
+          update: {
+            args: Prisma.ExchangeRateUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExchangeRatePayload>
+          }
+          deleteMany: {
+            args: Prisma.ExchangeRateDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ExchangeRateUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ExchangeRateUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExchangeRatePayload>[]
+          }
+          upsert: {
+            args: Prisma.ExchangeRateUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExchangeRatePayload>
+          }
+          aggregate: {
+            args: Prisma.ExchangeRateAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateExchangeRate>
+          }
+          groupBy: {
+            args: Prisma.ExchangeRateGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ExchangeRateGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ExchangeRateCountArgs<ExtArgs>
+            result: $Utils.Optional<ExchangeRateCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -4616,6 +4706,7 @@ export namespace Prisma {
     exploitationDocument?: ExploitationDocumentOmit
     approval?: ApprovalOmit
     approvalStep?: ApprovalStepOmit
+    exchangeRate?: ExchangeRateOmit
   }
 
   /* Types for Logging */
@@ -51102,6 +51193,1061 @@ export namespace Prisma {
 
 
   /**
+   * Model ExchangeRate
+   */
+
+  export type AggregateExchangeRate = {
+    _count: ExchangeRateCountAggregateOutputType | null
+    _avg: ExchangeRateAvgAggregateOutputType | null
+    _sum: ExchangeRateSumAggregateOutputType | null
+    _min: ExchangeRateMinAggregateOutputType | null
+    _max: ExchangeRateMaxAggregateOutputType | null
+  }
+
+  export type ExchangeRateAvgAggregateOutputType = {
+    rate: Decimal | null
+  }
+
+  export type ExchangeRateSumAggregateOutputType = {
+    rate: Decimal | null
+  }
+
+  export type ExchangeRateMinAggregateOutputType = {
+    id: string | null
+    fromCurrency: $Enums.Currency | null
+    toCurrency: $Enums.Currency | null
+    rate: Decimal | null
+    effectiveDate: Date | null
+    source: string | null
+    createdAt: Date | null
+  }
+
+  export type ExchangeRateMaxAggregateOutputType = {
+    id: string | null
+    fromCurrency: $Enums.Currency | null
+    toCurrency: $Enums.Currency | null
+    rate: Decimal | null
+    effectiveDate: Date | null
+    source: string | null
+    createdAt: Date | null
+  }
+
+  export type ExchangeRateCountAggregateOutputType = {
+    id: number
+    fromCurrency: number
+    toCurrency: number
+    rate: number
+    effectiveDate: number
+    source: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ExchangeRateAvgAggregateInputType = {
+    rate?: true
+  }
+
+  export type ExchangeRateSumAggregateInputType = {
+    rate?: true
+  }
+
+  export type ExchangeRateMinAggregateInputType = {
+    id?: true
+    fromCurrency?: true
+    toCurrency?: true
+    rate?: true
+    effectiveDate?: true
+    source?: true
+    createdAt?: true
+  }
+
+  export type ExchangeRateMaxAggregateInputType = {
+    id?: true
+    fromCurrency?: true
+    toCurrency?: true
+    rate?: true
+    effectiveDate?: true
+    source?: true
+    createdAt?: true
+  }
+
+  export type ExchangeRateCountAggregateInputType = {
+    id?: true
+    fromCurrency?: true
+    toCurrency?: true
+    rate?: true
+    effectiveDate?: true
+    source?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ExchangeRateAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ExchangeRate to aggregate.
+     */
+    where?: ExchangeRateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ExchangeRates to fetch.
+     */
+    orderBy?: ExchangeRateOrderByWithRelationInput | ExchangeRateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ExchangeRateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ExchangeRates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ExchangeRates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ExchangeRates
+    **/
+    _count?: true | ExchangeRateCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ExchangeRateAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ExchangeRateSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ExchangeRateMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ExchangeRateMaxAggregateInputType
+  }
+
+  export type GetExchangeRateAggregateType<T extends ExchangeRateAggregateArgs> = {
+        [P in keyof T & keyof AggregateExchangeRate]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateExchangeRate[P]>
+      : GetScalarType<T[P], AggregateExchangeRate[P]>
+  }
+
+
+
+
+  export type ExchangeRateGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ExchangeRateWhereInput
+    orderBy?: ExchangeRateOrderByWithAggregationInput | ExchangeRateOrderByWithAggregationInput[]
+    by: ExchangeRateScalarFieldEnum[] | ExchangeRateScalarFieldEnum
+    having?: ExchangeRateScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ExchangeRateCountAggregateInputType | true
+    _avg?: ExchangeRateAvgAggregateInputType
+    _sum?: ExchangeRateSumAggregateInputType
+    _min?: ExchangeRateMinAggregateInputType
+    _max?: ExchangeRateMaxAggregateInputType
+  }
+
+  export type ExchangeRateGroupByOutputType = {
+    id: string
+    fromCurrency: $Enums.Currency
+    toCurrency: $Enums.Currency
+    rate: Decimal
+    effectiveDate: Date
+    source: string
+    createdAt: Date
+    _count: ExchangeRateCountAggregateOutputType | null
+    _avg: ExchangeRateAvgAggregateOutputType | null
+    _sum: ExchangeRateSumAggregateOutputType | null
+    _min: ExchangeRateMinAggregateOutputType | null
+    _max: ExchangeRateMaxAggregateOutputType | null
+  }
+
+  type GetExchangeRateGroupByPayload<T extends ExchangeRateGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ExchangeRateGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ExchangeRateGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ExchangeRateGroupByOutputType[P]>
+            : GetScalarType<T[P], ExchangeRateGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ExchangeRateSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    fromCurrency?: boolean
+    toCurrency?: boolean
+    rate?: boolean
+    effectiveDate?: boolean
+    source?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["exchangeRate"]>
+
+  export type ExchangeRateSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    fromCurrency?: boolean
+    toCurrency?: boolean
+    rate?: boolean
+    effectiveDate?: boolean
+    source?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["exchangeRate"]>
+
+  export type ExchangeRateSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    fromCurrency?: boolean
+    toCurrency?: boolean
+    rate?: boolean
+    effectiveDate?: boolean
+    source?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["exchangeRate"]>
+
+  export type ExchangeRateSelectScalar = {
+    id?: boolean
+    fromCurrency?: boolean
+    toCurrency?: boolean
+    rate?: boolean
+    effectiveDate?: boolean
+    source?: boolean
+    createdAt?: boolean
+  }
+
+  export type ExchangeRateOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fromCurrency" | "toCurrency" | "rate" | "effectiveDate" | "source" | "createdAt", ExtArgs["result"]["exchangeRate"]>
+
+  export type $ExchangeRatePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ExchangeRate"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      fromCurrency: $Enums.Currency
+      toCurrency: $Enums.Currency
+      rate: Prisma.Decimal
+      effectiveDate: Date
+      source: string
+      createdAt: Date
+    }, ExtArgs["result"]["exchangeRate"]>
+    composites: {}
+  }
+
+  type ExchangeRateGetPayload<S extends boolean | null | undefined | ExchangeRateDefaultArgs> = $Result.GetResult<Prisma.$ExchangeRatePayload, S>
+
+  type ExchangeRateCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ExchangeRateFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ExchangeRateCountAggregateInputType | true
+    }
+
+  export interface ExchangeRateDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ExchangeRate'], meta: { name: 'ExchangeRate' } }
+    /**
+     * Find zero or one ExchangeRate that matches the filter.
+     * @param {ExchangeRateFindUniqueArgs} args - Arguments to find a ExchangeRate
+     * @example
+     * // Get one ExchangeRate
+     * const exchangeRate = await prisma.exchangeRate.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ExchangeRateFindUniqueArgs>(args: SelectSubset<T, ExchangeRateFindUniqueArgs<ExtArgs>>): Prisma__ExchangeRateClient<$Result.GetResult<Prisma.$ExchangeRatePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ExchangeRate that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ExchangeRateFindUniqueOrThrowArgs} args - Arguments to find a ExchangeRate
+     * @example
+     * // Get one ExchangeRate
+     * const exchangeRate = await prisma.exchangeRate.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ExchangeRateFindUniqueOrThrowArgs>(args: SelectSubset<T, ExchangeRateFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ExchangeRateClient<$Result.GetResult<Prisma.$ExchangeRatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ExchangeRate that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExchangeRateFindFirstArgs} args - Arguments to find a ExchangeRate
+     * @example
+     * // Get one ExchangeRate
+     * const exchangeRate = await prisma.exchangeRate.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ExchangeRateFindFirstArgs>(args?: SelectSubset<T, ExchangeRateFindFirstArgs<ExtArgs>>): Prisma__ExchangeRateClient<$Result.GetResult<Prisma.$ExchangeRatePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ExchangeRate that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExchangeRateFindFirstOrThrowArgs} args - Arguments to find a ExchangeRate
+     * @example
+     * // Get one ExchangeRate
+     * const exchangeRate = await prisma.exchangeRate.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ExchangeRateFindFirstOrThrowArgs>(args?: SelectSubset<T, ExchangeRateFindFirstOrThrowArgs<ExtArgs>>): Prisma__ExchangeRateClient<$Result.GetResult<Prisma.$ExchangeRatePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ExchangeRates that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExchangeRateFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ExchangeRates
+     * const exchangeRates = await prisma.exchangeRate.findMany()
+     * 
+     * // Get first 10 ExchangeRates
+     * const exchangeRates = await prisma.exchangeRate.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const exchangeRateWithIdOnly = await prisma.exchangeRate.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ExchangeRateFindManyArgs>(args?: SelectSubset<T, ExchangeRateFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExchangeRatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ExchangeRate.
+     * @param {ExchangeRateCreateArgs} args - Arguments to create a ExchangeRate.
+     * @example
+     * // Create one ExchangeRate
+     * const ExchangeRate = await prisma.exchangeRate.create({
+     *   data: {
+     *     // ... data to create a ExchangeRate
+     *   }
+     * })
+     * 
+     */
+    create<T extends ExchangeRateCreateArgs>(args: SelectSubset<T, ExchangeRateCreateArgs<ExtArgs>>): Prisma__ExchangeRateClient<$Result.GetResult<Prisma.$ExchangeRatePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ExchangeRates.
+     * @param {ExchangeRateCreateManyArgs} args - Arguments to create many ExchangeRates.
+     * @example
+     * // Create many ExchangeRates
+     * const exchangeRate = await prisma.exchangeRate.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ExchangeRateCreateManyArgs>(args?: SelectSubset<T, ExchangeRateCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ExchangeRates and returns the data saved in the database.
+     * @param {ExchangeRateCreateManyAndReturnArgs} args - Arguments to create many ExchangeRates.
+     * @example
+     * // Create many ExchangeRates
+     * const exchangeRate = await prisma.exchangeRate.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ExchangeRates and only return the `id`
+     * const exchangeRateWithIdOnly = await prisma.exchangeRate.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ExchangeRateCreateManyAndReturnArgs>(args?: SelectSubset<T, ExchangeRateCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExchangeRatePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ExchangeRate.
+     * @param {ExchangeRateDeleteArgs} args - Arguments to delete one ExchangeRate.
+     * @example
+     * // Delete one ExchangeRate
+     * const ExchangeRate = await prisma.exchangeRate.delete({
+     *   where: {
+     *     // ... filter to delete one ExchangeRate
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ExchangeRateDeleteArgs>(args: SelectSubset<T, ExchangeRateDeleteArgs<ExtArgs>>): Prisma__ExchangeRateClient<$Result.GetResult<Prisma.$ExchangeRatePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ExchangeRate.
+     * @param {ExchangeRateUpdateArgs} args - Arguments to update one ExchangeRate.
+     * @example
+     * // Update one ExchangeRate
+     * const exchangeRate = await prisma.exchangeRate.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ExchangeRateUpdateArgs>(args: SelectSubset<T, ExchangeRateUpdateArgs<ExtArgs>>): Prisma__ExchangeRateClient<$Result.GetResult<Prisma.$ExchangeRatePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ExchangeRates.
+     * @param {ExchangeRateDeleteManyArgs} args - Arguments to filter ExchangeRates to delete.
+     * @example
+     * // Delete a few ExchangeRates
+     * const { count } = await prisma.exchangeRate.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ExchangeRateDeleteManyArgs>(args?: SelectSubset<T, ExchangeRateDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ExchangeRates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExchangeRateUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ExchangeRates
+     * const exchangeRate = await prisma.exchangeRate.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ExchangeRateUpdateManyArgs>(args: SelectSubset<T, ExchangeRateUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ExchangeRates and returns the data updated in the database.
+     * @param {ExchangeRateUpdateManyAndReturnArgs} args - Arguments to update many ExchangeRates.
+     * @example
+     * // Update many ExchangeRates
+     * const exchangeRate = await prisma.exchangeRate.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ExchangeRates and only return the `id`
+     * const exchangeRateWithIdOnly = await prisma.exchangeRate.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ExchangeRateUpdateManyAndReturnArgs>(args: SelectSubset<T, ExchangeRateUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExchangeRatePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ExchangeRate.
+     * @param {ExchangeRateUpsertArgs} args - Arguments to update or create a ExchangeRate.
+     * @example
+     * // Update or create a ExchangeRate
+     * const exchangeRate = await prisma.exchangeRate.upsert({
+     *   create: {
+     *     // ... data to create a ExchangeRate
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ExchangeRate we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ExchangeRateUpsertArgs>(args: SelectSubset<T, ExchangeRateUpsertArgs<ExtArgs>>): Prisma__ExchangeRateClient<$Result.GetResult<Prisma.$ExchangeRatePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ExchangeRates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExchangeRateCountArgs} args - Arguments to filter ExchangeRates to count.
+     * @example
+     * // Count the number of ExchangeRates
+     * const count = await prisma.exchangeRate.count({
+     *   where: {
+     *     // ... the filter for the ExchangeRates we want to count
+     *   }
+     * })
+    **/
+    count<T extends ExchangeRateCountArgs>(
+      args?: Subset<T, ExchangeRateCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ExchangeRateCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ExchangeRate.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExchangeRateAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ExchangeRateAggregateArgs>(args: Subset<T, ExchangeRateAggregateArgs>): Prisma.PrismaPromise<GetExchangeRateAggregateType<T>>
+
+    /**
+     * Group by ExchangeRate.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExchangeRateGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ExchangeRateGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ExchangeRateGroupByArgs['orderBy'] }
+        : { orderBy?: ExchangeRateGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ExchangeRateGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetExchangeRateGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ExchangeRate model
+   */
+  readonly fields: ExchangeRateFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ExchangeRate.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ExchangeRateClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ExchangeRate model
+   */
+  interface ExchangeRateFieldRefs {
+    readonly id: FieldRef<"ExchangeRate", 'String'>
+    readonly fromCurrency: FieldRef<"ExchangeRate", 'Currency'>
+    readonly toCurrency: FieldRef<"ExchangeRate", 'Currency'>
+    readonly rate: FieldRef<"ExchangeRate", 'Decimal'>
+    readonly effectiveDate: FieldRef<"ExchangeRate", 'DateTime'>
+    readonly source: FieldRef<"ExchangeRate", 'String'>
+    readonly createdAt: FieldRef<"ExchangeRate", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ExchangeRate findUnique
+   */
+  export type ExchangeRateFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExchangeRate
+     */
+    select?: ExchangeRateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExchangeRate
+     */
+    omit?: ExchangeRateOmit<ExtArgs> | null
+    /**
+     * Filter, which ExchangeRate to fetch.
+     */
+    where: ExchangeRateWhereUniqueInput
+  }
+
+  /**
+   * ExchangeRate findUniqueOrThrow
+   */
+  export type ExchangeRateFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExchangeRate
+     */
+    select?: ExchangeRateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExchangeRate
+     */
+    omit?: ExchangeRateOmit<ExtArgs> | null
+    /**
+     * Filter, which ExchangeRate to fetch.
+     */
+    where: ExchangeRateWhereUniqueInput
+  }
+
+  /**
+   * ExchangeRate findFirst
+   */
+  export type ExchangeRateFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExchangeRate
+     */
+    select?: ExchangeRateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExchangeRate
+     */
+    omit?: ExchangeRateOmit<ExtArgs> | null
+    /**
+     * Filter, which ExchangeRate to fetch.
+     */
+    where?: ExchangeRateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ExchangeRates to fetch.
+     */
+    orderBy?: ExchangeRateOrderByWithRelationInput | ExchangeRateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ExchangeRates.
+     */
+    cursor?: ExchangeRateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ExchangeRates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ExchangeRates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ExchangeRates.
+     */
+    distinct?: ExchangeRateScalarFieldEnum | ExchangeRateScalarFieldEnum[]
+  }
+
+  /**
+   * ExchangeRate findFirstOrThrow
+   */
+  export type ExchangeRateFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExchangeRate
+     */
+    select?: ExchangeRateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExchangeRate
+     */
+    omit?: ExchangeRateOmit<ExtArgs> | null
+    /**
+     * Filter, which ExchangeRate to fetch.
+     */
+    where?: ExchangeRateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ExchangeRates to fetch.
+     */
+    orderBy?: ExchangeRateOrderByWithRelationInput | ExchangeRateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ExchangeRates.
+     */
+    cursor?: ExchangeRateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ExchangeRates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ExchangeRates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ExchangeRates.
+     */
+    distinct?: ExchangeRateScalarFieldEnum | ExchangeRateScalarFieldEnum[]
+  }
+
+  /**
+   * ExchangeRate findMany
+   */
+  export type ExchangeRateFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExchangeRate
+     */
+    select?: ExchangeRateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExchangeRate
+     */
+    omit?: ExchangeRateOmit<ExtArgs> | null
+    /**
+     * Filter, which ExchangeRates to fetch.
+     */
+    where?: ExchangeRateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ExchangeRates to fetch.
+     */
+    orderBy?: ExchangeRateOrderByWithRelationInput | ExchangeRateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ExchangeRates.
+     */
+    cursor?: ExchangeRateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ExchangeRates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ExchangeRates.
+     */
+    skip?: number
+    distinct?: ExchangeRateScalarFieldEnum | ExchangeRateScalarFieldEnum[]
+  }
+
+  /**
+   * ExchangeRate create
+   */
+  export type ExchangeRateCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExchangeRate
+     */
+    select?: ExchangeRateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExchangeRate
+     */
+    omit?: ExchangeRateOmit<ExtArgs> | null
+    /**
+     * The data needed to create a ExchangeRate.
+     */
+    data: XOR<ExchangeRateCreateInput, ExchangeRateUncheckedCreateInput>
+  }
+
+  /**
+   * ExchangeRate createMany
+   */
+  export type ExchangeRateCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ExchangeRates.
+     */
+    data: ExchangeRateCreateManyInput | ExchangeRateCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ExchangeRate createManyAndReturn
+   */
+  export type ExchangeRateCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExchangeRate
+     */
+    select?: ExchangeRateSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExchangeRate
+     */
+    omit?: ExchangeRateOmit<ExtArgs> | null
+    /**
+     * The data used to create many ExchangeRates.
+     */
+    data: ExchangeRateCreateManyInput | ExchangeRateCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ExchangeRate update
+   */
+  export type ExchangeRateUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExchangeRate
+     */
+    select?: ExchangeRateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExchangeRate
+     */
+    omit?: ExchangeRateOmit<ExtArgs> | null
+    /**
+     * The data needed to update a ExchangeRate.
+     */
+    data: XOR<ExchangeRateUpdateInput, ExchangeRateUncheckedUpdateInput>
+    /**
+     * Choose, which ExchangeRate to update.
+     */
+    where: ExchangeRateWhereUniqueInput
+  }
+
+  /**
+   * ExchangeRate updateMany
+   */
+  export type ExchangeRateUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ExchangeRates.
+     */
+    data: XOR<ExchangeRateUpdateManyMutationInput, ExchangeRateUncheckedUpdateManyInput>
+    /**
+     * Filter which ExchangeRates to update
+     */
+    where?: ExchangeRateWhereInput
+    /**
+     * Limit how many ExchangeRates to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ExchangeRate updateManyAndReturn
+   */
+  export type ExchangeRateUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExchangeRate
+     */
+    select?: ExchangeRateSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExchangeRate
+     */
+    omit?: ExchangeRateOmit<ExtArgs> | null
+    /**
+     * The data used to update ExchangeRates.
+     */
+    data: XOR<ExchangeRateUpdateManyMutationInput, ExchangeRateUncheckedUpdateManyInput>
+    /**
+     * Filter which ExchangeRates to update
+     */
+    where?: ExchangeRateWhereInput
+    /**
+     * Limit how many ExchangeRates to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ExchangeRate upsert
+   */
+  export type ExchangeRateUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExchangeRate
+     */
+    select?: ExchangeRateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExchangeRate
+     */
+    omit?: ExchangeRateOmit<ExtArgs> | null
+    /**
+     * The filter to search for the ExchangeRate to update in case it exists.
+     */
+    where: ExchangeRateWhereUniqueInput
+    /**
+     * In case the ExchangeRate found by the `where` argument doesn't exist, create a new ExchangeRate with this data.
+     */
+    create: XOR<ExchangeRateCreateInput, ExchangeRateUncheckedCreateInput>
+    /**
+     * In case the ExchangeRate was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ExchangeRateUpdateInput, ExchangeRateUncheckedUpdateInput>
+  }
+
+  /**
+   * ExchangeRate delete
+   */
+  export type ExchangeRateDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExchangeRate
+     */
+    select?: ExchangeRateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExchangeRate
+     */
+    omit?: ExchangeRateOmit<ExtArgs> | null
+    /**
+     * Filter which ExchangeRate to delete.
+     */
+    where: ExchangeRateWhereUniqueInput
+  }
+
+  /**
+   * ExchangeRate deleteMany
+   */
+  export type ExchangeRateDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ExchangeRates to delete
+     */
+    where?: ExchangeRateWhereInput
+    /**
+     * Limit how many ExchangeRates to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ExchangeRate without action
+   */
+  export type ExchangeRateDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExchangeRate
+     */
+    select?: ExchangeRateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExchangeRate
+     */
+    omit?: ExchangeRateOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -51832,6 +52978,19 @@ export namespace Prisma {
   };
 
   export type ApprovalStepScalarFieldEnum = (typeof ApprovalStepScalarFieldEnum)[keyof typeof ApprovalStepScalarFieldEnum]
+
+
+  export const ExchangeRateScalarFieldEnum: {
+    id: 'id',
+    fromCurrency: 'fromCurrency',
+    toCurrency: 'toCurrency',
+    rate: 'rate',
+    effectiveDate: 'effectiveDate',
+    source: 'source',
+    createdAt: 'createdAt'
+  };
+
+  export type ExchangeRateScalarFieldEnum = (typeof ExchangeRateScalarFieldEnum)[keyof typeof ExchangeRateScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -56331,6 +57490,71 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"ApprovalStep"> | Date | string
   }
 
+  export type ExchangeRateWhereInput = {
+    AND?: ExchangeRateWhereInput | ExchangeRateWhereInput[]
+    OR?: ExchangeRateWhereInput[]
+    NOT?: ExchangeRateWhereInput | ExchangeRateWhereInput[]
+    id?: StringFilter<"ExchangeRate"> | string
+    fromCurrency?: EnumCurrencyFilter<"ExchangeRate"> | $Enums.Currency
+    toCurrency?: EnumCurrencyFilter<"ExchangeRate"> | $Enums.Currency
+    rate?: DecimalFilter<"ExchangeRate"> | Decimal | DecimalJsLike | number | string
+    effectiveDate?: DateTimeFilter<"ExchangeRate"> | Date | string
+    source?: StringFilter<"ExchangeRate"> | string
+    createdAt?: DateTimeFilter<"ExchangeRate"> | Date | string
+  }
+
+  export type ExchangeRateOrderByWithRelationInput = {
+    id?: SortOrder
+    fromCurrency?: SortOrder
+    toCurrency?: SortOrder
+    rate?: SortOrder
+    effectiveDate?: SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ExchangeRateWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    fromCurrency_toCurrency_effectiveDate?: ExchangeRateFromCurrencyToCurrencyEffectiveDateCompoundUniqueInput
+    AND?: ExchangeRateWhereInput | ExchangeRateWhereInput[]
+    OR?: ExchangeRateWhereInput[]
+    NOT?: ExchangeRateWhereInput | ExchangeRateWhereInput[]
+    fromCurrency?: EnumCurrencyFilter<"ExchangeRate"> | $Enums.Currency
+    toCurrency?: EnumCurrencyFilter<"ExchangeRate"> | $Enums.Currency
+    rate?: DecimalFilter<"ExchangeRate"> | Decimal | DecimalJsLike | number | string
+    effectiveDate?: DateTimeFilter<"ExchangeRate"> | Date | string
+    source?: StringFilter<"ExchangeRate"> | string
+    createdAt?: DateTimeFilter<"ExchangeRate"> | Date | string
+  }, "id" | "fromCurrency_toCurrency_effectiveDate">
+
+  export type ExchangeRateOrderByWithAggregationInput = {
+    id?: SortOrder
+    fromCurrency?: SortOrder
+    toCurrency?: SortOrder
+    rate?: SortOrder
+    effectiveDate?: SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+    _count?: ExchangeRateCountOrderByAggregateInput
+    _avg?: ExchangeRateAvgOrderByAggregateInput
+    _max?: ExchangeRateMaxOrderByAggregateInput
+    _min?: ExchangeRateMinOrderByAggregateInput
+    _sum?: ExchangeRateSumOrderByAggregateInput
+  }
+
+  export type ExchangeRateScalarWhereWithAggregatesInput = {
+    AND?: ExchangeRateScalarWhereWithAggregatesInput | ExchangeRateScalarWhereWithAggregatesInput[]
+    OR?: ExchangeRateScalarWhereWithAggregatesInput[]
+    NOT?: ExchangeRateScalarWhereWithAggregatesInput | ExchangeRateScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ExchangeRate"> | string
+    fromCurrency?: EnumCurrencyWithAggregatesFilter<"ExchangeRate"> | $Enums.Currency
+    toCurrency?: EnumCurrencyWithAggregatesFilter<"ExchangeRate"> | $Enums.Currency
+    rate?: DecimalWithAggregatesFilter<"ExchangeRate"> | Decimal | DecimalJsLike | number | string
+    effectiveDate?: DateTimeWithAggregatesFilter<"ExchangeRate"> | Date | string
+    source?: StringWithAggregatesFilter<"ExchangeRate"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ExchangeRate"> | Date | string
+  }
+
   export type DepartmentCreateInput = {
     id?: string
     name: string
@@ -60740,6 +61964,76 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ExchangeRateCreateInput = {
+    id?: string
+    fromCurrency: $Enums.Currency
+    toCurrency: $Enums.Currency
+    rate: Decimal | DecimalJsLike | number | string
+    effectiveDate: Date | string
+    source?: string
+    createdAt?: Date | string
+  }
+
+  export type ExchangeRateUncheckedCreateInput = {
+    id?: string
+    fromCurrency: $Enums.Currency
+    toCurrency: $Enums.Currency
+    rate: Decimal | DecimalJsLike | number | string
+    effectiveDate: Date | string
+    source?: string
+    createdAt?: Date | string
+  }
+
+  export type ExchangeRateUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromCurrency?: EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+    toCurrency?: EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+    rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    effectiveDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExchangeRateUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromCurrency?: EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+    toCurrency?: EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+    rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    effectiveDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExchangeRateCreateManyInput = {
+    id?: string
+    fromCurrency: $Enums.Currency
+    toCurrency: $Enums.Currency
+    rate: Decimal | DecimalJsLike | number | string
+    effectiveDate: Date | string
+    source?: string
+    createdAt?: Date | string
+  }
+
+  export type ExchangeRateUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromCurrency?: EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+    toCurrency?: EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+    rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    effectiveDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExchangeRateUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromCurrency?: EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+    toCurrency?: EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+    rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    effectiveDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -64209,6 +65503,50 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumApprovalRoleFilter<$PrismaModel>
     _max?: NestedEnumApprovalRoleFilter<$PrismaModel>
+  }
+
+  export type ExchangeRateFromCurrencyToCurrencyEffectiveDateCompoundUniqueInput = {
+    fromCurrency: $Enums.Currency
+    toCurrency: $Enums.Currency
+    effectiveDate: Date | string
+  }
+
+  export type ExchangeRateCountOrderByAggregateInput = {
+    id?: SortOrder
+    fromCurrency?: SortOrder
+    toCurrency?: SortOrder
+    rate?: SortOrder
+    effectiveDate?: SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ExchangeRateAvgOrderByAggregateInput = {
+    rate?: SortOrder
+  }
+
+  export type ExchangeRateMaxOrderByAggregateInput = {
+    id?: SortOrder
+    fromCurrency?: SortOrder
+    toCurrency?: SortOrder
+    rate?: SortOrder
+    effectiveDate?: SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ExchangeRateMinOrderByAggregateInput = {
+    id?: SortOrder
+    fromCurrency?: SortOrder
+    toCurrency?: SortOrder
+    rate?: SortOrder
+    effectiveDate?: SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ExchangeRateSumOrderByAggregateInput = {
+    rate?: SortOrder
   }
 
   export type UserCreateNestedManyWithoutDepartmentInput = {
