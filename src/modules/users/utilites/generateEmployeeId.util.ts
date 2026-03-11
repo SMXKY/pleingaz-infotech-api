@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-type TransactionClient = Omit<
+export type TransactionClient = Omit<
   PrismaClient,
   "$connect" | "$disconnect" | "$on" | "$transaction" | "$use" | "$extends"
 >;
