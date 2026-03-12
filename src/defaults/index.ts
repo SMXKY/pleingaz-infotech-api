@@ -1,5 +1,6 @@
 import { seedAdminConfig } from "./adminConfig.seed";
 import seedDepartments from "./departments.seed";
+import { seedFinanceSettings } from "./financeSettings.seed";
 import seedImplications from "./permissionImplications.seed";
 import seedPermissions from "./permissions.seed";
 import seedRoles from "./roles.seed";
@@ -14,4 +15,5 @@ export const seedDefaultRecords = async () => {
   await seedSuperAdmin();
   await seedSuperAdminRolePermissions();
   await seedAdminConfig();
+  await seedFinanceSettings();
 };

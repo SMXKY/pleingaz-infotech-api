@@ -79,7 +79,7 @@ export const seedSuperAdmin = async (): Promise<void> => {
       data: {
         userId: adminUser.id,
         language: Language.ENG,
-        currency: Currency.FCFA,
+        currency: Currency.XAF,
       },
     }),
   ]);
