@@ -739,6 +739,53 @@ exports.Prisma.ExchangeRateScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.NotificationScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  priority: 'priority',
+  recipientId: 'recipientId',
+  title: 'title',
+  body: 'body',
+  data: 'data',
+  actionUrl: 'actionUrl',
+  refTable: 'refTable',
+  refId: 'refId',
+  status: 'status',
+  deliveredAt: 'deliveredAt',
+  readAt: 'readAt',
+  deliveredVia: 'deliveredVia',
+  attempts: 'attempts',
+  lastError: 'lastError',
+  groupKey: 'groupKey',
+  createdAt: 'createdAt',
+  expiresAt: 'expiresAt'
+};
+
+exports.Prisma.DeviceTokenScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  token: 'token',
+  platform: 'platform',
+  deviceName: 'deviceName',
+  isActive: 'isActive',
+  lastUsedAt: 'lastUsedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.NotificationPreferenceScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  inApp: 'inApp',
+  push: 'push',
+  email: 'email',
+  typeOverrides: 'typeOverrides',
+  quietStart: 'quietStart',
+  quietEnd: 'quietEnd',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1066,6 +1113,58 @@ exports.ApprovalRole = exports.$Enums.ApprovalRole = {
   GENERAL_MANAGER: 'GENERAL_MANAGER'
 };
 
+exports.NotificationType = exports.$Enums.NotificationType = {
+  APPROVAL_REQUIRED: 'APPROVAL_REQUIRED',
+  APPROVAL_APPROVED: 'APPROVAL_APPROVED',
+  APPROVAL_REJECTED: 'APPROVAL_REJECTED',
+  APPROVAL_CANCELLED: 'APPROVAL_CANCELLED',
+  ORDER_CREATED: 'ORDER_CREATED',
+  ORDER_SUBMITTED: 'ORDER_SUBMITTED',
+  ORDER_STATUS_CHANGED: 'ORDER_STATUS_CHANGED',
+  ORDER_COMPLETED: 'ORDER_COMPLETED',
+  ORDER_CANCELLED: 'ORDER_CANCELLED',
+  INVOICE_CREATED: 'INVOICE_CREATED',
+  INVOICE_DUE_SOON: 'INVOICE_DUE_SOON',
+  INVOICE_OVERDUE: 'INVOICE_OVERDUE',
+  PAYMENT_RECEIVED: 'PAYMENT_RECEIVED',
+  PAYMENT_CONFIRMED: 'PAYMENT_CONFIRMED',
+  LOW_STOCK_ALERT: 'LOW_STOCK_ALERT',
+  STOCK_REPLENISHED: 'STOCK_REPLENISHED',
+  SUPPLIER_RESPONSE_RECEIVED: 'SUPPLIER_RESPONSE_RECEIVED',
+  SUPPLIER_CREATED: 'SUPPLIER_CREATED',
+  SYSTEM_ANNOUNCEMENT: 'SYSTEM_ANNOUNCEMENT',
+  SYSTEM_MAINTENANCE: 'SYSTEM_MAINTENANCE',
+  PASSWORD_EXPIRING: 'PASSWORD_EXPIRING',
+  ACCOUNT_LOCKED: 'ACCOUNT_LOCKED'
+};
+
+exports.NotificationPriority = exports.$Enums.NotificationPriority = {
+  LOW: 'LOW',
+  NORMAL: 'NORMAL',
+  HIGH: 'HIGH',
+  URGENT: 'URGENT'
+};
+
+exports.NotificationStatus = exports.$Enums.NotificationStatus = {
+  PENDING: 'PENDING',
+  DELIVERED: 'DELIVERED',
+  READ: 'READ',
+  FAILED: 'FAILED',
+  EXPIRED: 'EXPIRED'
+};
+
+exports.DeliveryChannel = exports.$Enums.DeliveryChannel = {
+  SOCKET: 'SOCKET',
+  FCM: 'FCM',
+  EMAIL: 'EMAIL'
+};
+
+exports.Platform = exports.$Enums.Platform = {
+  WEB: 'WEB',
+  IOS: 'IOS',
+  ANDROID: 'ANDROID'
+};
+
 exports.Prisma.ModelName = {
   Department: 'Department',
   Role: 'Role',
@@ -1104,7 +1203,10 @@ exports.Prisma.ModelName = {
   ExploitationDocument: 'ExploitationDocument',
   Approval: 'Approval',
   ApprovalStep: 'ApprovalStep',
-  ExchangeRate: 'ExchangeRate'
+  ExchangeRate: 'ExchangeRate',
+  Notification: 'Notification',
+  DeviceToken: 'DeviceToken',
+  NotificationPreference: 'NotificationPreference'
 };
 
 /**

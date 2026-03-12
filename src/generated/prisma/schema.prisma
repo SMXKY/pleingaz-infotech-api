@@ -351,6 +351,9 @@ model User {
   financeSettingsUpdates      FinanceSettings[]        @relation("finance_settings_updated_by")
   suppliersCreated            Supplier[]               @relation("supplier_created_by")
   drivers                     ExploitationDriver[]     @relation("driver_user")
+  Notifications               Notification[]
+  DeviceTokens                DeviceToken[]
+  NotificationPreference      NotificationPreference?
 
   @@index([deletedAt])
   @@map("users")
@@ -1247,4 +1250,133 @@ model ExchangeRate {
   @@index([effectiveDate(sort: Desc)])
   @@index([fromCurrency, toCurrency])
   @@map("exchange_rates")
+}
+
+//Notification System
+
+enum Platform {
+  WEB
+  IOS
+  ANDROID
+}
+
+enum DeliveryChannel {
+  SOCKET
+  FCM
+  EMAIL
+}
+
+enum NotificationType {
+  APPROVAL_REQUIRED
+  APPROVAL_APPROVED
+  APPROVAL_REJECTED
+  APPROVAL_CANCELLED
+
+  ORDER_CREATED
+  ORDER_SUBMITTED
+  ORDER_STATUS_CHANGED
+  ORDER_COMPLETED
+  ORDER_CANCELLED
+
+  INVOICE_CREATED
+  INVOICE_DUE_SOON
+  INVOICE_OVERDUE
+  PAYMENT_RECEIVED
+  PAYMENT_CONFIRMED
+
+  LOW_STOCK_ALERT
+  STOCK_REPLENISHED
+
+  SUPPLIER_RESPONSE_RECEIVED
+  SUPPLIER_CREATED
+
+  SYSTEM_ANNOUNCEMENT
+  SYSTEM_MAINTENANCE
+  PASSWORD_EXPIRING
+  ACCOUNT_LOCKED
+}
+
+enum NotificationPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum NotificationStatus {
+  PENDING
+  DELIVERED
+  READ
+  FAILED
+  EXPIRED
+}
+
+model Notification {
+  id           String               @id @default(uuid())
+  type         NotificationType
+  priority     NotificationPriority @default(NORMAL)
+  recipientId  String               @map("recipient_id")
+  recipient    User                 @relation(fields: [recipientId], references: [id])
+  title        String
+  body         String
+  data         Json?
+  actionUrl    String?              @map("action_url")
+  refTable     String?              @map("ref_table")
+  refId        String?              @map("ref_id")
+  status       NotificationStatus   @default(PENDING)
+  deliveredAt  DateTime?            @map("delivered_at")
+  readAt       DateTime?            @map("read_at")
+  deliveredVia DeliveryChannel?     @map("delivered_via")
+  attempts     Int                  @default(0)
+  lastError    String?              @map("last_error")
+  groupKey     String?              @map("group_key")
+  createdAt    DateTime             @default(now()) @map("created_at")
+  expiresAt    DateTime?            @map("expires_at")
+
+  @@index([recipientId, status])
+  @@index([recipientId, readAt])
+  @@index([status, priority, createdAt])
+  @@index([refTable, refId])
+  @@index([groupKey])
+  @@map("notifications")
+}
+
+model DeviceToken {
+  id     String @id @default(uuid())
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  token      String   @unique
+  platform   Platform
+  deviceName String?  @map("device_name")
+
+  isActive   Boolean  @default(true) @map("is_active")
+  lastUsedAt DateTime @default(now()) @map("last_used_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userId, isActive])
+  @@index([platform])
+  @@map("device_tokens")
+}
+
+model NotificationPreference {
+  id     String @id @default(uuid())
+  userId String @unique @map("user_id")
+  user   User   @relation(fields: [userId], references: [id])
+
+  inApp Boolean @default(true) @map("in_app")
+  push  Boolean @default(true)
+  email Boolean @default(true)
+
+  typeOverrides Json? @map("type_overrides")
+
+  quietStart String? @map("quiet_start")
+  quietEnd   String? @map("quiet_end")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("notification_preferences")
 }
