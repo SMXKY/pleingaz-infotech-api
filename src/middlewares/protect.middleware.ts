@@ -69,6 +69,8 @@ const protect = catchAsync(
             description: true,
           },
         },
+        preference: true,
+        notificationPreference: true,
       },
     });
 

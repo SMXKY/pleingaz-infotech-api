@@ -46,6 +46,14 @@ if (!process.env.UNIRATEAPI_KEY) {
   throw new Error("UNIRATEAPI KEY enviroment variable not set");
 }
 
+if (!process.env.SOCKET_IO_PATH) {
+  throw new Error("SOCKET_IO_PATH enviroment variable not set");
+}
+
+if (!process.env.SOCKET_IO_CORS_ORIGIN) {
+  throw new Error("SOCKET_IO_CORS_ORIGIN KEY enviroment variable not set");
+}
+
 export const baseUrl = process.env.BASE_URL;
 export const frontEndUrl = process.env.FRONTEND_URL;
 export const ACCOUNT_LOGIN_WAIT_TIME_HOURS =
@@ -61,3 +69,5 @@ export const RESET_PASSWORD_LIMIT_HOURS =
 export const FTP_BASE_URL = process.env.FTP_BASE_URL;
 export const SUPER_ADMIN_EMAIL = process.env.SUPER_ADMIN_EMAIL;
 export const UNIRATEAPI_KEY = process.env.UNIRATEAPI_KEY;
+export const SOCKET_IO_PATH = process.env.SOCKET_IO_PATH;
+export const SOCKET_IO_CORS_ORIGIN = process.env.SOCKET_IO_CORS_ORIGIN;

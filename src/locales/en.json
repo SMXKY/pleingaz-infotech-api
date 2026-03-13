@@ -140,5 +140,6 @@
   "error.permission.override_not_found": "No active permission override was found for this user.",
   "success.permission.override_revoked": "permission override revoked successfully.",
 
-  "error.util.exchange_rate_not_found": ""
+  "error.util.exchange_rate_not_found": "",
+  "error.auth.socket_auth_error": ""
 }

@@ -353,7 +353,7 @@ model User {
   drivers                     ExploitationDriver[]     @relation("driver_user")
   Notifications               Notification[]
   DeviceTokens                DeviceToken[]
-  NotificationPreference      NotificationPreference?
+  notificationPreference      NotificationPreference?
 
   @@index([deletedAt])
   @@map("users")

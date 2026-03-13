@@ -14371,7 +14371,7 @@ export namespace Prisma {
     drivers?: boolean | User$driversArgs<ExtArgs>
     Notifications?: boolean | User$NotificationsArgs<ExtArgs>
     DeviceTokens?: boolean | User$DeviceTokensArgs<ExtArgs>
-    NotificationPreference?: boolean | User$NotificationPreferenceArgs<ExtArgs>
+    notificationPreference?: boolean | User$notificationPreferenceArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -14518,7 +14518,7 @@ export namespace Prisma {
     drivers?: boolean | User$driversArgs<ExtArgs>
     Notifications?: boolean | User$NotificationsArgs<ExtArgs>
     DeviceTokens?: boolean | User$DeviceTokensArgs<ExtArgs>
-    NotificationPreference?: boolean | User$NotificationPreferenceArgs<ExtArgs>
+    notificationPreference?: boolean | User$notificationPreferenceArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -14556,7 +14556,7 @@ export namespace Prisma {
       drivers: Prisma.$ExploitationDriverPayload<ExtArgs>[]
       Notifications: Prisma.$NotificationPayload<ExtArgs>[]
       DeviceTokens: Prisma.$DeviceTokenPayload<ExtArgs>[]
-      NotificationPreference: Prisma.$NotificationPreferencePayload<ExtArgs> | null
+      notificationPreference: Prisma.$NotificationPreferencePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -15011,7 +15011,7 @@ export namespace Prisma {
     drivers<T extends User$driversArgs<ExtArgs> = {}>(args?: Subset<T, User$driversArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExploitationDriverPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Notifications<T extends User$NotificationsArgs<ExtArgs> = {}>(args?: Subset<T, User$NotificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     DeviceTokens<T extends User$DeviceTokensArgs<ExtArgs> = {}>(args?: Subset<T, User$DeviceTokensArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeviceTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    NotificationPreference<T extends User$NotificationPreferenceArgs<ExtArgs> = {}>(args?: Subset<T, User$NotificationPreferenceArgs<ExtArgs>>): Prisma__NotificationPreferenceClient<$Result.GetResult<Prisma.$NotificationPreferencePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    notificationPreference<T extends User$notificationPreferenceArgs<ExtArgs> = {}>(args?: Subset<T, User$notificationPreferenceArgs<ExtArgs>>): Prisma__NotificationPreferenceClient<$Result.GetResult<Prisma.$NotificationPreferencePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15971,9 +15971,9 @@ export namespace Prisma {
   }
 
   /**
-   * User.NotificationPreference
+   * User.notificationPreference
    */
-  export type User$NotificationPreferenceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$notificationPreferenceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the NotificationPreference
      */
@@ -58355,7 +58355,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverListRelationFilter
     Notifications?: NotificationListRelationFilter
     DeviceTokens?: DeviceTokenListRelationFilter
-    NotificationPreference?: XOR<NotificationPreferenceNullableScalarRelationFilter, NotificationPreferenceWhereInput> | null
+    notificationPreference?: XOR<NotificationPreferenceNullableScalarRelationFilter, NotificationPreferenceWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -58417,7 +58417,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverOrderByRelationAggregateInput
     Notifications?: NotificationOrderByRelationAggregateInput
     DeviceTokens?: DeviceTokenOrderByRelationAggregateInput
-    NotificationPreference?: NotificationPreferenceOrderByWithRelationInput
+    notificationPreference?: NotificationPreferenceOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -58482,7 +58482,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverListRelationFilter
     Notifications?: NotificationListRelationFilter
     DeviceTokens?: DeviceTokenListRelationFilter
-    NotificationPreference?: XOR<NotificationPreferenceNullableScalarRelationFilter, NotificationPreferenceWhereInput> | null
+    notificationPreference?: XOR<NotificationPreferenceNullableScalarRelationFilter, NotificationPreferenceWhereInput> | null
   }, "id" | "email" | "username" | "employeeId" | "nationalIdNumber" | "phoneNumber">
 
   export type UserOrderByWithAggregationInput = {
@@ -62587,7 +62587,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -62647,7 +62647,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -62707,7 +62707,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -62767,7 +62767,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -74854,7 +74854,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutDepartmentInput = {
@@ -74913,7 +74913,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutDepartmentInput = {
@@ -75039,7 +75039,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRoleInput = {
@@ -75098,7 +75098,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRoleInput = {
@@ -75337,7 +75337,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRoleOverridesInput = {
@@ -75396,7 +75396,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRoleOverridesInput = {
@@ -75460,7 +75460,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreatedRoleOverridesInput = {
@@ -75519,7 +75519,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreatedRoleOverridesInput = {
@@ -75631,7 +75631,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRoleOverridesInput = {
@@ -75690,7 +75690,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutCreatedRoleOverridesInput = {
@@ -75760,7 +75760,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedRoleOverridesInput = {
@@ -75819,7 +75819,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type PermissionImpliesCreateWithoutPermissionInput = {
@@ -76271,7 +76271,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPermissionOverridesInput = {
@@ -76330,7 +76330,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPermissionOverridesInput = {
@@ -76437,7 +76437,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreatedPermissionOverridesInput = {
@@ -76496,7 +76496,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreatedPermissionOverridesInput = {
@@ -76571,7 +76571,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPermissionOverridesInput = {
@@ -76630,7 +76630,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type PermissionUpsertWithoutPermissionOverridesInput = {
@@ -76749,7 +76749,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedPermissionOverridesInput = {
@@ -76808,7 +76808,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type RoleCreateWithoutRolePermissionsInput = {
@@ -76941,7 +76941,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreatedRolePermissionsInput = {
@@ -77000,7 +77000,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreatedRolePermissionsInput = {
@@ -77161,7 +77161,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedRolePermissionsInput = {
@@ -77220,7 +77220,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type DepartmentCreateWithoutUsersInput = {
@@ -79004,7 +79004,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPreferenceInput = {
@@ -79063,7 +79063,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPreferenceInput = {
@@ -79138,7 +79138,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPreferenceInput = {
@@ -79197,7 +79197,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutActivityLogsInput = {
@@ -79256,7 +79256,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutActivityLogsInput = {
@@ -79315,7 +79315,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutActivityLogsInput = {
@@ -79390,7 +79390,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutActivityLogsInput = {
@@ -79449,7 +79449,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutUserTokenInput = {
@@ -79508,7 +79508,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserTokenInput = {
@@ -79567,7 +79567,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserTokenInput = {
@@ -79642,7 +79642,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserTokenInput = {
@@ -79701,7 +79701,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutFinanceSettingsUpdatesInput = {
@@ -79760,7 +79760,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFinanceSettingsUpdatesInput = {
@@ -79819,7 +79819,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFinanceSettingsUpdatesInput = {
@@ -79894,7 +79894,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFinanceSettingsUpdatesInput = {
@@ -79953,7 +79953,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSuppliersCreatedInput = {
@@ -80012,7 +80012,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSuppliersCreatedInput = {
@@ -80071,7 +80071,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSuppliersCreatedInput = {
@@ -80550,7 +80550,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSuppliersCreatedInput = {
@@ -80609,7 +80609,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type SupplierPaymentMethodUpsertWithWhereUniqueWithoutSupplierInput = {
@@ -81816,7 +81816,7 @@ export namespace Prisma {
     suppliersCreated?: SupplierCreateNestedManyWithoutCreatedByInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutDriversInput = {
@@ -81875,7 +81875,7 @@ export namespace Prisma {
     suppliersCreated?: SupplierUncheckedCreateNestedManyWithoutCreatedByInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutDriversInput = {
@@ -82031,7 +82031,7 @@ export namespace Prisma {
     suppliersCreated?: SupplierUpdateManyWithoutCreatedByNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDriversInput = {
@@ -82090,7 +82090,7 @@ export namespace Prisma {
     suppliersCreated?: SupplierUncheckedUpdateManyWithoutCreatedByNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type TankerUpsertWithoutDriverInput = {
@@ -82624,7 +82624,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutGasPurchaseOrdersInput = {
@@ -82683,7 +82683,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutGasPurchaseOrdersInput = {
@@ -82960,7 +82960,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutGasPurchaseOrdersInput = {
@@ -83019,7 +83019,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type GasPurchaseOrderTankerUpsertWithWhereUniqueWithoutOrderInput = {
@@ -83830,7 +83830,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutGasBottlePurchaseOrdersInput = {
@@ -83889,7 +83889,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutGasBottlePurchaseOrdersInput = {
@@ -84128,7 +84128,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutGasBottlePurchaseOrdersInput = {
@@ -84187,7 +84187,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type GasBottlePurchaseOrderItemUpsertWithWhereUniqueWithoutOrderInput = {
@@ -84880,7 +84880,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccessoryPurchaseOrdersInput = {
@@ -84939,7 +84939,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccessoryPurchaseOrdersInput = {
@@ -85180,7 +85180,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccessoryPurchaseOrdersInput = {
@@ -85239,7 +85239,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type AccessoryPurchaseOrderItemUpsertWithWhereUniqueWithoutOrderInput = {
@@ -85554,7 +85554,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreatedInvoicesInput = {
@@ -85613,7 +85613,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreatedInvoicesInput = {
@@ -85677,7 +85677,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPaidInvoicesInput = {
@@ -85736,7 +85736,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPaidInvoicesInput = {
@@ -85811,7 +85811,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedInvoicesInput = {
@@ -85870,7 +85870,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutPaidInvoicesInput = {
@@ -85940,7 +85940,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPaidInvoicesInput = {
@@ -85999,7 +85999,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutUploadedDocumentsInput = {
@@ -86058,7 +86058,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUploadedDocumentsInput = {
@@ -86117,7 +86117,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUploadedDocumentsInput = {
@@ -86192,7 +86192,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUploadedDocumentsInput = {
@@ -86251,7 +86251,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutApprovalRequestsInput = {
@@ -86310,7 +86310,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutApprovalRequestsInput = {
@@ -86369,7 +86369,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutApprovalRequestsInput = {
@@ -86478,7 +86478,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutApprovalRequestsInput = {
@@ -86537,7 +86537,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type ApprovalStepUpsertWithWhereUniqueWithoutApprovalInput = {
@@ -86647,7 +86647,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutApprovalStepsDecidedInput = {
@@ -86706,7 +86706,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutApprovalStepsDecidedInput = {
@@ -86822,7 +86822,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutApprovalStepsDecidedInput = {
@@ -86881,7 +86881,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutNotificationsInput = {
@@ -86940,7 +86940,7 @@ export namespace Prisma {
     suppliersCreated?: SupplierCreateNestedManyWithoutCreatedByInput
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -86999,7 +86999,7 @@ export namespace Prisma {
     suppliersCreated?: SupplierUncheckedCreateNestedManyWithoutCreatedByInput
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -87074,7 +87074,7 @@ export namespace Prisma {
     suppliersCreated?: SupplierUpdateManyWithoutCreatedByNestedInput
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -87133,7 +87133,7 @@ export namespace Prisma {
     suppliersCreated?: SupplierUncheckedUpdateManyWithoutCreatedByNestedInput
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutDeviceTokensInput = {
@@ -87192,7 +87192,7 @@ export namespace Prisma {
     suppliersCreated?: SupplierCreateNestedManyWithoutCreatedByInput
     drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
     Notifications?: NotificationCreateNestedManyWithoutRecipientInput
-    NotificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutDeviceTokensInput = {
@@ -87251,7 +87251,7 @@ export namespace Prisma {
     suppliersCreated?: SupplierUncheckedCreateNestedManyWithoutCreatedByInput
     drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
     Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
-    NotificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutDeviceTokensInput = {
@@ -87326,7 +87326,7 @@ export namespace Prisma {
     suppliersCreated?: SupplierUpdateManyWithoutCreatedByNestedInput
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDeviceTokensInput = {
@@ -87385,7 +87385,7 @@ export namespace Prisma {
     suppliersCreated?: SupplierUncheckedUpdateManyWithoutCreatedByNestedInput
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutNotificationPreferenceInput = {
@@ -87733,7 +87733,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDepartmentInput = {
@@ -87792,7 +87792,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutDepartmentInput = {
@@ -87946,7 +87946,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRoleInput = {
@@ -88005,7 +88005,7 @@ export namespace Prisma {
     drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
     Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
-    NotificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutRoleInput = {
