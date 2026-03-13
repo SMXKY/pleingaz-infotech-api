@@ -1,4 +1,6 @@
 import * as dotEnv from "dotenv";
+import { createServer } from "http";
+import { initializeSocketIO } from "./socket/socket";
 dotEnv.config();
 
 import { PrismaClient } from "./generated/prisma/client";
@@ -42,8 +44,15 @@ prisma
   });
 
 const port: number = Number(process.env.PORT) || 3000;
-const server = app.listen(port, "0.0.0.0", () => {
+
+const httpServer = createServer(app);
+const io = initializeSocketIO(httpServer);
+
+httpServer.listen(port, () => {
   console.log(`App is up and running on port: ${port}`);
+  console.log(
+    `Socket.IO listening on ${process.env.SOCKET_IO_PATH || "/socket.io"}`
+  );
 });
 
 process.on("unhandledRejection", (err) => {
@@ -51,4 +60,4 @@ process.on("unhandledRejection", (err) => {
   console.log(err);
 });
 
-export { prisma };
+export { prisma, httpServer, io };
