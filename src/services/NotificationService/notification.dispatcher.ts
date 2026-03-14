@@ -8,47 +8,8 @@ import prisma from "@models/index.model";
 import { isUserOnline } from "src/socket/socket";
 import NotificationService, {
   formatNotificationPayload,
-  NotificationPayload,
 } from "@services/NotificationService";
-import * as admin from "firebase-admin";
-
-import {
-  FIREBASE_CLIENT_EMAIL,
-  FIREBASE_PROJECT_ID,
-  FIREBASE_PRIVATE_KEY,
-} from "@utils/enviromentVariablesCheck.util";
-
-let firebaseInitialized = false;
-
-function initializeFirebase(): void {
-  if (firebaseInitialized) return;
-
-  if (!FIREBASE_PROJECT_ID || !FIREBASE_CLIENT_EMAIL || !FIREBASE_PRIVATE_KEY) {
-    console.warn(
-      "[NotificationDispatcher] Firebase not configured - FCM push disabled"
-    );
-    return;
-  }
-
-  try {
-    admin.initializeApp({
-      credential: admin.credential.cert({
-        projectId: FIREBASE_PROJECT_ID,
-        clientEmail: FIREBASE_CLIENT_EMAIL,
-        privateKey: FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
-      }),
-    });
-    firebaseInitialized = true;
-    console.log("[NotificationDispatcher] Firebase initialized");
-  } catch (error) {
-    console.error(
-      "[NotificationDispatcher] Firebase initialization failed:",
-      error
-    );
-  }
-}
-
-initializeFirebase();
+import FCMService from "@services/fcm/fcm.service";
 
 export interface DispatchResult {
   notificationId: string;
@@ -61,29 +22,6 @@ export interface DispatchOptions {
   skipSocket?: boolean;
   skipPush?: boolean;
   forceChannel?: DeliveryChannel;
-}
-
-interface FCMPayload {
-  notification: {
-    title: string;
-    body: string;
-  };
-  data: Record<string, string>;
-  android: {
-    priority: "high" | "normal";
-    notification: {
-      channelId: string;
-      sound: string;
-    };
-  };
-  apns: {
-    payload: {
-      aps: {
-        sound: string;
-        badge: number;
-      };
-    };
-  };
 }
 
 async function dispatchViaSocket(notification: Notification): Promise<boolean> {
@@ -109,121 +47,24 @@ async function dispatchViaSocket(notification: Notification): Promise<boolean> {
   return true;
 }
 
-async function getActiveDeviceTokens(userId: string): Promise<string[]> {
-  const tokens = await prisma.deviceToken.findMany({
-    where: {
-      userId,
-      isActive: true,
-      platform: { in: ["IOS", "ANDROID"] },
-    },
-    select: { token: true },
-  });
-
-  return tokens.map((t) => t.token);
-}
-
-function buildFCMPayload(
-  notification: Notification,
-  unreadCount: number
-): FCMPayload {
-  return {
-    notification: {
-      title: notification.title,
-      body: notification.body,
-    },
-    data: {
-      notificationId: notification.id,
-      type: notification.type,
-      priority: notification.priority,
-      actionUrl: notification.actionUrl ?? "",
-      refTable: notification.refTable ?? "",
-      refId: notification.refId ?? "",
-      payload: JSON.stringify(notification.data ?? {}),
-    },
-    android: {
-      priority: notification.priority === "URGENT" ? "high" : "normal",
-      notification: {
-        channelId: "pleingaz_notifications",
-        sound: "default",
-      },
-    },
-    apns: {
-      payload: {
-        aps: {
-          sound: "default",
-          badge: unreadCount,
-        },
-      },
-    },
-  };
-}
-
-async function handleFailedTokens(failedTokens: string[]): Promise<void> {
-  if (failedTokens.length === 0) return;
-
-  await prisma.deviceToken.updateMany({
-    where: { token: { in: failedTokens } },
-    data: { isActive: false },
-  });
-
-  console.log(
-    `[NotificationDispatcher] Deactivated ${failedTokens.length} invalid FCM token(s)`
-  );
-}
-
 async function dispatchViaPush(notification: Notification): Promise<boolean> {
-  if (!firebaseInitialized) {
+  if (!FCMService.isFirebaseReady()) {
     console.warn("[NotificationDispatcher] FCM not available - skipping push");
     return false;
   }
 
-  const userId = notification.recipientId;
-  const deviceTokens = await getActiveDeviceTokens(userId);
+  const result = await FCMService.sendPushToUser(
+    notification,
+    notification.recipientId
+  );
 
-  if (deviceTokens.length === 0) {
+  if (result.success) {
     console.log(
-      `[NotificationDispatcher] No active device tokens for user ${userId}`
+      `[NotificationDispatcher] Delivered via FCM to ${result.successCount} device(s)`
     );
-    return false;
   }
 
-  const unreadCount = await NotificationService.getUnreadCount(userId);
-  const fcmPayload = buildFCMPayload(notification, unreadCount);
-
-  try {
-    const message: admin.messaging.MulticastMessage = {
-      tokens: deviceTokens,
-      ...fcmPayload,
-    };
-
-    const response = await admin.messaging().sendEachForMulticast(message);
-
-    if (response.failureCount > 0) {
-      const failedTokens: string[] = [];
-      response.responses.forEach((resp, idx) => {
-        if (!resp.success) {
-          failedTokens.push(deviceTokens[idx]);
-          console.error(
-            `[NotificationDispatcher] FCM error: ${resp.error?.message}`
-          );
-        }
-      });
-      await handleFailedTokens(failedTokens);
-    }
-
-    const successCount = response.successCount;
-    if (successCount > 0) {
-      console.log(
-        `[NotificationDispatcher] Delivered via FCM to ${successCount} device(s) for user ${userId}`
-      );
-      return true;
-    }
-
-    return false;
-  } catch (error) {
-    console.error("[NotificationDispatcher] FCM send error:", error);
-    return false;
-  }
+  return result.success;
 }
 
 async function selectDeliveryChannel(
@@ -242,8 +83,8 @@ async function selectDeliveryChannel(
   }
 
   if (!options.skipPush) {
-    const hasDeviceTokens = (await getActiveDeviceTokens(userId)).length > 0;
-    if (hasDeviceTokens) {
+    const tokens = await FCMService.getMobileTokensForUser(userId);
+    if (tokens.length > 0) {
       return DeliveryChannel.FCM;
     }
   }
@@ -411,7 +252,7 @@ export async function sendAndDispatch(
 }
 
 const MAX_RETRY_ATTEMPTS = 4;
-const RETRY_DELAYS = [1000, 5000, 30000, 300000]; // 1s, 5s, 30s, 5min
+const RETRY_DELAYS = [1000, 5000, 30000, 300000];
 
 export async function retryDispatch(
   notificationId: string

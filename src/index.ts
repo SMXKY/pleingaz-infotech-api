@@ -16,6 +16,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { seedDefaultRecords } from "./defaults";
 import { loadTranslations } from "@utils/translate.util";
 import runCronJobs from "./cron-jobs";
+import { initializeFireBaseServices } from "@services/fcm";
 
 const connectionString = `${process.env.DATABASE_URL}`;
 
@@ -46,6 +47,7 @@ prisma
 const port: number = Number(process.env.PORT) || 3000;
 
 const httpServer = createServer(app);
+initializeFireBaseServices();
 const io = initializeSocketIO(httpServer);
 
 httpServer.listen(port, () => {
