@@ -54,6 +54,18 @@ if (!process.env.SOCKET_IO_CORS_ORIGIN) {
   throw new Error("SOCKET_IO_CORS_ORIGIN KEY enviroment variable not set");
 }
 
+if (!process.env.DEFAULT_PAGE_SIZE) {
+  throw new Error("DEFAULT_PAGE_SIZE KEY enviroment variable not set");
+}
+
+if (!process.env.MAX_PAGE_SIZE) {
+  throw new Error("MAX_PAGE_SIZE KEY enviroment variable not set");
+}
+
+if (!process.env.MAX_BATCH_SIZE) {
+  throw new Error("MAX_BATCH_SIZE KEY enviroment variable not set");
+}
+
 export const baseUrl = process.env.BASE_URL;
 export const frontEndUrl = process.env.FRONTEND_URL;
 export const ACCOUNT_LOGIN_WAIT_TIME_HOURS =
@@ -71,3 +83,6 @@ export const SUPER_ADMIN_EMAIL = process.env.SUPER_ADMIN_EMAIL;
 export const UNIRATEAPI_KEY = process.env.UNIRATEAPI_KEY;
 export const SOCKET_IO_PATH = process.env.SOCKET_IO_PATH;
 export const SOCKET_IO_CORS_ORIGIN = process.env.SOCKET_IO_CORS_ORIGIN;
+export const DEFAULT_PAGE_SIZE = Number(process.env.DEFAULT_PAGE_SIZE);
+export const MAX_PAGE_SIZE = Number(process.env.MAX_PAGE_SIZE);
+export const MAX_BATCH_SIZE = Number(process.env.MAX_BATCH_SIZE);

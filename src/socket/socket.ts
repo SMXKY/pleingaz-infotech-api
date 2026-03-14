@@ -57,7 +57,7 @@ async function authenticateSocket(
     }
 
     const user = await prisma.user.findUnique({
-      where: { id: decodedToken.userId },
+      where: { id: decodedToken.id },
       select: {
         id: true,
         email: true,

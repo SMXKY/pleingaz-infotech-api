@@ -141,5 +141,6 @@
   "success.permission.override_revoked": "permission override revoked successfully.",
 
   "error.util.exchange_rate_not_found": "",
-  "error.auth.socket_auth_error": ""
+  "error.auth.socket_auth_error": "",
+  "error.notification.invalid_target": ""
 }
