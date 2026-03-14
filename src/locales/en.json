@@ -142,5 +142,24 @@
 
   "error.util.exchange_rate_not_found": "",
   "error.auth.socket_auth_error": "",
-  "error.notification.invalid_target": ""
+  "error.notification.invalid_target": "",
+  "error.validation.users_required": "",
+  "error.validation.permission_required": "",
+  "error.validation.invalid_notification_type": "",
+  "error.validation.invalid_notification_priority": "",
+  "error.validation.title_required": "",
+  "error.validation.title_too_long": "",
+  "error.validation.body_required": "",
+  "error.validation.body_too_long": "",
+  "error.validation.action_url_too_long": "",
+  "error.validation.ref_table_too_long": "",
+  "error.validation.invalid_ref_id": "",
+  "error.validation.group_key_too_long": "",
+  "error.validation.invalid_expires_at": "",
+  "error.validation.invalid_since": "",
+  "error.validation.invalid_cursor": "",
+  "error.validation.invalid_notification_id": "",
+  "error.validation.invalid_platform": "",
+  "error.validation.device_name_too_long": "",
+  "error.validation.token_required": ""
 }
