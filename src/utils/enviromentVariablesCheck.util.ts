@@ -51,19 +51,31 @@ if (!process.env.SOCKET_IO_PATH) {
 }
 
 if (!process.env.SOCKET_IO_CORS_ORIGIN) {
-  throw new Error("SOCKET_IO_CORS_ORIGIN KEY enviroment variable not set");
+  throw new Error("SOCKET_IO_CORS_ORIGIN enviroment variable not set");
 }
 
 if (!process.env.DEFAULT_PAGE_SIZE) {
-  throw new Error("DEFAULT_PAGE_SIZE KEY enviroment variable not set");
+  throw new Error("DEFAULT_PAGE_SIZE enviroment variable not set");
 }
 
 if (!process.env.MAX_PAGE_SIZE) {
-  throw new Error("MAX_PAGE_SIZE KEY enviroment variable not set");
+  throw new Error("MAX_PAGE_SIZE enviroment variable not set");
 }
 
 if (!process.env.MAX_BATCH_SIZE) {
-  throw new Error("MAX_BATCH_SIZE KEY enviroment variable not set");
+  throw new Error("MAX_BATCH_SIZE enviroment variable not set");
+}
+
+if (!process.env.FIREBASE_PROJECT_ID) {
+  throw new Error("FIREBASE_PROJECT_ID enviroment variable not set");
+}
+
+if (!process.env.FIREBASE_PRIVATE_KEY) {
+  throw new Error("FIREBASE_PRIVATE_KEY enviroment variable not set");
+}
+
+if (!process.env.FIREBASE_CLIENT_EMAIL) {
+  throw new Error("FIREBASE_CLIENT_EMAIL enviroment variable not set");
 }
 
 export const baseUrl = process.env.BASE_URL;
@@ -86,3 +98,6 @@ export const SOCKET_IO_CORS_ORIGIN = process.env.SOCKET_IO_CORS_ORIGIN;
 export const DEFAULT_PAGE_SIZE = Number(process.env.DEFAULT_PAGE_SIZE);
 export const MAX_PAGE_SIZE = Number(process.env.MAX_PAGE_SIZE);
 export const MAX_BATCH_SIZE = Number(process.env.MAX_BATCH_SIZE);
+export const FIREBASE_PROJECT_ID = process.env.FIREBASE_PROJECT_ID;
+export const FIREBASE_PRIVATE_KEY = process.env.FIREBASE_PRIVATE_KEY;
+export const FIREBASE_CLIENT_EMAIL = process.env.FIREBASE_CLIENT_EMAIL;
