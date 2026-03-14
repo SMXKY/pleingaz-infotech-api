@@ -9,9 +9,12 @@ import {
 } from "@utils/enviromentVariablesCheck.util";
 import { StatusCodes } from "http-status-codes";
 import { AppError } from "@utils/AppError.util";
-import { Status } from "src/generated/prisma";
+import { DeliveryChannel, Status } from "src/generated/prisma";
+import NotificationService, {
+  formatNotificationPayload,
+} from "@services/NotificationService";
 
-interface UserData {
+export interface UserData {
   id: string;
   email: string;
   roleId: string | null;
@@ -180,24 +183,75 @@ export function initializeSocketIO(httpServer: HttpServer): Server {
 
     joinUserRooms(socket);
 
-    socket.emit("notification:count", { unread: 0 });
+    try {
+      const unreadCount = await NotificationService.getUnreadCount(user.id);
+      socket.emit("notification:count", { unread: unreadCount });
+    } catch (error) {
+      console.error(`[Socket.IO] Error fetching unread count:`, error);
+      socket.emit("notification:count", { unread: 0 });
+    }
 
     socket.on("notification:sync", async ({ since }: { since: string }) => {
-      console.log(`[Socket.IO] User ${user.id} requesting sync since ${since}`);
+      try {
+        const sinceDate = new Date(since);
+        if (isNaN(sinceDate.getTime())) {
+          console.warn(`[Socket.IO] Invalid sync timestamp: ${since}`);
+          return;
+        }
+
+        const missed = await NotificationService.getSince(user.id, sinceDate);
+        console.log(
+          `[Socket.IO] Syncing ${missed.length} notification(s) for user ${user.id}`
+        );
+
+        for (const notification of missed) {
+          socket.emit(
+            "notification:new",
+            formatNotificationPayload(notification)
+          );
+        }
+
+        const unreadCount = await NotificationService.getUnreadCount(user.id);
+        socket.emit("notification:count", { unread: unreadCount });
+      } catch (error) {
+        console.error(`[Socket.IO] Sync error for user ${user.id}:`, error);
+      }
     });
 
     socket.on("notification:ack", async ({ id }: { id: string }) => {
-      console.log(
-        `[Socket.IO] User ${user.id} acknowledged notification ${id}`
-      );
+      try {
+        await NotificationService.markAsDelivered(id, DeliveryChannel.SOCKET);
+      } catch (error) {
+        console.error(`[Socket.IO] Ack error for ${id}:`, error);
+      }
     });
 
     socket.on("notification:read", async ({ id }: { id: string }) => {
-      console.log(`[Socket.IO] User ${user.id} read notification ${id}`);
+      try {
+        await NotificationService.markAsRead(id, user.id);
+        const unreadCount = await NotificationService.getUnreadCount(user.id);
+
+        socket.emit("notification:count", { unread: unreadCount });
+
+        io?.to(`user:${user.id}`).emit("notification:updated", {
+          id,
+          status: "READ",
+          readAt: new Date().toISOString(),
+        });
+      } catch (error) {
+        console.error(`[Socket.IO] Read error for ${id}:`, error);
+      }
     });
 
     socket.on("notification:read:all", async () => {
-      console.log(`[Socket.IO] User ${user.id} marked all as read`);
+      try {
+        const count = await NotificationService.markAllAsRead(user.id);
+        console.log(`[Socket.IO] Marked ${count} as read for user ${user.id}`);
+
+        io?.to(`user:${user.id}`).emit("notification:count", { unread: 0 });
+      } catch (error) {
+        console.error(`[Socket.IO] Read all error for user ${user.id}:`, error);
+      }
     });
 
     socket.on("disconnect", (reason) => handleDisconnect(socket, reason));
