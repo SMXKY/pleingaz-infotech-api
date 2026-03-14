@@ -8,7 +8,7 @@ import prisma from "@models/index.model";
 import { isUserOnline } from "src/socket/socket";
 import NotificationService, {
   formatNotificationPayload,
-} from "@services/NotificationService";
+} from "@services/nofication";
 import FCMService from "@services/fcm/fcm.service";
 
 export interface DispatchResult {

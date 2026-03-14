@@ -1,7 +1,7 @@
 import { Socket } from "socket.io";
 import NotificationService, {
   formatNotificationPayload,
-} from "@services/NotificationService";
+} from "@services/nofication";
 import { DeliveryChannel } from "src/generated/prisma";
 
 interface SocketUserData {

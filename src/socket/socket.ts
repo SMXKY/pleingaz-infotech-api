@@ -12,7 +12,7 @@ import { AppError } from "@utils/AppError.util";
 import { DeliveryChannel, Status } from "src/generated/prisma";
 import NotificationService, {
   formatNotificationPayload,
-} from "@services/NotificationService";
+} from "@services/nofication";
 
 export interface UserData {
   id: string;
