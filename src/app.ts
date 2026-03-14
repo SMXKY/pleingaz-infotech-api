@@ -18,6 +18,7 @@ import { rolePermissionRouter } from "./modules/rolePermissions/indext";
 import permissionRouter from "./modules/permissions/permission.route";
 import { notificationRouter } from "./modules/notifications";
 import { deviceTokenRouter } from "./modules/deviceTokens";
+import notificationPreferencesRouter from "./modules/notificationPreferences/notificationPreference.route";
 
 export const app = express();
 
@@ -108,6 +109,7 @@ app.use("/api/v1/permission-overrides", PermissionOverrideRouter);
 app.use("/api/v1/role-permissions", rolePermissionRouter);
 app.use("/api/v1/notifications", notificationRouter);
 app.use("/api/v1/device-tokens", deviceTokenRouter);
+app.use("/api/v1/notification-preferences", notificationPreferencesRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   console.log(`Invalid route accessed: ${req.originalUrl}`);
