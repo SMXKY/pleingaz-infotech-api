@@ -161,5 +161,11 @@
   "error.validation.invalid_notification_id": "",
   "error.validation.invalid_platform": "",
   "error.validation.device_name_too_long": "",
-  "error.validation.token_required": ""
+  "error.validation.token_required": "",
+  "error.auth.user_id_missing": "",
+  "success.notification.notification_marked_as_read": "",
+  "success.notification.all_notifications_marked_as_read": "",
+  "error.notifications.not_found": "",
+  "error.notifications.cant_delete_unread_notification": "",
+  "error.req.invalid_request_params": ""
 }

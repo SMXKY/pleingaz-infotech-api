@@ -1,29 +1,20 @@
 import prisma from "@models/index.model";
 import { BaseRepository } from "src/base/BaseRepository";
-import { Department } from "src/generated/prisma";
+import { Notification } from "src/generated/prisma";
 
-export class DepartmentRepository extends BaseRepository<Department> {
-  protected modelName = "Department";
+export class NotificationRepository extends BaseRepository<Notification> {
+  protected modelName = "Notification";
   protected hasSystemField = true;
 
-  async findByName(name: string): Promise<Department | null> {
+  async findByName(name: string): Promise<Notification | null> {
     return this.model.findFirst({
       where: { name, deletedAt: null },
     });
   }
 
-  async findActiveDepartments(): Promise<Department[]> {
+  async findActiveNotifications(): Promise<Notification[]> {
     return this.model.findMany({
       where: { isActive: true, deletedAt: null },
     });
-  }
-
-  async findUsersInDepartment(id: string): Promise<number> {
-    const users = await prisma.user.findMany({
-      where: {
-        departmentId: id,
-      },
-    });
-    return users.length;
   }
 }

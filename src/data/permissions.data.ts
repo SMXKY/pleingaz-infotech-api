@@ -569,6 +569,8 @@ export const permissions: PermissionSeed[] = [
     action: PermissionAction.UPDATE,
     riskLevel: PermissionRiskLevel.HIGH,
   },
+
+  // Notifications
 ];
 
 console.log("Total Number of Permissions: ", permissions.length, " 🔥");
