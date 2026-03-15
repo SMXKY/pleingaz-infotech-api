@@ -1317,8 +1317,10 @@ model Notification {
   priority     NotificationPriority @default(NORMAL)
   recipientId  String               @map("recipient_id")
   recipient    User                 @relation(fields: [recipientId], references: [id])
-  title        String
-  body         String
+  titleFrench  String               @map("title_french")
+  bodyFrench   String               @map("body_french")
+  titleEnglish String               @map("title_english")
+  bodyEnglish  String               @map("body_english")
   data         Json?
   actionUrl    String?              @map("action_url")
   refTable     String?              @map("ref_table")

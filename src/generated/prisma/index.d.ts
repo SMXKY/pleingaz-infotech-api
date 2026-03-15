@@ -52729,8 +52729,10 @@ export namespace Prisma {
     type: $Enums.NotificationType | null
     priority: $Enums.NotificationPriority | null
     recipientId: string | null
-    title: string | null
-    body: string | null
+    titleFrench: string | null
+    bodyFrench: string | null
+    titleEnglish: string | null
+    bodyEnglish: string | null
     actionUrl: string | null
     refTable: string | null
     refId: string | null
@@ -52750,8 +52752,10 @@ export namespace Prisma {
     type: $Enums.NotificationType | null
     priority: $Enums.NotificationPriority | null
     recipientId: string | null
-    title: string | null
-    body: string | null
+    titleFrench: string | null
+    bodyFrench: string | null
+    titleEnglish: string | null
+    bodyEnglish: string | null
     actionUrl: string | null
     refTable: string | null
     refId: string | null
@@ -52771,8 +52775,10 @@ export namespace Prisma {
     type: number
     priority: number
     recipientId: number
-    title: number
-    body: number
+    titleFrench: number
+    bodyFrench: number
+    titleEnglish: number
+    bodyEnglish: number
     data: number
     actionUrl: number
     refTable: number
@@ -52803,8 +52809,10 @@ export namespace Prisma {
     type?: true
     priority?: true
     recipientId?: true
-    title?: true
-    body?: true
+    titleFrench?: true
+    bodyFrench?: true
+    titleEnglish?: true
+    bodyEnglish?: true
     actionUrl?: true
     refTable?: true
     refId?: true
@@ -52824,8 +52832,10 @@ export namespace Prisma {
     type?: true
     priority?: true
     recipientId?: true
-    title?: true
-    body?: true
+    titleFrench?: true
+    bodyFrench?: true
+    titleEnglish?: true
+    bodyEnglish?: true
     actionUrl?: true
     refTable?: true
     refId?: true
@@ -52845,8 +52855,10 @@ export namespace Prisma {
     type?: true
     priority?: true
     recipientId?: true
-    title?: true
-    body?: true
+    titleFrench?: true
+    bodyFrench?: true
+    titleEnglish?: true
+    bodyEnglish?: true
     data?: true
     actionUrl?: true
     refTable?: true
@@ -52954,8 +52966,10 @@ export namespace Prisma {
     type: $Enums.NotificationType
     priority: $Enums.NotificationPriority
     recipientId: string
-    title: string
-    body: string
+    titleFrench: string
+    bodyFrench: string
+    titleEnglish: string
+    bodyEnglish: string
     data: JsonValue | null
     actionUrl: string | null
     refTable: string | null
@@ -52995,8 +53009,10 @@ export namespace Prisma {
     type?: boolean
     priority?: boolean
     recipientId?: boolean
-    title?: boolean
-    body?: boolean
+    titleFrench?: boolean
+    bodyFrench?: boolean
+    titleEnglish?: boolean
+    bodyEnglish?: boolean
     data?: boolean
     actionUrl?: boolean
     refTable?: boolean
@@ -53018,8 +53034,10 @@ export namespace Prisma {
     type?: boolean
     priority?: boolean
     recipientId?: boolean
-    title?: boolean
-    body?: boolean
+    titleFrench?: boolean
+    bodyFrench?: boolean
+    titleEnglish?: boolean
+    bodyEnglish?: boolean
     data?: boolean
     actionUrl?: boolean
     refTable?: boolean
@@ -53041,8 +53059,10 @@ export namespace Prisma {
     type?: boolean
     priority?: boolean
     recipientId?: boolean
-    title?: boolean
-    body?: boolean
+    titleFrench?: boolean
+    bodyFrench?: boolean
+    titleEnglish?: boolean
+    bodyEnglish?: boolean
     data?: boolean
     actionUrl?: boolean
     refTable?: boolean
@@ -53064,8 +53084,10 @@ export namespace Prisma {
     type?: boolean
     priority?: boolean
     recipientId?: boolean
-    title?: boolean
-    body?: boolean
+    titleFrench?: boolean
+    bodyFrench?: boolean
+    titleEnglish?: boolean
+    bodyEnglish?: boolean
     data?: boolean
     actionUrl?: boolean
     refTable?: boolean
@@ -53081,7 +53103,7 @@ export namespace Prisma {
     expiresAt?: boolean
   }
 
-  export type NotificationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "priority" | "recipientId" | "title" | "body" | "data" | "actionUrl" | "refTable" | "refId" | "status" | "deliveredAt" | "readAt" | "deliveredVia" | "attempts" | "lastError" | "groupKey" | "createdAt" | "expiresAt", ExtArgs["result"]["notification"]>
+  export type NotificationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "priority" | "recipientId" | "titleFrench" | "bodyFrench" | "titleEnglish" | "bodyEnglish" | "data" | "actionUrl" | "refTable" | "refId" | "status" | "deliveredAt" | "readAt" | "deliveredVia" | "attempts" | "lastError" | "groupKey" | "createdAt" | "expiresAt", ExtArgs["result"]["notification"]>
   export type NotificationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     recipient?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -53102,8 +53124,10 @@ export namespace Prisma {
       type: $Enums.NotificationType
       priority: $Enums.NotificationPriority
       recipientId: string
-      title: string
-      body: string
+      titleFrench: string
+      bodyFrench: string
+      titleEnglish: string
+      bodyEnglish: string
       data: Prisma.JsonValue | null
       actionUrl: string | null
       refTable: string | null
@@ -53545,8 +53569,10 @@ export namespace Prisma {
     readonly type: FieldRef<"Notification", 'NotificationType'>
     readonly priority: FieldRef<"Notification", 'NotificationPriority'>
     readonly recipientId: FieldRef<"Notification", 'String'>
-    readonly title: FieldRef<"Notification", 'String'>
-    readonly body: FieldRef<"Notification", 'String'>
+    readonly titleFrench: FieldRef<"Notification", 'String'>
+    readonly bodyFrench: FieldRef<"Notification", 'String'>
+    readonly titleEnglish: FieldRef<"Notification", 'String'>
+    readonly bodyEnglish: FieldRef<"Notification", 'String'>
     readonly data: FieldRef<"Notification", 'Json'>
     readonly actionUrl: FieldRef<"Notification", 'String'>
     readonly refTable: FieldRef<"Notification", 'String'>
@@ -56954,8 +56980,10 @@ export namespace Prisma {
     type: 'type',
     priority: 'priority',
     recipientId: 'recipientId',
-    title: 'title',
-    body: 'body',
+    titleFrench: 'titleFrench',
+    bodyFrench: 'bodyFrench',
+    titleEnglish: 'titleEnglish',
+    bodyEnglish: 'bodyEnglish',
     data: 'data',
     actionUrl: 'actionUrl',
     refTable: 'refTable',
@@ -61654,8 +61682,10 @@ export namespace Prisma {
     type?: EnumNotificationTypeFilter<"Notification"> | $Enums.NotificationType
     priority?: EnumNotificationPriorityFilter<"Notification"> | $Enums.NotificationPriority
     recipientId?: StringFilter<"Notification"> | string
-    title?: StringFilter<"Notification"> | string
-    body?: StringFilter<"Notification"> | string
+    titleFrench?: StringFilter<"Notification"> | string
+    bodyFrench?: StringFilter<"Notification"> | string
+    titleEnglish?: StringFilter<"Notification"> | string
+    bodyEnglish?: StringFilter<"Notification"> | string
     data?: JsonNullableFilter<"Notification">
     actionUrl?: StringNullableFilter<"Notification"> | string | null
     refTable?: StringNullableFilter<"Notification"> | string | null
@@ -61677,8 +61707,10 @@ export namespace Prisma {
     type?: SortOrder
     priority?: SortOrder
     recipientId?: SortOrder
-    title?: SortOrder
-    body?: SortOrder
+    titleFrench?: SortOrder
+    bodyFrench?: SortOrder
+    titleEnglish?: SortOrder
+    bodyEnglish?: SortOrder
     data?: SortOrderInput | SortOrder
     actionUrl?: SortOrderInput | SortOrder
     refTable?: SortOrderInput | SortOrder
@@ -61703,8 +61735,10 @@ export namespace Prisma {
     type?: EnumNotificationTypeFilter<"Notification"> | $Enums.NotificationType
     priority?: EnumNotificationPriorityFilter<"Notification"> | $Enums.NotificationPriority
     recipientId?: StringFilter<"Notification"> | string
-    title?: StringFilter<"Notification"> | string
-    body?: StringFilter<"Notification"> | string
+    titleFrench?: StringFilter<"Notification"> | string
+    bodyFrench?: StringFilter<"Notification"> | string
+    titleEnglish?: StringFilter<"Notification"> | string
+    bodyEnglish?: StringFilter<"Notification"> | string
     data?: JsonNullableFilter<"Notification">
     actionUrl?: StringNullableFilter<"Notification"> | string | null
     refTable?: StringNullableFilter<"Notification"> | string | null
@@ -61726,8 +61760,10 @@ export namespace Prisma {
     type?: SortOrder
     priority?: SortOrder
     recipientId?: SortOrder
-    title?: SortOrder
-    body?: SortOrder
+    titleFrench?: SortOrder
+    bodyFrench?: SortOrder
+    titleEnglish?: SortOrder
+    bodyEnglish?: SortOrder
     data?: SortOrderInput | SortOrder
     actionUrl?: SortOrderInput | SortOrder
     refTable?: SortOrderInput | SortOrder
@@ -61756,8 +61792,10 @@ export namespace Prisma {
     type?: EnumNotificationTypeWithAggregatesFilter<"Notification"> | $Enums.NotificationType
     priority?: EnumNotificationPriorityWithAggregatesFilter<"Notification"> | $Enums.NotificationPriority
     recipientId?: StringWithAggregatesFilter<"Notification"> | string
-    title?: StringWithAggregatesFilter<"Notification"> | string
-    body?: StringWithAggregatesFilter<"Notification"> | string
+    titleFrench?: StringWithAggregatesFilter<"Notification"> | string
+    bodyFrench?: StringWithAggregatesFilter<"Notification"> | string
+    titleEnglish?: StringWithAggregatesFilter<"Notification"> | string
+    bodyEnglish?: StringWithAggregatesFilter<"Notification"> | string
     data?: JsonNullableWithAggregatesFilter<"Notification">
     actionUrl?: StringNullableWithAggregatesFilter<"Notification"> | string | null
     refTable?: StringNullableWithAggregatesFilter<"Notification"> | string | null
@@ -66423,8 +66461,10 @@ export namespace Prisma {
     id?: string
     type: $Enums.NotificationType
     priority?: $Enums.NotificationPriority
-    title: string
-    body: string
+    titleFrench: string
+    bodyFrench: string
+    titleEnglish: string
+    bodyEnglish: string
     data?: NullableJsonNullValueInput | InputJsonValue
     actionUrl?: string | null
     refTable?: string | null
@@ -66446,8 +66486,10 @@ export namespace Prisma {
     type: $Enums.NotificationType
     priority?: $Enums.NotificationPriority
     recipientId: string
-    title: string
-    body: string
+    titleFrench: string
+    bodyFrench: string
+    titleEnglish: string
+    bodyEnglish: string
     data?: NullableJsonNullValueInput | InputJsonValue
     actionUrl?: string | null
     refTable?: string | null
@@ -66467,8 +66509,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     priority?: EnumNotificationPriorityFieldUpdateOperationsInput | $Enums.NotificationPriority
-    title?: StringFieldUpdateOperationsInput | string
-    body?: StringFieldUpdateOperationsInput | string
+    titleFrench?: StringFieldUpdateOperationsInput | string
+    bodyFrench?: StringFieldUpdateOperationsInput | string
+    titleEnglish?: StringFieldUpdateOperationsInput | string
+    bodyEnglish?: StringFieldUpdateOperationsInput | string
     data?: NullableJsonNullValueInput | InputJsonValue
     actionUrl?: NullableStringFieldUpdateOperationsInput | string | null
     refTable?: NullableStringFieldUpdateOperationsInput | string | null
@@ -66490,8 +66534,10 @@ export namespace Prisma {
     type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     priority?: EnumNotificationPriorityFieldUpdateOperationsInput | $Enums.NotificationPriority
     recipientId?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    body?: StringFieldUpdateOperationsInput | string
+    titleFrench?: StringFieldUpdateOperationsInput | string
+    bodyFrench?: StringFieldUpdateOperationsInput | string
+    titleEnglish?: StringFieldUpdateOperationsInput | string
+    bodyEnglish?: StringFieldUpdateOperationsInput | string
     data?: NullableJsonNullValueInput | InputJsonValue
     actionUrl?: NullableStringFieldUpdateOperationsInput | string | null
     refTable?: NullableStringFieldUpdateOperationsInput | string | null
@@ -66512,8 +66558,10 @@ export namespace Prisma {
     type: $Enums.NotificationType
     priority?: $Enums.NotificationPriority
     recipientId: string
-    title: string
-    body: string
+    titleFrench: string
+    bodyFrench: string
+    titleEnglish: string
+    bodyEnglish: string
     data?: NullableJsonNullValueInput | InputJsonValue
     actionUrl?: string | null
     refTable?: string | null
@@ -66533,8 +66581,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     priority?: EnumNotificationPriorityFieldUpdateOperationsInput | $Enums.NotificationPriority
-    title?: StringFieldUpdateOperationsInput | string
-    body?: StringFieldUpdateOperationsInput | string
+    titleFrench?: StringFieldUpdateOperationsInput | string
+    bodyFrench?: StringFieldUpdateOperationsInput | string
+    titleEnglish?: StringFieldUpdateOperationsInput | string
+    bodyEnglish?: StringFieldUpdateOperationsInput | string
     data?: NullableJsonNullValueInput | InputJsonValue
     actionUrl?: NullableStringFieldUpdateOperationsInput | string | null
     refTable?: NullableStringFieldUpdateOperationsInput | string | null
@@ -66555,8 +66605,10 @@ export namespace Prisma {
     type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     priority?: EnumNotificationPriorityFieldUpdateOperationsInput | $Enums.NotificationPriority
     recipientId?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    body?: StringFieldUpdateOperationsInput | string
+    titleFrench?: StringFieldUpdateOperationsInput | string
+    bodyFrench?: StringFieldUpdateOperationsInput | string
+    titleEnglish?: StringFieldUpdateOperationsInput | string
+    bodyEnglish?: StringFieldUpdateOperationsInput | string
     data?: NullableJsonNullValueInput | InputJsonValue
     actionUrl?: NullableStringFieldUpdateOperationsInput | string | null
     refTable?: NullableStringFieldUpdateOperationsInput | string | null
@@ -70318,8 +70370,10 @@ export namespace Prisma {
     type?: SortOrder
     priority?: SortOrder
     recipientId?: SortOrder
-    title?: SortOrder
-    body?: SortOrder
+    titleFrench?: SortOrder
+    bodyFrench?: SortOrder
+    titleEnglish?: SortOrder
+    bodyEnglish?: SortOrder
     data?: SortOrder
     actionUrl?: SortOrder
     refTable?: SortOrder
@@ -70344,8 +70398,10 @@ export namespace Prisma {
     type?: SortOrder
     priority?: SortOrder
     recipientId?: SortOrder
-    title?: SortOrder
-    body?: SortOrder
+    titleFrench?: SortOrder
+    bodyFrench?: SortOrder
+    titleEnglish?: SortOrder
+    bodyEnglish?: SortOrder
     actionUrl?: SortOrder
     refTable?: SortOrder
     refId?: SortOrder
@@ -70365,8 +70421,10 @@ export namespace Prisma {
     type?: SortOrder
     priority?: SortOrder
     recipientId?: SortOrder
-    title?: SortOrder
-    body?: SortOrder
+    titleFrench?: SortOrder
+    bodyFrench?: SortOrder
+    titleEnglish?: SortOrder
+    bodyEnglish?: SortOrder
     actionUrl?: SortOrder
     refTable?: SortOrder
     refId?: SortOrder
@@ -78094,8 +78152,10 @@ export namespace Prisma {
     id?: string
     type: $Enums.NotificationType
     priority?: $Enums.NotificationPriority
-    title: string
-    body: string
+    titleFrench: string
+    bodyFrench: string
+    titleEnglish: string
+    bodyEnglish: string
     data?: NullableJsonNullValueInput | InputJsonValue
     actionUrl?: string | null
     refTable?: string | null
@@ -78115,8 +78175,10 @@ export namespace Prisma {
     id?: string
     type: $Enums.NotificationType
     priority?: $Enums.NotificationPriority
-    title: string
-    body: string
+    titleFrench: string
+    bodyFrench: string
+    titleEnglish: string
+    bodyEnglish: string
     data?: NullableJsonNullValueInput | InputJsonValue
     actionUrl?: string | null
     refTable?: string | null
@@ -78865,8 +78927,10 @@ export namespace Prisma {
     type?: EnumNotificationTypeFilter<"Notification"> | $Enums.NotificationType
     priority?: EnumNotificationPriorityFilter<"Notification"> | $Enums.NotificationPriority
     recipientId?: StringFilter<"Notification"> | string
-    title?: StringFilter<"Notification"> | string
-    body?: StringFilter<"Notification"> | string
+    titleFrench?: StringFilter<"Notification"> | string
+    bodyFrench?: StringFilter<"Notification"> | string
+    titleEnglish?: StringFilter<"Notification"> | string
+    bodyEnglish?: StringFilter<"Notification"> | string
     data?: JsonNullableFilter<"Notification">
     actionUrl?: StringNullableFilter<"Notification"> | string | null
     refTable?: StringNullableFilter<"Notification"> | string | null
@@ -88554,8 +88618,10 @@ export namespace Prisma {
     id?: string
     type: $Enums.NotificationType
     priority?: $Enums.NotificationPriority
-    title: string
-    body: string
+    titleFrench: string
+    bodyFrench: string
+    titleEnglish: string
+    bodyEnglish: string
     data?: NullableJsonNullValueInput | InputJsonValue
     actionUrl?: string | null
     refTable?: string | null
@@ -89486,8 +89552,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     priority?: EnumNotificationPriorityFieldUpdateOperationsInput | $Enums.NotificationPriority
-    title?: StringFieldUpdateOperationsInput | string
-    body?: StringFieldUpdateOperationsInput | string
+    titleFrench?: StringFieldUpdateOperationsInput | string
+    bodyFrench?: StringFieldUpdateOperationsInput | string
+    titleEnglish?: StringFieldUpdateOperationsInput | string
+    bodyEnglish?: StringFieldUpdateOperationsInput | string
     data?: NullableJsonNullValueInput | InputJsonValue
     actionUrl?: NullableStringFieldUpdateOperationsInput | string | null
     refTable?: NullableStringFieldUpdateOperationsInput | string | null
@@ -89507,8 +89575,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     priority?: EnumNotificationPriorityFieldUpdateOperationsInput | $Enums.NotificationPriority
-    title?: StringFieldUpdateOperationsInput | string
-    body?: StringFieldUpdateOperationsInput | string
+    titleFrench?: StringFieldUpdateOperationsInput | string
+    bodyFrench?: StringFieldUpdateOperationsInput | string
+    titleEnglish?: StringFieldUpdateOperationsInput | string
+    bodyEnglish?: StringFieldUpdateOperationsInput | string
     data?: NullableJsonNullValueInput | InputJsonValue
     actionUrl?: NullableStringFieldUpdateOperationsInput | string | null
     refTable?: NullableStringFieldUpdateOperationsInput | string | null
@@ -89528,8 +89598,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     priority?: EnumNotificationPriorityFieldUpdateOperationsInput | $Enums.NotificationPriority
-    title?: StringFieldUpdateOperationsInput | string
-    body?: StringFieldUpdateOperationsInput | string
+    titleFrench?: StringFieldUpdateOperationsInput | string
+    bodyFrench?: StringFieldUpdateOperationsInput | string
+    titleEnglish?: StringFieldUpdateOperationsInput | string
+    bodyEnglish?: StringFieldUpdateOperationsInput | string
     data?: NullableJsonNullValueInput | InputJsonValue
     actionUrl?: NullableStringFieldUpdateOperationsInput | string | null
     refTable?: NullableStringFieldUpdateOperationsInput | string | null

@@ -78,6 +78,10 @@ if (!process.env.FIREBASE_CLIENT_EMAIL) {
   throw new Error("FIREBASE_CLIENT_EMAIL enviroment variable not set");
 }
 
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL enviroment variable not set");
+}
+
 export const baseUrl = process.env.BASE_URL;
 export const frontEndUrl = process.env.FRONTEND_URL;
 export const ACCOUNT_LOGIN_WAIT_TIME_HOURS =
@@ -101,3 +105,4 @@ export const MAX_BATCH_SIZE = Number(process.env.MAX_BATCH_SIZE);
 export const FIREBASE_PROJECT_ID = process.env.FIREBASE_PROJECT_ID;
 export const FIREBASE_PRIVATE_KEY = process.env.FIREBASE_PRIVATE_KEY;
 export const FIREBASE_CLIENT_EMAIL = process.env.FIREBASE_CLIENT_EMAIL;
+export const DATABASE_URL = process.env.DATABASE_URL;

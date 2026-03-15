@@ -3,6 +3,8 @@ import { createServer } from "http";
 import { initializeSocketIO } from "./socket/socket";
 dotEnv.config();
 
+import { initJobQueue, registerNotificationJobs, stopJobQueue } from "./jobs";
+
 import { PrismaClient } from "./generated/prisma/client";
 
 import { app } from "./app";
@@ -55,6 +57,18 @@ httpServer.listen(port, () => {
   console.log(
     `Socket.IO listening on ${process.env.SOCKET_IO_PATH || "/socket.io"}`
   );
+});
+
+initJobQueue().then(async (data) => {
+  await registerNotificationJobs(data);
+
+  const shutdown = async () => {
+    await stopJobQueue();
+    process.exit(0);
+  };
+
+  process.on("SIGTERM", shutdown);
+  process.on("SIGINT", shutdown);
 });
 
 process.on("unhandledRejection", (err) => {
