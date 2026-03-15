@@ -21,6 +21,7 @@ import { deviceTokenRouter } from "./modules/deviceTokens";
 import notificationPreferencesRouter from "./modules/notificationPreferences/notificationPreference.route";
 import financeSettingsRouter from "./modules/financeSettings/financeSettings.route";
 import exchangeRateRouter from "./modules/exchangeRates/exchangeRates.route";
+import { supplierRouter } from "./modules/suppliers";
 
 export const app = express();
 
@@ -114,6 +115,7 @@ app.use("/api/v1/device-tokens", deviceTokenRouter);
 app.use("/api/v1/notification-preferences", notificationPreferencesRouter);
 app.use("/api/v1/finance-settings", financeSettingsRouter);
 app.use("/api/v1/exchange-rates", exchangeRateRouter);
+app.use("/api/v1/suppliers", supplierRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   console.log(`Invalid route accessed: ${req.originalUrl}`);

@@ -66,6 +66,13 @@ export const allPermissions = {
     readFinanceSettings: "finance.can_read_finance_settings",
     updateFinanceSettings: "finance.can_update_finance_settings",
   },
+  suppliers: {
+    createSupplier: "suppliers.can_create_supplier",
+    readSupplier: "suppliers.can_read_supplier",
+    readAllSuppliers: "suppliers.can_read_suppliers",
+    updateSupplier: "suppliers.can_update_supplier",
+    deleteSupplier: "suppliers.can_delete_supplier",
+  },
 } as const;
 
 export default allPermissions;

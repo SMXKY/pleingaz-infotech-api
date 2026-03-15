@@ -589,6 +589,53 @@ export const permissions: PermissionSeed[] = [
     action: PermissionAction.UPDATE,
     riskLevel: PermissionRiskLevel.HIGH,
   },
+
+  //suppliers
+  {
+    code: "suppliers.can_read_suppliers",
+    engName: "Read Suppliers",
+    frName: "Lire les fournisseurs",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.SUPPLIERS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.LOW,
+  },
+  {
+    code: "suppliers.can_read_supplier",
+    engName: "Read Supplier",
+    frName: "Lire le fournisseur",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.SUPPLIERS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.LOW,
+  },
+  {
+    code: "suppliers.can_create_supplier",
+    engName: "Create Supplier",
+    frName: "Créer un fournisseur",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.SUPPLIERS,
+    action: PermissionAction.CREATE,
+    riskLevel: PermissionRiskLevel.MEDIUM,
+  },
+  {
+    code: "suppliers.can_update_supplier",
+    engName: "Update Supplier",
+    frName: "Modifier un fournisseur",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.SUPPLIERS,
+    action: PermissionAction.UPDATE,
+    riskLevel: PermissionRiskLevel.MEDIUM,
+  },
+  {
+    code: "suppliers.can_delete_supplier",
+    engName: "Delete Supplier",
+    frName: "Supprimer un fournisseur",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.SUPPLIERS,
+    action: PermissionAction.DELETE,
+    riskLevel: PermissionRiskLevel.HIGH,
+  },
 ];
 
 console.log("Total Number of Permissions: ", permissions.length, " 🔥");
