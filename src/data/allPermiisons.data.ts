@@ -62,6 +62,10 @@ export const allPermissions = {
     readAllPermissionOverrides:
       "human_resources.can_read_all_permission_overrides",
   },
+  financeSettings: {
+    readFinanceSettings: "finance.can_read_finance_settings",
+    updateFinanceSettings: "finance.can_update_finance_settings",
+  },
 } as const;
 
 export default allPermissions;

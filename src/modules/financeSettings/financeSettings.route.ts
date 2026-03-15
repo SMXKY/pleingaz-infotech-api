@@ -1,29 +1,29 @@
 import { Router } from "express";
-import { AdminConfigController } from "./financeSettings.controller";
+import { FinanceSettingsController } from "./financeSettings.controller";
 import getUserLanguage from "@middlewares/getUserLanguage.middleware";
 import protect from "@middlewares/protect.middleware";
 import restrictTo from "@middlewares/restrictTo.middleware";
 import { allPermissions } from "src/data/allPermiisons.data";
 
-const adminConfigRouter = Router();
-const controller = new AdminConfigController();
+const financeSettingsRouter = Router();
+const controller = new FinanceSettingsController();
 
-adminConfigRouter.use(protect, getUserLanguage);
+financeSettingsRouter.use(protect, getUserLanguage);
 
-adminConfigRouter.get(
+financeSettingsRouter.get(
   "/",
-  restrictTo(allPermissions.adminConfigs.readAdminConfig),
+  restrictTo(allPermissions.financeSettings.readFinanceSettings),
   controller.findMany
 );
-adminConfigRouter.get(
+financeSettingsRouter.get(
   "/:id",
-  restrictTo(allPermissions.adminConfigs.readAdminConfig),
+  restrictTo(allPermissions.financeSettings.readFinanceSettings),
   controller.findById
 );
-adminConfigRouter.patch(
+financeSettingsRouter.patch(
   "/:id",
-  restrictTo(allPermissions.adminConfigs.updateAdminConfig),
+  restrictTo(allPermissions.financeSettings.updateFinanceSettings),
   controller.update
 );
 
-export default adminConfigRouter;
+export default financeSettingsRouter;

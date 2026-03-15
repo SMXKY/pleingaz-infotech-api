@@ -3,21 +3,20 @@ import {
   FindManyOptions,
   PaginatedResult,
 } from "@appTypes/base.types";
-import prisma from "@models/index.model";
 import { BaseRepository } from "src/base/BaseRepository";
-import { AdminConfig } from "src/generated/prisma";
+import { FinanceSettings } from "src/generated/prisma";
 
-export class AdminConfigRepository extends BaseRepository<AdminConfig> {
-  protected modelName = "AdminConfig";
+export class FinanceSettingsRepository extends BaseRepository<FinanceSettings> {
+  protected modelName = "FinanceSettings";
   protected hasSystemField = true;
 
-  async findByCode(code: string): Promise<AdminConfig | null> {
+  async findByCode(code: string): Promise<FinanceSettings | null> {
     return this.model.findFirst({
       where: { code, deletedAt: null },
     });
   }
 
-  async findWildCardAdminConfigs(): Promise<AdminConfig[]> {
+  async findWildCardFinanceSettingss(): Promise<FinanceSettings[]> {
     return this.model.findMany({
       where: { isWildcard: true, deletedAt: null },
     });
@@ -43,7 +42,7 @@ export class AdminConfigRepository extends BaseRepository<AdminConfig> {
 
   async findDeleted(
     options: FindManyOptions = {}
-  ): Promise<PaginatedResult<AdminConfig>> {
+  ): Promise<PaginatedResult<FinanceSettings>> {
     return super.findDeleted({
       ...options,
       pagination: {

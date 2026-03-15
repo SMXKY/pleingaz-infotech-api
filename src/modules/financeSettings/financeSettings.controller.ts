@@ -1,16 +1,16 @@
 import { Request, Response, NextFunction } from "express";
 import { BaseController } from "src/base/BaseController";
-import { AdminConfigService } from "./financeSettings.service";
+import { FinanceSettingsService } from "./financeSettings.service";
 import { appResponder } from "@utils/appResponder.util";
 import { StatusCodes } from "http-status-codes";
-import { AdminConfig } from "src/generated/prisma";
+import { FinanceSettings } from "src/generated/prisma";
 
-export class AdminConfigController extends BaseController<AdminConfig> {
-  protected service: AdminConfigService;
+export class FinanceSettingsController extends BaseController<FinanceSettings> {
+  protected service: FinanceSettingsService;
 
   constructor() {
     super();
-    this.service = new AdminConfigService();
+    this.service = new FinanceSettingsService();
   }
 
   findWildCards = async (
@@ -20,8 +20,10 @@ export class AdminConfigController extends BaseController<AdminConfig> {
   ): Promise<void> => {
     try {
       const ctx = this.getContext(req, res);
-      const AdminConfigs = await this.service.findWildCardAdminConfigs(ctx);
-      appResponder(StatusCodes.OK, AdminConfigs, res);
+      const FinanceSettings = await this.service.findWildCardFinanceSettingss(
+        ctx
+      );
+      appResponder(StatusCodes.OK, FinanceSettings, res);
     } catch (error) {
       next(error);
     }

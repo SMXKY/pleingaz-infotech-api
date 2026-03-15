@@ -570,7 +570,25 @@ export const permissions: PermissionSeed[] = [
     riskLevel: PermissionRiskLevel.HIGH,
   },
 
-  // Notifications
+  // Finance Settings
+  {
+    code: "finance.can_read_finance_settings",
+    engName: "Read Finance Settings",
+    frName: "Lire les paramètres financiers",
+    module: PermissionModule.ADMIN,
+    submodule: PermissionSubmodule.FINANCIAL_REPORTS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.LOW,
+  },
+  {
+    code: "finance.can_update_finance_settings",
+    engName: "Update Finance Settings",
+    frName: "Mettre à jour les paramètres financiers",
+    module: PermissionModule.ADMIN,
+    submodule: PermissionSubmodule.FINANCIAL_REPORTS,
+    action: PermissionAction.UPDATE,
+    riskLevel: PermissionRiskLevel.HIGH,
+  },
 ];
 
 console.log("Total Number of Permissions: ", permissions.length, " 🔥");
