@@ -167,5 +167,6 @@
   "success.notification.all_notifications_marked_as_read": "",
   "error.notifications.not_found": "",
   "error.notifications.cant_delete_unread_notification": "",
-  "error.req.invalid_request_params": ""
+  "error.req.invalid_request_params": "",
+  "error.currency.amount_to_convert_less_than_zero": ""
 }
