@@ -26,6 +26,6 @@ export class ExchangeRateController extends BaseController<ExchangeRate> {
     const ctx = this.getContext(req, res);
     const result = await this.service.convertCurrency(validation.data, ctx);
 
-    appResponder(StatusCodes.CREATED, result, res);
+    appResponder(StatusCodes.OK, result, res);
   });
 }
