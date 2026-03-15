@@ -35,6 +35,8 @@ const scheduledJobs: ScheduledJob[] = [
 
 export async function registerNotificationJobs(boss: PgBoss): Promise<void> {
   for (const job of scheduledJobs) {
+    await boss.createQueue(job.name);
+
     await boss.work(job.name, async () => {
       const startTime = Date.now();
       console.info(`[job] Starting: ${job.name}`);
@@ -49,6 +51,7 @@ export async function registerNotificationJobs(boss: PgBoss): Promise<void> {
         throw error;
       }
     });
+
     await boss.schedule(job.name, job.cron, {}, job.options);
 
     console.info(`[job] Scheduled: ${job.name} (${job.cron})`);

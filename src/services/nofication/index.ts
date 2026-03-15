@@ -28,8 +28,10 @@ export interface CreateNotificationInput {
   type: NotificationType;
   priority?: NotificationPriority;
   target: NotificationTarget;
-  title: string;
-  body: string;
+  titleFrench: string;
+  bodyFrench: string;
+  titleEnglish: string;
+  bodyEnglish: string;
   data?: Record<string, unknown>;
   actionUrl?: string;
   refTable?: string;
@@ -58,8 +60,10 @@ export interface NotificationPayload {
   id: string;
   type: NotificationType;
   priority: NotificationPriority;
-  title: string;
-  body: string;
+  titleFrench: string;
+  bodyFrench: string;
+  titleEnglish: string;
+  bodyEnglish: string;
   data?: Record<string, unknown> | null;
   actionUrl?: string | null;
   refTable?: string | null;
@@ -234,8 +238,10 @@ export function formatNotificationPayload(
     id: notification.id,
     type: notification.type,
     priority: notification.priority,
-    title: notification.title,
-    body: notification.body,
+    titleFrench: notification.titleFrench,
+    bodyFrench: notification.bodyFrench,
+    titleEnglish: notification.titleEnglish,
+    bodyEnglish: notification.bodyEnglish,
     data: notification.data as Record<string, unknown> | null,
     actionUrl: notification.actionUrl,
     refTable: notification.refTable,
@@ -270,8 +276,10 @@ async function send(input: CreateNotificationInput): Promise<Notification[]> {
           type: input.type,
           priority: input.priority ?? NotificationPriority.NORMAL,
           recipientId,
-          title: input.title,
-          body: input.body,
+          titleEnglish: input.titleEnglish,
+          titleFrench: input.titleFrench,
+          bodyEnglish: input.bodyEnglish,
+          bodyFrench: input.bodyFrench,
           data: input.data
             ? (input.data as Prisma.InputJsonValue)
             : Prisma.JsonNull,

@@ -1,6 +1,6 @@
 export const NOTIFICATION_JOBS = {
   ESCALATE_URGENT: {
-    name: "notification:escalate-urgent",
+    name: "notification_escalate_urgent",
     cron: "*/5 * * * *",
     options: {
       retryLimit: 2,
@@ -10,7 +10,7 @@ export const NOTIFICATION_JOBS = {
   },
 
   EXPIRE_OLD: {
-    name: "notification:expire-old",
+    name: "notification_expire_old",
     cron: "0 2 * * *",
     options: {
       retryLimit: 2,
@@ -20,7 +20,7 @@ export const NOTIFICATION_JOBS = {
   },
 
   CLEANUP_READ: {
-    name: "notification:cleanup-read",
+    name: "notification_cleanup_read",
     cron: "0 3 * * 0",
     options: {
       retryLimit: 2,
@@ -30,7 +30,7 @@ export const NOTIFICATION_JOBS = {
   },
 
   CLEANUP_STALE_TOKENS: {
-    name: "notification:cleanup-stale-tokens",
+    name: "notification_cleanup_stale_tokens",
     cron: "0 4 * * 0",
     options: {
       retryLimit: 2,

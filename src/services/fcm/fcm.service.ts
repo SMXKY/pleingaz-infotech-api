@@ -10,6 +10,8 @@ import {
   FIREBASE_CLIENT_EMAIL,
   FIREBASE_PRIVATE_KEY,
 } from "@utils/enviromentVariablesCheck.util";
+import { AppError } from "@utils/AppError.util";
+import { StatusCodes } from "http-status-codes";
 
 export interface FCMSendResult {
   success: boolean;
@@ -20,8 +22,10 @@ export interface FCMSendResult {
 }
 
 export interface FCMNotificationPayload {
-  title: string;
-  body: string;
+  titleFrench: string;
+  bodyFrench: string;
+  titleEnglish: string;
+  bodyEnglish: string;
 }
 
 export interface FCMDataPayload {
@@ -198,8 +202,10 @@ export function buildMessagePayload(
 
   return {
     notification: {
-      title: notification.title,
-      body: notification.body,
+      titleFrench: notification.titleFrench,
+      bodyFrench: notification.bodyFrench,
+      titleEnglish: notification.titleEnglish,
+      bodyEnglish: notification.bodyEnglish,
     },
     data: {
       notificationId: notification.id,
@@ -237,15 +243,17 @@ export function buildMessagePayload(
 }
 
 export function buildSimpleMessage(
-  title: string,
-  body: string,
+  titleFrench: string,
+  bodyFrench: string,
+  titleEnglish: string,
+  bodyEnglish: string,
   data?: Record<string, string>
 ): {
   notification: FCMNotificationPayload;
   data?: Record<string, string>;
 } {
   return {
-    notification: { title, body },
+    notification: { titleEnglish, titleFrench, bodyEnglish, bodyFrench },
     ...(data && { data }),
   };
 }
@@ -289,11 +297,37 @@ export async function sendPush(
   }
 
   const payload = buildMessagePayload(notification, unreadCount);
+  const user = await prisma.user.findUnique({
+    where: {
+      id: notification.recipientId,
+    },
+    include: {
+      preference: {
+        select: {
+          language: true,
+        },
+      },
+    },
+  });
+
+  if (!user) {
+    throw new AppError(
+      "error.auth.user_id_missing",
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+
+  const isFrench = user.preference?.language === "FR";
+
+  const cleanNotification = {
+    title: isFrench ? notification.titleFrench : notification.titleEnglish,
+    body: isFrench ? notification.bodyFrench : notification.bodyEnglish,
+  };
 
   try {
     const message: admin.messaging.MulticastMessage = {
       tokens: deviceTokens,
-      notification: payload.notification,
+      notification: cleanNotification,
       android: payload.android,
       apns: payload.apns,
       data: sanitizeFCMData(payload.data),

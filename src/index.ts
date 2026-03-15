@@ -44,6 +44,14 @@ prisma
   })
   .catch((err) => {
     console.log("Error running Cron Jobs: ", err);
+  })
+  .then(async () => {
+    const boss = await initJobQueue();
+    await registerNotificationJobs(boss);
+    console.log("Background jobs initialized. ✅✅");
+  })
+  .catch((err) => {
+    console.log("Error initializing job queue: ", err);
   });
 
 const port: number = Number(process.env.PORT) || 3000;
@@ -59,17 +67,16 @@ httpServer.listen(port, () => {
   );
 });
 
-initJobQueue().then(async (data) => {
-  await registerNotificationJobs(data);
+const shutdown = async () => {
+  console.log("Shutting down gracefully...");
+  await stopJobQueue();
+  httpServer.close();
+  await prisma.$disconnect();
+  process.exit(0);
+};
 
-  const shutdown = async () => {
-    await stopJobQueue();
-    process.exit(0);
-  };
-
-  process.on("SIGTERM", shutdown);
-  process.on("SIGINT", shutdown);
-});
+process.on("SIGTERM", shutdown);
+process.on("SIGINT", shutdown);
 
 process.on("unhandledRejection", (err) => {
   console.log("Unhandled Rejection Error...❌❌");
