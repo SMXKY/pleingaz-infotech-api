@@ -226,5 +226,18 @@
   "error.supplier.terms_lead_time_invalid": "",
   "error.supplier.terms_notes_too_long": "",
   "error.supplier.update_requires_at_least_one_field": "",
-  "error.validation.invalid_supplier_id": ""
+  "error.validation.invalid_supplier_id": "",
+  "error.validation.invalid_supplier_id_or_contact_id": "",
+  "error.supplier_contact.supplier_not_found": "",
+  "error.supplier_contact.not_found": "",
+  "error.supplier_contact.name_too_short": "",
+  "error.supplier_contact.name_too_long": "",
+  "error.supplier_contact.title_too_long": "",
+  "error.supplier_contact.department_too_long": "",
+  "error.supplier_contact.email_invalid": "",
+  "error.supplier_contact.phone_too_short": "",
+  "error.supplier_contact.phone_too_long": "",
+  "error.supplier_contact.requires_email_or_phone": "",
+  "error.supplier_contact.update_requires_at_least_one_field": "",
+  "error.supplier_contact.cannot_delete_last_contact": ""
 }
