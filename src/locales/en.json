@@ -254,5 +254,7 @@
   "error.supplier_address.longitude_out_of_range": "",
   "error.supplier_address.latitude_out_of_range": "",
   "error.supplier_address.update_requires_at_least_one_field": "",
-  "error.supplier_address.cannot_delete_last_address": ""
+  "error.supplier_address.cannot_delete_last_address": "",
+
+  "error.validation.invalid_supplier_id_or_method_id": ""
 }
