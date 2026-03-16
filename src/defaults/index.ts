@@ -1,4 +1,3 @@
-import { syncExchangeRates } from "@cron-jobs/updateExchangeRates.cron-job";
 import { seedAdminConfig } from "./adminConfig.seed";
 import seedDepartments from "./departments.seed";
 import { seedFinanceSettings } from "./financeSettings.seed";
@@ -7,6 +6,8 @@ import seedPermissions from "./permissions.seed";
 import seedRoles from "./roles.seed";
 import seedSuperAdmin from "./superAdminAccount.seed";
 import seedSuperAdminRolePermissions from "./superAdminPermissions.seed";
+import seedDepots from "./depots.seed";
+import { seedExchangeRates } from "./exchangeRates.seed";
 
 export const seedDefaultRecords = async () => {
   await seedRoles();
@@ -17,5 +18,6 @@ export const seedDefaultRecords = async () => {
   await seedSuperAdminRolePermissions();
   await seedAdminConfig();
   await seedFinanceSettings();
-  await syncExchangeRates();
+  await seedExchangeRates();
+  await seedDepots();
 };

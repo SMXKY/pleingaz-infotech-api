@@ -28,7 +28,7 @@ export abstract class BaseRepository<T> {
     include?: Record<string, boolean | object>
   ): Promise<T | null> {
     return this.model.findUnique({
-      where: { id },
+      where: { id, deletedAt: null },
       include,
     });
   }
