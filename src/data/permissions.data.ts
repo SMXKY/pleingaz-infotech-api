@@ -636,6 +636,53 @@ export const permissions: PermissionSeed[] = [
     action: PermissionAction.DELETE,
     riskLevel: PermissionRiskLevel.HIGH,
   },
+
+  //exploitation_deport:
+  {
+    code: "exploitation_depots.can_read_depots",
+    engName: "Read Depots",
+    frName: "Lire les dépôts",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.DEPOTS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.LOW,
+  },
+  {
+    code: "exploitation_depots.can_read_depot",
+    engName: "Read Depot",
+    frName: "Lire le dépôt",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.DEPOTS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.LOW,
+  },
+  {
+    code: "exploitation_depots.can_create_depot",
+    engName: "Create Depot",
+    frName: "Créer un dépôt",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.DEPOTS,
+    action: PermissionAction.CREATE,
+    riskLevel: PermissionRiskLevel.MEDIUM,
+  },
+  {
+    code: "exploitation_depots.can_update_depot",
+    engName: "Update Depot",
+    frName: "Modifier un dépôt",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.DEPOTS,
+    action: PermissionAction.UPDATE,
+    riskLevel: PermissionRiskLevel.MEDIUM,
+  },
+  {
+    code: "exploitation_depots.can_delete_depot",
+    engName: "Delete Depot",
+    frName: "Supprimer un dépôt",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.DEPOTS,
+    action: PermissionAction.DELETE,
+    riskLevel: PermissionRiskLevel.HIGH,
+  },
 ];
 
 console.log("Total Number of Permissions: ", permissions.length, " 🔥");

@@ -73,6 +73,13 @@ export const allPermissions = {
     updateSupplier: "suppliers.can_update_supplier",
     deleteSupplier: "suppliers.can_delete_supplier",
   },
+  exploitationDepots: {
+    createDepot: "exploitation_depots.can_create_depot",
+    readDepot: "exploitation_depots.can_read_depot",
+    readAllDepots: "exploitation_depots.can_read_depots",
+    updateDepot: "exploitation_depots.can_update_depot",
+    deleteDepot: "exploitation_depots.can_delete_depot",
+  },
 } as const;
 
 export default allPermissions;
