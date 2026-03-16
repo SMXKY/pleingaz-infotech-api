@@ -10,7 +10,7 @@ import { AppError } from "@utils/AppError.util";
 import { StatusCodes } from "http-status-codes";
 import { ServiceContext } from "@appTypes/base.types";
 import { SupplierPaymentMethod } from "src/generated/prisma";
-import { prisma } from "src";
+import prisma from "@models/index.model";
 import { LogCategory, LogOperation } from "@appTypes/log.type";
 
 export class SupplierPaymentMethodService extends BaseService<

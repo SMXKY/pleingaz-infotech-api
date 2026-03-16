@@ -24,6 +24,8 @@ import exchangeRateRouter from "./modules/exchangeRates/exchangeRates.route";
 import { supplierRouter } from "./modules/suppliers";
 import { supplierContactRouter } from "./modules/supplierContacts";
 import { supplierAddressRouter } from "./modules/supplierAddresses";
+import { supplierPaymentMethodRouter } from "./modules/supplierPaymentMethods";
+import supplierCommercialTermsRouter from "./modules/supplierCormercialTerms/supplierCormercialTerms.route";
 
 export const app = express();
 
@@ -120,6 +122,8 @@ app.use("/api/v1/exchange-rates", exchangeRateRouter);
 app.use("/api/v1/suppliers", supplierRouter);
 app.use("/api/v1/supplier-contacts", supplierContactRouter);
 app.use("/api/v1/supplier-addresses", supplierAddressRouter);
+app.use("/api/v1/supplier-payment-methods", supplierPaymentMethodRouter);
+app.use("/api/v1/supplier-commercial-terms", supplierCommercialTermsRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   console.log(`Invalid route accessed: ${req.originalUrl}`);
