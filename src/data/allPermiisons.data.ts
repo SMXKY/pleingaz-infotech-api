@@ -80,6 +80,35 @@ export const allPermissions = {
     updateDepot: "exploitation_depots.can_update_depot",
     deleteDepot: "exploitation_depots.can_delete_depot",
   },
+  exploitationDrivers: {
+    createDriver: "exploitation_drivers.can_create_driver",
+    readDriver: "exploitation_drivers.can_read_driver",
+    readAllDrivers: "exploitation_drivers.can_read_drivers",
+    updateDriver: "exploitation_drivers.can_update_driver",
+    deleteDriver: "exploitation_drivers.can_delete_driver",
+  },
+  exploitationTankers: {
+    createTanker: "exploitation_tankers.can_create_tanker",
+    readTanker: "exploitation_tankers.can_read_tanker",
+    readAllTankers: "exploitation_tankers.can_read_tankers",
+    updateTanker: "exploitation_tankers.can_update_tanker",
+    deleteTanker: "exploitation_tankers.can_delete_tanker",
+  },
+  gasBottleTypes: {
+    readBottleType: "exploitation_bottle_types.can_read_bottle_type",
+    readAllBottleTypes: "exploitation_bottle_types.can_read_bottle_types",
+    updateBottleType: "exploitation_bottle_types.can_update_bottle_type",
+  },
+  accessoryCategories: {
+    readAllAccessoryCategories: "exploitation_accessory_categories.can_read_accessory_categories",
+  },
+  accessoryItems: {
+    createAccessoryItem: "exploitation_accessory_items.can_create_accessory_item",
+    readAccessoryItem: "exploitation_accessory_items.can_read_accessory_item",
+    readAllAccessoryItems: "exploitation_accessory_items.can_read_accessory_items",
+    updateAccessoryItem: "exploitation_accessory_items.can_update_accessory_item",
+    deleteAccessoryItem: "exploitation_accessory_items.can_delete_accessory_item",
+  },
 } as const;
 
 export default allPermissions;

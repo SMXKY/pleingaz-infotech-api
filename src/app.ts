@@ -27,6 +27,11 @@ import { supplierAddressRouter } from "./modules/supplierAddresses";
 import { supplierPaymentMethodRouter } from "./modules/supplierPaymentMethods";
 import supplierCommercialTermsRouter from "./modules/supplierCormercialTerms/supplierCormercialTerms.route";
 import { exploitationDepotRouter } from "./modules/exploitationDepot";
+import { exploitationDriverRouter } from "./modules/exploitationDriver";
+import { exploitationTankerRouter } from "./modules/exploitationTanker";
+import { gasBottleTypeRouter } from "./modules/gasBottleType";
+import { accessoryCategoryRouter } from "./modules/accessoryCategory";
+import { accessoryItemRouter } from "./modules/accessoryItem";
 
 export const app = express();
 
@@ -126,6 +131,11 @@ app.use("/api/v1/supplier-addresses", supplierAddressRouter);
 app.use("/api/v1/supplier-payment-methods", supplierPaymentMethodRouter);
 app.use("/api/v1/supplier-commercial-terms", supplierCommercialTermsRouter);
 app.use("/api/v1/depots", exploitationDepotRouter);
+app.use("/api/v1/drivers", exploitationDriverRouter);
+app.use("/api/v1/tankers", exploitationTankerRouter);
+app.use("/api/v1/bottle-types", gasBottleTypeRouter);
+app.use("/api/v1/accessory-categories", accessoryCategoryRouter);
+app.use("/api/v1/accessory-items", accessoryItemRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   console.log(`Invalid route accessed: ${req.originalUrl}`);

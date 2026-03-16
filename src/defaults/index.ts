@@ -8,6 +8,8 @@ import seedSuperAdmin from "./superAdminAccount.seed";
 import seedSuperAdminRolePermissions from "./superAdminPermissions.seed";
 import seedDepots from "./depots.seed";
 import { seedExchangeRates } from "./exchangeRates.seed";
+import seedAccessoryCategories from "./accessoryCategories.seed";
+import seedBottleTypes from "./bottleTypes.seed";
 
 export const seedDefaultRecords = async () => {
   await seedRoles();
@@ -20,4 +22,6 @@ export const seedDefaultRecords = async () => {
   await seedFinanceSettings();
   await seedExchangeRates();
   await seedDepots();
+  await seedAccessoryCategories();
+  await seedBottleTypes();
 };
