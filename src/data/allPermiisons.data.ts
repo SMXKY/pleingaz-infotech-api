@@ -109,6 +109,11 @@ export const allPermissions = {
     updateAccessoryItem: "exploitation_accessory_items.can_update_accessory_item",
     deleteAccessoryItem: "exploitation_accessory_items.can_delete_accessory_item",
   },
+  exploitationDocuments: {
+    uploadDocument: "exploitation_documents.can_upload_document",
+    readAllDocuments: "exploitation_documents.can_read_documents",
+    deleteDocument: "exploitation_documents.can_delete_document",
+  },
 } as const;
 
 export default allPermissions;
