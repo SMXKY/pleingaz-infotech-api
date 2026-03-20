@@ -367,5 +367,12 @@
   "error.accessory_item.current_stock_invalid": "",
   "error.accessory_item.sku_already_exists": "",
   "error.accessory_item.has_active_orders": "",
-  "error.accessory_item.update_requires_at_least_one_field": ""
+  "error.accessory_item.update_requires_at_least_one_field": "",
+
+  "error.document.ref_table_required": "",
+  "error.document.invalid_record_id": "",
+  "error.document.type_invalid": "",
+  "error.document.name_required": "",
+  "error.document.name_too_long": "",
+  "error.document.ref_table_and_record_id_required": ""
 }

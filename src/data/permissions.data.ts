@@ -864,6 +864,35 @@ export const permissions: PermissionSeed[] = [
     action: PermissionAction.DELETE,
     riskLevel: PermissionRiskLevel.HIGH,
   },
+
+  // ─── EXPLOITATION - DOCUMENTS ─────────────────────────────────────────────────
+  {
+    code: "exploitation_documents.can_upload_document",
+    engName: "Upload Document",
+    frName: "Télécharger un document",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.EXPLOITATION_DOCUMENTS,
+    action: PermissionAction.CREATE,
+    riskLevel: PermissionRiskLevel.MEDIUM,
+  },
+  {
+    code: "exploitation_documents.can_read_documents",
+    engName: "Read Documents",
+    frName: "Lire les documents",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.EXPLOITATION_DOCUMENTS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.LOW,
+  },
+  {
+    code: "exploitation_documents.can_delete_document",
+    engName: "Delete Document",
+    frName: "Supprimer un document",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.EXPLOITATION_DOCUMENTS,
+    action: PermissionAction.DELETE,
+    riskLevel: PermissionRiskLevel.HIGH,
+  },
 ];
 
 console.log("Total Number of Permissions: ", permissions.length, " 🔥");
