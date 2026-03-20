@@ -109,6 +109,15 @@ export const allPermissions = {
     updateAccessoryItem: "exploitation_accessory_items.can_update_accessory_item",
     deleteAccessoryItem: "exploitation_accessory_items.can_delete_accessory_item",
   },
+  gasPurchaseOrders: {
+    createOrder: "gas_purchase_orders.can_create_order",
+    readOrder: "gas_purchase_orders.can_read_order",
+    readAllOrders: "gas_purchase_orders.can_read_orders",
+    updateOrder: "gas_purchase_orders.can_update_order",
+    deleteOrder: "gas_purchase_orders.can_delete_order",
+    submitOrder: "gas_purchase_orders.can_submit_order",
+    approveOrder: "gas_purchase_orders.can_approve_order",
+  },
   exploitationDocuments: {
     uploadDocument: "exploitation_documents.can_upload_document",
     readAllDocuments: "exploitation_documents.can_read_documents",
