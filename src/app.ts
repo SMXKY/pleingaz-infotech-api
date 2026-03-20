@@ -137,7 +137,7 @@ app.use("/api/v1/tankers", exploitationTankerRouter);
 app.use("/api/v1/bottle-types", gasBottleTypeRouter);
 app.use("/api/v1/accessory-categories", accessoryCategoryRouter);
 app.use("/api/v1/accessory-items", accessoryItemRouter);
-app.use("/api/v1/documents", exploitationDocumentRouter);
+app.use("/api/v1/exploitation-documents", exploitationDocumentRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   console.log(`Invalid route accessed: ${req.originalUrl}`);
