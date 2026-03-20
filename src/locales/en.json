@@ -413,6 +413,16 @@
   "error.gas_order.not_your_turn_to_approve": "",
   "error.gas_order.invalid_approval_action": "",
   "error.gas_order.cannot_delete_active_order": "",
+  "error.gas_order.cannot_edit_non_draft": "",
+  "error.gas_order.only_final_approver_can_delete": "",
+
+  "error.approval.invalid_action": "",
+  "error.approval.notes_too_long": "",
+  "error.approval.not_found": "",
+  "error.approval.not_pending": "",
+  "error.approval.step_not_found": "",
+  "error.approval.not_authorized": "",
+  "error.approval.record_id_and_entity_type_required": "",
 
   "error.document.ref_table_required": "",
   "error.document.invalid_record_id": "",

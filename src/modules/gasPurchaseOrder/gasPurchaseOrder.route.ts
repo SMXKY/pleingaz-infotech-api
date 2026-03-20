@@ -10,11 +10,11 @@ const controller = new GasPurchaseOrderController();
 
 gasPurchaseOrderRouter.use(protect, getUserLanguage);
 
-// Step 1: Create draft order
+// Create full order (single request — depot, tankers, supplier, line items)
 gasPurchaseOrderRouter.post(
   "/",
   restrictTo(allPermissions.gasPurchaseOrders.createOrder),
-  controller.createDraft
+  controller.createOrder
 );
 
 // List all orders
@@ -24,7 +24,7 @@ gasPurchaseOrderRouter.get(
   controller.findMany
 );
 
-// Step 4: Get full order summary
+// Get full order summary (with approval status)
 gasPurchaseOrderRouter.get(
   "/:id/summary",
   restrictTo(allPermissions.gasPurchaseOrders.readOrder),
@@ -38,35 +38,7 @@ gasPurchaseOrderRouter.get(
   controller.findById
 );
 
-// Step 2: Assign tankers
-gasPurchaseOrderRouter.patch(
-  "/:id/tankers",
-  restrictTo(allPermissions.gasPurchaseOrders.updateOrder),
-  controller.assignTankers
-);
-
-// Step 3: Add line items + supplier
-gasPurchaseOrderRouter.post(
-  "/:id/line-items",
-  restrictTo(allPermissions.gasPurchaseOrders.updateOrder),
-  controller.addLineItems
-);
-
-// Submit for approval
-gasPurchaseOrderRouter.post(
-  "/:id/submit",
-  restrictTo(allPermissions.gasPurchaseOrders.submitOrder),
-  controller.submitForApproval
-);
-
-// Approve or reject
-gasPurchaseOrderRouter.post(
-  "/:id/approve",
-  restrictTo(allPermissions.gasPurchaseOrders.approveOrder),
-  controller.approveOrReject
-);
-
-// Update order (general fields)
+// Update order (only while DRAFT)
 gasPurchaseOrderRouter.patch(
   "/:id",
   restrictTo(allPermissions.gasPurchaseOrders.updateOrder),

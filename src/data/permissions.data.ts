@@ -930,6 +930,26 @@ export const permissions: PermissionSeed[] = [
     riskLevel: PermissionRiskLevel.CRITICAL,
   },
 
+  // ─── APPROVALS ──────────────────────────────────────────────────────────────────
+  {
+    code: "approvals.can_read_approval",
+    engName: "Read Approval",
+    frName: "Lire une approbation",
+    module: PermissionModule.APPROVAL,
+    submodule: PermissionSubmodule.EXPLOITATION_APPROVALS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.LOW,
+  },
+  {
+    code: "approvals.can_decide_approval",
+    engName: "Approve or Reject",
+    frName: "Approuver ou rejeter",
+    module: PermissionModule.APPROVAL,
+    submodule: PermissionSubmodule.EXPLOITATION_APPROVALS,
+    action: PermissionAction.UPDATE,
+    riskLevel: PermissionRiskLevel.CRITICAL,
+  },
+
   // ─── EXPLOITATION - DOCUMENTS ─────────────────────────────────────────────────
   {
     code: "exploitation_documents.can_upload_document",
