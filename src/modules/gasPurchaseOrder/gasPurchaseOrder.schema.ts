@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { OrderPriority, Currency, GasUnit } from "src/generated/prisma";
 
-// ─── Step 1: Create Draft Order ──────────────────────────────────────────────
+// ─── Create Full Order (single request) ──────────────────────────────────────
 export const createGasPurchaseOrderSchema = z.object({
+  // Step 1 — Depot & general info
   depotId: z.string().uuid("error.gas_order.invalid_depot_id"),
   priority: z
     .nativeEnum(OrderPriority, {
@@ -28,14 +29,12 @@ export const createGasPurchaseOrderSchema = z.object({
     .date()
     .optional()
     .nullable(),
-});
+  collectionDate: z.coerce
+    .date()
+    .optional()
+    .nullable(),
 
-export type CreateGasPurchaseOrderInput = z.infer<
-  typeof createGasPurchaseOrderSchema
->;
-
-// ─── Step 2: Assign Tankers ──────────────────────────────────────────────────
-export const assignTankersSchema = z.object({
+  // Step 2 — Tankers
   tankers: z
     .array(
       z.object({
@@ -47,17 +46,9 @@ export const assignTankersSchema = z.object({
       })
     )
     .min(1, "error.gas_order.tankers_required"),
-});
 
-export type AssignTankersInput = z.infer<typeof assignTankersSchema>;
-
-// ─── Step 3: Add Line Items + Supplier ───────────────────────────────────────
-export const addLineItemsSchema = z.object({
+  // Step 3 — Supplier + line items
   supplierId: z.string().uuid("error.gas_order.invalid_supplier_id"),
-  collectionDate: z.coerce
-    .date()
-    .optional()
-    .nullable(),
   lineItems: z
     .array(
       z.object({
@@ -92,9 +83,11 @@ export const addLineItemsSchema = z.object({
     .min(1, "error.gas_order.line_items_required"),
 });
 
-export type AddLineItemsInput = z.infer<typeof addLineItemsSchema>;
+export type CreateGasPurchaseOrderInput = z.infer<
+  typeof createGasPurchaseOrderSchema
+>;
 
-// ─── Update Order (general fields) ──────────────────────────────────────────
+// ─── Update Order (only while DRAFT) ─────────────────────────────────────────
 export const updateGasPurchaseOrderSchema = z
   .object({
     depotId: z

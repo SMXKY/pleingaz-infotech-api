@@ -118,6 +118,10 @@ export const allPermissions = {
     submitOrder: "gas_purchase_orders.can_submit_order",
     approveOrder: "gas_purchase_orders.can_approve_order",
   },
+  approvals: {
+    readApproval: "approvals.can_read_approval",
+    decideApproval: "approvals.can_decide_approval",
+  },
   exploitationDocuments: {
     uploadDocument: "exploitation_documents.can_upload_document",
     readAllDocuments: "exploitation_documents.can_read_documents",

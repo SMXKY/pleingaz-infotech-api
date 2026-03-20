@@ -34,54 +34,22 @@ export class GasPurchaseOrderController extends BaseController<GasPurchaseOrder>
     return id;
   }
 
-  // Step 1: Create draft order
-  createDraft = async (
+  // Create full order (single request)
+  createOrder = async (
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> => {
     try {
       const ctx = this.getContext(req, res);
-      const order = await this.service.createDraftOrder(req.body, ctx);
+      const order = await this.service.createOrder(req.body, ctx);
       appResponder(StatusCodes.CREATED, order as object, res);
     } catch (error) {
       next(error);
     }
   };
 
-  // Step 2: Assign tankers
-  assignTankers = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> => {
-    try {
-      const ctx = this.getContext(req, res);
-      const id = this.extractId(req);
-      const order = await this.service.assignTankers(id, req.body, ctx);
-      appResponder(StatusCodes.OK, order as object, res);
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  // Step 3: Add line items + supplier
-  addLineItems = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> => {
-    try {
-      const ctx = this.getContext(req, res);
-      const id = this.extractId(req);
-      const order = await this.service.addLineItems(id, req.body, ctx);
-      appResponder(StatusCodes.OK, order as object, res);
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  // Step 4: Get full order summary
+  // Get full order summary with approval status
   getOrderSummary = async (
     req: Request,
     res: Response,
@@ -91,53 +59,6 @@ export class GasPurchaseOrderController extends BaseController<GasPurchaseOrder>
       const ctx = this.getContext(req, res);
       const id = this.extractId(req);
       const order = await this.service.getOrderSummary(id, ctx);
-      appResponder(StatusCodes.OK, order as object, res);
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  // Submit for approval
-  submitForApproval = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> => {
-    try {
-      const ctx = this.getContext(req, res);
-      const id = this.extractId(req);
-      const order = await this.service.submitForApproval(id, ctx);
-      appResponder(StatusCodes.OK, order as object, res);
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  // Approve or reject
-  approveOrReject = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> => {
-    try {
-      const ctx = this.getContext(req, res);
-      const id = this.extractId(req);
-
-      const { action, notes } = req.body;
-
-      if (!action || !["APPROVED", "REJECTED"].includes(action)) {
-        throw new AppError(
-          "error.gas_order.invalid_approval_action",
-          StatusCodes.BAD_REQUEST
-        );
-      }
-
-      const order = await this.service.approveOrReject(
-        id,
-        action,
-        notes,
-        ctx
-      );
       appResponder(StatusCodes.OK, order as object, res);
     } catch (error) {
       next(error);
