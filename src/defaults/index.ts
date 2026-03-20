@@ -10,6 +10,7 @@ import seedDepots from "./depots.seed";
 import { seedExchangeRates } from "./exchangeRates.seed";
 import seedAccessoryCategories from "./accessoryCategories.seed";
 import seedBottleTypes from "./bottleTypes.seed";
+import seedTestingAccounts from "./testingAccounts.seed";
 
 export const seedDefaultRecords = async () => {
   await seedRoles();
@@ -24,4 +25,5 @@ export const seedDefaultRecords = async () => {
   await seedDepots();
   await seedAccessoryCategories();
   await seedBottleTypes();
+  await seedTestingAccounts();
 };

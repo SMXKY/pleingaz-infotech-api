@@ -33,6 +33,7 @@ import { gasBottleTypeRouter } from "./modules/gasBottleType";
 import { accessoryCategoryRouter } from "./modules/accessoryCategory";
 import { accessoryItemRouter } from "./modules/accessoryItem";
 import { exploitationDocumentRouter } from "./modules/exploitationDocument";
+import { gasPurchaseOrderRouter } from "./modules/gasPurchaseOrder";
 
 export const app = express();
 
@@ -138,6 +139,7 @@ app.use("/api/v1/bottle-types", gasBottleTypeRouter);
 app.use("/api/v1/accessory-categories", accessoryCategoryRouter);
 app.use("/api/v1/accessory-items", accessoryItemRouter);
 app.use("/api/v1/documents", exploitationDocumentRouter);
+app.use("/api/v1/gas-purchase-orders", gasPurchaseOrderRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   console.log(`Invalid route accessed: ${req.originalUrl}`);
