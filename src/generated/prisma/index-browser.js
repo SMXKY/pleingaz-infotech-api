@@ -870,7 +870,8 @@ exports.PermissionModule = exports.$Enums.PermissionModule = {
   RESEARCH_DEVELOPMENT: 'RESEARCH_DEVELOPMENT',
   ADMIN: 'ADMIN',
   USER_MANAGEMENT: 'USER_MANAGEMENT',
-  APPROVAL: 'APPROVAL'
+  APPROVAL: 'APPROVAL',
+  DASHBOARD_ANALYTICS: 'DASHBOARD_ANALYTICS'
 };
 
 exports.PermissionSubmodule = exports.$Enums.PermissionSubmodule = {
@@ -938,7 +939,8 @@ exports.PermissionSubmodule = exports.$Enums.PermissionSubmodule = {
   SYSTEM_CONFIG: 'SYSTEM_CONFIG',
   AUDIT_LOGS: 'AUDIT_LOGS',
   DEPARTMENTS: 'DEPARTMENTS',
-  ADMINISTRATION: 'ADMINISTRATION'
+  ADMINISTRATION: 'ADMINISTRATION',
+  EXPLOITATION_DASHBOARD_AND_STATICS: 'EXPLOITATION_DASHBOARD_AND_STATICS'
 };
 
 exports.PermissionAction = exports.$Enums.PermissionAction = {

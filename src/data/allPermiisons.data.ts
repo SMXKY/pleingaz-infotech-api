@@ -169,6 +169,19 @@ export const allPermissions = {
     recordPayment: "exploitation_invoices:record_payment",
     markOverdue: "exploitation_invoices:mark_overdue",
   },
+  dashboardAnalytics: {
+    readGasPurchaseStatistics:
+      "dashboard_analytics.can_read_gas_purchase_statistics",
+
+    readGasPurchaseDashboard:
+      "dashboard_analytics.can_read_gas_purchase_dashboard",
+
+    readBottlePurchaseDashboard:
+      "dashboard_analytics.can_read_bottle_purchase_dashboard",
+
+    readAccessoryPurchaseDashboard:
+      "dashboard_analytics.can_read_accessory_purchase_dashboard",
+  },
 } as const;
 
 export default allPermissions;

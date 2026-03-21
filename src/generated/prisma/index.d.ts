@@ -289,7 +289,8 @@ export const PermissionModule: {
   RESEARCH_DEVELOPMENT: 'RESEARCH_DEVELOPMENT',
   ADMIN: 'ADMIN',
   USER_MANAGEMENT: 'USER_MANAGEMENT',
-  APPROVAL: 'APPROVAL'
+  APPROVAL: 'APPROVAL',
+  DASHBOARD_ANALYTICS: 'DASHBOARD_ANALYTICS'
 };
 
 export type PermissionModule = (typeof PermissionModule)[keyof typeof PermissionModule]
@@ -360,7 +361,8 @@ export const PermissionSubmodule: {
   SYSTEM_CONFIG: 'SYSTEM_CONFIG',
   AUDIT_LOGS: 'AUDIT_LOGS',
   DEPARTMENTS: 'DEPARTMENTS',
-  ADMINISTRATION: 'ADMINISTRATION'
+  ADMINISTRATION: 'ADMINISTRATION',
+  EXPLOITATION_DASHBOARD_AND_STATICS: 'EXPLOITATION_DASHBOARD_AND_STATICS'
 };
 
 export type PermissionSubmodule = (typeof PermissionSubmodule)[keyof typeof PermissionSubmodule]

@@ -1,0 +1,5 @@
+-- AlterEnum
+ALTER TYPE "PermissionModule" ADD VALUE 'DASHBOARD_ANALYTICS';
+
+-- AlterEnum
+ALTER TYPE "PermissionSubmodule" ADD VALUE 'EXPLOITATION_DASHBOARD_AND_STATICS';

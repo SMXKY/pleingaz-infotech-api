@@ -51,6 +51,7 @@ enum PermissionModule {
   ADMIN
   USER_MANAGEMENT
   APPROVAL
+  DASHBOARD_ANALYTICS
 }
 
 enum PermissionSubmodule {
@@ -138,6 +139,9 @@ enum PermissionSubmodule {
   AUDIT_LOGS
   DEPARTMENTS
   ADMINISTRATION
+
+  //DASHBOARD_ANALYTIC
+  EXPLOITATION_DASHBOARD_AND_STATICS
 }
 
 enum PermissionAction {

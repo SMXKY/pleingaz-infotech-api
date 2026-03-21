@@ -1221,6 +1221,44 @@ export const permissions: PermissionSeed[] = [
     action: PermissionAction.UPDATE,
     riskLevel: PermissionRiskLevel.MEDIUM,
   },
+
+  //Dashboards and Statistics
+  {
+    code: "dashboard_analytics.can_read_gas_purchase_statistics",
+    engName: "Read Gas Purchase Statistics",
+    frName: "Lire les statistiques des achats de gaz",
+    module: PermissionModule.DASHBOARD_ANALYTICS,
+    submodule: PermissionSubmodule.EXPLOITATION_DASHBOARD_AND_STATICS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.LOW,
+  },
+  {
+    code: "dashboard_analytics.can_read_gas_purchase_dashboard",
+    engName: "Read Gas Purchase Dashboard",
+    frName: "Lire le tableau de bord des achats de gaz",
+    module: PermissionModule.DASHBOARD_ANALYTICS,
+    submodule: PermissionSubmodule.EXPLOITATION_DASHBOARD_AND_STATICS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.LOW,
+  },
+  {
+    code: "dashboard_analytics.can_read_bottle_purchase_dashboard",
+    engName: "Read Gas Bottle Purchase Dashboard",
+    frName: "Lire le tableau de bord des achats de bouteilles de gaz",
+    module: PermissionModule.DASHBOARD_ANALYTICS,
+    submodule: PermissionSubmodule.EXPLOITATION_DASHBOARD_AND_STATICS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.LOW,
+  },
+  {
+    code: "dashboard_analytics.can_read_accessory_purchase_dashboard",
+    engName: "Read Accessory Purchase Dashboard",
+    frName: "Lire le tableau de bord des achats d'accessoires",
+    module: PermissionModule.DASHBOARD_ANALYTICS,
+    submodule: PermissionSubmodule.EXPLOITATION_DASHBOARD_AND_STATICS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.LOW,
+  },
 ];
 
 console.log("Total Number of Permissions: ", permissions.length, " 🔥");

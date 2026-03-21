@@ -38,6 +38,7 @@ import { approvalRouter } from "./modules/approval";
 import { paymentRouter } from "./modules/payments";
 import { orderEmailRouter } from "./modules/supplierEmails";
 import { gasBottlePurchaseOrderRouter } from "./modules/gasBottlePurchaseOrders";
+import dashboardAndAnalyticsRouter from "./modules/dashboardAndStatics/dashboardAndStatics.routes";
 
 // Handle BigInt JSON serialization globally
 (BigInt.prototype as any).toJSON = function () {
@@ -153,6 +154,7 @@ app.use("/api/v1/gas-bottle-purchase-orders", gasBottlePurchaseOrderRouter);
 app.use("/api/v1/approvals", approvalRouter);
 app.use("/api/v1/payments", paymentRouter);
 app.use("/api/v1/exploitation-order-emails", orderEmailRouter);
+app.use("/api/v1/dashboard-and-analytics", dashboardAndAnalyticsRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   console.log(`Invalid route accessed: ${req.originalUrl}`);
