@@ -1137,7 +1137,8 @@ exports.ExploitationInvoiceType = exports.$Enums.ExploitationInvoiceType = {
 exports.ExploitationInvoiceStatus = exports.$Enums.ExploitationInvoiceStatus = {
   UNPAID: 'UNPAID',
   PARTIAL: 'PARTIAL',
-  PAID: 'PAID'
+  PAID: 'PAID',
+  OVERDUE: 'OVERDUE'
 };
 
 exports.ExploitationDocumentType = exports.$Enums.ExploitationDocumentType = {

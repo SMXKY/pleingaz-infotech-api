@@ -159,6 +159,16 @@ export const allPermissions = {
     updateOrder: "accessory_purchase_orders.can_update_order",
     deleteOrder: "accessory_purchase_orders.can_delete_order",
   },
+  exploitationInvoices: {
+    createInvoice: "exploitation_invoices:create",
+    readAllInvoices: "exploitation_invoices:read_all",
+    readInvoice: "exploitation_invoices:read",
+    readInvoicesByOrder: "exploitation_invoices:read_by_order",
+    updateInvoice: "exploitation_invoices:update",
+    deleteInvoice: "exploitation_invoices:delete",
+    recordPayment: "exploitation_invoices:record_payment",
+    markOverdue: "exploitation_invoices:mark_overdue",
+  },
 } as const;
 
 export default allPermissions;

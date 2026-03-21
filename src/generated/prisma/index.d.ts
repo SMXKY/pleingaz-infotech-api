@@ -593,7 +593,8 @@ export type ExploitationInvoiceType = (typeof ExploitationInvoiceType)[keyof typ
 export const ExploitationInvoiceStatus: {
   UNPAID: 'UNPAID',
   PARTIAL: 'PARTIAL',
-  PAID: 'PAID'
+  PAID: 'PAID',
+  OVERDUE: 'OVERDUE'
 };
 
 export type ExploitationInvoiceStatus = (typeof ExploitationInvoiceStatus)[keyof typeof ExploitationInvoiceStatus]

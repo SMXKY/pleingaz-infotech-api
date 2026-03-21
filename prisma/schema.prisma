@@ -563,6 +563,7 @@ enum ExploitationInvoiceStatus {
   UNPAID
   PARTIAL
   PAID
+  OVERDUE
 }
 
 enum ExploitationDocumentType {
