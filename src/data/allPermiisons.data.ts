@@ -100,14 +100,19 @@ export const allPermissions = {
     updateBottleType: "exploitation_bottle_types.can_update_bottle_type",
   },
   accessoryCategories: {
-    readAllAccessoryCategories: "exploitation_accessory_categories.can_read_accessory_categories",
+    readAllAccessoryCategories:
+      "exploitation_accessory_categories.can_read_accessory_categories",
   },
   accessoryItems: {
-    createAccessoryItem: "exploitation_accessory_items.can_create_accessory_item",
+    createAccessoryItem:
+      "exploitation_accessory_items.can_create_accessory_item",
     readAccessoryItem: "exploitation_accessory_items.can_read_accessory_item",
-    readAllAccessoryItems: "exploitation_accessory_items.can_read_accessory_items",
-    updateAccessoryItem: "exploitation_accessory_items.can_update_accessory_item",
-    deleteAccessoryItem: "exploitation_accessory_items.can_delete_accessory_item",
+    readAllAccessoryItems:
+      "exploitation_accessory_items.can_read_accessory_items",
+    updateAccessoryItem:
+      "exploitation_accessory_items.can_update_accessory_item",
+    deleteAccessoryItem:
+      "exploitation_accessory_items.can_delete_accessory_item",
   },
   gasPurchaseOrders: {
     createOrder: "gas_purchase_orders.can_create_order",
@@ -134,6 +139,11 @@ export const allPermissions = {
     uploadDocument: "exploitation_documents.can_upload_document",
     readAllDocuments: "exploitation_documents.can_read_documents",
     deleteDocument: "exploitation_documents.can_delete_document",
+  },
+  exploitationOrderEmails: {
+    sendEmail: "exploitation_order_emails.can_send_email",
+    readAllEmails: "exploitation_order_emails.can_read_emails",
+    readOneEmail: "exploitation_order_emails.can_read_email",
   },
 } as const;
 

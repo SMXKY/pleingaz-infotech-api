@@ -1034,6 +1034,35 @@ export const permissions: PermissionSeed[] = [
     action: PermissionAction.DELETE,
     riskLevel: PermissionRiskLevel.HIGH,
   },
+
+  // ─── EXPLOITATION - EMAILS ─────────────────────────────────────────────────
+  {
+    code: "exploitation_order_emails.can_send_email",
+    engName: "Send Order Email",
+    frName: "Envoyer un email de commande",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.EXPLOITATION_ORDER_EMAILS,
+    action: PermissionAction.CREATE,
+    riskLevel: PermissionRiskLevel.MEDIUM,
+  },
+  {
+    code: "exploitation_order_emails.can_read_emails",
+    engName: "Read Order Emails",
+    frName: "Lire les emails de commande",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.EXPLOITATION_ORDER_EMAILS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.LOW,
+  },
+  {
+    code: "exploitation_order_emails.can_read_email",
+    engName: "Read Single Order Email",
+    frName: "Lire un email de commande",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.EXPLOITATION_ORDER_EMAILS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.LOW,
+  },
 ];
 
 console.log("Total Number of Permissions: ", permissions.length, " 🔥");

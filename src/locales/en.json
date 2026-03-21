@@ -474,5 +474,10 @@
   "success.payment.recorded": "Payment recorded successfully.",
   "success.payment.reversed": "Payment reversed successfully.",
   "success.payment.corrected": "Payment corrected successfully.",
-  "success.payment.notes_updated": "Payment notes updated successfully."
+  "success.payment.notes_updated": "Payment notes updated successfully.",
+
+  "error.supplier.invalid_supplier_id": "",
+  "error.order.invalid_order_id": "",
+  "error.gas_order.type_invalid": "",
+  "error.supplier.invalid_supplier_contact_id": ""
 }
