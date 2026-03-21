@@ -32,6 +32,7 @@ import { logUserActivity } from "@utils/logUserActivity.util";
 import { LogCategory, LogOperation } from "@appTypes/log.type";
 import { sendAndDispatch } from "@services/nofication/notification.dispatcher";
 import generateReference from "@utils/generateOrderReference.util";
+import { recalculateSupplierMetrics } from "@utils/recalculateSupplierMetrics.util";
 
 const PAYMENT_INCLUDE = {
   invoice: true,
@@ -690,6 +691,24 @@ export class PaymentService extends BaseService<PaymentRecord> {
           data: { status: OrderStatus.APPROVED },
         });
       }
+    }
+
+    // Recalculate supplier metrics after payment status changes
+    const orderForMetrics = await tx.gasPurchaseOrder.findUnique({
+      where: { id: orderId },
+      select: { supplierId: true },
+    });
+    if (orderForMetrics?.supplierId) {
+      const sid = orderForMetrics.supplierId;
+      // Fire-and-forget outside transaction to avoid blocking
+      setTimeout(() => {
+        recalculateSupplierMetrics(sid).catch((err) =>
+          console.error(
+            "[PaymentService] Supplier metrics recalculation failed:",
+            err
+          )
+        );
+      }, 0);
     }
   }
 

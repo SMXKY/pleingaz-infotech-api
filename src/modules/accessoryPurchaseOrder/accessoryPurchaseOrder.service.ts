@@ -26,6 +26,7 @@ import CalculateOrderTotals from "@utils/CalculateOrderTotals.util";
 import { logUserActivity } from "@utils/logUserActivity.util";
 import { LogCategory, LogOperation } from "@appTypes/log.type";
 import { sendAndDispatch } from "@services/nofication/notification.dispatcher";
+import { recalculateSupplierMetrics } from "@utils/recalculateSupplierMetrics.util";
 
 const FULL_ORDER_INCLUDE = {
   lineItems: {
@@ -560,6 +561,16 @@ export class AccessoryPurchaseOrderService extends BaseService<
         err
       )
     );
+
+    // Recalculate supplier metrics after cancellation
+    if (order.supplierId) {
+      recalculateSupplierMetrics(order.supplierId).catch((err) =>
+        console.error(
+          "[AccessoryPurchaseOrderService] Supplier metrics recalculation failed:",
+          err
+        )
+      );
+    }
 
     return updated;
   }

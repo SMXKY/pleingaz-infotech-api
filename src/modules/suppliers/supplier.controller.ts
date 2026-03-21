@@ -61,4 +61,28 @@ export class SupplierController extends BaseController<Supplier> {
       appResponder(StatusCodes.OK, supplier, res);
     }
   );
+
+  getPerformance = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+      if (!req.params.id) {
+        return next(
+          new AppError(
+            "error.validation.invalid_supplier_id",
+            StatusCodes.BAD_REQUEST
+          )
+        );
+      }
+
+      const { id } = req.params;
+      const result = await this.service.getSupplierPerformance(id as string);
+      appResponder(StatusCodes.OK, result, res);
+    }
+  );
+
+  getAllPerformance = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const result = await this.service.getAllSuppliersPerformance();
+      appResponder(StatusCodes.OK, result, res);
+    }
+  );
 }

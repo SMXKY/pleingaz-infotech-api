@@ -15,6 +15,7 @@ import { permissionCache } from "../users/utilites/getUserPermissions.util";
 import { UserStatus } from "@appTypes/user.types";
 import { Request, Response } from "express";
 import { LogCategory, LogOperation } from "@appTypes/log.type";
+import { recalculateSupplierMetrics } from "@utils/recalculateSupplierMetrics.util";
 
 export class SupplierService extends BaseService<
   Supplier,
@@ -193,5 +194,76 @@ export class SupplierService extends BaseService<
     }
 
     return supplier;
+  }
+
+  async getSupplierPerformance(id: string): Promise<any> {
+    const supplier = await prisma.supplier.findFirst({
+      where: { id, deletedAt: null },
+      select: { id: true, name: true, code: true },
+    });
+
+    if (!supplier) {
+      throw new AppError("error.supplier.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    // Recalculate on fetch so data is always fresh
+    await recalculateSupplierMetrics(id);
+
+    const metrics = await prisma.supplierPerformanceMetrics.findUnique({
+      where: { supplierId: id },
+    });
+
+    return {
+      supplier,
+      metrics: metrics
+        ? {
+            ...metrics,
+            rating: metrics.rating?.toString() ?? null,
+            onTimeDeliveryPct: metrics.onTimeDeliveryPct.toString(),
+            avgLeadTimeDays: metrics.avgLeadTimeDays?.toString() ?? null,
+            totalSpendCfa: metrics.totalSpendCfa.toString(),
+          }
+        : null,
+    };
+  }
+
+  async getAllSuppliersPerformance(): Promise<any[]> {
+    const suppliers = await prisma.supplier.findMany({
+      where: { deletedAt: null },
+      select: {
+        id: true,
+        name: true,
+        code: true,
+        type: true,
+        tier: true,
+        isPreferred: true,
+        performanceMetrics: true,
+      },
+      orderBy: { name: "asc" },
+    });
+
+    return suppliers.map((s) => ({
+      id: s.id,
+      name: s.name,
+      code: s.code,
+      type: s.type,
+      tier: s.tier,
+      isPreferred: s.isPreferred,
+      metrics: s.performanceMetrics
+        ? {
+            totalOrders: s.performanceMetrics.totalOrders,
+            completedOrders: s.performanceMetrics.completedOrders,
+            onTimeDeliveries: s.performanceMetrics.onTimeDeliveries,
+            onTimeDeliveryPct:
+              s.performanceMetrics.onTimeDeliveryPct.toString(),
+            avgLeadTimeDays:
+              s.performanceMetrics.avgLeadTimeDays?.toString() ?? null,
+            totalSpendCfa: s.performanceMetrics.totalSpendCfa.toString(),
+            rating: s.performanceMetrics.rating?.toString() ?? null,
+            lastOrderDate: s.performanceMetrics.lastOrderDate,
+            lastCalculatedAt: s.performanceMetrics.lastCalculatedAt,
+          }
+        : null,
+    }));
   }
 }

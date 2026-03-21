@@ -11,6 +11,18 @@ const controller = new SupplierController();
 supplierRouter.use(protect, getUserLanguage);
 
 supplierRouter.get(
+  "/performance",
+  restrictTo(allPermissions.suppliers.readAllSuppliers),
+  controller.getAllPerformance
+);
+
+supplierRouter.get(
+  "/:id/performance",
+  restrictTo(allPermissions.suppliers.readSupplier),
+  controller.getPerformance
+);
+
+supplierRouter.get(
   "/:id/orders",
   restrictTo(allPermissions.suppliers.readAllSuppliers),
   controller.findWithOrders

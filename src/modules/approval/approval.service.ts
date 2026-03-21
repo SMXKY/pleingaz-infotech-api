@@ -17,6 +17,7 @@ import { logUserActivity } from "@utils/logUserActivity.util";
 import { LogCategory, LogOperation } from "@appTypes/log.type";
 import { sendAndDispatch } from "@services/nofication/notification.dispatcher";
 import { BaseService } from "src/base/BaseService";
+import { recalculateSupplierMetrics } from "@utils/recalculateSupplierMetrics.util";
 
 const ROLE_NAME_TO_APPROVAL_ROLE: Record<string, ApprovalRole> = {
   "Directeur Général (CEO)": ApprovalRole.CEO,
@@ -274,6 +275,15 @@ export class ApprovalService extends BaseService<
       ctx
     );
 
+    // Recalculate supplier metrics after approval status changes
+    this.recalculateMetricsForOrder(approval.entityType, recordId).catch(
+      (err) =>
+        console.error(
+          "[ApprovalService] Supplier metrics recalculation failed:",
+          err
+        )
+    );
+
     return updatedApproval;
   }
 
@@ -406,5 +416,43 @@ export class ApprovalService extends BaseService<
       [ApprovalEntityType.GAS_ORDER]: "gas_purchase_orders",
     };
     return tableMapping[entityType] || "approvals";
+  }
+
+  private async recalculateMetricsForOrder(
+    entityType: string,
+    recordId: string
+  ): Promise<void> {
+    try {
+      let supplierId: string | null = null;
+
+      if (entityType === ApprovalEntityType.GAS_ORDER) {
+        const order = await prisma.gasPurchaseOrder.findUnique({
+          where: { id: recordId },
+          select: { supplierId: true },
+        });
+        supplierId = order?.supplierId ?? null;
+      } else if (entityType === ApprovalEntityType.GAS_BOTTLE_ORDER) {
+        const order = await prisma.gasBottlePurchaseOrder.findUnique({
+          where: { id: recordId },
+          select: { supplierId: true },
+        });
+        supplierId = order?.supplierId ?? null;
+      } else if (entityType === ApprovalEntityType.ACCESSORY_ORDER) {
+        const order = await prisma.accessoryPurchaseOrder.findUnique({
+          where: { id: recordId },
+          select: { supplierId: true },
+        });
+        supplierId = order?.supplierId ?? null;
+      }
+
+      if (supplierId) {
+        await recalculateSupplierMetrics(supplierId);
+      }
+    } catch (err) {
+      console.error(
+        "[ApprovalService] recalculateMetricsForOrder failed:",
+        err
+      );
+    }
   }
 }
