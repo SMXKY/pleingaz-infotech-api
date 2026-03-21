@@ -1,17 +1,17 @@
 import { Request, Response, NextFunction } from "express";
 import { BaseController } from "src/base/BaseController";
-import { GasBottlePurchaseOrderService } from "./gasBottlePurchaseOrders.service";
-import { GasBottlePurchaseOrder } from "src/generated/prisma";
+import { AccessoryPurchaseOrderService } from "./accessoryPurchaseOrder.service";
+import { AccessoryPurchaseOrder } from "src/generated/prisma";
 import { appResponder } from "@utils/appResponder.util";
 import { StatusCodes } from "http-status-codes";
 import { AppError } from "@utils/AppError.util";
 
-export class GasBottlePurchaseOrderController extends BaseController<GasBottlePurchaseOrder> {
-  protected service: GasBottlePurchaseOrderService;
+export class AccessoryPurchaseOrderController extends BaseController<AccessoryPurchaseOrder> {
+  protected service: AccessoryPurchaseOrderService;
 
   constructor() {
     super();
-    this.service = new GasBottlePurchaseOrderService();
+    this.service = new AccessoryPurchaseOrderService();
   }
 
   private extractId(req: Request): string {

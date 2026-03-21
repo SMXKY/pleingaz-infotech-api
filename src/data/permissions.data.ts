@@ -977,6 +977,53 @@ export const permissions: PermissionSeed[] = [
     riskLevel: PermissionRiskLevel.HIGH,
   },
 
+  //accesory purchase order
+  {
+    code: "accessory_purchase_orders.can_read_orders",
+    engName: "Read Accessory Purchase Orders",
+    frName: "Lire les bons de commande d'accessoires",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.ACCESSORIES_ORDERS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.LOW,
+  },
+  {
+    code: "accessory_purchase_orders.can_read_order",
+    engName: "Read Accessory Purchase Order",
+    frName: "Lire le bon de commande d'accessoire",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.ACCESSORIES_ORDERS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.LOW,
+  },
+  {
+    code: "accessory_purchase_orders.can_create_order",
+    engName: "Create Accessory Purchase Order",
+    frName: "Créer un bon de commande d'accessoire",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.ACCESSORIES_ORDERS,
+    action: PermissionAction.CREATE,
+    riskLevel: PermissionRiskLevel.MEDIUM,
+  },
+  {
+    code: "accessory_purchase_orders.can_update_order",
+    engName: "Update Accessory Purchase Order",
+    frName: "Modifier un bon de commande d'accessoire",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.ACCESSORIES_ORDERS,
+    action: PermissionAction.UPDATE,
+    riskLevel: PermissionRiskLevel.MEDIUM,
+  },
+  {
+    code: "accessory_purchase_orders.can_delete_order",
+    engName: "Delete Accessory Purchase Order",
+    frName: "Supprimer un bon de commande d'accessoire",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.ACCESSORIES_ORDERS,
+    action: PermissionAction.DELETE,
+    riskLevel: PermissionRiskLevel.HIGH,
+  },
+
   // ─── APPROVALS ──────────────────────────────────────────────────────────────────
   {
     code: "approvals.can_read_approval",

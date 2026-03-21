@@ -1,18 +1,17 @@
 import { BaseService } from "src/base/BaseService";
-import { GasBottlePurchaseOrderRepository } from "./gasBottlePurchaseOrders.repository";
+import { AccessoryPurchaseOrderRepository } from "./accessoryPurchaseOrder.repository";
 import {
-  createGasBottlePurchaseOrderSchema,
-  updateGasBottlePurchaseOrderSchema,
-  CreateGasBottlePurchaseOrderInput,
-  UpdateGasBottlePurchaseOrderInput,
-} from "./gasBottlePurchaseOrders.schema";
+  createAccessoryPurchaseOrderSchema,
+  updateAccessoryPurchaseOrderSchema,
+  CreateAccessoryPurchaseOrderInput,
+  UpdateAccessoryPurchaseOrderInput,
+} from "./accessoryPurchaseOrder.schema";
 
 import { AppError } from "@utils/AppError.util";
 import { StatusCodes } from "http-status-codes";
 import { ServiceContext } from "@appTypes/base.types";
 import {
-  GasBottlePurchaseOrder,
-  ConfigType,
+  AccessoryPurchaseOrder,
   OrderStatus,
   ApprovalEntityType,
   ApprovalStatus,
@@ -31,7 +30,11 @@ import { sendAndDispatch } from "@services/nofication/notification.dispatcher";
 const FULL_ORDER_INCLUDE = {
   lineItems: {
     include: {
-      bottleType: true,
+      item: {
+        include: {
+          category: true,
+        },
+      },
     },
   },
   supplier: {
@@ -46,26 +49,26 @@ const FULL_ORDER_INCLUDE = {
   },
 } as const;
 
-export class GasBottlePurchaseOrderService extends BaseService<
-  GasBottlePurchaseOrder,
-  CreateGasBottlePurchaseOrderInput,
-  UpdateGasBottlePurchaseOrderInput
+export class AccessoryPurchaseOrderService extends BaseService<
+  AccessoryPurchaseOrder,
+  CreateAccessoryPurchaseOrderInput,
+  UpdateAccessoryPurchaseOrderInput
 > {
-  protected repository: GasBottlePurchaseOrderRepository;
-  protected tableName = "gas_bottle_purchase_orders";
-  protected createSchema = createGasBottlePurchaseOrderSchema;
-  protected updateSchema = updateGasBottlePurchaseOrderSchema;
+  protected repository: AccessoryPurchaseOrderRepository;
+  protected tableName = "accessory_purchase_orders";
+  protected createSchema = createAccessoryPurchaseOrderSchema;
+  protected updateSchema = updateAccessoryPurchaseOrderSchema;
 
   constructor() {
     super();
-    this.repository = new GasBottlePurchaseOrderRepository();
+    this.repository = new AccessoryPurchaseOrderRepository();
   }
 
   async create(
-    data: CreateGasBottlePurchaseOrderInput,
+    data: CreateAccessoryPurchaseOrderInput,
     ctx: ServiceContext
-  ): Promise<GasBottlePurchaseOrder> {
-    const result = createGasBottlePurchaseOrderSchema.safeParse(data);
+  ): Promise<AccessoryPurchaseOrder> {
+    const result = createAccessoryPurchaseOrderSchema.safeParse(data);
     if (!result.success) {
       const messages = result.error.issues
         .map((issue) => issue.message)
@@ -79,7 +82,7 @@ export class GasBottlePurchaseOrderService extends BaseService<
     });
     if (!depot) {
       throw new AppError(
-        "error.gas_bottle_order.depot_not_found",
+        "error.accessory_order.depot_not_found",
         StatusCodes.NOT_FOUND
       );
     }
@@ -89,13 +92,13 @@ export class GasBottlePurchaseOrderService extends BaseService<
     });
     if (!supplier) {
       throw new AppError(
-        "error.gas_bottle_order.supplier_not_found",
+        "error.accessory_order.supplier_not_found",
         StatusCodes.NOT_FOUND
       );
     }
-    if (supplier.type !== "BOTTLES" && supplier.type !== "MULTIPLE") {
+    if (supplier.type !== "ACCESSORIES" && supplier.type !== "MULTIPLE") {
       throw new AppError(
-        "error.gas_bottle_order.supplier_not_bottle_type",
+        "error.accessory_order.supplier_not_accessory_type",
         StatusCodes.BAD_REQUEST
       );
     }
@@ -105,7 +108,7 @@ export class GasBottlePurchaseOrderService extends BaseService<
     });
     if (!accountantRole) {
       throw new AppError(
-        "error.gas_bottle_order.accountant_role_not_found",
+        "error.accessory_order.accountant_role_not_found",
         StatusCodes.INTERNAL_SERVER_ERROR
       );
     }
@@ -114,37 +117,44 @@ export class GasBottlePurchaseOrderService extends BaseService<
     });
     if (!ceoRole) {
       throw new AppError(
-        "error.gas_bottle_order.ceo_role_not_found",
+        "error.accessory_order.ceo_role_not_found",
         StatusCodes.INTERNAL_SERVER_ERROR
       );
     }
 
     const order = await prisma.$transaction(async (tx) => {
-      const reference = await generateReference(tx, "GB_PO" as any);
+      const reference = await generateReference(tx, "ACC_PO" as any);
 
-      const created = await tx.gasBottlePurchaseOrder.create({
+      const created = await tx.accessoryPurchaseOrder.create({
         data: {
           reference,
           status: OrderStatus.PENDING_APPROVAL,
           currency: v.currency || "XAF",
           vatPct: v.vatPct,
-          shippingCost: v.shippingCost ?? 0,
+          transportMode: v.transportMode,
+          estimatedTransitDays: v.estimatedTransitDays ?? null,
+          estimatedArrivalDate: v.estimatedArrivalDate ?? null,
+          preferredCarrier: v.preferredCarrier ?? null,
+          logisticsNotes: v.logisticsNotes ?? null,
+          freightFees: v.freightFees ?? 0,
+          customsDuties: v.customsDuties ?? 0,
+          insuranceAmount: v.insuranceAmount ?? 0,
+          hasInsurance: v.hasInsurance ?? false,
           depotId: v.depotId,
           supplierId: v.supplierId,
           createdById: ctx.userId!,
           notes: v.notes ?? null,
           internalNotes: v.internalNotes ?? null,
-          requestedDeliveryDate: v.requestedDeliveryDate ?? null,
         },
       });
 
       for (const item of v.lineItems) {
-        const bottleType = await tx.gasBottleType.findFirst({
-          where: { id: item.bottleTypeId, deletedAt: null, isActive: true },
+        const accessoryItem = await tx.accessoryItem.findFirst({
+          where: { id: item.itemId, deletedAt: null, isActive: true },
         });
-        if (!bottleType) {
+        if (!accessoryItem) {
           throw new AppError(
-            "error.gas_bottle_order.bottle_type_not_found",
+            "error.accessory_order.item_not_found",
             StatusCodes.NOT_FOUND
           );
         }
@@ -153,23 +163,24 @@ export class GasBottlePurchaseOrderService extends BaseService<
           new Prisma.Decimal(item.unitPrice)
         );
 
-        await tx.gasBottlePurchaseOrderItem.create({
+        await tx.accessoryPurchaseOrderItem.create({
           data: {
             orderId: created.id,
-            bottleTypeId: item.bottleTypeId,
+            itemId: item.itemId,
             quantity: item.quantity,
             unitPrice: item.unitPrice,
             lineTotal,
+            isHighPriority: item.isHighPriority ?? false,
           },
         });
       }
 
-      await CalculateOrderTotals.gasBottlePurchaseOrder(created, tx);
+      await CalculateOrderTotals.accessoryPurchaseOrder(created, tx);
 
       const approval = await tx.approval.create({
         data: {
-          entityType: ApprovalEntityType.GAS_BOTTLE_ORDER,
-          refTable: "gas_bottle_purchase_orders",
+          entityType: ApprovalEntityType.ACCESSORY_ORDER,
+          refTable: "accessory_purchase_orders",
           recordId: created.id,
           status: ApprovalStatus.PENDING,
           currentStep: 1,
@@ -196,7 +207,7 @@ export class GasBottlePurchaseOrderService extends BaseService<
         },
       });
 
-      return tx.gasBottlePurchaseOrder.findUniqueOrThrow({
+      return tx.accessoryPurchaseOrder.findUniqueOrThrow({
         where: { id: created.id },
         include: FULL_ORDER_INCLUDE,
       });
@@ -220,10 +231,10 @@ export class GasBottlePurchaseOrderService extends BaseService<
       order,
       NotificationType.ORDER_SUBMITTED,
       NotificationPriority.HIGH,
-      "Gas Bottle Purchase Order Pending Your Approval",
-      "Bon de commande de bouteilles de gaz en attente de votre approbation",
-      `Gas bottle purchase order ${order.reference} has been created and requires your approval.`,
-      `Le bon de commande de bouteilles de gaz ${order.reference} a été créé et nécessite votre approbation.`
+      "Accessory Purchase Order Pending Your Approval",
+      "Bon de commande d'accessoires en attente de votre approbation",
+      `Accessory purchase order ${order.reference} has been created and requires your approval.`,
+      `Le bon de commande d'accessoires ${order.reference} a été créé et nécessite votre approbation.`
     );
 
     this.notifyRole(
@@ -231,10 +242,10 @@ export class GasBottlePurchaseOrderService extends BaseService<
       order,
       NotificationType.ORDER_CREATED,
       NotificationPriority.NORMAL,
-      "New Gas Bottle Purchase Order Created",
-      "Nouveau bon de commande de bouteilles de gaz créé",
-      `Gas bottle purchase order ${order.reference} has been created and is pending accounting approval.`,
-      `Le bon de commande de bouteilles de gaz ${order.reference} a été créé et est en attente d'approbation comptable.`
+      "New Accessory Purchase Order Created",
+      "Nouveau bon de commande d'accessoires créé",
+      `Accessory purchase order ${order.reference} has been created and is pending accounting approval.`,
+      `Le bon de commande d'accessoires ${order.reference} a été créé et est en attente d'approbation comptable.`
     );
 
     return order;
@@ -242,10 +253,10 @@ export class GasBottlePurchaseOrderService extends BaseService<
 
   async update(
     id: string,
-    data: UpdateGasBottlePurchaseOrderInput,
+    data: UpdateAccessoryPurchaseOrderInput,
     ctx: ServiceContext
-  ): Promise<GasBottlePurchaseOrder> {
-    const result = updateGasBottlePurchaseOrderSchema.safeParse(data);
+  ): Promise<AccessoryPurchaseOrder> {
+    const result = updateAccessoryPurchaseOrderSchema.safeParse(data);
     if (!result.success) {
       const messages = result.error.issues
         .map((issue) => issue.message)
@@ -254,12 +265,12 @@ export class GasBottlePurchaseOrderService extends BaseService<
     }
     const v = result.data;
 
-    const order = await prisma.gasBottlePurchaseOrder.findFirst({
+    const order = await prisma.accessoryPurchaseOrder.findFirst({
       where: { id, deletedAt: null },
     });
     if (!order) {
       throw new AppError(
-        "error.gas_bottle_order.not_found",
+        "error.accessory_order.not_found",
         StatusCodes.NOT_FOUND
       );
     }
@@ -271,7 +282,7 @@ export class GasBottlePurchaseOrderService extends BaseService<
     });
     if (!depot) {
       throw new AppError(
-        "error.gas_bottle_order.depot_not_found",
+        "error.accessory_order.depot_not_found",
         StatusCodes.NOT_FOUND
       );
     }
@@ -281,43 +292,51 @@ export class GasBottlePurchaseOrderService extends BaseService<
     });
     if (!supplier) {
       throw new AppError(
-        "error.gas_bottle_order.supplier_not_found",
+        "error.accessory_order.supplier_not_found",
         StatusCodes.NOT_FOUND
       );
     }
-    if (supplier.type !== "BOTTLES" && supplier.type !== "MULTIPLE") {
+    if (supplier.type !== "ACCESSORIES" && supplier.type !== "MULTIPLE") {
       throw new AppError(
-        "error.gas_bottle_order.supplier_not_bottle_type",
+        "error.accessory_order.supplier_not_accessory_type",
         StatusCodes.BAD_REQUEST
       );
     }
 
     const updated = await prisma.$transaction(async (tx) => {
-      await tx.gasBottlePurchaseOrder.update({
+      await tx.accessoryPurchaseOrder.update({
         where: { id },
         data: {
           depotId: v.depotId,
           supplierId: v.supplierId,
           currency: v.currency || order.currency,
           vatPct: v.vatPct,
-          shippingCost: v.shippingCost ?? order.shippingCost,
+          transportMode: v.transportMode,
+          estimatedTransitDays:
+            v.estimatedTransitDays ?? order.estimatedTransitDays,
+          estimatedArrivalDate: v.estimatedArrivalDate ?? null,
+          preferredCarrier: v.preferredCarrier ?? null,
+          logisticsNotes: v.logisticsNotes ?? null,
+          freightFees: v.freightFees ?? order.freightFees,
+          customsDuties: v.customsDuties ?? order.customsDuties,
+          insuranceAmount: v.insuranceAmount ?? order.insuranceAmount,
+          hasInsurance: v.hasInsurance ?? order.hasInsurance,
           notes: v.notes ?? null,
           internalNotes: v.internalNotes ?? null,
-          requestedDeliveryDate: v.requestedDeliveryDate ?? null,
         },
       });
 
-      await tx.gasBottlePurchaseOrderItem.deleteMany({
+      await tx.accessoryPurchaseOrderItem.deleteMany({
         where: { orderId: id },
       });
 
       for (const item of v.lineItems) {
-        const bottleType = await tx.gasBottleType.findFirst({
-          where: { id: item.bottleTypeId, deletedAt: null, isActive: true },
+        const accessoryItem = await tx.accessoryItem.findFirst({
+          where: { id: item.itemId, deletedAt: null, isActive: true },
         });
-        if (!bottleType) {
+        if (!accessoryItem) {
           throw new AppError(
-            "error.gas_bottle_order.bottle_type_not_found",
+            "error.accessory_order.item_not_found",
             StatusCodes.NOT_FOUND
           );
         }
@@ -326,23 +345,24 @@ export class GasBottlePurchaseOrderService extends BaseService<
           new Prisma.Decimal(item.unitPrice)
         );
 
-        await tx.gasBottlePurchaseOrderItem.create({
+        await tx.accessoryPurchaseOrderItem.create({
           data: {
             orderId: id,
-            bottleTypeId: item.bottleTypeId,
+            itemId: item.itemId,
             quantity: item.quantity,
             unitPrice: item.unitPrice,
             lineTotal,
+            isHighPriority: item.isHighPriority ?? false,
           },
         });
       }
 
-      const refreshedOrder = await tx.gasBottlePurchaseOrder.findUniqueOrThrow({
+      const refreshedOrder = await tx.accessoryPurchaseOrder.findUniqueOrThrow({
         where: { id },
       });
-      await CalculateOrderTotals.gasBottlePurchaseOrder(refreshedOrder, tx);
+      await CalculateOrderTotals.accessoryPurchaseOrder(refreshedOrder, tx);
 
-      return tx.gasBottlePurchaseOrder.findUniqueOrThrow({
+      return tx.accessoryPurchaseOrder.findUniqueOrThrow({
         where: { id },
         include: FULL_ORDER_INCLUDE,
       });
@@ -360,11 +380,16 @@ export class GasBottlePurchaseOrderService extends BaseService<
           "depotId",
           "supplierId",
           "vatPct",
-          "shippingCost",
+          "transportMode",
+          "estimatedTransitDays",
+          "freightFees",
+          "customsDuties",
+          "insuranceAmount",
+          "hasInsurance",
           "lineItems",
           "subTotal",
           "vatAmount",
-          "total",
+          "totalEstimate",
         ],
         userId: ctx.userId,
         userEmail: ctx.userEmail || "system",
@@ -379,13 +404,13 @@ export class GasBottlePurchaseOrderService extends BaseService<
     id: string,
     ctx: ServiceContext,
     soft: boolean = true
-  ): Promise<GasBottlePurchaseOrder> {
-    const order = await prisma.gasBottlePurchaseOrder.findFirst({
+  ): Promise<AccessoryPurchaseOrder> {
+    const order = await prisma.accessoryPurchaseOrder.findFirst({
       where: { id, deletedAt: null },
     });
     if (!order) {
       throw new AppError(
-        "error.gas_bottle_order.not_found",
+        "error.accessory_order.not_found",
         StatusCodes.NOT_FOUND
       );
     }
@@ -395,7 +420,7 @@ export class GasBottlePurchaseOrderService extends BaseService<
       order.status === OrderStatus.IN_TRANSIT
     ) {
       throw new AppError(
-        "error.gas_bottle_order.cannot_delete_active_order",
+        "error.accessory_order.cannot_delete_active_order",
         StatusCodes.BAD_REQUEST
       );
     }
@@ -424,13 +449,13 @@ export class GasBottlePurchaseOrderService extends BaseService<
   async cancelOrder(
     id: string,
     ctx: ServiceContext
-  ): Promise<GasBottlePurchaseOrder> {
-    const order = await prisma.gasBottlePurchaseOrder.findFirst({
+  ): Promise<AccessoryPurchaseOrder> {
+    const order = await prisma.accessoryPurchaseOrder.findFirst({
       where: { id, deletedAt: null },
     });
     if (!order) {
       throw new AppError(
-        "error.gas_bottle_order.not_found",
+        "error.accessory_order.not_found",
         StatusCodes.NOT_FOUND
       );
     }
@@ -440,7 +465,7 @@ export class GasBottlePurchaseOrderService extends BaseService<
       order.status === OrderStatus.CANCELLED
     ) {
       throw new AppError(
-        "error.gas_bottle_order.cannot_cancel_order",
+        "error.accessory_order.cannot_cancel_order",
         StatusCodes.BAD_REQUEST
       );
     }
@@ -448,14 +473,14 @@ export class GasBottlePurchaseOrderService extends BaseService<
     const approval = await prisma.approval.findFirst({
       where: {
         recordId: id,
-        entityType: ApprovalEntityType.GAS_BOTTLE_ORDER,
+        entityType: ApprovalEntityType.ACCESSORY_ORDER,
       },
       include: { steps: { orderBy: { step: "asc" } } },
     });
 
     if (!approval) {
       throw new AppError(
-        "error.gas_bottle_order.approval_not_found",
+        "error.accessory_order.approval_not_found",
         StatusCodes.NOT_FOUND
       );
     }
@@ -478,13 +503,13 @@ export class GasBottlePurchaseOrderService extends BaseService<
     const requiredRoleName = roleMapping[lastStep.role];
     if (!requiredRoleName || user.role.name !== requiredRoleName) {
       throw new AppError(
-        "error.gas_bottle_order.only_final_approver_can_cancel",
+        "error.accessory_order.only_final_approver_can_cancel",
         StatusCodes.FORBIDDEN
       );
     }
 
     const updated = await prisma.$transaction(async (tx) => {
-      const cancelled = await tx.gasBottlePurchaseOrder.update({
+      const cancelled = await tx.accessoryPurchaseOrder.update({
         where: { id },
         data: { status: OrderStatus.CANCELLED },
         include: FULL_ORDER_INCLUDE,
@@ -522,16 +547,16 @@ export class GasBottlePurchaseOrderService extends BaseService<
       type: NotificationType.ORDER_CANCELLED,
       priority: NotificationPriority.HIGH,
       target: { type: "user", userId: order.createdById },
-      titleEnglish: "Gas Bottle Purchase Order Cancelled",
-      titleFrench: "Bon de commande de bouteilles de gaz annulé",
-      bodyEnglish: `Gas bottle purchase order ${order.reference} has been cancelled by ${user.name} ${user.surname}.`,
-      bodyFrench: `Le bon de commande de bouteilles de gaz ${order.reference} a été annulé par ${user.name} ${user.surname}.`,
-      refTable: "gas_bottle_purchase_orders",
+      titleEnglish: "Accessory Purchase Order Cancelled",
+      titleFrench: "Bon de commande d'accessoires annulé",
+      bodyEnglish: `Accessory purchase order ${order.reference} has been cancelled by ${user.name} ${user.surname}.`,
+      bodyFrench: `Le bon de commande d'accessoires ${order.reference} a été annulé par ${user.name} ${user.surname}.`,
+      refTable: "accessory_purchase_orders",
       refId: id,
       data: { orderId: id, reference: order.reference },
     }).catch((err) =>
       console.error(
-        "[GasBottlePurchaseOrderService] Cancel notification failed:",
+        "[AccessoryPurchaseOrderService] Cancel notification failed:",
         err
       )
     );
@@ -540,14 +565,14 @@ export class GasBottlePurchaseOrderService extends BaseService<
   }
 
   async getOrderSummary(id: string, ctx: ServiceContext): Promise<any> {
-    const order = await prisma.gasBottlePurchaseOrder.findFirst({
+    const order = await prisma.accessoryPurchaseOrder.findFirst({
       where: { id, deletedAt: null },
       include: FULL_ORDER_INCLUDE,
     });
 
     if (!order) {
       throw new AppError(
-        "error.gas_bottle_order.not_found",
+        "error.accessory_order.not_found",
         StatusCodes.NOT_FOUND
       );
     }
@@ -555,7 +580,7 @@ export class GasBottlePurchaseOrderService extends BaseService<
     const approval = await prisma.approval.findFirst({
       where: {
         recordId: id,
-        entityType: ApprovalEntityType.GAS_BOTTLE_ORDER,
+        entityType: ApprovalEntityType.ACCESSORY_ORDER,
       },
       include: {
         steps: {
@@ -579,7 +604,7 @@ export class GasBottlePurchaseOrderService extends BaseService<
     const approval = await prisma.approval.findFirst({
       where: {
         recordId: orderId,
-        entityType: ApprovalEntityType.GAS_BOTTLE_ORDER,
+        entityType: ApprovalEntityType.ACCESSORY_ORDER,
       },
       include: { steps: true },
     });
@@ -590,7 +615,7 @@ export class GasBottlePurchaseOrderService extends BaseService<
       );
       if (hasApprovedStep) {
         throw new AppError(
-          "error.gas_bottle_order.cannot_edit_approved_order",
+          "error.accessory_order.cannot_edit_approved_order",
           StatusCodes.BAD_REQUEST
         );
       }
@@ -599,7 +624,7 @@ export class GasBottlePurchaseOrderService extends BaseService<
 
   private notifyRole(
     roleId: string,
-    order: GasBottlePurchaseOrder,
+    order: AccessoryPurchaseOrder,
     type: NotificationType,
     priority: NotificationPriority,
     titleEn: string,
@@ -615,12 +640,12 @@ export class GasBottlePurchaseOrderService extends BaseService<
       titleFrench: titleFr,
       bodyEnglish: bodyEn,
       bodyFrench: bodyFr,
-      refTable: "gas_bottle_purchase_orders",
+      refTable: "accessory_purchase_orders",
       refId: order.id,
       data: { orderId: order.id, reference: order.reference },
     }).catch((err) =>
       console.error(
-        `[GasBottlePurchaseOrderService] Notification to role ${roleId} failed:`,
+        `[AccessoryPurchaseOrderService] Notification to role ${roleId} failed:`,
         err
       )
     );

@@ -152,6 +152,13 @@ export const allPermissions = {
     updateOrder: "gas_bottle_purchase_orders.can_update_order",
     deleteOrder: "gas_bottle_purchase_orders.can_delete_order",
   },
+  accessoryPurchaseOrders: {
+    createOrder: "accessory_purchase_orders.can_create_order",
+    readOrder: "accessory_purchase_orders.can_read_order",
+    readAllOrders: "accessory_purchase_orders.can_read_orders",
+    updateOrder: "accessory_purchase_orders.can_update_order",
+    deleteOrder: "accessory_purchase_orders.can_delete_order",
+  },
 } as const;
 
 export default allPermissions;

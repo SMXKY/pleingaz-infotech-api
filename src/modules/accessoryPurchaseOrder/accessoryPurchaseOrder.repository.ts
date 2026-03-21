@@ -1,14 +1,14 @@
 import { BaseRepository } from "src/base/BaseRepository";
-import { GasBottlePurchaseOrder } from "src/generated/prisma";
+import { AccessoryPurchaseOrder } from "src/generated/prisma";
 import { FilterParams } from "@appTypes/base.types";
 
-export class GasBottlePurchaseOrderRepository extends BaseRepository<GasBottlePurchaseOrder> {
-  protected modelName = "gasBottlePurchaseOrder";
+export class AccessoryPurchaseOrderRepository extends BaseRepository<AccessoryPurchaseOrder> {
+  protected modelName = "accessoryPurchaseOrder";
   protected hasSystemField = false;
 
   async findByReference(
     reference: string
-  ): Promise<GasBottlePurchaseOrder | null> {
+  ): Promise<AccessoryPurchaseOrder | null> {
     return this.model.findFirst({
       where: { reference, deletedAt: null },
     });
@@ -20,7 +20,11 @@ export class GasBottlePurchaseOrderRepository extends BaseRepository<GasBottlePu
     for (const [key, value] of Object.entries(filters)) {
       if (value === undefined || value === "") continue;
 
-      if (key === "status" || key === "paymentStatus") {
+      if (
+        key === "status" ||
+        key === "paymentStatus" ||
+        key === "transportMode"
+      ) {
         where[key] = value;
       } else if (
         key === "supplierId" ||
