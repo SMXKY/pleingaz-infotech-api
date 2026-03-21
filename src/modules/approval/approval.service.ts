@@ -21,11 +21,20 @@ import { BaseService } from "src/base/BaseService";
 const ROLE_NAME_TO_APPROVAL_ROLE: Record<string, ApprovalRole> = {
   "Directeur Général (CEO)": ApprovalRole.CEO,
   "Comptable (Accountant)": ApprovalRole.ACCOUNTING,
+  "Chef d'Exploitation (Chief of Exploitation)":
+    ApprovalRole.CHIEF_EXPLOITATION,
+  "Responsable de Département (Department Head)": ApprovalRole.DEPARTMENT_HEAD,
+  "Directeur Général Adjoint (General Manager)": ApprovalRole.GENERAL_MANAGER,
 };
 
-const APPROVAL_ROLE_TO_NAME: Record<string, string> = {
+const APPROVAL_ROLE_TO_NAME: Record<ApprovalRole, string> = {
   [ApprovalRole.CEO]: "Directeur Général (CEO)",
   [ApprovalRole.ACCOUNTING]: "Comptable (Accountant)",
+  [ApprovalRole.CHIEF_EXPLOITATION]:
+    "Chef d'Exploitation (Chief of Exploitation)",
+  [ApprovalRole.DEPARTMENT_HEAD]:
+    "Responsable de Département (Department Head)",
+  [ApprovalRole.GENERAL_MANAGER]: "Directeur Général Adjoint (General Manager)",
 };
 
 export class ApprovalService extends BaseService<
