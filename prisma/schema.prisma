@@ -97,6 +97,7 @@ enum PermissionSubmodule {
   FIXED_ASSETS
   TAX_DECLARATIONS
   FINANCIAL_REPORTS
+  PAYMENTS
 
   // HUMAN_RESOURCES
   ATTENDANCE
@@ -365,6 +366,8 @@ model User {
   Notifications               Notification[]
   DeviceTokens                DeviceToken[]
   notificationPreference      NotificationPreference?
+  paymentsMade                PaymentRecord[]          @relation("payment_paid_by")
+  paymentsReceived            PaymentRecord[]          @relation("payment_recipient")
 
   @@index([deletedAt])
   @@map("users")
@@ -651,6 +654,7 @@ model Supplier {
   gasPurchaseOrders       GasPurchaseOrder[]
   gasBottlePurchaseOrders GasBottlePurchaseOrder[]
   accessoryPurchaseOrders AccessoryPurchaseOrder[]
+  paymentsReceived        PaymentRecord[]             @relation("payment_recipient_supplier")
 
   @@index([deletedAt])
   @@index([type])
@@ -1170,9 +1174,10 @@ model ExploitationInvoice {
   paidBy      User?   @relation("exploitation_invoices_paid_by", fields: [paidById], references: [id])
   paidById    String? @map("paid_by_id")
 
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  deletedAt DateTime? @map("deleted_at")
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+  deletedAt      DateTime?       @map("deleted_at")
+  paymentRecords PaymentRecord[]
 
   @@unique([invoiceNumber, type])
   @@index([type, orderId])
@@ -1392,4 +1397,59 @@ model NotificationPreference {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("notification_preferences")
+}
+
+enum PaymentRecipientType {
+  SUPPLIER
+  EMPLOYEE
+  DRIVER
+  OTHER
+}
+
+model PaymentRecord {
+  id        String              @id @default(uuid())
+  invoiceId String              @map("invoice_id")
+  invoice   ExploitationInvoice @relation(fields: [invoiceId], references: [id])
+  refTable  String              @map("ref_table")
+  orderId   String              @map("order_id")
+
+  paidById String @map("paid_by_id")
+  paidBy   User   @relation("payment_paid_by", fields: [paidById], references: [id])
+
+  recipientType       PaymentRecipientType @map("recipient_type")
+  recipientName       String               @map("recipient_name")
+  recipientUserId     String?              @map("recipient_user_id")
+  recipientUser       User?                @relation("payment_recipient", fields: [recipientUserId], references: [id])
+  recipientSupplierId String?              @map("recipient_supplier_id")
+  recipientSupplier   Supplier?            @relation("payment_recipient_supplier", fields: [recipientSupplierId], references: [id])
+
+  method               PaymentMethod
+  mobileMoneyProvider  MobileMoneyProvider? @map("mobile_money_provider")
+  bankName             String?              @map("bank_name")
+  transactionReference String?              @map("transaction_reference")
+  checkNumber          String?              @map("check_number")
+
+  currency    Currency @default(XAF)
+  amount      Decimal  @db.Decimal(15, 2)
+  amountInCfa Decimal  @map("amount_in_cfa") @db.Decimal(15, 2)
+
+  paidAt     DateTime @map("paid_at")
+  recordedAt DateTime @default(now()) @map("recorded_at")
+
+  isReversal Boolean        @default(false) @map("is_reversal")
+  reversesId String?        @unique @map("reverses_id")
+  reverses   PaymentRecord? @relation("payment_reversal", fields: [reversesId], references: [id])
+  reversedBy PaymentRecord? @relation("payment_reversal")
+
+  purpose String?
+  notes   String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([invoiceId])
+  @@index([refTable, orderId])
+  @@index([paidById])
+  @@index([paidAt])
+  @@map("payment_records")
 }

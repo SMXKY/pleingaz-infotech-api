@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "Bash(wc -l /c/Users/SPVCEMVN/OneDrive/Desktop/projects/pliengaz/api/src/utils/*.ts)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(wc -l /c/Users/SPVCEMVN/OneDrive/Desktop/projects/pliengaz/api/src/locales/*.json)",
+      "Bash(find /c/Users/SPVCEMVN/OneDrive/Desktop/projects/pliengaz/api -type f -name *permission* -o -name *seed*)",
+      "Bash(xargs ls:*)",
+      "Bash(npx prisma:*)",
+      "Bash(xxd)"
     ]
   }
 }

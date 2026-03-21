@@ -122,6 +122,14 @@ export const allPermissions = {
     readApproval: "approvals.can_read_approval",
     decideApproval: "approvals.can_decide_approval",
   },
+  payments: {
+    recordPayment: "payments.can_record_payment",
+    readPayment: "payments.can_read_payment",
+    readAllPayments: "payments.can_read_payments",
+    reversePayment: "payments.can_reverse_payment",
+    correctPayment: "payments.can_correct_payment",
+    updatePaymentNotes: "payments.can_update_payment_notes",
+  },
   exploitationDocuments: {
     uploadDocument: "exploitation_documents.can_upload_document",
     readAllDocuments: "exploitation_documents.can_read_documents",

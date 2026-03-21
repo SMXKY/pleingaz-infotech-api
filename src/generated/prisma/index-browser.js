@@ -788,6 +788,34 @@ exports.Prisma.NotificationPreferenceScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.PaymentRecordScalarFieldEnum = {
+  id: 'id',
+  invoiceId: 'invoiceId',
+  refTable: 'refTable',
+  orderId: 'orderId',
+  paidById: 'paidById',
+  recipientType: 'recipientType',
+  recipientName: 'recipientName',
+  recipientUserId: 'recipientUserId',
+  recipientSupplierId: 'recipientSupplierId',
+  method: 'method',
+  mobileMoneyProvider: 'mobileMoneyProvider',
+  bankName: 'bankName',
+  transactionReference: 'transactionReference',
+  checkNumber: 'checkNumber',
+  currency: 'currency',
+  amount: 'amount',
+  amountInCfa: 'amountInCfa',
+  paidAt: 'paidAt',
+  recordedAt: 'recordedAt',
+  isReversal: 'isReversal',
+  reversesId: 'reversesId',
+  purpose: 'purpose',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -863,6 +891,7 @@ exports.PermissionSubmodule = exports.$Enums.PermissionSubmodule = {
   FIXED_ASSETS: 'FIXED_ASSETS',
   TAX_DECLARATIONS: 'TAX_DECLARATIONS',
   FINANCIAL_REPORTS: 'FINANCIAL_REPORTS',
+  PAYMENTS: 'PAYMENTS',
   ATTENDANCE: 'ATTENDANCE',
   RECRUITMENT: 'RECRUITMENT',
   SALARY_MANAGEMENT: 'SALARY_MANAGEMENT',
@@ -1178,6 +1207,13 @@ exports.Platform = exports.$Enums.Platform = {
   ANDROID: 'ANDROID'
 };
 
+exports.PaymentRecipientType = exports.$Enums.PaymentRecipientType = {
+  SUPPLIER: 'SUPPLIER',
+  EMPLOYEE: 'EMPLOYEE',
+  DRIVER: 'DRIVER',
+  OTHER: 'OTHER'
+};
+
 exports.Prisma.ModelName = {
   Department: 'Department',
   Role: 'Role',
@@ -1219,7 +1255,8 @@ exports.Prisma.ModelName = {
   ExchangeRate: 'ExchangeRate',
   Notification: 'Notification',
   DeviceToken: 'DeviceToken',
-  NotificationPreference: 'NotificationPreference'
+  NotificationPreference: 'NotificationPreference',
+  PaymentRecord: 'PaymentRecord'
 };
 
 /**

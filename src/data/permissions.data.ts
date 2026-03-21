@@ -950,6 +950,62 @@ export const permissions: PermissionSeed[] = [
     riskLevel: PermissionRiskLevel.CRITICAL,
   },
 
+  // ─── ACCOUNTING - PAYMENTS ──────────────────────────────────────────────────────
+  {
+    code: "payments.can_record_payment",
+    engName: "Record Payment",
+    frName: "Enregistrer un paiement",
+    module: PermissionModule.ACCOUNTING,
+    submodule: PermissionSubmodule.PAYMENTS,
+    action: PermissionAction.CREATE,
+    riskLevel: PermissionRiskLevel.CRITICAL,
+  },
+  {
+    code: "payments.can_read_payment",
+    engName: "Read Payment",
+    frName: "Lire un paiement",
+    module: PermissionModule.ACCOUNTING,
+    submodule: PermissionSubmodule.PAYMENTS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.LOW,
+  },
+  {
+    code: "payments.can_read_payments",
+    engName: "Read All Payments",
+    frName: "Lire tous les paiements",
+    module: PermissionModule.ACCOUNTING,
+    submodule: PermissionSubmodule.PAYMENTS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.LOW,
+  },
+  {
+    code: "payments.can_reverse_payment",
+    engName: "Reverse Payment",
+    frName: "Annuler un paiement",
+    module: PermissionModule.ACCOUNTING,
+    submodule: PermissionSubmodule.PAYMENTS,
+    action: PermissionAction.CREATE,
+    riskLevel: PermissionRiskLevel.CRITICAL,
+  },
+  {
+    code: "payments.can_correct_payment",
+    engName: "Correct Payment",
+    frName: "Corriger un paiement",
+    module: PermissionModule.ACCOUNTING,
+    submodule: PermissionSubmodule.PAYMENTS,
+    action: PermissionAction.CREATE,
+    riskLevel: PermissionRiskLevel.CRITICAL,
+  },
+  {
+    code: "payments.can_update_payment_notes",
+    engName: "Update Payment Notes",
+    frName: "Modifier les notes de paiement",
+    module: PermissionModule.ACCOUNTING,
+    submodule: PermissionSubmodule.PAYMENTS,
+    action: PermissionAction.UPDATE,
+    riskLevel: PermissionRiskLevel.MEDIUM,
+  },
+
   // ─── EXPLOITATION - DOCUMENTS ─────────────────────────────────────────────────
   {
     code: "exploitation_documents.can_upload_document",
