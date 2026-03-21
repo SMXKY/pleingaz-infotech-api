@@ -223,6 +223,11 @@ export type NotificationPreference = $Result.DefaultSelection<Prisma.$Notificati
  * 
  */
 export type PaymentRecord = $Result.DefaultSelection<Prisma.$PaymentRecordPayload>
+/**
+ * Model OrderEmail
+ * 
+ */
+export type OrderEmail = $Result.DefaultSelection<Prisma.$OrderEmailPayload>
 
 /**
  * Enums
@@ -1433,6 +1438,16 @@ export class PrismaClient<
     * ```
     */
   get paymentRecord(): Prisma.PaymentRecordDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.orderEmail`: Exposes CRUD operations for the **OrderEmail** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more OrderEmails
+    * const orderEmails = await prisma.orderEmail.findMany()
+    * ```
+    */
+  get orderEmail(): Prisma.OrderEmailDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1915,7 +1930,8 @@ export namespace Prisma {
     Notification: 'Notification',
     DeviceToken: 'DeviceToken',
     NotificationPreference: 'NotificationPreference',
-    PaymentRecord: 'PaymentRecord'
+    PaymentRecord: 'PaymentRecord',
+    OrderEmail: 'OrderEmail'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1934,7 +1950,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "department" | "role" | "roleOverride" | "permission" | "permissionImplies" | "permissionOverride" | "rolePermission" | "user" | "userPreference" | "activityLog" | "userToken" | "adminConfig" | "financeSettings" | "numberSequence" | "supplier" | "supplierPaymentMethod" | "supplierCommercialTerms" | "supplierAddress" | "supplierContact" | "supplierPerformanceMetrics" | "exploitationDepot" | "exploitationDriver" | "tanker" | "gasPurchaseOrder" | "gasPurchaseOrderTanker" | "gasPurchaseOrderItem" | "gasBottleType" | "gasBottlePurchaseOrder" | "gasBottlePurchaseOrderItem" | "accessoryCategory" | "accessoryItem" | "accessoryPurchaseOrder" | "accessoryPurchaseOrderItem" | "exploitationInvoice" | "exploitationDocument" | "approval" | "approvalStep" | "exchangeRate" | "notification" | "deviceToken" | "notificationPreference" | "paymentRecord"
+      modelProps: "department" | "role" | "roleOverride" | "permission" | "permissionImplies" | "permissionOverride" | "rolePermission" | "user" | "userPreference" | "activityLog" | "userToken" | "adminConfig" | "financeSettings" | "numberSequence" | "supplier" | "supplierPaymentMethod" | "supplierCommercialTerms" | "supplierAddress" | "supplierContact" | "supplierPerformanceMetrics" | "exploitationDepot" | "exploitationDriver" | "tanker" | "gasPurchaseOrder" | "gasPurchaseOrderTanker" | "gasPurchaseOrderItem" | "gasBottleType" | "gasBottlePurchaseOrder" | "gasBottlePurchaseOrderItem" | "accessoryCategory" | "accessoryItem" | "accessoryPurchaseOrder" | "accessoryPurchaseOrderItem" | "exploitationInvoice" | "exploitationDocument" | "approval" | "approvalStep" | "exchangeRate" | "notification" | "deviceToken" | "notificationPreference" | "paymentRecord" | "orderEmail"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -5046,6 +5062,80 @@ export namespace Prisma {
           }
         }
       }
+      OrderEmail: {
+        payload: Prisma.$OrderEmailPayload<ExtArgs>
+        fields: Prisma.OrderEmailFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OrderEmailFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderEmailPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OrderEmailFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderEmailPayload>
+          }
+          findFirst: {
+            args: Prisma.OrderEmailFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderEmailPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OrderEmailFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderEmailPayload>
+          }
+          findMany: {
+            args: Prisma.OrderEmailFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderEmailPayload>[]
+          }
+          create: {
+            args: Prisma.OrderEmailCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderEmailPayload>
+          }
+          createMany: {
+            args: Prisma.OrderEmailCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.OrderEmailCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderEmailPayload>[]
+          }
+          delete: {
+            args: Prisma.OrderEmailDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderEmailPayload>
+          }
+          update: {
+            args: Prisma.OrderEmailUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderEmailPayload>
+          }
+          deleteMany: {
+            args: Prisma.OrderEmailDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OrderEmailUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.OrderEmailUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderEmailPayload>[]
+          }
+          upsert: {
+            args: Prisma.OrderEmailUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderEmailPayload>
+          }
+          aggregate: {
+            args: Prisma.OrderEmailAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateOrderEmail>
+          }
+          groupBy: {
+            args: Prisma.OrderEmailGroupByArgs<ExtArgs>
+            result: $Utils.Optional<OrderEmailGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OrderEmailCountArgs<ExtArgs>
+            result: $Utils.Optional<OrderEmailCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -5184,6 +5274,7 @@ export namespace Prisma {
     deviceToken?: DeviceTokenOmit
     notificationPreference?: NotificationPreferenceOmit
     paymentRecord?: PaymentRecordOmit
+    orderEmail?: OrderEmailOmit
   }
 
   /* Types for Logging */
@@ -5424,6 +5515,7 @@ export namespace Prisma {
     DeviceTokens: number
     paymentsMade: number
     paymentsReceived: number
+    orderEmailsSent: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5449,6 +5541,7 @@ export namespace Prisma {
     DeviceTokens?: boolean | UserCountOutputTypeCountDeviceTokensArgs
     paymentsMade?: boolean | UserCountOutputTypeCountPaymentsMadeArgs
     paymentsReceived?: boolean | UserCountOutputTypeCountPaymentsReceivedArgs
+    orderEmailsSent?: boolean | UserCountOutputTypeCountOrderEmailsSentArgs
   }
 
   // Custom InputTypes
@@ -5616,6 +5709,13 @@ export namespace Prisma {
     where?: PaymentRecordWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountOrderEmailsSentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrderEmailWhereInput
+  }
+
 
   /**
    * Count Type SupplierCountOutputType
@@ -5629,6 +5729,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders: number
     accessoryPurchaseOrders: number
     paymentsReceived: number
+    orderEmails: number
   }
 
   export type SupplierCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5639,6 +5740,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: boolean | SupplierCountOutputTypeCountGasBottlePurchaseOrdersArgs
     accessoryPurchaseOrders?: boolean | SupplierCountOutputTypeCountAccessoryPurchaseOrdersArgs
     paymentsReceived?: boolean | SupplierCountOutputTypeCountPaymentsReceivedArgs
+    orderEmails?: boolean | SupplierCountOutputTypeCountOrderEmailsArgs
   }
 
   // Custom InputTypes
@@ -5699,6 +5801,13 @@ export namespace Prisma {
    */
   export type SupplierCountOutputTypeCountPaymentsReceivedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PaymentRecordWhereInput
+  }
+
+  /**
+   * SupplierCountOutputType without action
+   */
+  export type SupplierCountOutputTypeCountOrderEmailsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrderEmailWhereInput
   }
 
 
@@ -14549,6 +14658,7 @@ export namespace Prisma {
     notificationPreference?: boolean | User$notificationPreferenceArgs<ExtArgs>
     paymentsMade?: boolean | User$paymentsMadeArgs<ExtArgs>
     paymentsReceived?: boolean | User$paymentsReceivedArgs<ExtArgs>
+    orderEmailsSent?: boolean | User$orderEmailsSentArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -14698,6 +14808,7 @@ export namespace Prisma {
     notificationPreference?: boolean | User$notificationPreferenceArgs<ExtArgs>
     paymentsMade?: boolean | User$paymentsMadeArgs<ExtArgs>
     paymentsReceived?: boolean | User$paymentsReceivedArgs<ExtArgs>
+    orderEmailsSent?: boolean | User$orderEmailsSentArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -14738,6 +14849,7 @@ export namespace Prisma {
       notificationPreference: Prisma.$NotificationPreferencePayload<ExtArgs> | null
       paymentsMade: Prisma.$PaymentRecordPayload<ExtArgs>[]
       paymentsReceived: Prisma.$PaymentRecordPayload<ExtArgs>[]
+      orderEmailsSent: Prisma.$OrderEmailPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -15195,6 +15307,7 @@ export namespace Prisma {
     notificationPreference<T extends User$notificationPreferenceArgs<ExtArgs> = {}>(args?: Subset<T, User$notificationPreferenceArgs<ExtArgs>>): Prisma__NotificationPreferenceClient<$Result.GetResult<Prisma.$NotificationPreferencePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     paymentsMade<T extends User$paymentsMadeArgs<ExtArgs> = {}>(args?: Subset<T, User$paymentsMadeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     paymentsReceived<T extends User$paymentsReceivedArgs<ExtArgs> = {}>(args?: Subset<T, User$paymentsReceivedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    orderEmailsSent<T extends User$orderEmailsSentArgs<ExtArgs> = {}>(args?: Subset<T, User$orderEmailsSentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderEmailPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -16218,6 +16331,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PaymentRecordScalarFieldEnum | PaymentRecordScalarFieldEnum[]
+  }
+
+  /**
+   * User.orderEmailsSent
+   */
+  export type User$orderEmailsSentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderEmail
+     */
+    select?: OrderEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderEmail
+     */
+    omit?: OrderEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderEmailInclude<ExtArgs> | null
+    where?: OrderEmailWhereInput
+    orderBy?: OrderEmailOrderByWithRelationInput | OrderEmailOrderByWithRelationInput[]
+    cursor?: OrderEmailWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OrderEmailScalarFieldEnum | OrderEmailScalarFieldEnum[]
   }
 
   /**
@@ -23052,6 +23189,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: boolean | Supplier$gasBottlePurchaseOrdersArgs<ExtArgs>
     accessoryPurchaseOrders?: boolean | Supplier$accessoryPurchaseOrdersArgs<ExtArgs>
     paymentsReceived?: boolean | Supplier$paymentsReceivedArgs<ExtArgs>
+    orderEmails?: boolean | Supplier$orderEmailsArgs<ExtArgs>
     _count?: boolean | SupplierCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["supplier"]>
 
@@ -23120,6 +23258,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: boolean | Supplier$gasBottlePurchaseOrdersArgs<ExtArgs>
     accessoryPurchaseOrders?: boolean | Supplier$accessoryPurchaseOrdersArgs<ExtArgs>
     paymentsReceived?: boolean | Supplier$paymentsReceivedArgs<ExtArgs>
+    orderEmails?: boolean | Supplier$orderEmailsArgs<ExtArgs>
     _count?: boolean | SupplierCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SupplierIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -23142,6 +23281,7 @@ export namespace Prisma {
       gasBottlePurchaseOrders: Prisma.$GasBottlePurchaseOrderPayload<ExtArgs>[]
       accessoryPurchaseOrders: Prisma.$AccessoryPurchaseOrderPayload<ExtArgs>[]
       paymentsReceived: Prisma.$PaymentRecordPayload<ExtArgs>[]
+      orderEmails: Prisma.$OrderEmailPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -23562,6 +23702,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders<T extends Supplier$gasBottlePurchaseOrdersArgs<ExtArgs> = {}>(args?: Subset<T, Supplier$gasBottlePurchaseOrdersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GasBottlePurchaseOrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     accessoryPurchaseOrders<T extends Supplier$accessoryPurchaseOrdersArgs<ExtArgs> = {}>(args?: Subset<T, Supplier$accessoryPurchaseOrdersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccessoryPurchaseOrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     paymentsReceived<T extends Supplier$paymentsReceivedArgs<ExtArgs> = {}>(args?: Subset<T, Supplier$paymentsReceivedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    orderEmails<T extends Supplier$orderEmailsArgs<ExtArgs> = {}>(args?: Subset<T, Supplier$orderEmailsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderEmailPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -24204,6 +24345,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PaymentRecordScalarFieldEnum | PaymentRecordScalarFieldEnum[]
+  }
+
+  /**
+   * Supplier.orderEmails
+   */
+  export type Supplier$orderEmailsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderEmail
+     */
+    select?: OrderEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderEmail
+     */
+    omit?: OrderEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderEmailInclude<ExtArgs> | null
+    where?: OrderEmailWhereInput
+    orderBy?: OrderEmailOrderByWithRelationInput | OrderEmailOrderByWithRelationInput[]
+    cursor?: OrderEmailWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OrderEmailScalarFieldEnum | OrderEmailScalarFieldEnum[]
   }
 
   /**
@@ -57987,6 +58152,1189 @@ export namespace Prisma {
 
 
   /**
+   * Model OrderEmail
+   */
+
+  export type AggregateOrderEmail = {
+    _count: OrderEmailCountAggregateOutputType | null
+    _min: OrderEmailMinAggregateOutputType | null
+    _max: OrderEmailMaxAggregateOutputType | null
+  }
+
+  export type OrderEmailMinAggregateOutputType = {
+    id: string | null
+    refTable: string | null
+    orderId: string | null
+    recipientEmail: string | null
+    recipientName: string | null
+    supplierId: string | null
+    subject: string | null
+    htmlBody: string | null
+    userMessage: string | null
+    sentById: string | null
+    sentAt: Date | null
+    brevoMessageId: string | null
+    deliveryStatus: string | null
+    createdAt: Date | null
+  }
+
+  export type OrderEmailMaxAggregateOutputType = {
+    id: string | null
+    refTable: string | null
+    orderId: string | null
+    recipientEmail: string | null
+    recipientName: string | null
+    supplierId: string | null
+    subject: string | null
+    htmlBody: string | null
+    userMessage: string | null
+    sentById: string | null
+    sentAt: Date | null
+    brevoMessageId: string | null
+    deliveryStatus: string | null
+    createdAt: Date | null
+  }
+
+  export type OrderEmailCountAggregateOutputType = {
+    id: number
+    refTable: number
+    orderId: number
+    recipientEmail: number
+    recipientName: number
+    supplierId: number
+    subject: number
+    htmlBody: number
+    userMessage: number
+    sentById: number
+    sentAt: number
+    brevoMessageId: number
+    deliveryStatus: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type OrderEmailMinAggregateInputType = {
+    id?: true
+    refTable?: true
+    orderId?: true
+    recipientEmail?: true
+    recipientName?: true
+    supplierId?: true
+    subject?: true
+    htmlBody?: true
+    userMessage?: true
+    sentById?: true
+    sentAt?: true
+    brevoMessageId?: true
+    deliveryStatus?: true
+    createdAt?: true
+  }
+
+  export type OrderEmailMaxAggregateInputType = {
+    id?: true
+    refTable?: true
+    orderId?: true
+    recipientEmail?: true
+    recipientName?: true
+    supplierId?: true
+    subject?: true
+    htmlBody?: true
+    userMessage?: true
+    sentById?: true
+    sentAt?: true
+    brevoMessageId?: true
+    deliveryStatus?: true
+    createdAt?: true
+  }
+
+  export type OrderEmailCountAggregateInputType = {
+    id?: true
+    refTable?: true
+    orderId?: true
+    recipientEmail?: true
+    recipientName?: true
+    supplierId?: true
+    subject?: true
+    htmlBody?: true
+    userMessage?: true
+    sentById?: true
+    sentAt?: true
+    brevoMessageId?: true
+    deliveryStatus?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type OrderEmailAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OrderEmail to aggregate.
+     */
+    where?: OrderEmailWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OrderEmails to fetch.
+     */
+    orderBy?: OrderEmailOrderByWithRelationInput | OrderEmailOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OrderEmailWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OrderEmails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OrderEmails.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned OrderEmails
+    **/
+    _count?: true | OrderEmailCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OrderEmailMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OrderEmailMaxAggregateInputType
+  }
+
+  export type GetOrderEmailAggregateType<T extends OrderEmailAggregateArgs> = {
+        [P in keyof T & keyof AggregateOrderEmail]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOrderEmail[P]>
+      : GetScalarType<T[P], AggregateOrderEmail[P]>
+  }
+
+
+
+
+  export type OrderEmailGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrderEmailWhereInput
+    orderBy?: OrderEmailOrderByWithAggregationInput | OrderEmailOrderByWithAggregationInput[]
+    by: OrderEmailScalarFieldEnum[] | OrderEmailScalarFieldEnum
+    having?: OrderEmailScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OrderEmailCountAggregateInputType | true
+    _min?: OrderEmailMinAggregateInputType
+    _max?: OrderEmailMaxAggregateInputType
+  }
+
+  export type OrderEmailGroupByOutputType = {
+    id: string
+    refTable: string
+    orderId: string
+    recipientEmail: string
+    recipientName: string | null
+    supplierId: string
+    subject: string
+    htmlBody: string
+    userMessage: string | null
+    sentById: string
+    sentAt: Date
+    brevoMessageId: string | null
+    deliveryStatus: string | null
+    createdAt: Date
+    _count: OrderEmailCountAggregateOutputType | null
+    _min: OrderEmailMinAggregateOutputType | null
+    _max: OrderEmailMaxAggregateOutputType | null
+  }
+
+  type GetOrderEmailGroupByPayload<T extends OrderEmailGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OrderEmailGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OrderEmailGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OrderEmailGroupByOutputType[P]>
+            : GetScalarType<T[P], OrderEmailGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OrderEmailSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    refTable?: boolean
+    orderId?: boolean
+    recipientEmail?: boolean
+    recipientName?: boolean
+    supplierId?: boolean
+    subject?: boolean
+    htmlBody?: boolean
+    userMessage?: boolean
+    sentById?: boolean
+    sentAt?: boolean
+    brevoMessageId?: boolean
+    deliveryStatus?: boolean
+    createdAt?: boolean
+    supplier?: boolean | SupplierDefaultArgs<ExtArgs>
+    sentBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["orderEmail"]>
+
+  export type OrderEmailSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    refTable?: boolean
+    orderId?: boolean
+    recipientEmail?: boolean
+    recipientName?: boolean
+    supplierId?: boolean
+    subject?: boolean
+    htmlBody?: boolean
+    userMessage?: boolean
+    sentById?: boolean
+    sentAt?: boolean
+    brevoMessageId?: boolean
+    deliveryStatus?: boolean
+    createdAt?: boolean
+    supplier?: boolean | SupplierDefaultArgs<ExtArgs>
+    sentBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["orderEmail"]>
+
+  export type OrderEmailSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    refTable?: boolean
+    orderId?: boolean
+    recipientEmail?: boolean
+    recipientName?: boolean
+    supplierId?: boolean
+    subject?: boolean
+    htmlBody?: boolean
+    userMessage?: boolean
+    sentById?: boolean
+    sentAt?: boolean
+    brevoMessageId?: boolean
+    deliveryStatus?: boolean
+    createdAt?: boolean
+    supplier?: boolean | SupplierDefaultArgs<ExtArgs>
+    sentBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["orderEmail"]>
+
+  export type OrderEmailSelectScalar = {
+    id?: boolean
+    refTable?: boolean
+    orderId?: boolean
+    recipientEmail?: boolean
+    recipientName?: boolean
+    supplierId?: boolean
+    subject?: boolean
+    htmlBody?: boolean
+    userMessage?: boolean
+    sentById?: boolean
+    sentAt?: boolean
+    brevoMessageId?: boolean
+    deliveryStatus?: boolean
+    createdAt?: boolean
+  }
+
+  export type OrderEmailOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "refTable" | "orderId" | "recipientEmail" | "recipientName" | "supplierId" | "subject" | "htmlBody" | "userMessage" | "sentById" | "sentAt" | "brevoMessageId" | "deliveryStatus" | "createdAt", ExtArgs["result"]["orderEmail"]>
+  export type OrderEmailInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    supplier?: boolean | SupplierDefaultArgs<ExtArgs>
+    sentBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type OrderEmailIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    supplier?: boolean | SupplierDefaultArgs<ExtArgs>
+    sentBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type OrderEmailIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    supplier?: boolean | SupplierDefaultArgs<ExtArgs>
+    sentBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $OrderEmailPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "OrderEmail"
+    objects: {
+      supplier: Prisma.$SupplierPayload<ExtArgs>
+      sentBy: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      refTable: string
+      orderId: string
+      recipientEmail: string
+      recipientName: string | null
+      supplierId: string
+      subject: string
+      htmlBody: string
+      userMessage: string | null
+      sentById: string
+      sentAt: Date
+      brevoMessageId: string | null
+      deliveryStatus: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["orderEmail"]>
+    composites: {}
+  }
+
+  type OrderEmailGetPayload<S extends boolean | null | undefined | OrderEmailDefaultArgs> = $Result.GetResult<Prisma.$OrderEmailPayload, S>
+
+  type OrderEmailCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<OrderEmailFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: OrderEmailCountAggregateInputType | true
+    }
+
+  export interface OrderEmailDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['OrderEmail'], meta: { name: 'OrderEmail' } }
+    /**
+     * Find zero or one OrderEmail that matches the filter.
+     * @param {OrderEmailFindUniqueArgs} args - Arguments to find a OrderEmail
+     * @example
+     * // Get one OrderEmail
+     * const orderEmail = await prisma.orderEmail.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OrderEmailFindUniqueArgs>(args: SelectSubset<T, OrderEmailFindUniqueArgs<ExtArgs>>): Prisma__OrderEmailClient<$Result.GetResult<Prisma.$OrderEmailPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one OrderEmail that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {OrderEmailFindUniqueOrThrowArgs} args - Arguments to find a OrderEmail
+     * @example
+     * // Get one OrderEmail
+     * const orderEmail = await prisma.orderEmail.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OrderEmailFindUniqueOrThrowArgs>(args: SelectSubset<T, OrderEmailFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OrderEmailClient<$Result.GetResult<Prisma.$OrderEmailPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first OrderEmail that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderEmailFindFirstArgs} args - Arguments to find a OrderEmail
+     * @example
+     * // Get one OrderEmail
+     * const orderEmail = await prisma.orderEmail.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OrderEmailFindFirstArgs>(args?: SelectSubset<T, OrderEmailFindFirstArgs<ExtArgs>>): Prisma__OrderEmailClient<$Result.GetResult<Prisma.$OrderEmailPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first OrderEmail that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderEmailFindFirstOrThrowArgs} args - Arguments to find a OrderEmail
+     * @example
+     * // Get one OrderEmail
+     * const orderEmail = await prisma.orderEmail.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OrderEmailFindFirstOrThrowArgs>(args?: SelectSubset<T, OrderEmailFindFirstOrThrowArgs<ExtArgs>>): Prisma__OrderEmailClient<$Result.GetResult<Prisma.$OrderEmailPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more OrderEmails that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderEmailFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all OrderEmails
+     * const orderEmails = await prisma.orderEmail.findMany()
+     * 
+     * // Get first 10 OrderEmails
+     * const orderEmails = await prisma.orderEmail.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const orderEmailWithIdOnly = await prisma.orderEmail.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends OrderEmailFindManyArgs>(args?: SelectSubset<T, OrderEmailFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderEmailPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a OrderEmail.
+     * @param {OrderEmailCreateArgs} args - Arguments to create a OrderEmail.
+     * @example
+     * // Create one OrderEmail
+     * const OrderEmail = await prisma.orderEmail.create({
+     *   data: {
+     *     // ... data to create a OrderEmail
+     *   }
+     * })
+     * 
+     */
+    create<T extends OrderEmailCreateArgs>(args: SelectSubset<T, OrderEmailCreateArgs<ExtArgs>>): Prisma__OrderEmailClient<$Result.GetResult<Prisma.$OrderEmailPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many OrderEmails.
+     * @param {OrderEmailCreateManyArgs} args - Arguments to create many OrderEmails.
+     * @example
+     * // Create many OrderEmails
+     * const orderEmail = await prisma.orderEmail.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends OrderEmailCreateManyArgs>(args?: SelectSubset<T, OrderEmailCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many OrderEmails and returns the data saved in the database.
+     * @param {OrderEmailCreateManyAndReturnArgs} args - Arguments to create many OrderEmails.
+     * @example
+     * // Create many OrderEmails
+     * const orderEmail = await prisma.orderEmail.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many OrderEmails and only return the `id`
+     * const orderEmailWithIdOnly = await prisma.orderEmail.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends OrderEmailCreateManyAndReturnArgs>(args?: SelectSubset<T, OrderEmailCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderEmailPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a OrderEmail.
+     * @param {OrderEmailDeleteArgs} args - Arguments to delete one OrderEmail.
+     * @example
+     * // Delete one OrderEmail
+     * const OrderEmail = await prisma.orderEmail.delete({
+     *   where: {
+     *     // ... filter to delete one OrderEmail
+     *   }
+     * })
+     * 
+     */
+    delete<T extends OrderEmailDeleteArgs>(args: SelectSubset<T, OrderEmailDeleteArgs<ExtArgs>>): Prisma__OrderEmailClient<$Result.GetResult<Prisma.$OrderEmailPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one OrderEmail.
+     * @param {OrderEmailUpdateArgs} args - Arguments to update one OrderEmail.
+     * @example
+     * // Update one OrderEmail
+     * const orderEmail = await prisma.orderEmail.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends OrderEmailUpdateArgs>(args: SelectSubset<T, OrderEmailUpdateArgs<ExtArgs>>): Prisma__OrderEmailClient<$Result.GetResult<Prisma.$OrderEmailPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more OrderEmails.
+     * @param {OrderEmailDeleteManyArgs} args - Arguments to filter OrderEmails to delete.
+     * @example
+     * // Delete a few OrderEmails
+     * const { count } = await prisma.orderEmail.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends OrderEmailDeleteManyArgs>(args?: SelectSubset<T, OrderEmailDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OrderEmails.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderEmailUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many OrderEmails
+     * const orderEmail = await prisma.orderEmail.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends OrderEmailUpdateManyArgs>(args: SelectSubset<T, OrderEmailUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OrderEmails and returns the data updated in the database.
+     * @param {OrderEmailUpdateManyAndReturnArgs} args - Arguments to update many OrderEmails.
+     * @example
+     * // Update many OrderEmails
+     * const orderEmail = await prisma.orderEmail.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more OrderEmails and only return the `id`
+     * const orderEmailWithIdOnly = await prisma.orderEmail.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends OrderEmailUpdateManyAndReturnArgs>(args: SelectSubset<T, OrderEmailUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderEmailPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one OrderEmail.
+     * @param {OrderEmailUpsertArgs} args - Arguments to update or create a OrderEmail.
+     * @example
+     * // Update or create a OrderEmail
+     * const orderEmail = await prisma.orderEmail.upsert({
+     *   create: {
+     *     // ... data to create a OrderEmail
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the OrderEmail we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OrderEmailUpsertArgs>(args: SelectSubset<T, OrderEmailUpsertArgs<ExtArgs>>): Prisma__OrderEmailClient<$Result.GetResult<Prisma.$OrderEmailPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of OrderEmails.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderEmailCountArgs} args - Arguments to filter OrderEmails to count.
+     * @example
+     * // Count the number of OrderEmails
+     * const count = await prisma.orderEmail.count({
+     *   where: {
+     *     // ... the filter for the OrderEmails we want to count
+     *   }
+     * })
+    **/
+    count<T extends OrderEmailCountArgs>(
+      args?: Subset<T, OrderEmailCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OrderEmailCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a OrderEmail.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderEmailAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OrderEmailAggregateArgs>(args: Subset<T, OrderEmailAggregateArgs>): Prisma.PrismaPromise<GetOrderEmailAggregateType<T>>
+
+    /**
+     * Group by OrderEmail.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderEmailGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OrderEmailGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OrderEmailGroupByArgs['orderBy'] }
+        : { orderBy?: OrderEmailGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OrderEmailGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOrderEmailGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the OrderEmail model
+   */
+  readonly fields: OrderEmailFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for OrderEmail.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OrderEmailClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    supplier<T extends SupplierDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SupplierDefaultArgs<ExtArgs>>): Prisma__SupplierClient<$Result.GetResult<Prisma.$SupplierPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    sentBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the OrderEmail model
+   */
+  interface OrderEmailFieldRefs {
+    readonly id: FieldRef<"OrderEmail", 'String'>
+    readonly refTable: FieldRef<"OrderEmail", 'String'>
+    readonly orderId: FieldRef<"OrderEmail", 'String'>
+    readonly recipientEmail: FieldRef<"OrderEmail", 'String'>
+    readonly recipientName: FieldRef<"OrderEmail", 'String'>
+    readonly supplierId: FieldRef<"OrderEmail", 'String'>
+    readonly subject: FieldRef<"OrderEmail", 'String'>
+    readonly htmlBody: FieldRef<"OrderEmail", 'String'>
+    readonly userMessage: FieldRef<"OrderEmail", 'String'>
+    readonly sentById: FieldRef<"OrderEmail", 'String'>
+    readonly sentAt: FieldRef<"OrderEmail", 'DateTime'>
+    readonly brevoMessageId: FieldRef<"OrderEmail", 'String'>
+    readonly deliveryStatus: FieldRef<"OrderEmail", 'String'>
+    readonly createdAt: FieldRef<"OrderEmail", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * OrderEmail findUnique
+   */
+  export type OrderEmailFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderEmail
+     */
+    select?: OrderEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderEmail
+     */
+    omit?: OrderEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderEmailInclude<ExtArgs> | null
+    /**
+     * Filter, which OrderEmail to fetch.
+     */
+    where: OrderEmailWhereUniqueInput
+  }
+
+  /**
+   * OrderEmail findUniqueOrThrow
+   */
+  export type OrderEmailFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderEmail
+     */
+    select?: OrderEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderEmail
+     */
+    omit?: OrderEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderEmailInclude<ExtArgs> | null
+    /**
+     * Filter, which OrderEmail to fetch.
+     */
+    where: OrderEmailWhereUniqueInput
+  }
+
+  /**
+   * OrderEmail findFirst
+   */
+  export type OrderEmailFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderEmail
+     */
+    select?: OrderEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderEmail
+     */
+    omit?: OrderEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderEmailInclude<ExtArgs> | null
+    /**
+     * Filter, which OrderEmail to fetch.
+     */
+    where?: OrderEmailWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OrderEmails to fetch.
+     */
+    orderBy?: OrderEmailOrderByWithRelationInput | OrderEmailOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OrderEmails.
+     */
+    cursor?: OrderEmailWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OrderEmails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OrderEmails.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OrderEmails.
+     */
+    distinct?: OrderEmailScalarFieldEnum | OrderEmailScalarFieldEnum[]
+  }
+
+  /**
+   * OrderEmail findFirstOrThrow
+   */
+  export type OrderEmailFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderEmail
+     */
+    select?: OrderEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderEmail
+     */
+    omit?: OrderEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderEmailInclude<ExtArgs> | null
+    /**
+     * Filter, which OrderEmail to fetch.
+     */
+    where?: OrderEmailWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OrderEmails to fetch.
+     */
+    orderBy?: OrderEmailOrderByWithRelationInput | OrderEmailOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OrderEmails.
+     */
+    cursor?: OrderEmailWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OrderEmails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OrderEmails.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OrderEmails.
+     */
+    distinct?: OrderEmailScalarFieldEnum | OrderEmailScalarFieldEnum[]
+  }
+
+  /**
+   * OrderEmail findMany
+   */
+  export type OrderEmailFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderEmail
+     */
+    select?: OrderEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderEmail
+     */
+    omit?: OrderEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderEmailInclude<ExtArgs> | null
+    /**
+     * Filter, which OrderEmails to fetch.
+     */
+    where?: OrderEmailWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OrderEmails to fetch.
+     */
+    orderBy?: OrderEmailOrderByWithRelationInput | OrderEmailOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing OrderEmails.
+     */
+    cursor?: OrderEmailWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OrderEmails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OrderEmails.
+     */
+    skip?: number
+    distinct?: OrderEmailScalarFieldEnum | OrderEmailScalarFieldEnum[]
+  }
+
+  /**
+   * OrderEmail create
+   */
+  export type OrderEmailCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderEmail
+     */
+    select?: OrderEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderEmail
+     */
+    omit?: OrderEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderEmailInclude<ExtArgs> | null
+    /**
+     * The data needed to create a OrderEmail.
+     */
+    data: XOR<OrderEmailCreateInput, OrderEmailUncheckedCreateInput>
+  }
+
+  /**
+   * OrderEmail createMany
+   */
+  export type OrderEmailCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many OrderEmails.
+     */
+    data: OrderEmailCreateManyInput | OrderEmailCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * OrderEmail createManyAndReturn
+   */
+  export type OrderEmailCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderEmail
+     */
+    select?: OrderEmailSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderEmail
+     */
+    omit?: OrderEmailOmit<ExtArgs> | null
+    /**
+     * The data used to create many OrderEmails.
+     */
+    data: OrderEmailCreateManyInput | OrderEmailCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderEmailIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * OrderEmail update
+   */
+  export type OrderEmailUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderEmail
+     */
+    select?: OrderEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderEmail
+     */
+    omit?: OrderEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderEmailInclude<ExtArgs> | null
+    /**
+     * The data needed to update a OrderEmail.
+     */
+    data: XOR<OrderEmailUpdateInput, OrderEmailUncheckedUpdateInput>
+    /**
+     * Choose, which OrderEmail to update.
+     */
+    where: OrderEmailWhereUniqueInput
+  }
+
+  /**
+   * OrderEmail updateMany
+   */
+  export type OrderEmailUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update OrderEmails.
+     */
+    data: XOR<OrderEmailUpdateManyMutationInput, OrderEmailUncheckedUpdateManyInput>
+    /**
+     * Filter which OrderEmails to update
+     */
+    where?: OrderEmailWhereInput
+    /**
+     * Limit how many OrderEmails to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * OrderEmail updateManyAndReturn
+   */
+  export type OrderEmailUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderEmail
+     */
+    select?: OrderEmailSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderEmail
+     */
+    omit?: OrderEmailOmit<ExtArgs> | null
+    /**
+     * The data used to update OrderEmails.
+     */
+    data: XOR<OrderEmailUpdateManyMutationInput, OrderEmailUncheckedUpdateManyInput>
+    /**
+     * Filter which OrderEmails to update
+     */
+    where?: OrderEmailWhereInput
+    /**
+     * Limit how many OrderEmails to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderEmailIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * OrderEmail upsert
+   */
+  export type OrderEmailUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderEmail
+     */
+    select?: OrderEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderEmail
+     */
+    omit?: OrderEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderEmailInclude<ExtArgs> | null
+    /**
+     * The filter to search for the OrderEmail to update in case it exists.
+     */
+    where: OrderEmailWhereUniqueInput
+    /**
+     * In case the OrderEmail found by the `where` argument doesn't exist, create a new OrderEmail with this data.
+     */
+    create: XOR<OrderEmailCreateInput, OrderEmailUncheckedCreateInput>
+    /**
+     * In case the OrderEmail was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OrderEmailUpdateInput, OrderEmailUncheckedUpdateInput>
+  }
+
+  /**
+   * OrderEmail delete
+   */
+  export type OrderEmailDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderEmail
+     */
+    select?: OrderEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderEmail
+     */
+    omit?: OrderEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderEmailInclude<ExtArgs> | null
+    /**
+     * Filter which OrderEmail to delete.
+     */
+    where: OrderEmailWhereUniqueInput
+  }
+
+  /**
+   * OrderEmail deleteMany
+   */
+  export type OrderEmailDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OrderEmails to delete
+     */
+    where?: OrderEmailWhereInput
+    /**
+     * Limit how many OrderEmails to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * OrderEmail without action
+   */
+  export type OrderEmailDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderEmail
+     */
+    select?: OrderEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderEmail
+     */
+    omit?: OrderEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderEmailInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -58819,6 +60167,26 @@ export namespace Prisma {
   };
 
   export type PaymentRecordScalarFieldEnum = (typeof PaymentRecordScalarFieldEnum)[keyof typeof PaymentRecordScalarFieldEnum]
+
+
+  export const OrderEmailScalarFieldEnum: {
+    id: 'id',
+    refTable: 'refTable',
+    orderId: 'orderId',
+    recipientEmail: 'recipientEmail',
+    recipientName: 'recipientName',
+    supplierId: 'supplierId',
+    subject: 'subject',
+    htmlBody: 'htmlBody',
+    userMessage: 'userMessage',
+    sentById: 'sentById',
+    sentAt: 'sentAt',
+    brevoMessageId: 'brevoMessageId',
+    deliveryStatus: 'deliveryStatus',
+    createdAt: 'createdAt'
+  };
+
+  export type OrderEmailScalarFieldEnum = (typeof OrderEmailScalarFieldEnum)[keyof typeof OrderEmailScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -60188,6 +61556,7 @@ export namespace Prisma {
     notificationPreference?: XOR<NotificationPreferenceNullableScalarRelationFilter, NotificationPreferenceWhereInput> | null
     paymentsMade?: PaymentRecordListRelationFilter
     paymentsReceived?: PaymentRecordListRelationFilter
+    orderEmailsSent?: OrderEmailListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -60252,6 +61621,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceOrderByWithRelationInput
     paymentsMade?: PaymentRecordOrderByRelationAggregateInput
     paymentsReceived?: PaymentRecordOrderByRelationAggregateInput
+    orderEmailsSent?: OrderEmailOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -60319,6 +61689,7 @@ export namespace Prisma {
     notificationPreference?: XOR<NotificationPreferenceNullableScalarRelationFilter, NotificationPreferenceWhereInput> | null
     paymentsMade?: PaymentRecordListRelationFilter
     paymentsReceived?: PaymentRecordListRelationFilter
+    orderEmailsSent?: OrderEmailListRelationFilter
   }, "id" | "email" | "username" | "employeeId" | "nationalIdNumber" | "phoneNumber">
 
   export type UserOrderByWithAggregationInput = {
@@ -60856,6 +62227,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderListRelationFilter
     accessoryPurchaseOrders?: AccessoryPurchaseOrderListRelationFilter
     paymentsReceived?: PaymentRecordListRelationFilter
+    orderEmails?: OrderEmailListRelationFilter
   }
 
   export type SupplierOrderByWithRelationInput = {
@@ -60883,6 +62255,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderOrderByRelationAggregateInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderOrderByRelationAggregateInput
     paymentsReceived?: PaymentRecordOrderByRelationAggregateInput
+    orderEmails?: OrderEmailOrderByRelationAggregateInput
   }
 
   export type SupplierWhereUniqueInput = Prisma.AtLeast<{
@@ -60913,6 +62286,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderListRelationFilter
     accessoryPurchaseOrders?: AccessoryPurchaseOrderListRelationFilter
     paymentsReceived?: PaymentRecordListRelationFilter
+    orderEmails?: OrderEmailListRelationFilter
   }, "id" | "code" | "name">
 
   export type SupplierOrderByWithAggregationInput = {
@@ -63952,6 +65326,109 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"PaymentRecord"> | Date | string
   }
 
+  export type OrderEmailWhereInput = {
+    AND?: OrderEmailWhereInput | OrderEmailWhereInput[]
+    OR?: OrderEmailWhereInput[]
+    NOT?: OrderEmailWhereInput | OrderEmailWhereInput[]
+    id?: StringFilter<"OrderEmail"> | string
+    refTable?: StringFilter<"OrderEmail"> | string
+    orderId?: StringFilter<"OrderEmail"> | string
+    recipientEmail?: StringFilter<"OrderEmail"> | string
+    recipientName?: StringNullableFilter<"OrderEmail"> | string | null
+    supplierId?: StringFilter<"OrderEmail"> | string
+    subject?: StringFilter<"OrderEmail"> | string
+    htmlBody?: StringFilter<"OrderEmail"> | string
+    userMessage?: StringNullableFilter<"OrderEmail"> | string | null
+    sentById?: StringFilter<"OrderEmail"> | string
+    sentAt?: DateTimeFilter<"OrderEmail"> | Date | string
+    brevoMessageId?: StringNullableFilter<"OrderEmail"> | string | null
+    deliveryStatus?: StringNullableFilter<"OrderEmail"> | string | null
+    createdAt?: DateTimeFilter<"OrderEmail"> | Date | string
+    supplier?: XOR<SupplierScalarRelationFilter, SupplierWhereInput>
+    sentBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type OrderEmailOrderByWithRelationInput = {
+    id?: SortOrder
+    refTable?: SortOrder
+    orderId?: SortOrder
+    recipientEmail?: SortOrder
+    recipientName?: SortOrderInput | SortOrder
+    supplierId?: SortOrder
+    subject?: SortOrder
+    htmlBody?: SortOrder
+    userMessage?: SortOrderInput | SortOrder
+    sentById?: SortOrder
+    sentAt?: SortOrder
+    brevoMessageId?: SortOrderInput | SortOrder
+    deliveryStatus?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    supplier?: SupplierOrderByWithRelationInput
+    sentBy?: UserOrderByWithRelationInput
+  }
+
+  export type OrderEmailWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: OrderEmailWhereInput | OrderEmailWhereInput[]
+    OR?: OrderEmailWhereInput[]
+    NOT?: OrderEmailWhereInput | OrderEmailWhereInput[]
+    refTable?: StringFilter<"OrderEmail"> | string
+    orderId?: StringFilter<"OrderEmail"> | string
+    recipientEmail?: StringFilter<"OrderEmail"> | string
+    recipientName?: StringNullableFilter<"OrderEmail"> | string | null
+    supplierId?: StringFilter<"OrderEmail"> | string
+    subject?: StringFilter<"OrderEmail"> | string
+    htmlBody?: StringFilter<"OrderEmail"> | string
+    userMessage?: StringNullableFilter<"OrderEmail"> | string | null
+    sentById?: StringFilter<"OrderEmail"> | string
+    sentAt?: DateTimeFilter<"OrderEmail"> | Date | string
+    brevoMessageId?: StringNullableFilter<"OrderEmail"> | string | null
+    deliveryStatus?: StringNullableFilter<"OrderEmail"> | string | null
+    createdAt?: DateTimeFilter<"OrderEmail"> | Date | string
+    supplier?: XOR<SupplierScalarRelationFilter, SupplierWhereInput>
+    sentBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type OrderEmailOrderByWithAggregationInput = {
+    id?: SortOrder
+    refTable?: SortOrder
+    orderId?: SortOrder
+    recipientEmail?: SortOrder
+    recipientName?: SortOrderInput | SortOrder
+    supplierId?: SortOrder
+    subject?: SortOrder
+    htmlBody?: SortOrder
+    userMessage?: SortOrderInput | SortOrder
+    sentById?: SortOrder
+    sentAt?: SortOrder
+    brevoMessageId?: SortOrderInput | SortOrder
+    deliveryStatus?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: OrderEmailCountOrderByAggregateInput
+    _max?: OrderEmailMaxOrderByAggregateInput
+    _min?: OrderEmailMinOrderByAggregateInput
+  }
+
+  export type OrderEmailScalarWhereWithAggregatesInput = {
+    AND?: OrderEmailScalarWhereWithAggregatesInput | OrderEmailScalarWhereWithAggregatesInput[]
+    OR?: OrderEmailScalarWhereWithAggregatesInput[]
+    NOT?: OrderEmailScalarWhereWithAggregatesInput | OrderEmailScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"OrderEmail"> | string
+    refTable?: StringWithAggregatesFilter<"OrderEmail"> | string
+    orderId?: StringWithAggregatesFilter<"OrderEmail"> | string
+    recipientEmail?: StringWithAggregatesFilter<"OrderEmail"> | string
+    recipientName?: StringNullableWithAggregatesFilter<"OrderEmail"> | string | null
+    supplierId?: StringWithAggregatesFilter<"OrderEmail"> | string
+    subject?: StringWithAggregatesFilter<"OrderEmail"> | string
+    htmlBody?: StringWithAggregatesFilter<"OrderEmail"> | string
+    userMessage?: StringNullableWithAggregatesFilter<"OrderEmail"> | string | null
+    sentById?: StringWithAggregatesFilter<"OrderEmail"> | string
+    sentAt?: DateTimeWithAggregatesFilter<"OrderEmail"> | Date | string
+    brevoMessageId?: StringNullableWithAggregatesFilter<"OrderEmail"> | string | null
+    deliveryStatus?: StringNullableWithAggregatesFilter<"OrderEmail"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"OrderEmail"> | Date | string
+  }
+
   export type DepartmentCreateInput = {
     id?: string
     name: string
@@ -64614,6 +66091,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -64676,6 +66154,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserUpdateInput = {
@@ -64738,6 +66217,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -64800,6 +66280,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -65403,6 +66884,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderCreateNestedManyWithoutSupplierInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderCreateNestedManyWithoutSupplierInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientSupplierInput
+    orderEmails?: OrderEmailCreateNestedManyWithoutSupplierInput
   }
 
   export type SupplierUncheckedCreateInput = {
@@ -65429,6 +66911,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientSupplierInput
+    orderEmails?: OrderEmailUncheckedCreateNestedManyWithoutSupplierInput
   }
 
   export type SupplierUpdateInput = {
@@ -65455,6 +66938,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUpdateManyWithoutSupplierNestedInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUpdateManyWithoutSupplierNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientSupplierNestedInput
+    orderEmails?: OrderEmailUpdateManyWithoutSupplierNestedInput
   }
 
   export type SupplierUncheckedUpdateInput = {
@@ -65481,6 +66965,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientSupplierNestedInput
+    orderEmails?: OrderEmailUncheckedUpdateManyWithoutSupplierNestedInput
   }
 
   export type SupplierCreateManyInput = {
@@ -68994,6 +70479,123 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type OrderEmailCreateInput = {
+    id?: string
+    refTable: string
+    orderId: string
+    recipientEmail: string
+    recipientName?: string | null
+    subject: string
+    htmlBody: string
+    userMessage?: string | null
+    sentAt?: Date | string
+    brevoMessageId?: string | null
+    deliveryStatus?: string | null
+    createdAt?: Date | string
+    supplier: SupplierCreateNestedOneWithoutOrderEmailsInput
+    sentBy: UserCreateNestedOneWithoutOrderEmailsSentInput
+  }
+
+  export type OrderEmailUncheckedCreateInput = {
+    id?: string
+    refTable: string
+    orderId: string
+    recipientEmail: string
+    recipientName?: string | null
+    supplierId: string
+    subject: string
+    htmlBody: string
+    userMessage?: string | null
+    sentById: string
+    sentAt?: Date | string
+    brevoMessageId?: string | null
+    deliveryStatus?: string | null
+    createdAt?: Date | string
+  }
+
+  export type OrderEmailUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    refTable?: StringFieldUpdateOperationsInput | string
+    orderId?: StringFieldUpdateOperationsInput | string
+    recipientEmail?: StringFieldUpdateOperationsInput | string
+    recipientName?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: StringFieldUpdateOperationsInput | string
+    htmlBody?: StringFieldUpdateOperationsInput | string
+    userMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    sentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brevoMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    supplier?: SupplierUpdateOneRequiredWithoutOrderEmailsNestedInput
+    sentBy?: UserUpdateOneRequiredWithoutOrderEmailsSentNestedInput
+  }
+
+  export type OrderEmailUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    refTable?: StringFieldUpdateOperationsInput | string
+    orderId?: StringFieldUpdateOperationsInput | string
+    recipientEmail?: StringFieldUpdateOperationsInput | string
+    recipientName?: NullableStringFieldUpdateOperationsInput | string | null
+    supplierId?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    htmlBody?: StringFieldUpdateOperationsInput | string
+    userMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    sentById?: StringFieldUpdateOperationsInput | string
+    sentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brevoMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderEmailCreateManyInput = {
+    id?: string
+    refTable: string
+    orderId: string
+    recipientEmail: string
+    recipientName?: string | null
+    supplierId: string
+    subject: string
+    htmlBody: string
+    userMessage?: string | null
+    sentById: string
+    sentAt?: Date | string
+    brevoMessageId?: string | null
+    deliveryStatus?: string | null
+    createdAt?: Date | string
+  }
+
+  export type OrderEmailUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    refTable?: StringFieldUpdateOperationsInput | string
+    orderId?: StringFieldUpdateOperationsInput | string
+    recipientEmail?: StringFieldUpdateOperationsInput | string
+    recipientName?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: StringFieldUpdateOperationsInput | string
+    htmlBody?: StringFieldUpdateOperationsInput | string
+    userMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    sentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brevoMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderEmailUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    refTable?: StringFieldUpdateOperationsInput | string
+    orderId?: StringFieldUpdateOperationsInput | string
+    recipientEmail?: StringFieldUpdateOperationsInput | string
+    recipientName?: NullableStringFieldUpdateOperationsInput | string | null
+    supplierId?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    htmlBody?: StringFieldUpdateOperationsInput | string
+    userMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    sentById?: StringFieldUpdateOperationsInput | string
+    sentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brevoMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -69684,6 +71286,12 @@ export namespace Prisma {
     none?: PaymentRecordWhereInput
   }
 
+  export type OrderEmailListRelationFilter = {
+    every?: OrderEmailWhereInput
+    some?: OrderEmailWhereInput
+    none?: OrderEmailWhereInput
+  }
+
   export type ActivityLogOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -69741,6 +71349,10 @@ export namespace Prisma {
   }
 
   export type PaymentRecordOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type OrderEmailOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -72901,6 +74513,57 @@ export namespace Prisma {
     _max?: NestedEnumPaymentRecipientTypeFilter<$PrismaModel>
   }
 
+  export type OrderEmailCountOrderByAggregateInput = {
+    id?: SortOrder
+    refTable?: SortOrder
+    orderId?: SortOrder
+    recipientEmail?: SortOrder
+    recipientName?: SortOrder
+    supplierId?: SortOrder
+    subject?: SortOrder
+    htmlBody?: SortOrder
+    userMessage?: SortOrder
+    sentById?: SortOrder
+    sentAt?: SortOrder
+    brevoMessageId?: SortOrder
+    deliveryStatus?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type OrderEmailMaxOrderByAggregateInput = {
+    id?: SortOrder
+    refTable?: SortOrder
+    orderId?: SortOrder
+    recipientEmail?: SortOrder
+    recipientName?: SortOrder
+    supplierId?: SortOrder
+    subject?: SortOrder
+    htmlBody?: SortOrder
+    userMessage?: SortOrder
+    sentById?: SortOrder
+    sentAt?: SortOrder
+    brevoMessageId?: SortOrder
+    deliveryStatus?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type OrderEmailMinOrderByAggregateInput = {
+    id?: SortOrder
+    refTable?: SortOrder
+    orderId?: SortOrder
+    recipientEmail?: SortOrder
+    recipientName?: SortOrder
+    supplierId?: SortOrder
+    subject?: SortOrder
+    htmlBody?: SortOrder
+    userMessage?: SortOrder
+    sentById?: SortOrder
+    sentAt?: SortOrder
+    brevoMessageId?: SortOrder
+    deliveryStatus?: SortOrder
+    createdAt?: SortOrder
+  }
+
   export type UserCreateNestedManyWithoutDepartmentInput = {
     create?: XOR<UserCreateWithoutDepartmentInput, UserUncheckedCreateWithoutDepartmentInput> | UserCreateWithoutDepartmentInput[] | UserUncheckedCreateWithoutDepartmentInput[]
     connectOrCreate?: UserCreateOrConnectWithoutDepartmentInput | UserCreateOrConnectWithoutDepartmentInput[]
@@ -73609,6 +75272,13 @@ export namespace Prisma {
     connect?: PaymentRecordWhereUniqueInput | PaymentRecordWhereUniqueInput[]
   }
 
+  export type OrderEmailCreateNestedManyWithoutSentByInput = {
+    create?: XOR<OrderEmailCreateWithoutSentByInput, OrderEmailUncheckedCreateWithoutSentByInput> | OrderEmailCreateWithoutSentByInput[] | OrderEmailUncheckedCreateWithoutSentByInput[]
+    connectOrCreate?: OrderEmailCreateOrConnectWithoutSentByInput | OrderEmailCreateOrConnectWithoutSentByInput[]
+    createMany?: OrderEmailCreateManySentByInputEnvelope
+    connect?: OrderEmailWhereUniqueInput | OrderEmailWhereUniqueInput[]
+  }
+
   export type UserPreferenceUncheckedCreateNestedOneWithoutUserInput = {
     create?: XOR<UserPreferenceCreateWithoutUserInput, UserPreferenceUncheckedCreateWithoutUserInput>
     connectOrCreate?: UserPreferenceCreateOrConnectWithoutUserInput
@@ -73773,6 +75443,13 @@ export namespace Prisma {
     connectOrCreate?: PaymentRecordCreateOrConnectWithoutRecipientUserInput | PaymentRecordCreateOrConnectWithoutRecipientUserInput[]
     createMany?: PaymentRecordCreateManyRecipientUserInputEnvelope
     connect?: PaymentRecordWhereUniqueInput | PaymentRecordWhereUniqueInput[]
+  }
+
+  export type OrderEmailUncheckedCreateNestedManyWithoutSentByInput = {
+    create?: XOR<OrderEmailCreateWithoutSentByInput, OrderEmailUncheckedCreateWithoutSentByInput> | OrderEmailCreateWithoutSentByInput[] | OrderEmailUncheckedCreateWithoutSentByInput[]
+    connectOrCreate?: OrderEmailCreateOrConnectWithoutSentByInput | OrderEmailCreateOrConnectWithoutSentByInput[]
+    createMany?: OrderEmailCreateManySentByInputEnvelope
+    connect?: OrderEmailWhereUniqueInput | OrderEmailWhereUniqueInput[]
   }
 
   export type EnumStatusFieldUpdateOperationsInput = {
@@ -74143,6 +75820,20 @@ export namespace Prisma {
     deleteMany?: PaymentRecordScalarWhereInput | PaymentRecordScalarWhereInput[]
   }
 
+  export type OrderEmailUpdateManyWithoutSentByNestedInput = {
+    create?: XOR<OrderEmailCreateWithoutSentByInput, OrderEmailUncheckedCreateWithoutSentByInput> | OrderEmailCreateWithoutSentByInput[] | OrderEmailUncheckedCreateWithoutSentByInput[]
+    connectOrCreate?: OrderEmailCreateOrConnectWithoutSentByInput | OrderEmailCreateOrConnectWithoutSentByInput[]
+    upsert?: OrderEmailUpsertWithWhereUniqueWithoutSentByInput | OrderEmailUpsertWithWhereUniqueWithoutSentByInput[]
+    createMany?: OrderEmailCreateManySentByInputEnvelope
+    set?: OrderEmailWhereUniqueInput | OrderEmailWhereUniqueInput[]
+    disconnect?: OrderEmailWhereUniqueInput | OrderEmailWhereUniqueInput[]
+    delete?: OrderEmailWhereUniqueInput | OrderEmailWhereUniqueInput[]
+    connect?: OrderEmailWhereUniqueInput | OrderEmailWhereUniqueInput[]
+    update?: OrderEmailUpdateWithWhereUniqueWithoutSentByInput | OrderEmailUpdateWithWhereUniqueWithoutSentByInput[]
+    updateMany?: OrderEmailUpdateManyWithWhereWithoutSentByInput | OrderEmailUpdateManyWithWhereWithoutSentByInput[]
+    deleteMany?: OrderEmailScalarWhereInput | OrderEmailScalarWhereInput[]
+  }
+
   export type UserPreferenceUncheckedUpdateOneWithoutUserNestedInput = {
     create?: XOR<UserPreferenceCreateWithoutUserInput, UserPreferenceUncheckedCreateWithoutUserInput>
     connectOrCreate?: UserPreferenceCreateOrConnectWithoutUserInput
@@ -74471,6 +76162,20 @@ export namespace Prisma {
     deleteMany?: PaymentRecordScalarWhereInput | PaymentRecordScalarWhereInput[]
   }
 
+  export type OrderEmailUncheckedUpdateManyWithoutSentByNestedInput = {
+    create?: XOR<OrderEmailCreateWithoutSentByInput, OrderEmailUncheckedCreateWithoutSentByInput> | OrderEmailCreateWithoutSentByInput[] | OrderEmailUncheckedCreateWithoutSentByInput[]
+    connectOrCreate?: OrderEmailCreateOrConnectWithoutSentByInput | OrderEmailCreateOrConnectWithoutSentByInput[]
+    upsert?: OrderEmailUpsertWithWhereUniqueWithoutSentByInput | OrderEmailUpsertWithWhereUniqueWithoutSentByInput[]
+    createMany?: OrderEmailCreateManySentByInputEnvelope
+    set?: OrderEmailWhereUniqueInput | OrderEmailWhereUniqueInput[]
+    disconnect?: OrderEmailWhereUniqueInput | OrderEmailWhereUniqueInput[]
+    delete?: OrderEmailWhereUniqueInput | OrderEmailWhereUniqueInput[]
+    connect?: OrderEmailWhereUniqueInput | OrderEmailWhereUniqueInput[]
+    update?: OrderEmailUpdateWithWhereUniqueWithoutSentByInput | OrderEmailUpdateWithWhereUniqueWithoutSentByInput[]
+    updateMany?: OrderEmailUpdateManyWithWhereWithoutSentByInput | OrderEmailUpdateManyWithWhereWithoutSentByInput[]
+    deleteMany?: OrderEmailScalarWhereInput | OrderEmailScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutPreferenceInput = {
     create?: XOR<UserCreateWithoutPreferenceInput, UserUncheckedCreateWithoutPreferenceInput>
     connectOrCreate?: UserCreateOrConnectWithoutPreferenceInput
@@ -74647,6 +76352,13 @@ export namespace Prisma {
     connect?: PaymentRecordWhereUniqueInput | PaymentRecordWhereUniqueInput[]
   }
 
+  export type OrderEmailCreateNestedManyWithoutSupplierInput = {
+    create?: XOR<OrderEmailCreateWithoutSupplierInput, OrderEmailUncheckedCreateWithoutSupplierInput> | OrderEmailCreateWithoutSupplierInput[] | OrderEmailUncheckedCreateWithoutSupplierInput[]
+    connectOrCreate?: OrderEmailCreateOrConnectWithoutSupplierInput | OrderEmailCreateOrConnectWithoutSupplierInput[]
+    createMany?: OrderEmailCreateManySupplierInputEnvelope
+    connect?: OrderEmailWhereUniqueInput | OrderEmailWhereUniqueInput[]
+  }
+
   export type SupplierPaymentMethodUncheckedCreateNestedManyWithoutSupplierInput = {
     create?: XOR<SupplierPaymentMethodCreateWithoutSupplierInput, SupplierPaymentMethodUncheckedCreateWithoutSupplierInput> | SupplierPaymentMethodCreateWithoutSupplierInput[] | SupplierPaymentMethodUncheckedCreateWithoutSupplierInput[]
     connectOrCreate?: SupplierPaymentMethodCreateOrConnectWithoutSupplierInput | SupplierPaymentMethodCreateOrConnectWithoutSupplierInput[]
@@ -74706,6 +76418,13 @@ export namespace Prisma {
     connectOrCreate?: PaymentRecordCreateOrConnectWithoutRecipientSupplierInput | PaymentRecordCreateOrConnectWithoutRecipientSupplierInput[]
     createMany?: PaymentRecordCreateManyRecipientSupplierInputEnvelope
     connect?: PaymentRecordWhereUniqueInput | PaymentRecordWhereUniqueInput[]
+  }
+
+  export type OrderEmailUncheckedCreateNestedManyWithoutSupplierInput = {
+    create?: XOR<OrderEmailCreateWithoutSupplierInput, OrderEmailUncheckedCreateWithoutSupplierInput> | OrderEmailCreateWithoutSupplierInput[] | OrderEmailUncheckedCreateWithoutSupplierInput[]
+    connectOrCreate?: OrderEmailCreateOrConnectWithoutSupplierInput | OrderEmailCreateOrConnectWithoutSupplierInput[]
+    createMany?: OrderEmailCreateManySupplierInputEnvelope
+    connect?: OrderEmailWhereUniqueInput | OrderEmailWhereUniqueInput[]
   }
 
   export type EnumSupplierTypeFieldUpdateOperationsInput = {
@@ -74846,6 +76565,20 @@ export namespace Prisma {
     deleteMany?: PaymentRecordScalarWhereInput | PaymentRecordScalarWhereInput[]
   }
 
+  export type OrderEmailUpdateManyWithoutSupplierNestedInput = {
+    create?: XOR<OrderEmailCreateWithoutSupplierInput, OrderEmailUncheckedCreateWithoutSupplierInput> | OrderEmailCreateWithoutSupplierInput[] | OrderEmailUncheckedCreateWithoutSupplierInput[]
+    connectOrCreate?: OrderEmailCreateOrConnectWithoutSupplierInput | OrderEmailCreateOrConnectWithoutSupplierInput[]
+    upsert?: OrderEmailUpsertWithWhereUniqueWithoutSupplierInput | OrderEmailUpsertWithWhereUniqueWithoutSupplierInput[]
+    createMany?: OrderEmailCreateManySupplierInputEnvelope
+    set?: OrderEmailWhereUniqueInput | OrderEmailWhereUniqueInput[]
+    disconnect?: OrderEmailWhereUniqueInput | OrderEmailWhereUniqueInput[]
+    delete?: OrderEmailWhereUniqueInput | OrderEmailWhereUniqueInput[]
+    connect?: OrderEmailWhereUniqueInput | OrderEmailWhereUniqueInput[]
+    update?: OrderEmailUpdateWithWhereUniqueWithoutSupplierInput | OrderEmailUpdateWithWhereUniqueWithoutSupplierInput[]
+    updateMany?: OrderEmailUpdateManyWithWhereWithoutSupplierInput | OrderEmailUpdateManyWithWhereWithoutSupplierInput[]
+    deleteMany?: OrderEmailScalarWhereInput | OrderEmailScalarWhereInput[]
+  }
+
   export type SupplierPaymentMethodUncheckedUpdateManyWithoutSupplierNestedInput = {
     create?: XOR<SupplierPaymentMethodCreateWithoutSupplierInput, SupplierPaymentMethodUncheckedCreateWithoutSupplierInput> | SupplierPaymentMethodCreateWithoutSupplierInput[] | SupplierPaymentMethodUncheckedCreateWithoutSupplierInput[]
     connectOrCreate?: SupplierPaymentMethodCreateOrConnectWithoutSupplierInput | SupplierPaymentMethodCreateOrConnectWithoutSupplierInput[]
@@ -74962,6 +76695,20 @@ export namespace Prisma {
     update?: PaymentRecordUpdateWithWhereUniqueWithoutRecipientSupplierInput | PaymentRecordUpdateWithWhereUniqueWithoutRecipientSupplierInput[]
     updateMany?: PaymentRecordUpdateManyWithWhereWithoutRecipientSupplierInput | PaymentRecordUpdateManyWithWhereWithoutRecipientSupplierInput[]
     deleteMany?: PaymentRecordScalarWhereInput | PaymentRecordScalarWhereInput[]
+  }
+
+  export type OrderEmailUncheckedUpdateManyWithoutSupplierNestedInput = {
+    create?: XOR<OrderEmailCreateWithoutSupplierInput, OrderEmailUncheckedCreateWithoutSupplierInput> | OrderEmailCreateWithoutSupplierInput[] | OrderEmailUncheckedCreateWithoutSupplierInput[]
+    connectOrCreate?: OrderEmailCreateOrConnectWithoutSupplierInput | OrderEmailCreateOrConnectWithoutSupplierInput[]
+    upsert?: OrderEmailUpsertWithWhereUniqueWithoutSupplierInput | OrderEmailUpsertWithWhereUniqueWithoutSupplierInput[]
+    createMany?: OrderEmailCreateManySupplierInputEnvelope
+    set?: OrderEmailWhereUniqueInput | OrderEmailWhereUniqueInput[]
+    disconnect?: OrderEmailWhereUniqueInput | OrderEmailWhereUniqueInput[]
+    delete?: OrderEmailWhereUniqueInput | OrderEmailWhereUniqueInput[]
+    connect?: OrderEmailWhereUniqueInput | OrderEmailWhereUniqueInput[]
+    update?: OrderEmailUpdateWithWhereUniqueWithoutSupplierInput | OrderEmailUpdateWithWhereUniqueWithoutSupplierInput[]
+    updateMany?: OrderEmailUpdateManyWithWhereWithoutSupplierInput | OrderEmailUpdateManyWithWhereWithoutSupplierInput[]
+    deleteMany?: OrderEmailScalarWhereInput | OrderEmailScalarWhereInput[]
   }
 
   export type SupplierCreateNestedOneWithoutPaymentMethodsInput = {
@@ -76432,6 +78179,34 @@ export namespace Prisma {
     update?: XOR<XOR<PaymentRecordUpdateToOneWithWhereWithoutReversesInput, PaymentRecordUpdateWithoutReversesInput>, PaymentRecordUncheckedUpdateWithoutReversesInput>
   }
 
+  export type SupplierCreateNestedOneWithoutOrderEmailsInput = {
+    create?: XOR<SupplierCreateWithoutOrderEmailsInput, SupplierUncheckedCreateWithoutOrderEmailsInput>
+    connectOrCreate?: SupplierCreateOrConnectWithoutOrderEmailsInput
+    connect?: SupplierWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutOrderEmailsSentInput = {
+    create?: XOR<UserCreateWithoutOrderEmailsSentInput, UserUncheckedCreateWithoutOrderEmailsSentInput>
+    connectOrCreate?: UserCreateOrConnectWithoutOrderEmailsSentInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type SupplierUpdateOneRequiredWithoutOrderEmailsNestedInput = {
+    create?: XOR<SupplierCreateWithoutOrderEmailsInput, SupplierUncheckedCreateWithoutOrderEmailsInput>
+    connectOrCreate?: SupplierCreateOrConnectWithoutOrderEmailsInput
+    upsert?: SupplierUpsertWithoutOrderEmailsInput
+    connect?: SupplierWhereUniqueInput
+    update?: XOR<XOR<SupplierUpdateToOneWithWhereWithoutOrderEmailsInput, SupplierUpdateWithoutOrderEmailsInput>, SupplierUncheckedUpdateWithoutOrderEmailsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutOrderEmailsSentNestedInput = {
+    create?: XOR<UserCreateWithoutOrderEmailsSentInput, UserUncheckedCreateWithoutOrderEmailsSentInput>
+    connectOrCreate?: UserCreateOrConnectWithoutOrderEmailsSentInput
+    upsert?: UserUpsertWithoutOrderEmailsSentInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutOrderEmailsSentInput, UserUpdateWithoutOrderEmailsSentInput>, UserUncheckedUpdateWithoutOrderEmailsSentInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -77540,6 +79315,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutDepartmentInput = {
@@ -77601,6 +79377,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutDepartmentInput = {
@@ -77729,6 +79506,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutRoleInput = {
@@ -77790,6 +79568,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutRoleInput = {
@@ -78031,6 +79810,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutRoleOverridesInput = {
@@ -78092,6 +79872,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutRoleOverridesInput = {
@@ -78158,6 +79939,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutCreatedRoleOverridesInput = {
@@ -78219,6 +80001,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutCreatedRoleOverridesInput = {
@@ -78333,6 +80116,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRoleOverridesInput = {
@@ -78394,6 +80178,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUpsertWithoutCreatedRoleOverridesInput = {
@@ -78466,6 +80251,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedRoleOverridesInput = {
@@ -78527,6 +80313,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type PermissionImpliesCreateWithoutPermissionInput = {
@@ -78981,6 +80768,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutPermissionOverridesInput = {
@@ -79042,6 +80830,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutPermissionOverridesInput = {
@@ -79151,6 +80940,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutCreatedPermissionOverridesInput = {
@@ -79212,6 +81002,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutCreatedPermissionOverridesInput = {
@@ -79289,6 +81080,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPermissionOverridesInput = {
@@ -79350,6 +81142,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type PermissionUpsertWithoutPermissionOverridesInput = {
@@ -79471,6 +81264,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedPermissionOverridesInput = {
@@ -79532,6 +81326,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type RoleCreateWithoutRolePermissionsInput = {
@@ -79667,6 +81462,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutCreatedRolePermissionsInput = {
@@ -79728,6 +81524,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutCreatedRolePermissionsInput = {
@@ -79891,6 +81688,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedRolePermissionsInput = {
@@ -79952,6 +81750,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type DepartmentCreateWithoutUsersInput = {
@@ -80750,6 +82549,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderCreateNestedManyWithoutSupplierInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderCreateNestedManyWithoutSupplierInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientSupplierInput
+    orderEmails?: OrderEmailCreateNestedManyWithoutSupplierInput
   }
 
   export type SupplierUncheckedCreateWithoutCreatedByInput = {
@@ -80775,6 +82575,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientSupplierInput
+    orderEmails?: OrderEmailUncheckedCreateNestedManyWithoutSupplierInput
   }
 
   export type SupplierCreateOrConnectWithoutCreatedByInput = {
@@ -81073,6 +82874,48 @@ export namespace Prisma {
 
   export type PaymentRecordCreateManyRecipientUserInputEnvelope = {
     data: PaymentRecordCreateManyRecipientUserInput | PaymentRecordCreateManyRecipientUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type OrderEmailCreateWithoutSentByInput = {
+    id?: string
+    refTable: string
+    orderId: string
+    recipientEmail: string
+    recipientName?: string | null
+    subject: string
+    htmlBody: string
+    userMessage?: string | null
+    sentAt?: Date | string
+    brevoMessageId?: string | null
+    deliveryStatus?: string | null
+    createdAt?: Date | string
+    supplier: SupplierCreateNestedOneWithoutOrderEmailsInput
+  }
+
+  export type OrderEmailUncheckedCreateWithoutSentByInput = {
+    id?: string
+    refTable: string
+    orderId: string
+    recipientEmail: string
+    recipientName?: string | null
+    supplierId: string
+    subject: string
+    htmlBody: string
+    userMessage?: string | null
+    sentAt?: Date | string
+    brevoMessageId?: string | null
+    deliveryStatus?: string | null
+    createdAt?: Date | string
+  }
+
+  export type OrderEmailCreateOrConnectWithoutSentByInput = {
+    where: OrderEmailWhereUniqueInput
+    create: XOR<OrderEmailCreateWithoutSentByInput, OrderEmailUncheckedCreateWithoutSentByInput>
+  }
+
+  export type OrderEmailCreateManySentByInputEnvelope = {
+    data: OrderEmailCreateManySentByInput | OrderEmailCreateManySentByInput[]
     skipDuplicates?: boolean
   }
 
@@ -81886,6 +83729,42 @@ export namespace Prisma {
     data: XOR<PaymentRecordUpdateManyMutationInput, PaymentRecordUncheckedUpdateManyWithoutRecipientUserInput>
   }
 
+  export type OrderEmailUpsertWithWhereUniqueWithoutSentByInput = {
+    where: OrderEmailWhereUniqueInput
+    update: XOR<OrderEmailUpdateWithoutSentByInput, OrderEmailUncheckedUpdateWithoutSentByInput>
+    create: XOR<OrderEmailCreateWithoutSentByInput, OrderEmailUncheckedCreateWithoutSentByInput>
+  }
+
+  export type OrderEmailUpdateWithWhereUniqueWithoutSentByInput = {
+    where: OrderEmailWhereUniqueInput
+    data: XOR<OrderEmailUpdateWithoutSentByInput, OrderEmailUncheckedUpdateWithoutSentByInput>
+  }
+
+  export type OrderEmailUpdateManyWithWhereWithoutSentByInput = {
+    where: OrderEmailScalarWhereInput
+    data: XOR<OrderEmailUpdateManyMutationInput, OrderEmailUncheckedUpdateManyWithoutSentByInput>
+  }
+
+  export type OrderEmailScalarWhereInput = {
+    AND?: OrderEmailScalarWhereInput | OrderEmailScalarWhereInput[]
+    OR?: OrderEmailScalarWhereInput[]
+    NOT?: OrderEmailScalarWhereInput | OrderEmailScalarWhereInput[]
+    id?: StringFilter<"OrderEmail"> | string
+    refTable?: StringFilter<"OrderEmail"> | string
+    orderId?: StringFilter<"OrderEmail"> | string
+    recipientEmail?: StringFilter<"OrderEmail"> | string
+    recipientName?: StringNullableFilter<"OrderEmail"> | string | null
+    supplierId?: StringFilter<"OrderEmail"> | string
+    subject?: StringFilter<"OrderEmail"> | string
+    htmlBody?: StringFilter<"OrderEmail"> | string
+    userMessage?: StringNullableFilter<"OrderEmail"> | string | null
+    sentById?: StringFilter<"OrderEmail"> | string
+    sentAt?: DateTimeFilter<"OrderEmail"> | Date | string
+    brevoMessageId?: StringNullableFilter<"OrderEmail"> | string | null
+    deliveryStatus?: StringNullableFilter<"OrderEmail"> | string | null
+    createdAt?: DateTimeFilter<"OrderEmail"> | Date | string
+  }
+
   export type UserCreateWithoutPreferenceInput = {
     id?: string
     email: string
@@ -81945,6 +83824,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutPreferenceInput = {
@@ -82006,6 +83886,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutPreferenceInput = {
@@ -82083,6 +83964,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPreferenceInput = {
@@ -82144,6 +84026,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type UserCreateWithoutActivityLogsInput = {
@@ -82205,6 +84088,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutActivityLogsInput = {
@@ -82266,6 +84150,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutActivityLogsInput = {
@@ -82343,6 +84228,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutActivityLogsInput = {
@@ -82404,6 +84290,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type UserCreateWithoutUserTokenInput = {
@@ -82465,6 +84352,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutUserTokenInput = {
@@ -82526,6 +84414,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutUserTokenInput = {
@@ -82603,6 +84492,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserTokenInput = {
@@ -82664,6 +84554,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type UserCreateWithoutFinanceSettingsUpdatesInput = {
@@ -82725,6 +84616,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutFinanceSettingsUpdatesInput = {
@@ -82786,6 +84678,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutFinanceSettingsUpdatesInput = {
@@ -82863,6 +84756,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFinanceSettingsUpdatesInput = {
@@ -82924,6 +84818,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type UserCreateWithoutSuppliersCreatedInput = {
@@ -82985,6 +84880,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutSuppliersCreatedInput = {
@@ -83046,6 +84942,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutSuppliersCreatedInput = {
@@ -83523,6 +85420,48 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type OrderEmailCreateWithoutSupplierInput = {
+    id?: string
+    refTable: string
+    orderId: string
+    recipientEmail: string
+    recipientName?: string | null
+    subject: string
+    htmlBody: string
+    userMessage?: string | null
+    sentAt?: Date | string
+    brevoMessageId?: string | null
+    deliveryStatus?: string | null
+    createdAt?: Date | string
+    sentBy: UserCreateNestedOneWithoutOrderEmailsSentInput
+  }
+
+  export type OrderEmailUncheckedCreateWithoutSupplierInput = {
+    id?: string
+    refTable: string
+    orderId: string
+    recipientEmail: string
+    recipientName?: string | null
+    subject: string
+    htmlBody: string
+    userMessage?: string | null
+    sentById: string
+    sentAt?: Date | string
+    brevoMessageId?: string | null
+    deliveryStatus?: string | null
+    createdAt?: Date | string
+  }
+
+  export type OrderEmailCreateOrConnectWithoutSupplierInput = {
+    where: OrderEmailWhereUniqueInput
+    create: XOR<OrderEmailCreateWithoutSupplierInput, OrderEmailUncheckedCreateWithoutSupplierInput>
+  }
+
+  export type OrderEmailCreateManySupplierInputEnvelope = {
+    data: OrderEmailCreateManySupplierInput | OrderEmailCreateManySupplierInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutSuppliersCreatedInput = {
     update: XOR<UserUpdateWithoutSuppliersCreatedInput, UserUncheckedUpdateWithoutSuppliersCreatedInput>
     create: XOR<UserCreateWithoutSuppliersCreatedInput, UserUncheckedCreateWithoutSuppliersCreatedInput>
@@ -83593,6 +85532,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSuppliersCreatedInput = {
@@ -83654,6 +85594,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type SupplierPaymentMethodUpsertWithWhereUniqueWithoutSupplierInput = {
@@ -83916,6 +85857,22 @@ export namespace Prisma {
     data: XOR<PaymentRecordUpdateManyMutationInput, PaymentRecordUncheckedUpdateManyWithoutRecipientSupplierInput>
   }
 
+  export type OrderEmailUpsertWithWhereUniqueWithoutSupplierInput = {
+    where: OrderEmailWhereUniqueInput
+    update: XOR<OrderEmailUpdateWithoutSupplierInput, OrderEmailUncheckedUpdateWithoutSupplierInput>
+    create: XOR<OrderEmailCreateWithoutSupplierInput, OrderEmailUncheckedCreateWithoutSupplierInput>
+  }
+
+  export type OrderEmailUpdateWithWhereUniqueWithoutSupplierInput = {
+    where: OrderEmailWhereUniqueInput
+    data: XOR<OrderEmailUpdateWithoutSupplierInput, OrderEmailUncheckedUpdateWithoutSupplierInput>
+  }
+
+  export type OrderEmailUpdateManyWithWhereWithoutSupplierInput = {
+    where: OrderEmailScalarWhereInput
+    data: XOR<OrderEmailUpdateManyMutationInput, OrderEmailUncheckedUpdateManyWithoutSupplierInput>
+  }
+
   export type SupplierCreateWithoutPaymentMethodsInput = {
     id?: string
     code: string
@@ -83939,6 +85896,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderCreateNestedManyWithoutSupplierInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderCreateNestedManyWithoutSupplierInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientSupplierInput
+    orderEmails?: OrderEmailCreateNestedManyWithoutSupplierInput
   }
 
   export type SupplierUncheckedCreateWithoutPaymentMethodsInput = {
@@ -83964,6 +85922,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientSupplierInput
+    orderEmails?: OrderEmailUncheckedCreateNestedManyWithoutSupplierInput
   }
 
   export type SupplierCreateOrConnectWithoutPaymentMethodsInput = {
@@ -84005,6 +85964,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUpdateManyWithoutSupplierNestedInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUpdateManyWithoutSupplierNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientSupplierNestedInput
+    orderEmails?: OrderEmailUpdateManyWithoutSupplierNestedInput
   }
 
   export type SupplierUncheckedUpdateWithoutPaymentMethodsInput = {
@@ -84030,6 +85990,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientSupplierNestedInput
+    orderEmails?: OrderEmailUncheckedUpdateManyWithoutSupplierNestedInput
   }
 
   export type SupplierCreateWithoutCommercialTermsInput = {
@@ -84055,6 +86016,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderCreateNestedManyWithoutSupplierInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderCreateNestedManyWithoutSupplierInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientSupplierInput
+    orderEmails?: OrderEmailCreateNestedManyWithoutSupplierInput
   }
 
   export type SupplierUncheckedCreateWithoutCommercialTermsInput = {
@@ -84080,6 +86042,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientSupplierInput
+    orderEmails?: OrderEmailUncheckedCreateNestedManyWithoutSupplierInput
   }
 
   export type SupplierCreateOrConnectWithoutCommercialTermsInput = {
@@ -84121,6 +86084,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUpdateManyWithoutSupplierNestedInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUpdateManyWithoutSupplierNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientSupplierNestedInput
+    orderEmails?: OrderEmailUpdateManyWithoutSupplierNestedInput
   }
 
   export type SupplierUncheckedUpdateWithoutCommercialTermsInput = {
@@ -84146,6 +86110,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientSupplierNestedInput
+    orderEmails?: OrderEmailUncheckedUpdateManyWithoutSupplierNestedInput
   }
 
   export type SupplierCreateWithoutAddressesInput = {
@@ -84171,6 +86136,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderCreateNestedManyWithoutSupplierInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderCreateNestedManyWithoutSupplierInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientSupplierInput
+    orderEmails?: OrderEmailCreateNestedManyWithoutSupplierInput
   }
 
   export type SupplierUncheckedCreateWithoutAddressesInput = {
@@ -84196,6 +86162,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientSupplierInput
+    orderEmails?: OrderEmailUncheckedCreateNestedManyWithoutSupplierInput
   }
 
   export type SupplierCreateOrConnectWithoutAddressesInput = {
@@ -84237,6 +86204,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUpdateManyWithoutSupplierNestedInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUpdateManyWithoutSupplierNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientSupplierNestedInput
+    orderEmails?: OrderEmailUpdateManyWithoutSupplierNestedInput
   }
 
   export type SupplierUncheckedUpdateWithoutAddressesInput = {
@@ -84262,6 +86230,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientSupplierNestedInput
+    orderEmails?: OrderEmailUncheckedUpdateManyWithoutSupplierNestedInput
   }
 
   export type SupplierCreateWithoutContactsInput = {
@@ -84287,6 +86256,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderCreateNestedManyWithoutSupplierInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderCreateNestedManyWithoutSupplierInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientSupplierInput
+    orderEmails?: OrderEmailCreateNestedManyWithoutSupplierInput
   }
 
   export type SupplierUncheckedCreateWithoutContactsInput = {
@@ -84312,6 +86282,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientSupplierInput
+    orderEmails?: OrderEmailUncheckedCreateNestedManyWithoutSupplierInput
   }
 
   export type SupplierCreateOrConnectWithoutContactsInput = {
@@ -84353,6 +86324,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUpdateManyWithoutSupplierNestedInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUpdateManyWithoutSupplierNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientSupplierNestedInput
+    orderEmails?: OrderEmailUpdateManyWithoutSupplierNestedInput
   }
 
   export type SupplierUncheckedUpdateWithoutContactsInput = {
@@ -84378,6 +86350,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientSupplierNestedInput
+    orderEmails?: OrderEmailUncheckedUpdateManyWithoutSupplierNestedInput
   }
 
   export type SupplierCreateWithoutPerformanceMetricsInput = {
@@ -84403,6 +86376,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderCreateNestedManyWithoutSupplierInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderCreateNestedManyWithoutSupplierInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientSupplierInput
+    orderEmails?: OrderEmailCreateNestedManyWithoutSupplierInput
   }
 
   export type SupplierUncheckedCreateWithoutPerformanceMetricsInput = {
@@ -84428,6 +86402,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientSupplierInput
+    orderEmails?: OrderEmailUncheckedCreateNestedManyWithoutSupplierInput
   }
 
   export type SupplierCreateOrConnectWithoutPerformanceMetricsInput = {
@@ -84469,6 +86444,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUpdateManyWithoutSupplierNestedInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUpdateManyWithoutSupplierNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientSupplierNestedInput
+    orderEmails?: OrderEmailUpdateManyWithoutSupplierNestedInput
   }
 
   export type SupplierUncheckedUpdateWithoutPerformanceMetricsInput = {
@@ -84494,6 +86470,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientSupplierNestedInput
+    orderEmails?: OrderEmailUncheckedUpdateManyWithoutSupplierNestedInput
   }
 
   export type TankerCreateWithoutDepotInput = {
@@ -84899,6 +86876,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutDriversInput = {
@@ -84960,6 +86938,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutDriversInput = {
@@ -85118,6 +87097,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDriversInput = {
@@ -85179,6 +87159,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type TankerUpsertWithoutDriverInput = {
@@ -85557,6 +87538,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderCreateNestedManyWithoutSupplierInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderCreateNestedManyWithoutSupplierInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientSupplierInput
+    orderEmails?: OrderEmailCreateNestedManyWithoutSupplierInput
   }
 
   export type SupplierUncheckedCreateWithoutGasPurchaseOrdersInput = {
@@ -85582,6 +87564,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientSupplierInput
+    orderEmails?: OrderEmailUncheckedCreateNestedManyWithoutSupplierInput
   }
 
   export type SupplierCreateOrConnectWithoutGasPurchaseOrdersInput = {
@@ -85717,6 +87700,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutGasPurchaseOrdersInput = {
@@ -85778,6 +87762,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutGasPurchaseOrdersInput = {
@@ -85887,6 +87872,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUpdateManyWithoutSupplierNestedInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUpdateManyWithoutSupplierNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientSupplierNestedInput
+    orderEmails?: OrderEmailUpdateManyWithoutSupplierNestedInput
   }
 
   export type SupplierUncheckedUpdateWithoutGasPurchaseOrdersInput = {
@@ -85912,6 +87898,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientSupplierNestedInput
+    orderEmails?: OrderEmailUncheckedUpdateManyWithoutSupplierNestedInput
   }
 
   export type ExploitationDepotUpsertWithoutGasPurchaseOrdersInput = {
@@ -86059,6 +88046,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutGasPurchaseOrdersInput = {
@@ -86120,6 +88108,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type GasPurchaseOrderTankerUpsertWithWhereUniqueWithoutOrderInput = {
@@ -86775,6 +88764,7 @@ export namespace Prisma {
     gasPurchaseOrders?: GasPurchaseOrderCreateNestedManyWithoutSupplierInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderCreateNestedManyWithoutSupplierInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientSupplierInput
+    orderEmails?: OrderEmailCreateNestedManyWithoutSupplierInput
   }
 
   export type SupplierUncheckedCreateWithoutGasBottlePurchaseOrdersInput = {
@@ -86800,6 +88790,7 @@ export namespace Prisma {
     gasPurchaseOrders?: GasPurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientSupplierInput
+    orderEmails?: OrderEmailUncheckedCreateNestedManyWithoutSupplierInput
   }
 
   export type SupplierCreateOrConnectWithoutGasBottlePurchaseOrdersInput = {
@@ -86935,6 +88926,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutGasBottlePurchaseOrdersInput = {
@@ -86996,6 +88988,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutGasBottlePurchaseOrdersInput = {
@@ -87067,6 +89060,7 @@ export namespace Prisma {
     gasPurchaseOrders?: GasPurchaseOrderUpdateManyWithoutSupplierNestedInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUpdateManyWithoutSupplierNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientSupplierNestedInput
+    orderEmails?: OrderEmailUpdateManyWithoutSupplierNestedInput
   }
 
   export type SupplierUncheckedUpdateWithoutGasBottlePurchaseOrdersInput = {
@@ -87092,6 +89086,7 @@ export namespace Prisma {
     gasPurchaseOrders?: GasPurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientSupplierNestedInput
+    orderEmails?: OrderEmailUncheckedUpdateManyWithoutSupplierNestedInput
   }
 
   export type ExploitationDepotUpsertWithoutGasBottlePurchaseOrdersInput = {
@@ -87239,6 +89234,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutGasBottlePurchaseOrdersInput = {
@@ -87300,6 +89296,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type GasBottlePurchaseOrderItemUpsertWithWhereUniqueWithoutOrderInput = {
@@ -87837,6 +89834,7 @@ export namespace Prisma {
     gasPurchaseOrders?: GasPurchaseOrderCreateNestedManyWithoutSupplierInput
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderCreateNestedManyWithoutSupplierInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientSupplierInput
+    orderEmails?: OrderEmailCreateNestedManyWithoutSupplierInput
   }
 
   export type SupplierUncheckedCreateWithoutAccessoryPurchaseOrdersInput = {
@@ -87862,6 +89860,7 @@ export namespace Prisma {
     gasPurchaseOrders?: GasPurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientSupplierInput
+    orderEmails?: OrderEmailUncheckedCreateNestedManyWithoutSupplierInput
   }
 
   export type SupplierCreateOrConnectWithoutAccessoryPurchaseOrdersInput = {
@@ -87997,6 +89996,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutAccessoryPurchaseOrdersInput = {
@@ -88058,6 +90058,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutAccessoryPurchaseOrdersInput = {
@@ -88131,6 +90132,7 @@ export namespace Prisma {
     gasPurchaseOrders?: GasPurchaseOrderUpdateManyWithoutSupplierNestedInput
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUpdateManyWithoutSupplierNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientSupplierNestedInput
+    orderEmails?: OrderEmailUpdateManyWithoutSupplierNestedInput
   }
 
   export type SupplierUncheckedUpdateWithoutAccessoryPurchaseOrdersInput = {
@@ -88156,6 +90158,7 @@ export namespace Prisma {
     gasPurchaseOrders?: GasPurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientSupplierNestedInput
+    orderEmails?: OrderEmailUncheckedUpdateManyWithoutSupplierNestedInput
   }
 
   export type ExploitationDepotUpsertWithoutAccessoryPurchaseOrdersInput = {
@@ -88303,6 +90306,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccessoryPurchaseOrdersInput = {
@@ -88364,6 +90368,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type AccessoryPurchaseOrderItemUpsertWithWhereUniqueWithoutOrderInput = {
@@ -88681,6 +90686,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutCreatedInvoicesInput = {
@@ -88742,6 +90748,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutCreatedInvoicesInput = {
@@ -88808,6 +90815,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutPaidInvoicesInput = {
@@ -88869,6 +90877,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutPaidInvoicesInput = {
@@ -89012,6 +91021,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedInvoicesInput = {
@@ -89073,6 +91083,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUpsertWithoutPaidInvoicesInput = {
@@ -89145,6 +91156,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPaidInvoicesInput = {
@@ -89206,6 +91218,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type PaymentRecordUpsertWithWhereUniqueWithoutInvoiceInput = {
@@ -89283,6 +91296,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutUploadedDocumentsInput = {
@@ -89344,6 +91358,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutUploadedDocumentsInput = {
@@ -89421,6 +91436,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUploadedDocumentsInput = {
@@ -89482,6 +91498,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type UserCreateWithoutApprovalRequestsInput = {
@@ -89543,6 +91560,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutApprovalRequestsInput = {
@@ -89604,6 +91622,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutApprovalRequestsInput = {
@@ -89715,6 +91734,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutApprovalRequestsInput = {
@@ -89776,6 +91796,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type ApprovalStepUpsertWithWhereUniqueWithoutApprovalInput = {
@@ -89888,6 +91909,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutApprovalStepsDecidedInput = {
@@ -89949,6 +91971,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutApprovalStepsDecidedInput = {
@@ -90067,6 +92090,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutApprovalStepsDecidedInput = {
@@ -90128,6 +92152,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type UserCreateWithoutNotificationsInput = {
@@ -90189,6 +92214,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -90250,6 +92276,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -90327,6 +92354,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -90388,6 +92416,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type UserCreateWithoutDeviceTokensInput = {
@@ -90449,6 +92478,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutDeviceTokensInput = {
@@ -90510,6 +92540,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutDeviceTokensInput = {
@@ -90587,6 +92618,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDeviceTokensInput = {
@@ -90648,6 +92680,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type UserCreateWithoutNotificationPreferenceInput = {
@@ -90709,6 +92742,7 @@ export namespace Prisma {
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutNotificationPreferenceInput = {
@@ -90770,6 +92804,7 @@ export namespace Prisma {
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutNotificationPreferenceInput = {
@@ -90847,6 +92882,7 @@ export namespace Prisma {
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationPreferenceInput = {
@@ -90908,6 +92944,7 @@ export namespace Prisma {
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type ExploitationInvoiceCreateWithoutPaymentRecordsInput = {
@@ -91024,6 +93061,7 @@ export namespace Prisma {
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutPaymentsMadeInput = {
@@ -91085,6 +93123,7 @@ export namespace Prisma {
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutPaymentsMadeInput = {
@@ -91151,6 +93190,7 @@ export namespace Prisma {
     DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
     notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
+    orderEmailsSent?: OrderEmailCreateNestedManyWithoutSentByInput
   }
 
   export type UserUncheckedCreateWithoutPaymentsReceivedInput = {
@@ -91212,6 +93252,7 @@ export namespace Prisma {
     DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
     notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
     paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
+    orderEmailsSent?: OrderEmailUncheckedCreateNestedManyWithoutSentByInput
   }
 
   export type UserCreateOrConnectWithoutPaymentsReceivedInput = {
@@ -91242,6 +93283,7 @@ export namespace Prisma {
     gasPurchaseOrders?: GasPurchaseOrderCreateNestedManyWithoutSupplierInput
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderCreateNestedManyWithoutSupplierInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderCreateNestedManyWithoutSupplierInput
+    orderEmails?: OrderEmailCreateNestedManyWithoutSupplierInput
   }
 
   export type SupplierUncheckedCreateWithoutPaymentsReceivedInput = {
@@ -91267,6 +93309,7 @@ export namespace Prisma {
     gasPurchaseOrders?: GasPurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
+    orderEmails?: OrderEmailUncheckedCreateNestedManyWithoutSupplierInput
   }
 
   export type SupplierCreateOrConnectWithoutPaymentsReceivedInput = {
@@ -91527,6 +93570,7 @@ export namespace Prisma {
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPaymentsMadeInput = {
@@ -91588,6 +93632,7 @@ export namespace Prisma {
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUpsertWithoutPaymentsReceivedInput = {
@@ -91660,6 +93705,7 @@ export namespace Prisma {
     DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPaymentsReceivedInput = {
@@ -91721,6 +93767,7 @@ export namespace Prisma {
     DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type SupplierUpsertWithoutPaymentsReceivedInput = {
@@ -91757,6 +93804,7 @@ export namespace Prisma {
     gasPurchaseOrders?: GasPurchaseOrderUpdateManyWithoutSupplierNestedInput
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUpdateManyWithoutSupplierNestedInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUpdateManyWithoutSupplierNestedInput
+    orderEmails?: OrderEmailUpdateManyWithoutSupplierNestedInput
   }
 
   export type SupplierUncheckedUpdateWithoutPaymentsReceivedInput = {
@@ -91782,6 +93830,7 @@ export namespace Prisma {
     gasPurchaseOrders?: GasPurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
+    orderEmails?: OrderEmailUncheckedUpdateManyWithoutSupplierNestedInput
   }
 
   export type PaymentRecordUpsertWithoutReversedByInput = {
@@ -91918,6 +93967,390 @@ export namespace Prisma {
     reversedBy?: PaymentRecordUncheckedUpdateOneWithoutReversesNestedInput
   }
 
+  export type SupplierCreateWithoutOrderEmailsInput = {
+    id?: string
+    code: string
+    name: string
+    fullName?: string | null
+    type: $Enums.SupplierType
+    category?: $Enums.SupplierCategory
+    tier?: $Enums.SupplierTier
+    isPreferred?: boolean
+    isVerifiedPartner?: boolean
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    createdBy: UserCreateNestedOneWithoutSuppliersCreatedInput
+    paymentMethods?: SupplierPaymentMethodCreateNestedManyWithoutSupplierInput
+    commercialTerms?: SupplierCommercialTermsCreateNestedOneWithoutSupplierInput
+    addresses?: SupplierAddressCreateNestedManyWithoutSupplierInput
+    contacts?: SupplierContactCreateNestedManyWithoutSupplierInput
+    performanceMetrics?: SupplierPerformanceMetricsCreateNestedOneWithoutSupplierInput
+    gasPurchaseOrders?: GasPurchaseOrderCreateNestedManyWithoutSupplierInput
+    gasBottlePurchaseOrders?: GasBottlePurchaseOrderCreateNestedManyWithoutSupplierInput
+    accessoryPurchaseOrders?: AccessoryPurchaseOrderCreateNestedManyWithoutSupplierInput
+    paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientSupplierInput
+  }
+
+  export type SupplierUncheckedCreateWithoutOrderEmailsInput = {
+    id?: string
+    code: string
+    name: string
+    fullName?: string | null
+    type: $Enums.SupplierType
+    category?: $Enums.SupplierCategory
+    tier?: $Enums.SupplierTier
+    isPreferred?: boolean
+    isVerifiedPartner?: boolean
+    isActive?: boolean
+    createdById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    paymentMethods?: SupplierPaymentMethodUncheckedCreateNestedManyWithoutSupplierInput
+    commercialTerms?: SupplierCommercialTermsUncheckedCreateNestedOneWithoutSupplierInput
+    addresses?: SupplierAddressUncheckedCreateNestedManyWithoutSupplierInput
+    contacts?: SupplierContactUncheckedCreateNestedManyWithoutSupplierInput
+    performanceMetrics?: SupplierPerformanceMetricsUncheckedCreateNestedOneWithoutSupplierInput
+    gasPurchaseOrders?: GasPurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
+    gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
+    accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedCreateNestedManyWithoutSupplierInput
+    paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientSupplierInput
+  }
+
+  export type SupplierCreateOrConnectWithoutOrderEmailsInput = {
+    where: SupplierWhereUniqueInput
+    create: XOR<SupplierCreateWithoutOrderEmailsInput, SupplierUncheckedCreateWithoutOrderEmailsInput>
+  }
+
+  export type UserCreateWithoutOrderEmailsSentInput = {
+    id?: string
+    email: string
+    username?: string | null
+    name: string
+    surname: string
+    employeeId: string
+    nationalIdNumber: string
+    phoneNumber?: string | null
+    isEmailVerified?: boolean
+    status?: $Enums.Status
+    password?: string | null
+    passwordConfirm?: string | null
+    passwordChangedAt?: Date | string | null
+    deactivatedUntil?: Date | string | null
+    failedLoginAttempts?: number
+    lockedUntil?: Date | string | null
+    lastLoggedInAt?: Date | string | null
+    dob?: Date | string | null
+    gender?: $Enums.Gender
+    profilePictureUrl?: string | null
+    address?: string | null
+    emergencyContactName?: string | null
+    emergencyContactPhoneNumber?: string | null
+    hireDate: Date | string
+    baseSalaryInCFA?: number | null
+    bankName?: string | null
+    cnpsNumber?: string | null
+    taxId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    isSystem?: boolean | null
+    suspensionReason?: string | null
+    department: DepartmentCreateNestedOneWithoutUsersInput
+    role: RoleCreateNestedOneWithoutUsersInput
+    preference?: UserPreferenceCreateNestedOneWithoutUserInput
+    roleOverrides?: RoleOverrideCreateNestedManyWithoutUserInput
+    createdRoleOverrides?: RoleOverrideCreateNestedManyWithoutCreatedByInput
+    permissionOverrides?: PermissionOverrideCreateNestedManyWithoutUserInput
+    createdPermissionOverrides?: PermissionOverrideCreateNestedManyWithoutCreatedByInput
+    createdRolePermissions?: RolePermissionCreateNestedManyWithoutCreatedByInput
+    activityLogs?: ActivityLogCreateNestedManyWithoutUserInput
+    UserToken?: UserTokenCreateNestedManyWithoutUserInput
+    createdInvoices?: ExploitationInvoiceCreateNestedManyWithoutCreatedByInput
+    paidInvoices?: ExploitationInvoiceCreateNestedManyWithoutPaidByInput
+    uploadedDocuments?: ExploitationDocumentCreateNestedManyWithoutUploadedByInput
+    gasPurchaseOrders?: GasPurchaseOrderCreateNestedManyWithoutCreatedByInput
+    gasBottlePurchaseOrders?: GasBottlePurchaseOrderCreateNestedManyWithoutCreatedByInput
+    accessoryPurchaseOrders?: AccessoryPurchaseOrderCreateNestedManyWithoutCreatedByInput
+    approvalRequests?: ApprovalCreateNestedManyWithoutRequestedByInput
+    approvalStepsDecided?: ApprovalStepCreateNestedManyWithoutDecidedByInput
+    financeSettingsUpdates?: FinanceSettingsCreateNestedManyWithoutUpdatedByInput
+    suppliersCreated?: SupplierCreateNestedManyWithoutCreatedByInput
+    drivers?: ExploitationDriverCreateNestedManyWithoutUserInput
+    Notifications?: NotificationCreateNestedManyWithoutRecipientInput
+    DeviceTokens?: DeviceTokenCreateNestedManyWithoutUserInput
+    notificationPreference?: NotificationPreferenceCreateNestedOneWithoutUserInput
+    paymentsMade?: PaymentRecordCreateNestedManyWithoutPaidByInput
+    paymentsReceived?: PaymentRecordCreateNestedManyWithoutRecipientUserInput
+  }
+
+  export type UserUncheckedCreateWithoutOrderEmailsSentInput = {
+    id?: string
+    email: string
+    username?: string | null
+    name: string
+    surname: string
+    employeeId: string
+    nationalIdNumber: string
+    phoneNumber?: string | null
+    isEmailVerified?: boolean
+    status?: $Enums.Status
+    password?: string | null
+    passwordConfirm?: string | null
+    passwordChangedAt?: Date | string | null
+    deactivatedUntil?: Date | string | null
+    failedLoginAttempts?: number
+    lockedUntil?: Date | string | null
+    lastLoggedInAt?: Date | string | null
+    dob?: Date | string | null
+    gender?: $Enums.Gender
+    profilePictureUrl?: string | null
+    address?: string | null
+    emergencyContactName?: string | null
+    emergencyContactPhoneNumber?: string | null
+    hireDate: Date | string
+    baseSalaryInCFA?: number | null
+    bankName?: string | null
+    cnpsNumber?: string | null
+    taxId?: string | null
+    departmentId: string
+    roleId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    isSystem?: boolean | null
+    suspensionReason?: string | null
+    preference?: UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+    roleOverrides?: RoleOverrideUncheckedCreateNestedManyWithoutUserInput
+    createdRoleOverrides?: RoleOverrideUncheckedCreateNestedManyWithoutCreatedByInput
+    permissionOverrides?: PermissionOverrideUncheckedCreateNestedManyWithoutUserInput
+    createdPermissionOverrides?: PermissionOverrideUncheckedCreateNestedManyWithoutCreatedByInput
+    createdRolePermissions?: RolePermissionUncheckedCreateNestedManyWithoutCreatedByInput
+    activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutUserInput
+    UserToken?: UserTokenUncheckedCreateNestedManyWithoutUserInput
+    createdInvoices?: ExploitationInvoiceUncheckedCreateNestedManyWithoutCreatedByInput
+    paidInvoices?: ExploitationInvoiceUncheckedCreateNestedManyWithoutPaidByInput
+    uploadedDocuments?: ExploitationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+    gasPurchaseOrders?: GasPurchaseOrderUncheckedCreateNestedManyWithoutCreatedByInput
+    gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedCreateNestedManyWithoutCreatedByInput
+    accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedCreateNestedManyWithoutCreatedByInput
+    approvalRequests?: ApprovalUncheckedCreateNestedManyWithoutRequestedByInput
+    approvalStepsDecided?: ApprovalStepUncheckedCreateNestedManyWithoutDecidedByInput
+    financeSettingsUpdates?: FinanceSettingsUncheckedCreateNestedManyWithoutUpdatedByInput
+    suppliersCreated?: SupplierUncheckedCreateNestedManyWithoutCreatedByInput
+    drivers?: ExploitationDriverUncheckedCreateNestedManyWithoutUserInput
+    Notifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
+    DeviceTokens?: DeviceTokenUncheckedCreateNestedManyWithoutUserInput
+    notificationPreference?: NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+    paymentsMade?: PaymentRecordUncheckedCreateNestedManyWithoutPaidByInput
+    paymentsReceived?: PaymentRecordUncheckedCreateNestedManyWithoutRecipientUserInput
+  }
+
+  export type UserCreateOrConnectWithoutOrderEmailsSentInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutOrderEmailsSentInput, UserUncheckedCreateWithoutOrderEmailsSentInput>
+  }
+
+  export type SupplierUpsertWithoutOrderEmailsInput = {
+    update: XOR<SupplierUpdateWithoutOrderEmailsInput, SupplierUncheckedUpdateWithoutOrderEmailsInput>
+    create: XOR<SupplierCreateWithoutOrderEmailsInput, SupplierUncheckedCreateWithoutOrderEmailsInput>
+    where?: SupplierWhereInput
+  }
+
+  export type SupplierUpdateToOneWithWhereWithoutOrderEmailsInput = {
+    where?: SupplierWhereInput
+    data: XOR<SupplierUpdateWithoutOrderEmailsInput, SupplierUncheckedUpdateWithoutOrderEmailsInput>
+  }
+
+  export type SupplierUpdateWithoutOrderEmailsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumSupplierTypeFieldUpdateOperationsInput | $Enums.SupplierType
+    category?: EnumSupplierCategoryFieldUpdateOperationsInput | $Enums.SupplierCategory
+    tier?: EnumSupplierTierFieldUpdateOperationsInput | $Enums.SupplierTier
+    isPreferred?: BoolFieldUpdateOperationsInput | boolean
+    isVerifiedPartner?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdBy?: UserUpdateOneRequiredWithoutSuppliersCreatedNestedInput
+    paymentMethods?: SupplierPaymentMethodUpdateManyWithoutSupplierNestedInput
+    commercialTerms?: SupplierCommercialTermsUpdateOneWithoutSupplierNestedInput
+    addresses?: SupplierAddressUpdateManyWithoutSupplierNestedInput
+    contacts?: SupplierContactUpdateManyWithoutSupplierNestedInput
+    performanceMetrics?: SupplierPerformanceMetricsUpdateOneWithoutSupplierNestedInput
+    gasPurchaseOrders?: GasPurchaseOrderUpdateManyWithoutSupplierNestedInput
+    gasBottlePurchaseOrders?: GasBottlePurchaseOrderUpdateManyWithoutSupplierNestedInput
+    accessoryPurchaseOrders?: AccessoryPurchaseOrderUpdateManyWithoutSupplierNestedInput
+    paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientSupplierNestedInput
+  }
+
+  export type SupplierUncheckedUpdateWithoutOrderEmailsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumSupplierTypeFieldUpdateOperationsInput | $Enums.SupplierType
+    category?: EnumSupplierCategoryFieldUpdateOperationsInput | $Enums.SupplierCategory
+    tier?: EnumSupplierTierFieldUpdateOperationsInput | $Enums.SupplierTier
+    isPreferred?: BoolFieldUpdateOperationsInput | boolean
+    isVerifiedPartner?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    paymentMethods?: SupplierPaymentMethodUncheckedUpdateManyWithoutSupplierNestedInput
+    commercialTerms?: SupplierCommercialTermsUncheckedUpdateOneWithoutSupplierNestedInput
+    addresses?: SupplierAddressUncheckedUpdateManyWithoutSupplierNestedInput
+    contacts?: SupplierContactUncheckedUpdateManyWithoutSupplierNestedInput
+    performanceMetrics?: SupplierPerformanceMetricsUncheckedUpdateOneWithoutSupplierNestedInput
+    gasPurchaseOrders?: GasPurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
+    gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
+    accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
+    paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientSupplierNestedInput
+  }
+
+  export type UserUpsertWithoutOrderEmailsSentInput = {
+    update: XOR<UserUpdateWithoutOrderEmailsSentInput, UserUncheckedUpdateWithoutOrderEmailsSentInput>
+    create: XOR<UserCreateWithoutOrderEmailsSentInput, UserUncheckedCreateWithoutOrderEmailsSentInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutOrderEmailsSentInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutOrderEmailsSentInput, UserUncheckedUpdateWithoutOrderEmailsSentInput>
+  }
+
+  export type UserUpdateWithoutOrderEmailsSentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    surname?: StringFieldUpdateOperationsInput | string
+    employeeId?: StringFieldUpdateOperationsInput | string
+    nationalIdNumber?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordConfirm?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deactivatedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedLoginAttempts?: IntFieldUpdateOperationsInput | number
+    lockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoggedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    profilePictureUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    hireDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    baseSalaryInCFA?: NullableIntFieldUpdateOperationsInput | number | null
+    bankName?: NullableStringFieldUpdateOperationsInput | string | null
+    cnpsNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: DepartmentUpdateOneRequiredWithoutUsersNestedInput
+    role?: RoleUpdateOneRequiredWithoutUsersNestedInput
+    preference?: UserPreferenceUpdateOneWithoutUserNestedInput
+    roleOverrides?: RoleOverrideUpdateManyWithoutUserNestedInput
+    createdRoleOverrides?: RoleOverrideUpdateManyWithoutCreatedByNestedInput
+    permissionOverrides?: PermissionOverrideUpdateManyWithoutUserNestedInput
+    createdPermissionOverrides?: PermissionOverrideUpdateManyWithoutCreatedByNestedInput
+    createdRolePermissions?: RolePermissionUpdateManyWithoutCreatedByNestedInput
+    activityLogs?: ActivityLogUpdateManyWithoutUserNestedInput
+    UserToken?: UserTokenUpdateManyWithoutUserNestedInput
+    createdInvoices?: ExploitationInvoiceUpdateManyWithoutCreatedByNestedInput
+    paidInvoices?: ExploitationInvoiceUpdateManyWithoutPaidByNestedInput
+    uploadedDocuments?: ExploitationDocumentUpdateManyWithoutUploadedByNestedInput
+    gasPurchaseOrders?: GasPurchaseOrderUpdateManyWithoutCreatedByNestedInput
+    gasBottlePurchaseOrders?: GasBottlePurchaseOrderUpdateManyWithoutCreatedByNestedInput
+    accessoryPurchaseOrders?: AccessoryPurchaseOrderUpdateManyWithoutCreatedByNestedInput
+    approvalRequests?: ApprovalUpdateManyWithoutRequestedByNestedInput
+    approvalStepsDecided?: ApprovalStepUpdateManyWithoutDecidedByNestedInput
+    financeSettingsUpdates?: FinanceSettingsUpdateManyWithoutUpdatedByNestedInput
+    suppliersCreated?: SupplierUpdateManyWithoutCreatedByNestedInput
+    drivers?: ExploitationDriverUpdateManyWithoutUserNestedInput
+    Notifications?: NotificationUpdateManyWithoutRecipientNestedInput
+    DeviceTokens?: DeviceTokenUpdateManyWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
+    paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
+    paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutOrderEmailsSentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    surname?: StringFieldUpdateOperationsInput | string
+    employeeId?: StringFieldUpdateOperationsInput | string
+    nationalIdNumber?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordConfirm?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deactivatedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedLoginAttempts?: IntFieldUpdateOperationsInput | number
+    lockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoggedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    profilePictureUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    hireDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    baseSalaryInCFA?: NullableIntFieldUpdateOperationsInput | number | null
+    bankName?: NullableStringFieldUpdateOperationsInput | string | null
+    cnpsNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    departmentId?: StringFieldUpdateOperationsInput | string
+    roleId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isSystem?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    preference?: UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    roleOverrides?: RoleOverrideUncheckedUpdateManyWithoutUserNestedInput
+    createdRoleOverrides?: RoleOverrideUncheckedUpdateManyWithoutCreatedByNestedInput
+    permissionOverrides?: PermissionOverrideUncheckedUpdateManyWithoutUserNestedInput
+    createdPermissionOverrides?: PermissionOverrideUncheckedUpdateManyWithoutCreatedByNestedInput
+    createdRolePermissions?: RolePermissionUncheckedUpdateManyWithoutCreatedByNestedInput
+    activityLogs?: ActivityLogUncheckedUpdateManyWithoutUserNestedInput
+    UserToken?: UserTokenUncheckedUpdateManyWithoutUserNestedInput
+    createdInvoices?: ExploitationInvoiceUncheckedUpdateManyWithoutCreatedByNestedInput
+    paidInvoices?: ExploitationInvoiceUncheckedUpdateManyWithoutPaidByNestedInput
+    uploadedDocuments?: ExploitationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+    gasPurchaseOrders?: GasPurchaseOrderUncheckedUpdateManyWithoutCreatedByNestedInput
+    gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedUpdateManyWithoutCreatedByNestedInput
+    accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedUpdateManyWithoutCreatedByNestedInput
+    approvalRequests?: ApprovalUncheckedUpdateManyWithoutRequestedByNestedInput
+    approvalStepsDecided?: ApprovalStepUncheckedUpdateManyWithoutDecidedByNestedInput
+    financeSettingsUpdates?: FinanceSettingsUncheckedUpdateManyWithoutUpdatedByNestedInput
+    suppliersCreated?: SupplierUncheckedUpdateManyWithoutCreatedByNestedInput
+    drivers?: ExploitationDriverUncheckedUpdateManyWithoutUserNestedInput
+    Notifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+    DeviceTokens?: DeviceTokenUncheckedUpdateManyWithoutUserNestedInput
+    notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+    paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
+    paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+  }
+
   export type UserCreateManyDepartmentInput = {
     id?: string
     email: string
@@ -92014,6 +94447,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDepartmentInput = {
@@ -92075,6 +94509,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutDepartmentInput = {
@@ -92231,6 +94666,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRoleInput = {
@@ -92292,6 +94728,7 @@ export namespace Prisma {
     notificationPreference?: NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
     paymentsMade?: PaymentRecordUncheckedUpdateManyWithoutPaidByNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientUserNestedInput
+    orderEmailsSent?: OrderEmailUncheckedUpdateManyWithoutSentByNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutRoleInput = {
@@ -92922,6 +95359,22 @@ export namespace Prisma {
     notes?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type OrderEmailCreateManySentByInput = {
+    id?: string
+    refTable: string
+    orderId: string
+    recipientEmail: string
+    recipientName?: string | null
+    supplierId: string
+    subject: string
+    htmlBody: string
+    userMessage?: string | null
+    sentAt?: Date | string
+    brevoMessageId?: string | null
+    deliveryStatus?: string | null
+    createdAt?: Date | string
   }
 
   export type RoleOverrideUpdateWithoutUserInput = {
@@ -93744,6 +96197,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUpdateManyWithoutSupplierNestedInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUpdateManyWithoutSupplierNestedInput
     paymentsReceived?: PaymentRecordUpdateManyWithoutRecipientSupplierNestedInput
+    orderEmails?: OrderEmailUpdateManyWithoutSupplierNestedInput
   }
 
   export type SupplierUncheckedUpdateWithoutCreatedByInput = {
@@ -93769,6 +96223,7 @@ export namespace Prisma {
     gasBottlePurchaseOrders?: GasBottlePurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
     accessoryPurchaseOrders?: AccessoryPurchaseOrderUncheckedUpdateManyWithoutSupplierNestedInput
     paymentsReceived?: PaymentRecordUncheckedUpdateManyWithoutRecipientSupplierNestedInput
+    orderEmails?: OrderEmailUncheckedUpdateManyWithoutSupplierNestedInput
   }
 
   export type SupplierUncheckedUpdateManyWithoutCreatedByInput = {
@@ -94098,6 +96553,54 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type OrderEmailUpdateWithoutSentByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    refTable?: StringFieldUpdateOperationsInput | string
+    orderId?: StringFieldUpdateOperationsInput | string
+    recipientEmail?: StringFieldUpdateOperationsInput | string
+    recipientName?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: StringFieldUpdateOperationsInput | string
+    htmlBody?: StringFieldUpdateOperationsInput | string
+    userMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    sentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brevoMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    supplier?: SupplierUpdateOneRequiredWithoutOrderEmailsNestedInput
+  }
+
+  export type OrderEmailUncheckedUpdateWithoutSentByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    refTable?: StringFieldUpdateOperationsInput | string
+    orderId?: StringFieldUpdateOperationsInput | string
+    recipientEmail?: StringFieldUpdateOperationsInput | string
+    recipientName?: NullableStringFieldUpdateOperationsInput | string | null
+    supplierId?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    htmlBody?: StringFieldUpdateOperationsInput | string
+    userMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    sentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brevoMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderEmailUncheckedUpdateManyWithoutSentByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    refTable?: StringFieldUpdateOperationsInput | string
+    orderId?: StringFieldUpdateOperationsInput | string
+    recipientEmail?: StringFieldUpdateOperationsInput | string
+    recipientName?: NullableStringFieldUpdateOperationsInput | string | null
+    supplierId?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    htmlBody?: StringFieldUpdateOperationsInput | string
+    userMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    sentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brevoMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type SupplierPaymentMethodCreateManySupplierInput = {
     id?: string
     method: $Enums.PaymentMethod
@@ -94255,6 +96758,22 @@ export namespace Prisma {
     notes?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type OrderEmailCreateManySupplierInput = {
+    id?: string
+    refTable: string
+    orderId: string
+    recipientEmail: string
+    recipientName?: string | null
+    subject: string
+    htmlBody: string
+    userMessage?: string | null
+    sentById: string
+    sentAt?: Date | string
+    brevoMessageId?: string | null
+    deliveryStatus?: string | null
+    createdAt?: Date | string
   }
 
   export type SupplierPaymentMethodUpdateWithoutSupplierInput = {
@@ -94742,6 +97261,54 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderEmailUpdateWithoutSupplierInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    refTable?: StringFieldUpdateOperationsInput | string
+    orderId?: StringFieldUpdateOperationsInput | string
+    recipientEmail?: StringFieldUpdateOperationsInput | string
+    recipientName?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: StringFieldUpdateOperationsInput | string
+    htmlBody?: StringFieldUpdateOperationsInput | string
+    userMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    sentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brevoMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sentBy?: UserUpdateOneRequiredWithoutOrderEmailsSentNestedInput
+  }
+
+  export type OrderEmailUncheckedUpdateWithoutSupplierInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    refTable?: StringFieldUpdateOperationsInput | string
+    orderId?: StringFieldUpdateOperationsInput | string
+    recipientEmail?: StringFieldUpdateOperationsInput | string
+    recipientName?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: StringFieldUpdateOperationsInput | string
+    htmlBody?: StringFieldUpdateOperationsInput | string
+    userMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    sentById?: StringFieldUpdateOperationsInput | string
+    sentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brevoMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderEmailUncheckedUpdateManyWithoutSupplierInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    refTable?: StringFieldUpdateOperationsInput | string
+    orderId?: StringFieldUpdateOperationsInput | string
+    recipientEmail?: StringFieldUpdateOperationsInput | string
+    recipientName?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: StringFieldUpdateOperationsInput | string
+    htmlBody?: StringFieldUpdateOperationsInput | string
+    userMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    sentById?: StringFieldUpdateOperationsInput | string
+    sentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brevoMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TankerCreateManyDepotInput = {

@@ -368,6 +368,7 @@ model User {
   notificationPreference      NotificationPreference?
   paymentsMade                PaymentRecord[]          @relation("payment_paid_by")
   paymentsReceived            PaymentRecord[]          @relation("payment_recipient")
+  orderEmailsSent             OrderEmail[]             @relation("order_emails_sent_by")
 
   @@index([deletedAt])
   @@map("users")
@@ -655,6 +656,7 @@ model Supplier {
   gasBottlePurchaseOrders GasBottlePurchaseOrder[]
   accessoryPurchaseOrders AccessoryPurchaseOrder[]
   paymentsReceived        PaymentRecord[]             @relation("payment_recipient_supplier")
+  orderEmails             OrderEmail[]                @relation("order_emails_sent_to")
 
   @@index([deletedAt])
   @@index([type])
@@ -1452,4 +1454,31 @@ model PaymentRecord {
   @@index([paidById])
   @@index([paidAt])
   @@map("payment_records")
+}
+
+model OrderEmail {
+  id       String @id @default(uuid())
+  refTable String @map("ref_table")
+  orderId  String @map("order_id")
+
+  recipientEmail String   @map("recipient_email")
+  recipientName  String?  @map("recipient_name")
+  supplierId     String   @map("supplier_id")
+  supplier       Supplier @relation("order_emails_sent_to", fields: [supplierId], references: [id])
+  subject        String
+  htmlBody       String   @map("html_body")
+  userMessage    String?  @map("user_message")
+
+  sentById String   @map("sent_by_id")
+  sentBy   User     @relation("order_emails_sent_by", fields: [sentById], references: [id])
+  sentAt   DateTime @default(now()) @map("sent_at")
+
+  brevoMessageId String? @map("brevo_message_id")
+  deliveryStatus String? @map("delivery_status")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([refTable, orderId])
+  @@index([sentById])
+  @@map("order_emails")
 }

@@ -816,6 +816,23 @@ exports.Prisma.PaymentRecordScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.OrderEmailScalarFieldEnum = {
+  id: 'id',
+  refTable: 'refTable',
+  orderId: 'orderId',
+  recipientEmail: 'recipientEmail',
+  recipientName: 'recipientName',
+  supplierId: 'supplierId',
+  subject: 'subject',
+  htmlBody: 'htmlBody',
+  userMessage: 'userMessage',
+  sentById: 'sentById',
+  sentAt: 'sentAt',
+  brevoMessageId: 'brevoMessageId',
+  deliveryStatus: 'deliveryStatus',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1256,7 +1273,8 @@ exports.Prisma.ModelName = {
   Notification: 'Notification',
   DeviceToken: 'DeviceToken',
   NotificationPreference: 'NotificationPreference',
-  PaymentRecord: 'PaymentRecord'
+  PaymentRecord: 'PaymentRecord',
+  OrderEmail: 'OrderEmail'
 };
 
 /**
