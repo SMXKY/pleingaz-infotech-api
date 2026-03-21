@@ -5,6 +5,12 @@
  * All special characters have been replaced with standard ASCII.
  */
 
+import {
+  exploitationTags,
+  exploitationSchemas,
+  exploitationPaths,
+} from "./exploitation-openapi";
+
 export const swaggerSpec = {
   openapi: "3.0.0",
   info: {
@@ -43,6 +49,7 @@ export const swaggerSpec = {
     { name: "Role Permissions", description: "Role-permission mappings" },
     { name: "Activity Logs", description: "Audit trail" },
     { name: "Admin Config", description: "System configuration" },
+    ...exploitationTags,
   ],
   components: {
     securitySchemes: {
@@ -1409,6 +1416,7 @@ export const swaggerSpec = {
           "updatedAt",
         ],
       },
+      ...exploitationSchemas,
     },
   },
   paths: {
@@ -5288,5 +5296,6 @@ export const swaggerSpec = {
         },
       },
     },
+    ...exploitationPaths,
   },
 };

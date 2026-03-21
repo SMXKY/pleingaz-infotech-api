@@ -8,7 +8,17 @@
       "Bash(xargs ls:*)",
       "Bash(npx prisma:*)",
       "Bash(xxd)",
-      "Bash(xargs grep:*)"
+      "Bash(xargs grep:*)",
+      "Bash(node -e \":*)",
+      "Bash(npx ts-node -e \":*)",
+      "Bash(npx tsx -e \":*)",
+      "Bash(grep -i -E \"\\\\.\\(json|ts|js\\)$\")",
+      "Bash(grep -r error.gas_bottle_order. /c/Users/SPVCEMVN/OneDrive/Desktop/projects/pliengaz/api/src/modules --include=*.ts)",
+      "Bash(grep -r error.accessory_order. /c/Users/SPVCEMVN/OneDrive/Desktop/projects/pliengaz/api/src/modules --include=*.ts)",
+      "Bash(grep -r error.exploitation_invoice. /c/Users/SPVCEMVN/OneDrive/Desktop/projects/pliengaz/api/src/modules --include=*.ts)",
+      "Bash(grep -r error.orderEmail. /c/Users/SPVCEMVN/OneDrive/Desktop/projects/pliengaz/api/src/modules --include=*.ts)",
+      "Bash(grep -r error.device_token. /c/Users/SPVCEMVN/OneDrive/Desktop/projects/pliengaz/api/src/modules --include=*.ts)",
+      "Bash(grep -r error.validation. /c/Users/SPVCEMVN/OneDrive/Desktop/projects/pliengaz/api/src/modules --include=*.ts)"
     ]
   }
 }
