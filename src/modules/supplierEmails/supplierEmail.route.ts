@@ -13,7 +13,7 @@ orderEmailRouter.use(protect, getUserLanguage);
 orderEmailRouter.post(
   "/",
   restrictTo(allPermissions.exploitationOrderEmails.sendEmail),
-  controller.create
+  controller.createOrderEmail
 );
 orderEmailRouter.get(
   "/",

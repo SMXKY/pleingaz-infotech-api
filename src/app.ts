@@ -37,6 +37,7 @@ import { gasPurchaseOrderRouter } from "./modules/gasPurchaseOrder";
 import { approvalRouter } from "./modules/approval";
 import { paymentRouter } from "./modules/payments";
 import { orderEmailRouter } from "./modules/supplierEmails";
+import { gasBottlePurchaseOrderRouter } from "./modules/gasBottlePurchaseOrders";
 
 // Handle BigInt JSON serialization globally
 (BigInt.prototype as any).toJSON = function () {
@@ -148,6 +149,7 @@ app.use("/api/v1/accessory-categories", accessoryCategoryRouter);
 app.use("/api/v1/accessory-items", accessoryItemRouter);
 app.use("/api/v1/exploitation-documents", exploitationDocumentRouter);
 app.use("/api/v1/gas-purchase-orders", gasPurchaseOrderRouter);
+app.use("/api/v1/gas-bottle-purchase-orders", gasBottlePurchaseOrderRouter);
 app.use("/api/v1/approvals", approvalRouter);
 app.use("/api/v1/payments", paymentRouter);
 app.use("/api/v1/exploitation-order-emails", orderEmailRouter);

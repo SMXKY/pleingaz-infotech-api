@@ -145,6 +145,13 @@ export const allPermissions = {
     readAllEmails: "exploitation_order_emails.can_read_emails",
     readOneEmail: "exploitation_order_emails.can_read_email",
   },
+  gasBottlePurchaseOrders: {
+    createOrder: "gas_bottle_purchase_orders.can_create_order",
+    readOrder: "gas_bottle_purchase_orders.can_read_order",
+    readAllOrders: "gas_bottle_purchase_orders.can_read_orders",
+    updateOrder: "gas_bottle_purchase_orders.can_update_order",
+    deleteOrder: "gas_bottle_purchase_orders.can_delete_order",
+  },
 } as const;
 
 export default allPermissions;

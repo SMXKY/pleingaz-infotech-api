@@ -41,7 +41,6 @@ export class ApprovalController {
     return id;
   }
 
-  // GET / — List all approvals the user is involved with
   getMyApprovals = async (
     req: Request,
     res: Response,
@@ -56,7 +55,6 @@ export class ApprovalController {
     }
   };
 
-  // GET /by-record?recordId=xxx&entityType=GAS_ORDER
   getApprovalByRecord = async (
     req: Request,
     res: Response,
@@ -85,7 +83,6 @@ export class ApprovalController {
     }
   };
 
-  // GET /:id — Get approval by ID (involvement check)
   getApproval = async (
     req: Request,
     res: Response,
@@ -101,7 +98,6 @@ export class ApprovalController {
     }
   };
 
-  // POST /:id/decide — Approve or reject
   approveOrReject = async (
     req: Request,
     res: Response,

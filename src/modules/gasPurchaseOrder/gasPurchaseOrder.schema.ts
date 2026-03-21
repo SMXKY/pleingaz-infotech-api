@@ -1,13 +1,11 @@
 import { z } from "zod";
 import { OrderPriority, Currency, GasUnit } from "src/generated/prisma";
 
-// ─── Tanker assignment sub-schema ────────────────────────────────────────────
 const tankerSchema = z.object({
   tankerId: z.string().uuid("error.gas_order.invalid_tanker_id"),
   collectionDate: z.coerce.date().optional().nullable(),
 });
 
-// ─── Line item sub-schema ────────────────────────────────────────────────────
 const lineItemSchema = z.object({
   code: z
     .string()
@@ -35,7 +33,6 @@ const lineItemSchema = z.object({
   unitPrice: z.number().positive("error.gas_order.item_unit_price_invalid"),
 });
 
-// ─── Create Full Order (single request) ──────────────────────────────────────
 export const createGasPurchaseOrderSchema = z.object({
   depotId: z.string().uuid("error.gas_order.invalid_depot_id"),
   supplierId: z.string().uuid("error.gas_order.invalid_supplier_id"),
@@ -71,7 +68,6 @@ export type CreateGasPurchaseOrderInput = z.infer<
   typeof createGasPurchaseOrderSchema
 >;
 
-// ─── Update Order (full state replacement — only while no approval step approved) ─
 export const updateGasPurchaseOrderSchema = z.object({
   depotId: z.string().uuid("error.gas_order.invalid_depot_id"),
   supplierId: z.string().uuid("error.gas_order.invalid_supplier_id"),

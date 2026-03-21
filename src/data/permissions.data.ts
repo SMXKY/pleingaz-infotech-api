@@ -930,6 +930,53 @@ export const permissions: PermissionSeed[] = [
     riskLevel: PermissionRiskLevel.CRITICAL,
   },
 
+  //Gas Bottle Purchase Orders
+  {
+    code: "gas_bottle_purchase_orders.can_read_orders",
+    engName: "Read Gas Bottle Purchase Orders",
+    frName: "Lire les bons de commande de bouteilles de gaz",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.GAS_BOTTLE_ORDERS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.LOW,
+  },
+  {
+    code: "gas_bottle_purchase_orders.can_read_order",
+    engName: "Read Gas Bottle Purchase Order",
+    frName: "Lire le bon de commande de bouteille de gaz",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.GAS_BOTTLE_ORDERS,
+    action: PermissionAction.READ,
+    riskLevel: PermissionRiskLevel.LOW,
+  },
+  {
+    code: "gas_bottle_purchase_orders.can_create_order",
+    engName: "Create Gas Bottle Purchase Order",
+    frName: "Créer un bon de commande de bouteille de gaz",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.GAS_BOTTLE_ORDERS,
+    action: PermissionAction.CREATE,
+    riskLevel: PermissionRiskLevel.MEDIUM,
+  },
+  {
+    code: "gas_bottle_purchase_orders.can_update_order",
+    engName: "Update Gas Bottle Purchase Order",
+    frName: "Modifier un bon de commande de bouteille de gaz",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.GAS_BOTTLE_ORDERS,
+    action: PermissionAction.UPDATE,
+    riskLevel: PermissionRiskLevel.MEDIUM,
+  },
+  {
+    code: "gas_bottle_purchase_orders.can_delete_order",
+    engName: "Delete Gas Bottle Purchase Order",
+    frName: "Supprimer un bon de commande de bouteille de gaz",
+    module: PermissionModule.EXPLOITATION,
+    submodule: PermissionSubmodule.GAS_BOTTLE_ORDERS,
+    action: PermissionAction.DELETE,
+    riskLevel: PermissionRiskLevel.HIGH,
+  },
+
   // ─── APPROVALS ──────────────────────────────────────────────────────────────────
   {
     code: "approvals.can_read_approval",
