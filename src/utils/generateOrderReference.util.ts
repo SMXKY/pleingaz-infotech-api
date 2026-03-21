@@ -13,6 +13,15 @@ const generateReference = async (
 ): Promise<string> => {
   const currentYear = new Date().getFullYear();
 
+  const DEFAULT_PREFIXES: Record<SequenceType, string> = {
+    GAS_PO: "GAS-PO",
+    GAS_BOTTLE_PO: "GBT-PO",
+    ACCESSORY_PO: "ACC-PO",
+    GAS_INVOICE: "GAS-INV",
+    GAS_BOTTLE_INVOICE: "GBT-INV",
+    ACCESSORY_INVOICE: "ACC-INV",
+  };
+
   const sequence = (await tx.$queryRaw(
     Prisma.sql`
       SELECT current_number, prefix, current_year
@@ -22,7 +31,24 @@ const generateReference = async (
     `
   )) as SequenceResult[];
 
-  const record = sequence[0];
+  let record = sequence[0];
+
+  if (!record) {
+    await tx.numberSequence.create({
+      data: {
+        type,
+        prefix: DEFAULT_PREFIXES[type],
+        currentNumber: 0,
+        currentYear: currentYear,
+      },
+    });
+
+    record = {
+      current_number: 0,
+      prefix: DEFAULT_PREFIXES[type],
+      current_year: currentYear,
+    };
+  }
 
   const newNumber =
     record.current_year === currentYear ? record.current_number + 1 : 1;
@@ -31,7 +57,7 @@ const generateReference = async (
     where: { type },
     data: {
       currentNumber: newNumber,
-      currentYear,
+      currentYear: currentYear,
     },
   });
 

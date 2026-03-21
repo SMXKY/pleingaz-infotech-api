@@ -41,23 +41,22 @@ export class ApprovalController {
     return id;
   }
 
-  // Get approval by ID
-  getApproval = async (
+  // GET / — List all approvals the user is involved with
+  getMyApprovals = async (
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> => {
     try {
       const ctx = this.getContext(req, res);
-      const id = this.extractId(req);
-      const approval = await this.service.getApprovalById(id, ctx);
-      appResponder(StatusCodes.OK, approval as object, res);
+      const approvals = await this.service.getMyApprovals(ctx);
+      appResponder(StatusCodes.OK, approvals, res);
     } catch (error) {
       next(error);
     }
   };
 
-  // Get approval by record ID (query param: ?recordId=xxx&entityType=GAS_ORDER)
+  // GET /by-record?recordId=xxx&entityType=GAS_ORDER
   getApprovalByRecord = async (
     req: Request,
     res: Response,
@@ -86,7 +85,23 @@ export class ApprovalController {
     }
   };
 
-  // Approve or reject — POST /approvals/:id/decide
+  // GET /:id — Get approval by ID (involvement check)
+  getApproval = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const ctx = this.getContext(req, res);
+      const id = this.extractId(req);
+      const approval = await this.service.getApprovalById(id, ctx);
+      appResponder(StatusCodes.OK, approval as object, res);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  // POST /:id/decide — Approve or reject
   approveOrReject = async (
     req: Request,
     res: Response,

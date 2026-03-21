@@ -34,7 +34,6 @@ export class GasPurchaseOrderController extends BaseController<GasPurchaseOrder>
     return id;
   }
 
-  // Create full order (single request)
   createOrder = async (
     req: Request,
     res: Response,
@@ -42,14 +41,13 @@ export class GasPurchaseOrderController extends BaseController<GasPurchaseOrder>
   ): Promise<void> => {
     try {
       const ctx = this.getContext(req, res);
-      const order = await this.service.createOrder(req.body, ctx);
+      const order = await this.service.create(req.body, ctx);
       appResponder(StatusCodes.CREATED, order as object, res);
     } catch (error) {
       next(error);
     }
   };
 
-  // Get full order summary with approval status
   getOrderSummary = async (
     req: Request,
     res: Response,
@@ -59,6 +57,21 @@ export class GasPurchaseOrderController extends BaseController<GasPurchaseOrder>
       const ctx = this.getContext(req, res);
       const id = this.extractId(req);
       const order = await this.service.getOrderSummary(id, ctx);
+      appResponder(StatusCodes.OK, order as object, res);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  cancelOrder = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const ctx = this.getContext(req, res);
+      const id = this.extractId(req);
+      const order = await this.service.cancelOrder(id, ctx);
       appResponder(StatusCodes.OK, order as object, res);
     } catch (error) {
       next(error);

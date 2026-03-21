@@ -36,6 +36,11 @@ import { exploitationDocumentRouter } from "./modules/exploitationDocument";
 import { gasPurchaseOrderRouter } from "./modules/gasPurchaseOrder";
 import { approvalRouter } from "./modules/approval";
 
+// Handle BigInt JSON serialization globally
+(BigInt.prototype as any).toJSON = function () {
+  return this.toString();
+};
+
 export const app = express();
 
 // app.use((req, res, next) => {

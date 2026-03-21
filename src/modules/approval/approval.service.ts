@@ -10,20 +10,74 @@ import {
   OrderStatus,
   NotificationType,
   NotificationPriority,
+  Approval,
 } from "src/generated/prisma";
 import prisma from "@models/index.model";
 import { logUserActivity } from "@utils/logUserActivity.util";
 import { LogCategory, LogOperation } from "@appTypes/log.type";
 import { sendAndDispatch } from "@services/nofication/notification.dispatcher";
+import { BaseService } from "src/base/BaseService";
 
-export class ApprovalService {
-  private repository: ApprovalRepository;
+const ROLE_NAME_TO_APPROVAL_ROLE: Record<string, ApprovalRole> = {
+  "Directeur Général (CEO)": ApprovalRole.CEO,
+  "Comptable (Accountant)": ApprovalRole.ACCOUNTING,
+};
+
+const APPROVAL_ROLE_TO_NAME: Record<string, string> = {
+  [ApprovalRole.CEO]: "Directeur Général (CEO)",
+  [ApprovalRole.ACCOUNTING]: "Comptable (Accountant)",
+};
+
+export class ApprovalService extends BaseService<
+  Approval,
+  ApproveOrRejectInput
+> {
+  protected repository: ApprovalRepository;
+  protected tableName = "approvals";
 
   constructor() {
+    super();
     this.repository = new ApprovalRepository();
   }
 
-  // ─── Get approval status for a record ────────────────────────────────────────
+  private async getUserApprovalRoles(userId: string): Promise<ApprovalRole[]> {
+    const user = await prisma.user.findFirst({
+      where: { id: userId, deletedAt: null },
+      include: { role: true },
+    });
+
+    if (!user || !user.role) return [];
+
+    const approvalRole = ROLE_NAME_TO_APPROVAL_ROLE[user.role.name];
+    return approvalRole ? [approvalRole] : [];
+  }
+
+  async getMyApprovals(ctx: ServiceContext): Promise<any[]> {
+    const approvalRoles = await this.getUserApprovalRoles(ctx.userId!);
+
+    return this.repository.findByInvolvement(ctx.userId!, approvalRoles);
+  }
+
+  async getApprovalById(id: string, ctx: ServiceContext): Promise<any> {
+    const approvalRoles = await this.getUserApprovalRoles(ctx.userId!);
+    const isInvolved = await this.repository.isUserInvolved(
+      id,
+      ctx.userId!,
+      approvalRoles
+    );
+
+    if (!isInvolved) {
+      throw new AppError("error.approval.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    const approval = await this.repository.findById(id);
+    if (!approval) {
+      throw new AppError("error.approval.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    return approval;
+  }
+
   async getApprovalByRecord(
     recordId: string,
     entityType: string,
@@ -32,39 +86,29 @@ export class ApprovalService {
     const approval = await this.repository.findByRecord(recordId, entityType);
 
     if (!approval) {
-      throw new AppError(
-        "error.approval.not_found",
-        StatusCodes.NOT_FOUND
-      );
+      throw new AppError("error.approval.not_found", StatusCodes.NOT_FOUND);
+    }
+
+    // Verify involvement
+    const approvalRoles = await this.getUserApprovalRoles(ctx.userId!);
+    const isInvolved = await this.repository.isUserInvolved(
+      approval.id,
+      ctx.userId!,
+      approvalRoles
+    );
+
+    if (!isInvolved) {
+      throw new AppError("error.approval.not_found", StatusCodes.NOT_FOUND);
     }
 
     return approval;
   }
 
-  // ─── Get approval by ID ──────────────────────────────────────────────────────
-  async getApprovalById(
-    id: string,
-    ctx: ServiceContext
-  ): Promise<any> {
-    const approval = await this.repository.findById(id);
-
-    if (!approval) {
-      throw new AppError(
-        "error.approval.not_found",
-        StatusCodes.NOT_FOUND
-      );
-    }
-
-    return approval;
-  }
-
-  // ─── Approve or Reject ───────────────────────────────────────────────────────
   async approveOrReject(
     recordId: string,
     data: ApproveOrRejectInput,
     ctx: ServiceContext
   ): Promise<any> {
-    // Validate input
     const result = approveOrRejectSchema.safeParse(data);
     if (!result.success) {
       const messages = result.error.issues
@@ -74,7 +118,6 @@ export class ApprovalService {
     }
     const { action, notes } = result.data;
 
-    // Find the approval record for this order
     const approval = await prisma.approval.findFirst({
       where: { recordId },
       include: {
@@ -83,20 +126,13 @@ export class ApprovalService {
     });
 
     if (!approval) {
-      throw new AppError(
-        "error.approval.not_found",
-        StatusCodes.NOT_FOUND
-      );
+      throw new AppError("error.approval.not_found", StatusCodes.NOT_FOUND);
     }
 
     if (approval.status !== ApprovalStatus.PENDING) {
-      throw new AppError(
-        "error.approval.not_pending",
-        StatusCodes.BAD_REQUEST
-      );
+      throw new AppError("error.approval.not_pending", StatusCodes.BAD_REQUEST);
     }
 
-    // Get the current step
     const currentStep = approval.steps.find(
       (s) => s.step === approval.currentStep
     );
@@ -107,7 +143,6 @@ export class ApprovalService {
       );
     }
 
-    // Verify user has the right role for this step
     const user = await prisma.user.findFirst({
       where: { id: ctx.userId!, deletedAt: null },
       include: { role: true },
@@ -120,13 +155,7 @@ export class ApprovalService {
       );
     }
 
-    // Map ApprovalRole to actual role names
-    const roleMapping: Record<string, string> = {
-      [ApprovalRole.CEO]: "Directeur Général (CEO)",
-      [ApprovalRole.ACCOUNTING]: "Comptable (Accountant)",
-    };
-
-    const requiredRoleName = roleMapping[currentStep.role];
+    const requiredRoleName = APPROVAL_ROLE_TO_NAME[currentStep.role];
     if (!requiredRoleName || user.role.name !== requiredRoleName) {
       throw new AppError(
         "error.approval.not_authorized",
@@ -134,12 +163,9 @@ export class ApprovalService {
       );
     }
 
-    // Determine entity-specific table and status field
     const entityConfig = this.getEntityConfig(approval.entityType);
 
-    // Execute approval/rejection in a transaction
     const updatedApproval = await prisma.$transaction(async (tx) => {
-      // Update the current step
       await tx.approvalStep.update({
         where: {
           approvalId_step: {
@@ -156,13 +182,14 @@ export class ApprovalService {
       });
 
       if (action === "REJECTED") {
-        // Reject: update approval status, update order status
         await tx.approval.update({
           where: { id: approval.id },
-          data: { status: ApprovalStatus.REJECTED },
+          data: {
+            status: ApprovalStatus.REJECTED,
+            completedAt: new Date(),
+          },
         });
 
-        // Update the entity status to CANCELLED
         if (entityConfig) {
           await (tx as any)[entityConfig.modelName].update({
             where: { id: recordId },
@@ -170,16 +197,15 @@ export class ApprovalService {
           });
         }
       } else {
-        // Approved: check if this was the last step
         const isLastStep = currentStep.step >= approval.totalSteps;
 
         if (isLastStep) {
-          // Final approval — mark approval and entity as approved
           await tx.approval.update({
             where: { id: approval.id },
             data: {
               status: ApprovalStatus.APPROVED,
               currentStep: currentStep.step,
+              completedAt: new Date(),
             },
           });
 
@@ -190,7 +216,6 @@ export class ApprovalService {
             });
           }
         } else {
-          // Move to next step
           await tx.approval.update({
             where: { id: approval.id },
             data: { currentStep: currentStep.step + 1 },
@@ -198,7 +223,6 @@ export class ApprovalService {
         }
       }
 
-      // Return updated approval
       return tx.approval.findUnique({
         where: { id: approval.id },
         include: {
@@ -217,9 +241,6 @@ export class ApprovalService {
       });
     });
 
-    // ── Post-transaction: log + notify ──────────────────────────────────────────
-
-    // Log activity
     if (ctx.req) {
       logUserActivity(ctx.req, {
         operation: LogOperation.UPDATE,
@@ -233,7 +254,6 @@ export class ApprovalService {
       });
     }
 
-    // Send notifications based on action
     await this.sendApprovalNotifications(
       approval.entityType,
       recordId,
@@ -241,13 +261,13 @@ export class ApprovalService {
       currentStep.step,
       approval.totalSteps,
       approval.requestedById,
+      user,
       ctx
     );
 
     return updatedApproval;
   }
 
-  // ─── Entity Configuration ────────────────────────────────────────────────────
   private getEntityConfig(entityType: string): {
     modelName: string;
     approvedStatus: string;
@@ -267,7 +287,6 @@ export class ApprovalService {
     return configs[entityType] || null;
   }
 
-  // ─── Send Approval Notifications ─────────────────────────────────────────────
   private async sendApprovalNotifications(
     entityType: string,
     recordId: string,
@@ -275,43 +294,58 @@ export class ApprovalService {
     completedStep: number,
     totalSteps: number,
     requestedById: string,
+    decidedByUser: { name: string; surname: string },
     ctx: ServiceContext
   ): Promise<void> {
+    const refTable = this.getRefTable(entityType);
+
     try {
       if (action === "REJECTED") {
-        // Notify the requester that the order was rejected
         sendAndDispatch({
-          type: NotificationType.ORDER_STATUS_CHANGED,
+          type: NotificationType.APPROVAL_REJECTED,
           priority: NotificationPriority.HIGH,
           target: { type: "user", userId: requestedById },
           titleEnglish: "Order Rejected",
           titleFrench: "Commande rejetée",
-          bodyEnglish: `Your order has been rejected at approval step ${completedStep}.`,
-          bodyFrench: `Votre commande a été rejetée à l'étape d'approbation ${completedStep}.`,
-          refTable: this.getRefTable(entityType),
+          bodyEnglish: `Your order has been rejected at approval step ${completedStep} by ${decidedByUser.name} ${decidedByUser.surname}.`,
+          bodyFrench: `Votre commande a été rejetée à l'étape d'approbation ${completedStep} par ${decidedByUser.name} ${decidedByUser.surname}.`,
+          refTable,
           refId: recordId,
           data: { recordId, action: "REJECTED", step: completedStep },
         }).catch((err) =>
           console.error("[ApprovalService] Notification failed:", err)
         );
       } else if (completedStep >= totalSteps) {
-        // Final approval — notify requester
         sendAndDispatch({
-          type: NotificationType.ORDER_STATUS_CHANGED,
+          type: NotificationType.APPROVAL_APPROVED,
           priority: NotificationPriority.HIGH,
           target: { type: "user", userId: requestedById },
-          titleEnglish: "Order Approved",
-          titleFrench: "Commande approuvée",
-          bodyEnglish: `Your order has been fully approved.`,
-          bodyFrench: `Votre commande a été entièrement approuvée.`,
-          refTable: this.getRefTable(entityType),
+          titleEnglish: "Order Fully Approved",
+          titleFrench: "Commande entièrement approuvée",
+          bodyEnglish: `Your order has been fully approved by ${decidedByUser.name} ${decidedByUser.surname}.`,
+          bodyFrench: `Votre commande a été entièrement approuvée par ${decidedByUser.name} ${decidedByUser.surname}.`,
+          refTable,
           refId: recordId,
           data: { recordId, action: "APPROVED", step: completedStep },
         }).catch((err) =>
           console.error("[ApprovalService] Notification failed:", err)
         );
       } else {
-        // Move to next step — notify the next approver role
+        sendAndDispatch({
+          type: NotificationType.APPROVAL_APPROVED,
+          priority: NotificationPriority.NORMAL,
+          target: { type: "user", userId: requestedById },
+          titleEnglish: `Approval Step ${completedStep} Completed`,
+          titleFrench: `Étape d'approbation ${completedStep} terminée`,
+          bodyEnglish: `Approval step ${completedStep} of ${totalSteps} has been approved by ${decidedByUser.name} ${decidedByUser.surname}.`,
+          bodyFrench: `L'étape d'approbation ${completedStep} sur ${totalSteps} a été approuvée par ${decidedByUser.name} ${decidedByUser.surname}.`,
+          refTable,
+          refId: recordId,
+          data: { recordId, action: "APPROVED", step: completedStep },
+        }).catch((err) =>
+          console.error("[ApprovalService] Notification failed:", err)
+        );
+
         const nextStepNumber = completedStep + 1;
         const approval = await prisma.approval.findFirst({
           where: { recordId },
@@ -323,50 +357,31 @@ export class ApprovalService {
             (s) => s.step === nextStepNumber
           );
           if (nextStep) {
-            const roleMapping: Record<string, string> = {
-              [ApprovalRole.CEO]: "Directeur Général (CEO)",
-              [ApprovalRole.ACCOUNTING]: "Comptable (Accountant)",
-            };
-
-            const roleName = roleMapping[nextStep.role];
+            const roleName = APPROVAL_ROLE_TO_NAME[nextStep.role];
             if (roleName) {
               const role = await prisma.role.findFirst({
                 where: { name: roleName },
               });
 
               if (role) {
-                const nextApprovers = await prisma.user.findMany({
-                  where: {
-                    roleId: role.id,
-                    deletedAt: null,
-                    status: "ACTIVE",
+                sendAndDispatch({
+                  type: NotificationType.APPROVAL_REQUIRED,
+                  priority: NotificationPriority.HIGH,
+                  target: { type: "role", roleId: role.id },
+                  titleEnglish: "Order Pending Your Approval",
+                  titleFrench: "Commande en attente de votre approbation",
+                  bodyEnglish: `An order is waiting for your approval (step ${nextStepNumber} of ${totalSteps}).`,
+                  bodyFrench: `Une commande attend votre approbation (étape ${nextStepNumber} sur ${totalSteps}).`,
+                  refTable,
+                  refId: recordId,
+                  data: {
+                    recordId,
+                    action: "PENDING",
+                    step: nextStepNumber,
                   },
-                  select: { id: true },
-                });
-
-                for (const approver of nextApprovers) {
-                  sendAndDispatch({
-                    type: NotificationType.ORDER_SUBMITTED,
-                    priority: NotificationPriority.HIGH,
-                    target: { type: "user", userId: approver.id },
-                    titleEnglish: "Order Pending Your Approval",
-                    titleFrench: "Commande en attente de votre approbation",
-                    bodyEnglish: `An order is waiting for your approval (step ${nextStepNumber} of ${totalSteps}).`,
-                    bodyFrench: `Une commande attend votre approbation (étape ${nextStepNumber} sur ${totalSteps}).`,
-                    refTable: this.getRefTable(entityType),
-                    refId: recordId,
-                    data: {
-                      recordId,
-                      action: "PENDING",
-                      step: nextStepNumber,
-                    },
-                  }).catch((err) =>
-                    console.error(
-                      "[ApprovalService] Notification failed:",
-                      err
-                    )
-                  );
-                }
+                }).catch((err) =>
+                  console.error("[ApprovalService] Notification failed:", err)
+                );
               }
             }
           }
@@ -377,7 +392,6 @@ export class ApprovalService {
     }
   }
 
-  // ─── Get ref table for entity type ────────────────────────────────────────────
   private getRefTable(entityType: string): string {
     const tableMapping: Record<string, string> = {
       [ApprovalEntityType.GAS_ORDER]: "gas_purchase_orders",
