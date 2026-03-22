@@ -4,21 +4,15 @@ import { appResponder } from "@utils/appResponder.util";
 import { StatusCodes } from "http-status-codes";
 import { AppError } from "@utils/AppError.util";
 import { ServiceContext } from "@appTypes/base.types";
+import { BaseController } from "src/base/BaseController";
+import { Approval } from "src/generated/prisma";
 
-export class ApprovalController {
-  private service: ApprovalService;
+export class ApprovalController extends BaseController<Approval> {
+  protected service: ApprovalService;
 
   constructor() {
+    super();
     this.service = new ApprovalService();
-  }
-
-  private getContext(req: Request, res: Response): ServiceContext {
-    return {
-      req,
-      userId: res.locals.user?.id,
-      userEmail: res.locals.user?.email,
-      requestId: req.headers["x-request-id"] as string,
-    };
   }
 
   private extractId(req: Request): string {
@@ -48,7 +42,8 @@ export class ApprovalController {
   ): Promise<void> => {
     try {
       const ctx = this.getContext(req, res);
-      const approvals = await this.service.getMyApprovals(ctx);
+      const options = this.parseFindManyOptions(req);
+      const approvals = await this.service.getMyApprovals(ctx, options);
       appResponder(StatusCodes.OK, approvals, res);
     } catch (error) {
       next(error);

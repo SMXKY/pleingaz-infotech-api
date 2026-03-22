@@ -53,6 +53,49 @@ const PAYMENT_INCLUDE = {
   },
 } as const;
 
+interface OrderTypeConfig {
+  modelName: string;
+  refTable: string;
+  invoiceType: ExploitationInvoiceType;
+  approvalEntityType: ApprovalEntityType;
+  invoiceRefPrefix: string;
+}
+
+const ORDER_TYPE_CONFIGS: Record<string, OrderTypeConfig> = {
+  gas_purchase_orders: {
+    modelName: "gasPurchaseOrder",
+    refTable: "gas_purchase_orders",
+    invoiceType: ExploitationInvoiceType.GAS,
+    approvalEntityType: ApprovalEntityType.GAS_ORDER,
+    invoiceRefPrefix: "GAS_INVOICE",
+  },
+  gas_bottle_purchase_orders: {
+    modelName: "gasBottlePurchaseOrder",
+    refTable: "gas_bottle_purchase_orders",
+    invoiceType: ExploitationInvoiceType.GAS_BOTTLE,
+    approvalEntityType: ApprovalEntityType.GAS_BOTTLE_ORDER,
+    invoiceRefPrefix: "GAS_BOTTLE_INVOICE",
+  },
+  accessory_purchase_orders: {
+    modelName: "accessoryPurchaseOrder",
+    refTable: "accessory_purchase_orders",
+    invoiceType: ExploitationInvoiceType.ACCESSORY,
+    approvalEntityType: ApprovalEntityType.ACCESSORY_ORDER,
+    invoiceRefPrefix: "ACCESSORY_INVOICE",
+  },
+};
+
+function getOrderTypeConfig(refTable: string): OrderTypeConfig {
+  const config = ORDER_TYPE_CONFIGS[refTable];
+  if (!config) {
+    throw new AppError(
+      "error.payment.unsupported_order_type",
+      StatusCodes.BAD_REQUEST
+    );
+  }
+  return config;
+}
+
 export class PaymentService extends BaseService<PaymentRecord> {
   protected repository: PaymentRepository;
   protected tableName = "payment_records";
@@ -62,21 +105,12 @@ export class PaymentService extends BaseService<PaymentRecord> {
     this.repository = new PaymentRepository();
   }
 
-  async recordPayment(
-    data: RecordPaymentInput,
-    ctx: ServiceContext
-  ): Promise<PaymentRecord> {
-    const result = recordPaymentSchema.safeParse(data);
-    if (!result.success) {
-      const messages = result.error.issues
-        .map((issue) => issue.message)
-        .join(", ");
-      throw new AppError(messages, StatusCodes.BAD_REQUEST);
-    }
-    const v = result.data;
-
-    const order = await prisma.gasPurchaseOrder.findFirst({
-      where: { id: v.orderId, deletedAt: null },
+  private async findOrder(
+    config: OrderTypeConfig,
+    orderId: string
+  ): Promise<any> {
+    const order = await (prisma as any)[config.modelName].findFirst({
+      where: { id: orderId, deletedAt: null },
     });
     if (!order) {
       throw new AppError(
@@ -84,6 +118,23 @@ export class PaymentService extends BaseService<PaymentRecord> {
         StatusCodes.NOT_FOUND
       );
     }
+    return order;
+  }
+
+  async recordPayment(
+    data: RecordPaymentInput,
+    ctx: ServiceContext
+  ): Promise<PaymentRecord> {
+    const result = recordPaymentSchema.safeParse(data);
+    if (!result.success) {
+      const messages = result.error.issues.map((issue) => issue.message)[0];
+      throw new AppError(messages, StatusCodes.BAD_REQUEST);
+    }
+    const v = result.data;
+
+    const config = getOrderTypeConfig(v.refTable);
+    const order = await this.findOrder(config, v.orderId);
+
     if (
       order.status !== OrderStatus.APPROVED &&
       order.status !== OrderStatus.FINALIZED
@@ -97,7 +148,7 @@ export class PaymentService extends BaseService<PaymentRecord> {
     const approval = await prisma.approval.findFirst({
       where: {
         recordId: v.orderId,
-        entityType: ApprovalEntityType.GAS_ORDER,
+        entityType: config.approvalEntityType,
       },
       include: { steps: { orderBy: { step: "asc" } } },
     });
@@ -154,18 +205,21 @@ export class PaymentService extends BaseService<PaymentRecord> {
       let invoice = await tx.exploitationInvoice.findFirst({
         where: {
           orderId: v.orderId,
-          type: ExploitationInvoiceType.GAS,
+          type: config.invoiceType,
           deletedAt: null,
         },
       });
 
       if (!invoice) {
-        const invoiceNumber = await generateReference(tx, "GAS_INVOICE" as any);
+        const invoiceNumber = await generateReference(
+          tx,
+          config.invoiceRefPrefix as any
+        );
 
         invoice = await tx.exploitationInvoice.create({
           data: {
-            type: ExploitationInvoiceType.GAS,
-            refTable: "gas_purchase_orders",
+            type: config.invoiceType,
+            refTable: config.refTable,
             orderId: v.orderId,
             invoiceNumber,
             invoiceDate: new Date(),
@@ -185,7 +239,7 @@ export class PaymentService extends BaseService<PaymentRecord> {
       const paymentRecord = await tx.paymentRecord.create({
         data: {
           invoiceId: invoice.id,
-          refTable: "gas_purchase_orders",
+          refTable: config.refTable,
           orderId: v.orderId,
           paidById: ctx.userId!,
           recipientType: v.recipientType,
@@ -207,7 +261,7 @@ export class PaymentService extends BaseService<PaymentRecord> {
         },
       });
 
-      await this.recalculateInvoiceAndOrder(tx, invoice.id, v.orderId);
+      await this.recalculateInvoiceAndOrder(tx, invoice.id, v.orderId, config);
 
       return tx.paymentRecord.findUniqueOrThrow({
         where: { id: paymentRecord.id },
@@ -232,6 +286,7 @@ export class PaymentService extends BaseService<PaymentRecord> {
       order.createdById,
       order.id,
       order.reference,
+      config.refTable,
       NotificationType.PAYMENT_RECEIVED,
       "Payment Recorded",
       "Paiement enregistré",
@@ -279,6 +334,8 @@ export class PaymentService extends BaseService<PaymentRecord> {
       );
     }
 
+    const config = getOrderTypeConfig(original.refTable);
+
     const reversal = await prisma.$transaction(async (tx) => {
       const reversalRecord = await tx.paymentRecord.create({
         data: {
@@ -309,7 +366,8 @@ export class PaymentService extends BaseService<PaymentRecord> {
       await this.recalculateInvoiceAndOrder(
         tx,
         original.invoiceId,
-        original.orderId
+        original.orderId,
+        config
       );
 
       return tx.paymentRecord.findUniqueOrThrow({
@@ -333,7 +391,7 @@ export class PaymentService extends BaseService<PaymentRecord> {
       });
     }
 
-    const order = await prisma.gasPurchaseOrder.findUnique({
+    const order = await (prisma as any)[config.modelName].findUnique({
       where: { id: original.orderId },
     });
     if (order) {
@@ -341,6 +399,7 @@ export class PaymentService extends BaseService<PaymentRecord> {
         order.createdById,
         order.id,
         order.reference,
+        config.refTable,
         NotificationType.PAYMENT_RECEIVED,
         "Payment Reversed",
         "Paiement annulé",
@@ -412,6 +471,8 @@ export class PaymentService extends BaseService<PaymentRecord> {
       }
     }
 
+    const config = getOrderTypeConfig(original.refTable);
+
     const { reversal, corrected } = await prisma.$transaction(async (tx) => {
       const reversalRecord = await tx.paymentRecord.create({
         data: {
@@ -467,7 +528,8 @@ export class PaymentService extends BaseService<PaymentRecord> {
       await this.recalculateInvoiceAndOrder(
         tx,
         original.invoiceId,
-        original.orderId
+        original.orderId,
+        config
       );
 
       const [rev, cor] = await Promise.all([
@@ -510,7 +572,7 @@ export class PaymentService extends BaseService<PaymentRecord> {
       });
     }
 
-    const order = await prisma.gasPurchaseOrder.findUnique({
+    const order = await (prisma as any)[config.modelName].findUnique({
       where: { id: original.orderId },
     });
     if (order) {
@@ -518,6 +580,7 @@ export class PaymentService extends BaseService<PaymentRecord> {
         order.createdById,
         order.id,
         order.reference,
+        config.refTable,
         NotificationType.PAYMENT_RECEIVED,
         "Payment Corrected",
         "Paiement corrigé",
@@ -583,9 +646,12 @@ export class PaymentService extends BaseService<PaymentRecord> {
 
   async getPaymentsByOrder(
     orderId: string,
+    refTable: string,
     ctx: ServiceContext
   ): Promise<PaymentRecord[]> {
-    const order = await prisma.gasPurchaseOrder.findFirst({
+    const config = getOrderTypeConfig(refTable);
+
+    const order = await (prisma as any)[config.modelName].findFirst({
       where: { id: orderId, deletedAt: null },
     });
     if (!order) {
@@ -612,7 +678,8 @@ export class PaymentService extends BaseService<PaymentRecord> {
   private async recalculateInvoiceAndOrder(
     tx: Prisma.TransactionClient,
     invoiceId: string,
-    orderId: string
+    orderId: string,
+    config: OrderTypeConfig
   ): Promise<void> {
     const allPayments = await tx.paymentRecord.findMany({
       where: { invoiceId },
@@ -662,7 +729,7 @@ export class PaymentService extends BaseService<PaymentRecord> {
       },
     });
 
-    await tx.gasPurchaseOrder.update({
+    await (tx as any)[config.modelName].update({
       where: { id: orderId },
       data: {
         paymentStatus,
@@ -670,11 +737,11 @@ export class PaymentService extends BaseService<PaymentRecord> {
     });
 
     if (paymentStatus === PaymentStatus.PAID) {
-      const order = await tx.gasPurchaseOrder.findUniqueOrThrow({
+      const order = await (tx as any)[config.modelName].findUniqueOrThrow({
         where: { id: orderId },
       });
       if (order.status === OrderStatus.APPROVED) {
-        await tx.gasPurchaseOrder.update({
+        await (tx as any)[config.modelName].update({
           where: { id: orderId },
           data: { status: OrderStatus.FINALIZED },
         });
@@ -682,25 +749,23 @@ export class PaymentService extends BaseService<PaymentRecord> {
     }
 
     if (paymentStatus !== PaymentStatus.PAID) {
-      const order = await tx.gasPurchaseOrder.findUniqueOrThrow({
+      const order = await (tx as any)[config.modelName].findUniqueOrThrow({
         where: { id: orderId },
       });
       if (order.status === OrderStatus.FINALIZED) {
-        await tx.gasPurchaseOrder.update({
+        await (tx as any)[config.modelName].update({
           where: { id: orderId },
           data: { status: OrderStatus.APPROVED },
         });
       }
     }
 
-    // Recalculate supplier metrics after payment status changes
-    const orderForMetrics = await tx.gasPurchaseOrder.findUnique({
+    const orderForMetrics = await (tx as any)[config.modelName].findUnique({
       where: { id: orderId },
       select: { supplierId: true },
     });
     if (orderForMetrics?.supplierId) {
       const sid = orderForMetrics.supplierId;
-      // Fire-and-forget outside transaction to avoid blocking
       setTimeout(() => {
         recalculateSupplierMetrics(sid).catch((err) =>
           console.error(
@@ -735,6 +800,7 @@ export class PaymentService extends BaseService<PaymentRecord> {
     creatorId: string,
     orderId: string,
     orderReference: string,
+    refTable: string,
     type: NotificationType,
     titleEn: string,
     titleFr: string,
@@ -749,7 +815,7 @@ export class PaymentService extends BaseService<PaymentRecord> {
       titleFrench: titleFr,
       bodyEnglish: bodyEn,
       bodyFrench: bodyFr,
-      refTable: "gas_purchase_orders",
+      refTable,
       refId: orderId,
       data: { orderId, reference: orderReference },
     }).catch((err) =>

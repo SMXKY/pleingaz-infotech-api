@@ -160,14 +160,13 @@ export const allPermissions = {
     deleteOrder: "accessory_purchase_orders.can_delete_order",
   },
   exploitationInvoices: {
-    createInvoice: "exploitation_invoices:create",
-    readAllInvoices: "exploitation_invoices:read_all",
-    readInvoice: "exploitation_invoices:read",
-    readInvoicesByOrder: "exploitation_invoices:read_by_order",
-    updateInvoice: "exploitation_invoices:update",
-    deleteInvoice: "exploitation_invoices:delete",
-    recordPayment: "exploitation_invoices:record_payment",
-    markOverdue: "exploitation_invoices:mark_overdue",
+    createInvoice: "exploitation_invoices.can_create_invoice",
+    readAllInvoices: "exploitation_invoices.can_read_invoices",
+    readInvoice: "exploitation_invoices.can_read_invoice",
+    readInvoicesByOrder: "exploitation_invoices.can_read_invoices_by_order",
+    updateInvoice: "exploitation_invoices.can_update_invoice",
+    deleteInvoice: "exploitation_invoices.can_delete_invoice",
+    markOverdue: "exploitation_invoices.can_mark_overdue",
   },
   dashboardAnalytics: {
     readGasPurchaseStatistics:

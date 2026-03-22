@@ -14,12 +14,12 @@ const generateReference = async (
   const currentYear = new Date().getFullYear();
 
   const DEFAULT_PREFIXES: Record<SequenceType, string> = {
-    GAS_PO: "GAS-PO",
-    GAS_BOTTLE_PO: "GBT-PO",
-    ACCESSORY_PO: "ACC-PO",
-    GAS_INVOICE: "GAS-INV",
-    GAS_BOTTLE_INVOICE: "GBT-INV",
-    ACCESSORY_INVOICE: "ACC-INV",
+    GAS_PO: "GAS_PO",
+    GAS_BOTTLE_PO: "GAS_BOTTLE_PO",
+    ACCESSORY_PO: "ACCESSORY_PO",
+    GAS_INVOICE: "GAS_INVOICE",
+    GAS_BOTTLE_INVOICE: "GAS_BOTTLE_INVOICE",
+    ACCESSORY_INVOICE: "ACCESSORY_INVOICE",
   };
 
   const sequence = (await tx.$queryRaw(
@@ -37,7 +37,7 @@ const generateReference = async (
     await tx.numberSequence.create({
       data: {
         type,
-        prefix: DEFAULT_PREFIXES[type],
+        prefix: SequenceType[type],
         currentNumber: 0,
         currentYear: currentYear,
       },
@@ -45,7 +45,7 @@ const generateReference = async (
 
     record = {
       current_number: 0,
-      prefix: DEFAULT_PREFIXES[type],
+      prefix: SequenceType[type],
       current_year: currentYear,
     };
   }

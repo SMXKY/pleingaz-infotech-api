@@ -44,6 +44,8 @@ import { paymentRouter } from "./modules/payments";
 import { orderEmailRouter } from "./modules/supplierEmails";
 import { gasBottlePurchaseOrderRouter } from "./modules/gasBottlePurchaseOrders";
 import dashboardAndAnalyticsRouter from "./modules/dashboardAndStatics/dashboardAndStatics.routes";
+import accessoryPurchaseOrderRouter from "./modules/accessoryPurchaseOrder/accessoryPurchaseOrder.route";
+import exploitationInvoiceRouter from "./modules/ExploitationInvoice/ExploitationInvoice.route";
 
 // Handle BigInt JSON serialization globally
 (BigInt.prototype as any).toJSON = function () {
@@ -157,6 +159,7 @@ app.use("/api/v1/tankers", exploitationTankerRouter);
 app.use("/api/v1/bottle-types", gasBottleTypeRouter);
 app.use("/api/v1/accessory-categories", accessoryCategoryRouter);
 app.use("/api/v1/accessory-items", accessoryItemRouter);
+app.use("/api/v1/accessory-purchase-orders", accessoryPurchaseOrderRouter);
 app.use("/api/v1/exploitation-documents", exploitationDocumentRouter);
 app.use("/api/v1/gas-purchase-orders", gasPurchaseOrderRouter);
 app.use("/api/v1/gas-bottle-purchase-orders", gasBottlePurchaseOrderRouter);
@@ -164,6 +167,46 @@ app.use("/api/v1/approvals", approvalRouter);
 app.use("/api/v1/payments", paymentRouter);
 app.use("/api/v1/exploitation-order-emails", orderEmailRouter);
 app.use("/api/v1/dashboard-and-analytics", dashboardAndAnalyticsRouter);
+app.use("/api/v1/exploitation-invoices", exploitationInvoiceRouter);
+
+app.set("json replacer", function (_key: string, value: any) {
+  if (
+    value !== null &&
+    typeof value === "object" &&
+    !Array.isArray(value) &&
+    "d" in value &&
+    "e" in value &&
+    "s" in value
+  ) {
+    const sign = value.s === -1 ? -1 : 1;
+    const digits = value.d;
+    const exponent = value.e;
+
+    if (!Array.isArray(digits) || digits.length === 0) return "0";
+
+    let str = digits[0].toString();
+    for (let i = 1; i < digits.length; i++) {
+      str += digits[i].toString().padStart(7, "0");
+    }
+
+    const intDigits = exponent + 1;
+    if (intDigits >= str.length) {
+      str = str.padEnd(intDigits, "0");
+    } else if (intDigits <= 0) {
+      str = "0." + "0".repeat(-intDigits) + str;
+    } else {
+      str = str.slice(0, intDigits) + "." + str.slice(intDigits);
+    }
+
+    str = str.replace(/\.?0+$/, "");
+
+    return sign === -1 ? "-" + str : str;
+  }
+  if (typeof value === "bigint") {
+    return value.toString();
+  }
+  return value;
+});
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   console.log(`Invalid route accessed: ${req.originalUrl}`);

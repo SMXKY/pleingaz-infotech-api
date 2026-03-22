@@ -124,7 +124,12 @@ export class PaymentController extends BaseController<PaymentRecord> {
     try {
       const ctx = this.getContext(req, res);
       const orderId = this.extractId(req, "orderId");
-      const payments = await this.service.getPaymentsByOrder(orderId, ctx);
+      const refTable = this.extractId(req, "refTable");
+      const payments = await this.service.getPaymentsByOrder(
+        orderId,
+        refTable,
+        ctx
+      );
       appResponder(
         StatusCodes.OK,
         payments.map((p) => this.serialize(p)),

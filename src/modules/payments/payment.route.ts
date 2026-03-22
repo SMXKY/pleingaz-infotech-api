@@ -17,7 +17,7 @@ paymentRouter.post(
 );
 
 paymentRouter.get(
-  "/by-order/:orderId",
+  "/by-order/:orderId/:refTable",
   restrictTo(allPermissions.payments.readPayment),
   controller.getByOrder
 );

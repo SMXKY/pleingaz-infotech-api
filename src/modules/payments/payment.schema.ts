@@ -6,12 +6,21 @@ import {
   Currency,
 } from "src/generated/prisma";
 
+enum RefTable {
+  GAS_PURCHASE_ORDERS = "gas_purchase_orders",
+  GAS_BOTTLE_PURCHASE_ORDERS = "gas_bottle_purchase_orders",
+  ACCESSORY_PURCHASE_ORDERS = "accessory_purchase_orders",
+}
+
 export const recordPaymentSchema = z
   .object({
     orderId: z.string().uuid("error.payment.invalid_order_id"),
 
     recipientType: z.nativeEnum(PaymentRecipientType, {
       error: "error.payment.recipient_type_invalid",
+    }),
+    refTable: z.nativeEnum(RefTable, {
+      error: "error.payment.ref_table_invalid",
     }),
     recipientName: z
       .string()

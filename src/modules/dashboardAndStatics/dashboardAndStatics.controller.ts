@@ -14,6 +14,19 @@ const resolveGroupBucket = (groupBy?: string): string => {
   return "month";
 };
 
+function resolveBucketSql(groupBy?: string): Prisma.Sql {
+  switch (groupBy) {
+    case "day":
+      return Prisma.sql`day`;
+    case "week":
+      return Prisma.sql`week`;
+    case "year":
+      return Prisma.sql`year`;
+    default:
+      return Prisma.sql`month`;
+  }
+}
+
 const gasPurchaseStatistics = catchAsync(
   async (req: Request, res: Response, _next: NextFunction) => {
     const { startDate, endDate, groupBy, supplierId } = req.query as {
@@ -23,7 +36,7 @@ const gasPurchaseStatistics = catchAsync(
       supplierId?: string;
     };
 
-    const bucket = resolveGroupBucket(groupBy);
+    const bucketSql = resolveBucketSql(groupBy);
 
     const where: Prisma.GasPurchaseOrderWhereInput = { deletedAt: null };
     if (startDate || endDate) {
@@ -42,14 +55,27 @@ const gasPurchaseStatistics = catchAsync(
       prisma.gasPurchaseOrder.count({ where }),
     ]);
 
-    const dateFragments: Prisma.Sql[] = [Prisma.sql`o.deleted_at IS NULL`];
+    const joinDateFragments: Prisma.Sql[] = [Prisma.sql`o.deleted_at IS NULL`];
     if (startDate)
-      dateFragments.push(Prisma.sql`o.created_at >= ${new Date(startDate)}`);
+      joinDateFragments.push(
+        Prisma.sql`o.created_at >= ${new Date(startDate)}`
+      );
     if (endDate)
-      dateFragments.push(Prisma.sql`o.created_at <= ${new Date(endDate)}`);
+      joinDateFragments.push(Prisma.sql`o.created_at <= ${new Date(endDate)}`);
     if (supplierId)
-      dateFragments.push(Prisma.sql`o.supplier_id = ${supplierId}`);
-    const rawWhere = Prisma.join(dateFragments, " AND ");
+      joinDateFragments.push(Prisma.sql`o.supplier_id = ${supplierId}`);
+    const joinWhere = Prisma.join(joinDateFragments, " AND ");
+
+    const directDateFragments: Prisma.Sql[] = [Prisma.sql`deleted_at IS NULL`];
+    if (startDate)
+      directDateFragments.push(
+        Prisma.sql`created_at >= ${new Date(startDate)}`
+      );
+    if (endDate)
+      directDateFragments.push(Prisma.sql`created_at <= ${new Date(endDate)}`);
+    if (supplierId)
+      directDateFragments.push(Prisma.sql`supplier_id = ${supplierId}`);
+    const directWhere = Prisma.join(directDateFragments, " AND ");
 
     const volumeResult = await prisma.$queryRaw<[{ total_tons: number }]>`
       SELECT COALESCE(SUM(
@@ -62,21 +88,14 @@ const gasPurchaseStatistics = catchAsync(
       ), 0)::float AS total_tons
       FROM gas_purchase_order_items i
       JOIN gas_purchase_orders o ON o.id = i.order_id
-      WHERE ${rawWhere}
+      WHERE ${joinWhere}
     `;
 
+    const bucket = resolveGroupBucket(groupBy);
+    const trendsQuery = buildTrendsQuery(bucket, directWhere);
     const trends = await prisma.$queryRaw<
       { period: string; order_count: number; total_spend: number }[]
-    >`
-      SELECT
-        TO_CHAR(DATE_TRUNC(${bucket}, created_at), 'YYYY-MM-DD') AS period,
-        COUNT(*)::int AS order_count,
-        COALESCE(SUM(total_in_cfa), 0)::float AS total_spend
-      FROM gas_purchase_orders
-      WHERE ${rawWhere}
-      GROUP BY DATE_TRUNC(${bucket}, created_at)
-      ORDER BY DATE_TRUNC(${bucket}, created_at) ASC
-    `;
+    >(trendsQuery);
 
     const bySupplierRaw = await prisma.gasPurchaseOrder.groupBy({
       by: ["supplierId"],
@@ -133,7 +152,57 @@ const gasPurchaseStatistics = catchAsync(
     });
   }
 );
-
+function buildTrendsQuery(
+  bucketSql: string,
+  directWhere: Prisma.Sql
+): Prisma.Sql {
+  switch (bucketSql) {
+    case "day":
+      return Prisma.sql`
+        SELECT
+          TO_CHAR(DATE_TRUNC('day', created_at), 'YYYY-MM-DD') AS period,
+          COUNT(*)::int AS order_count,
+          COALESCE(SUM(total_in_cfa), 0)::float AS total_spend
+        FROM gas_purchase_orders
+        WHERE ${directWhere}
+        GROUP BY DATE_TRUNC('day', created_at)
+        ORDER BY DATE_TRUNC('day', created_at) ASC
+      `;
+    case "week":
+      return Prisma.sql`
+        SELECT
+          TO_CHAR(DATE_TRUNC('week', created_at), 'YYYY-MM-DD') AS period,
+          COUNT(*)::int AS order_count,
+          COALESCE(SUM(total_in_cfa), 0)::float AS total_spend
+        FROM gas_purchase_orders
+        WHERE ${directWhere}
+        GROUP BY DATE_TRUNC('week', created_at)
+        ORDER BY DATE_TRUNC('week', created_at) ASC
+      `;
+    case "year":
+      return Prisma.sql`
+        SELECT
+          TO_CHAR(DATE_TRUNC('year', created_at), 'YYYY-MM-DD') AS period,
+          COUNT(*)::int AS order_count,
+          COALESCE(SUM(total_in_cfa), 0)::float AS total_spend
+        FROM gas_purchase_orders
+        WHERE ${directWhere}
+        GROUP BY DATE_TRUNC('year', created_at)
+        ORDER BY DATE_TRUNC('year', created_at) ASC
+      `;
+    default:
+      return Prisma.sql`
+        SELECT
+          TO_CHAR(DATE_TRUNC('month', created_at), 'YYYY-MM-DD') AS period,
+          COUNT(*)::int AS order_count,
+          COALESCE(SUM(total_in_cfa), 0)::float AS total_spend
+        FROM gas_purchase_orders
+        WHERE ${directWhere}
+        GROUP BY DATE_TRUNC('month', created_at)
+        ORDER BY DATE_TRUNC('month', created_at) ASC
+      `;
+  }
+}
 const gasPurchaseDashboard = catchAsync(
   async (req: Request, res: Response, _next: NextFunction) => {
     const now = new Date();

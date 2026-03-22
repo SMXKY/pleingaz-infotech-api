@@ -2,7 +2,11 @@ import { ApprovalRepository } from "./approval.repository";
 import { approveOrRejectSchema, ApproveOrRejectInput } from "./approval.schema";
 import { AppError } from "@utils/AppError.util";
 import { StatusCodes } from "http-status-codes";
-import { ServiceContext } from "@appTypes/base.types";
+import {
+  FindManyOptions,
+  PaginatedResult,
+  ServiceContext,
+} from "@appTypes/base.types";
 import {
   ApprovalEntityType,
   ApprovalStatus,
@@ -62,10 +66,17 @@ export class ApprovalService extends BaseService<
     return approvalRole ? [approvalRole] : [];
   }
 
-  async getMyApprovals(ctx: ServiceContext): Promise<any[]> {
+  async getMyApprovals(
+    ctx: ServiceContext,
+    options: FindManyOptions
+  ): Promise<PaginatedResult<Approval>> {
     const approvalRoles = await this.getUserApprovalRoles(ctx.userId!);
 
-    return this.repository.findByInvolvement(ctx.userId!, approvalRoles);
+    return this.repository.findByInvolvement(
+      ctx.userId!,
+      approvalRoles,
+      options
+    );
   }
 
   async getApprovalById(id: string, ctx: ServiceContext): Promise<any> {
@@ -99,7 +110,6 @@ export class ApprovalService extends BaseService<
       throw new AppError("error.approval.not_found", StatusCodes.NOT_FOUND);
     }
 
-    // Verify involvement
     const approvalRoles = await this.getUserApprovalRoles(ctx.userId!);
     const isInvolved = await this.repository.isUserInvolved(
       approval.id,
@@ -115,21 +125,21 @@ export class ApprovalService extends BaseService<
   }
 
   async approveOrReject(
-    recordId: string,
+    approvalId: string,
     data: ApproveOrRejectInput,
     ctx: ServiceContext
   ): Promise<any> {
     const result = approveOrRejectSchema.safeParse(data);
     if (!result.success) {
-      const messages = result.error.issues
-        .map((issue) => issue.message)
-        .join(", ");
+      const messages = result.error.issues.map((issue) => issue.message)[0];
       throw new AppError(messages, StatusCodes.BAD_REQUEST);
     }
     const { action, notes } = result.data;
 
     const approval = await prisma.approval.findFirst({
-      where: { recordId },
+      where: {
+        id: approvalId,
+      },
       include: {
         steps: { orderBy: { step: "asc" } },
       },
@@ -141,6 +151,29 @@ export class ApprovalService extends BaseService<
 
     if (approval.status !== ApprovalStatus.PENDING) {
       throw new AppError("error.approval.not_pending", StatusCodes.BAD_REQUEST);
+    }
+
+    const entityConfig = this.getEntityConfig(approval.entityType);
+
+    if (!entityConfig) {
+      throw new AppError(
+        "error.approval.unsupported_entity_type",
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
+    }
+
+    const orderExists = await (prisma as any)[
+      entityConfig.modelName
+    ].findUnique({
+      where: { id: approval.recordId },
+      select: { id: true },
+    });
+
+    if (!orderExists) {
+      throw new AppError(
+        "error.approval.order_not_found",
+        StatusCodes.NOT_FOUND
+      );
     }
 
     const currentStep = approval.steps.find(
@@ -173,8 +206,6 @@ export class ApprovalService extends BaseService<
       );
     }
 
-    const entityConfig = this.getEntityConfig(approval.entityType);
-
     const updatedApproval = await prisma.$transaction(async (tx) => {
       await tx.approvalStep.update({
         where: {
@@ -200,12 +231,10 @@ export class ApprovalService extends BaseService<
           },
         });
 
-        if (entityConfig) {
-          await (tx as any)[entityConfig.modelName].update({
-            where: { id: recordId },
-            data: { status: entityConfig.rejectedStatus },
-          });
-        }
+        await (tx as any)[entityConfig.modelName].update({
+          where: { id: approval.recordId },
+          data: { status: entityConfig.rejectedStatus },
+        });
       } else {
         const isLastStep = currentStep.step >= approval.totalSteps;
 
@@ -219,12 +248,10 @@ export class ApprovalService extends BaseService<
             },
           });
 
-          if (entityConfig) {
-            await (tx as any)[entityConfig.modelName].update({
-              where: { id: recordId },
-              data: { status: entityConfig.approvedStatus },
-            });
-          }
+          await (tx as any)[entityConfig.modelName].update({
+            where: { id: approval.recordId },
+            data: { status: OrderStatus.APPROVED },
+          });
         } else {
           await tx.approval.update({
             where: { id: approval.id },
@@ -266,7 +293,7 @@ export class ApprovalService extends BaseService<
 
     await this.sendApprovalNotifications(
       approval.entityType,
-      recordId,
+      approval.recordId,
       action,
       currentStep.step,
       approval.totalSteps,
@@ -275,13 +302,14 @@ export class ApprovalService extends BaseService<
       ctx
     );
 
-    // Recalculate supplier metrics after approval status changes
-    this.recalculateMetricsForOrder(approval.entityType, recordId).catch(
-      (err) =>
-        console.error(
-          "[ApprovalService] Supplier metrics recalculation failed:",
-          err
-        )
+    this.recalculateMetricsForOrder(
+      approval.entityType,
+      approval.recordId
+    ).catch((err) =>
+      console.error(
+        "[ApprovalService] Supplier metrics recalculation failed:",
+        err
+      )
     );
 
     return updatedApproval;
@@ -298,6 +326,16 @@ export class ApprovalService extends BaseService<
     > = {
       [ApprovalEntityType.GAS_ORDER]: {
         modelName: "gasPurchaseOrder",
+        approvedStatus: OrderStatus.APPROVED,
+        rejectedStatus: OrderStatus.CANCELLED,
+      },
+      [ApprovalEntityType.GAS_BOTTLE_ORDER]: {
+        modelName: "gasBottlePurchaseOrder",
+        approvedStatus: OrderStatus.APPROVED,
+        rejectedStatus: OrderStatus.CANCELLED,
+      },
+      [ApprovalEntityType.ACCESSORY_ORDER]: {
+        modelName: "accessoryPurchaseOrder",
         approvedStatus: OrderStatus.APPROVED,
         rejectedStatus: OrderStatus.CANCELLED,
       },
@@ -366,13 +404,13 @@ export class ApprovalService extends BaseService<
         );
 
         const nextStepNumber = completedStep + 1;
-        const approval = await prisma.approval.findFirst({
+        const approvalRecord = await prisma.approval.findFirst({
           where: { recordId },
           include: { steps: true },
         });
 
-        if (approval) {
-          const nextStep = approval.steps.find(
+        if (approvalRecord) {
+          const nextStep = approvalRecord.steps.find(
             (s) => s.step === nextStepNumber
           );
           if (nextStep) {
@@ -414,6 +452,8 @@ export class ApprovalService extends BaseService<
   private getRefTable(entityType: string): string {
     const tableMapping: Record<string, string> = {
       [ApprovalEntityType.GAS_ORDER]: "gas_purchase_orders",
+      [ApprovalEntityType.GAS_BOTTLE_ORDER]: "gas_bottle_purchase_orders",
+      [ApprovalEntityType.ACCESSORY_ORDER]: "accessory_purchase_orders",
     };
     return tableMapping[entityType] || "approvals";
   }

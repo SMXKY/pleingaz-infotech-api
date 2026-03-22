@@ -20,6 +20,7 @@ import {
   Prisma,
   NotificationType,
   NotificationPriority,
+  SequenceType,
 } from "src/generated/prisma";
 import prisma from "@models/index.model";
 import generateReference from "@utils/generateOrderReference.util";
@@ -121,7 +122,10 @@ export class GasBottlePurchaseOrderService extends BaseService<
     }
 
     const order = await prisma.$transaction(async (tx) => {
-      const reference = await generateReference(tx, "GB_PO" as any);
+      const reference = await generateReference(
+        tx,
+        SequenceType.GAS_BOTTLE_PO as any
+      );
 
       const created = await tx.gasBottlePurchaseOrder.create({
         data: {

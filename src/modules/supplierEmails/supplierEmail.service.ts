@@ -56,9 +56,7 @@ export class OrderEmailService extends BaseService<
   ): Promise<OrderEmail> {
     const result = createSupplierEmailSchema.safeParse(data);
     if (!result.success) {
-      const messages = result.error.issues
-        .map((issue) => issue.message)
-        .join(", ");
+      const messages = result.error.issues.map((issue) => issue.message)[0];
       throw new AppError(messages, StatusCodes.BAD_REQUEST);
     }
 
@@ -126,7 +124,9 @@ export class OrderEmailService extends BaseService<
         recipientEmail: contact.email,
         recipientName: contact.name,
         subject,
-        htmlBody,
+        htmlBody: htmlBody.replace(/[^\x00-\xFF]/g, function (char) {
+          return "&#" + char.charCodeAt(0) + ";";
+        }),
         userMessage: body.message,
         sentById: ctx.userId || "",
         brevoMessageId: brevoResult?.messageId ?? null,
