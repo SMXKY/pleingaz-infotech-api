@@ -51,4 +51,20 @@ export class FinanceSettingsRepository extends BaseRepository<FinanceSettings> {
       },
     });
   }
+
+  protected addSoftDeleteFilter(
+    where: Partial<FinanceSettings>
+  ): Record<string, any> {
+    return { ...where };
+  }
+
+  async findById(
+    id: string,
+    include?: Record<string, boolean | object>
+  ): Promise<FinanceSettings | null> {
+    return this.model.findUnique({
+      where: { id },
+      include,
+    });
+  }
 }

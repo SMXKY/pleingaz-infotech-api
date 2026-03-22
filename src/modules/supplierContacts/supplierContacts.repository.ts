@@ -1,5 +1,6 @@
 import { BaseRepository } from "src/base/BaseRepository";
 import { SupplierContact } from "src/generated/prisma";
+import { TransactionClient } from "../users/utilites/generateEmployeeId.util";
 
 export class SupplierContactRepository extends BaseRepository<SupplierContact> {
   protected modelName = "supplierContact";
@@ -41,14 +42,26 @@ export class SupplierContactRepository extends BaseRepository<SupplierContact> {
 
   async promoteNextPrimary(
     supplierId: string,
-    excludeId: string
+    excludeId: string,
+    tx: TransactionClient
   ): Promise<void> {
-    const next = await this.model.findFirst({
+    await tx.supplierContact.updateMany({
+      where: {
+        supplierId,
+        isPrimary: true,
+      },
+      data: {
+        isPrimary: false,
+      },
+    });
+
+    const next = await tx.supplierContact.findFirst({
       where: { supplierId, deletedAt: null, id: { not: excludeId } },
       orderBy: { createdAt: "asc" },
     });
+
     if (next) {
-      await this.model.update({
+      await tx.supplierContact.update({
         where: { id: next.id },
         data: { isPrimary: true },
       });

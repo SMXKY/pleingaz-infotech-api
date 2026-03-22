@@ -9,7 +9,7 @@ const controller = new NotificationPreferencesController();
 notificationPreferencesRouter.use(protect, getUserLanguage);
 
 notificationPreferencesRouter.get("/", controller.get);
-notificationPreferencesRouter.patch("/", controller.update);
+notificationPreferencesRouter.patch("/", controller.updatePreference);
 notificationPreferencesRouter.post("/reset", controller.reset);
 
 export default notificationPreferencesRouter;

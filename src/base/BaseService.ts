@@ -53,9 +53,7 @@ export abstract class BaseService<
     if (this.createSchema) {
       const result = this.createSchema.safeParse(data);
       if (!result.success) {
-        const messages = result.error.issues
-          .map((issue) => issue.message)
-          .join(", ");
+        const messages = result.error.issues.map((issue) => issue.message)[0];
         throw new AppError(messages, StatusCodes.BAD_REQUEST);
       }
       data = result.data;
@@ -106,9 +104,7 @@ export abstract class BaseService<
     if (this.updateSchema) {
       const result = this.updateSchema.safeParse(data);
       if (!result.success) {
-        const messages = result.error.issues
-          .map((issue) => issue.message)
-          .join(", ");
+        const messages = result.error.issues.map((issue) => issue.message)[0];
         throw new AppError(messages, StatusCodes.BAD_REQUEST);
       }
       data = result.data;

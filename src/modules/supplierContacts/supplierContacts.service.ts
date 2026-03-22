@@ -258,7 +258,7 @@ export class SupplierContactService extends BaseService<
       const deleted = await this.repository.softDelete(contactId);
 
       if (existing.isPrimary) {
-        await this.repository.promoteNextPrimary(supplierId, contactId);
+        await this.repository.promoteNextPrimary(supplierId, contactId, tx);
       }
 
       if (ctx.req) {
