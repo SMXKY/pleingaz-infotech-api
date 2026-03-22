@@ -2,6 +2,11 @@ import express, { Request, Response, NextFunction } from "express";
 import swaggerUi from "swagger-ui-express";
 import { StatusCodes } from "http-status-codes";
 import cookieParser from "cookie-parser";
+import {
+  exploitationSchemas,
+  exploitationPaths,
+  exploitationTags,
+} from "./docs/exploitation-openapi";
 import { globalErrorController } from "@controllers/error.controller";
 import { AppError } from "@utils/AppError.util";
 import { swaggerSpec } from "./docs/openapi";
@@ -116,7 +121,11 @@ const allowedIps = [
 // });
 
 app.use("/assets", express.static(path.join(__dirname, "assets")));
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use(
+  "/docs",
+  swaggerUi.serve,
+  swaggerUi.setup(JSON.parse(JSON.stringify(swaggerSpec)))
+);
 app.get("/docs.json", (req, res) => {
   res.setHeader(
     "Content-Disposition",
