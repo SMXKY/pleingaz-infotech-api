@@ -12,7 +12,7 @@ import {
   ServiceContext,
 } from "@appTypes/base.types";
 import { Notification } from "src/generated/prisma";
-import NotificationCoreService from "@services/nofication";
+import NotificationCoreService from "@services/notification";
 import { Request } from "express";
 import { prisma } from "src";
 import { LogCategory, LogOperation } from "@appTypes/log.type";

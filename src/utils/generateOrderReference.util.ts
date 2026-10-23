@@ -1,5 +1,5 @@
 import { SequenceType, Prisma } from "src/generated/prisma";
-import { TransactionClient } from "src/modules/users/utilites/generateEmployeeId.util";
+import { TransactionClient } from "src/modules/users/utilities/generateEmployeeId.util";
 
 type SequenceResult = {
   current_number: number;

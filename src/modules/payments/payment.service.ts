@@ -30,7 +30,7 @@ import {
 import prisma from "@models/index.model";
 import { logUserActivity } from "@utils/logUserActivity.util";
 import { LogCategory, LogOperation } from "@appTypes/log.type";
-import { sendAndDispatch } from "@services/nofication/notification.dispatcher";
+import { sendAndDispatch } from "@services/notification/notification.dispatcher";
 import generateReference from "@utils/generateOrderReference.util";
 import { recalculateSupplierMetrics } from "@utils/recalculateSupplierMetrics.util";
 

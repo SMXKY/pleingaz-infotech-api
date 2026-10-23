@@ -3,9 +3,9 @@ import * as jwt from "jsonwebtoken";
 import { AppError } from "@utils/AppError.util";
 import { StatusCodes } from "http-status-codes";
 import prisma from "@models/index.model";
-import getUserPermissions from "src/modules/users/utilites/getUserPermissions.util";
+import getUserPermissions from "src/modules/users/utilities/getUserPermissions.util";
 import { catchAsync } from "@utils/catchAsync.util";
-import { JWT_SECRET } from "@utils/enviromentVariablesCheck.util";
+import { JWT_SECRET } from "@utils/environmentVariablesCheck.util";
 import { applyFtpUrlTransform } from "@utils/applyFtpUrl.util";
 import { Status } from "src/generated/prisma";
 

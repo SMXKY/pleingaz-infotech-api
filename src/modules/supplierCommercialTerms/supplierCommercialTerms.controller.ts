@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import { BaseController } from "src/base/BaseController";
-import { SupplierCommercialTermsService } from "./supplierCormercialTerms.service";
+import { SupplierCommercialTermsService } from "./supplierCommercialTerms.service";
 import { appResponder } from "@utils/appResponder.util";
 import { StatusCodes } from "http-status-codes";
 import { SupplierCommercialTerms } from "src/generated/prisma";
 import { AppError } from "@utils/AppError.util";
-import { updateSupplierCommercialTermsSchema } from "./supplierCormercialTerms.schema";
+import { updateSupplierCommercialTermsSchema } from "./supplierCommercialTerms.schema";
 import { catchAsync } from "@utils/catchAsync.util";
 
 export class SupplierCommercialTermsController extends BaseController<SupplierCommercialTerms> {

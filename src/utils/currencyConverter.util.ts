@@ -1,5 +1,5 @@
 import { Currency } from "@appTypes/preferences.type";
-import { TransactionClient } from "src/modules/users/utilites/generateEmployeeId.util";
+import { TransactionClient } from "src/modules/users/utilities/generateEmployeeId.util";
 import { AppError } from "./AppError.util";
 import { StatusCodes } from "http-status-codes";
 import { Decimal } from "@prisma/client/runtime/library";

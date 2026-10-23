@@ -25,7 +25,7 @@ import { $Enums, Status, TokenType, User } from "src/generated/prisma";
 import { prisma } from "src";
 import path from "path";
 import { readFileSync } from "fs";
-import generateEmployeeId from "./utilites/generateEmployeeId.util";
+import generateEmployeeId from "./utilities/generateEmployeeId.util";
 import crypto from "crypto";
 import argon2 from "argon2";
 import {
@@ -35,14 +35,14 @@ import {
   frontEndUrl,
   MAX_LOGIN_ATTEMPTS,
   RESET_PASSWORD_LIMIT_HOURS,
-} from "@utils/enviromentVariablesCheck.util";
+} from "@utils/environmentVariablesCheck.util";
 import { sendEmail } from "@utils/sendEmail.util";
 import { logUserActivity } from "@utils/logUserActivity.util";
 import getUserPermissions, {
   permissionCache,
-} from "./utilites/getUserPermissions.util";
+} from "./utilities/getUserPermissions.util";
 import { id } from "zod/v4/locales";
-import signToken from "./utilites/signToken.util";
+import signToken from "./utilities/signToken.util";
 import { Response, Request } from "express";
 import { UpdateMeResult, UserStatus } from "@appTypes/user.types";
 import { applyFtpUrlTransform } from "@utils/applyFtpUrl.util";

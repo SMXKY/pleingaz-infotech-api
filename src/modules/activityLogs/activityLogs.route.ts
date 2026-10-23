@@ -3,7 +3,7 @@ import { ActivityLogController } from "./activityLogs.controller";
 import getUserLanguage from "@middlewares/getUserLanguage.middleware";
 import protect from "@middlewares/protect.middleware";
 import restrictTo from "@middlewares/restrictTo.middleware";
-import allactivityLogs from "src/data/allPermiisons.data";
+import allactivityLogs from "src/data/allPermissions.data";
 
 const activityLogRouter = Router();
 const controller = new ActivityLogController();

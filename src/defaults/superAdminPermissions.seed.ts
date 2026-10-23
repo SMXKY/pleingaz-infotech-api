@@ -1,5 +1,5 @@
 import prisma from "@models/index.model";
-import { SUPER_ADMIN_EMAIL } from "@utils/enviromentVariablesCheck.util";
+import { SUPER_ADMIN_EMAIL } from "@utils/environmentVariablesCheck.util";
 
 const seedSuperAdminRolePermissions = async () => {
   const superAdmin = await prisma.role.findFirst({

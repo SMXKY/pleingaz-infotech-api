@@ -6,13 +6,13 @@ import {
   JWT_SECRET,
   SOCKET_IO_CORS_ORIGIN,
   SOCKET_IO_PATH,
-} from "@utils/enviromentVariablesCheck.util";
+} from "@utils/environmentVariablesCheck.util";
 import { StatusCodes } from "http-status-codes";
 import { AppError } from "@utils/AppError.util";
 import { DeliveryChannel, Status } from "src/generated/prisma";
 import NotificationService, {
   formatNotificationPayload,
-} from "@services/nofication";
+} from "@services/notification";
 
 export interface UserData {
   id: string;

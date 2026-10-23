@@ -1,7 +1,7 @@
 import cron from "node-cron";
 import axios from "axios";
 import { Currency } from "@appTypes/preferences.type";
-import { UNIRATEAPI_KEY } from "@utils/enviromentVariablesCheck.util";
+import { UNIRATEAPI_KEY } from "@utils/environmentVariablesCheck.util";
 import prisma from "@models/index.model";
 
 const PAIRS: { from: string; to: string }[] = [

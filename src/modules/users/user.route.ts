@@ -5,7 +5,7 @@ import protect from "@middlewares/protect.middleware";
 import multer from "multer";
 import { handleFilesMiddleware } from "@middlewares/handleFiles.middleware";
 import restrictTo from "@middlewares/restrictTo.middleware";
-import allPermissions from "src/data/allPermiisons.data";
+import allPermissions from "src/data/allPermissions.data";
 
 const userRouter = Router();
 const controller = new UserController();

@@ -1,4 +1,4 @@
-import { DATABASE_URL } from "@utils/enviromentVariablesCheck.util";
+import { DATABASE_URL } from "@utils/environmentVariablesCheck.util";
 import { PgBoss } from "pg-boss";
 
 let boss: PgBoss | null = null;

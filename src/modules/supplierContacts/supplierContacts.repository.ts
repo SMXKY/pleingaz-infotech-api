@@ -1,6 +1,6 @@
 import { BaseRepository } from "src/base/BaseRepository";
 import { SupplierContact } from "src/generated/prisma";
-import { TransactionClient } from "../users/utilites/generateEmployeeId.util";
+import { TransactionClient } from "../users/utilities/generateEmployeeId.util";
 
 export class SupplierContactRepository extends BaseRepository<SupplierContact> {
   protected modelName = "supplierContact";

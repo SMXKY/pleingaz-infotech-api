@@ -1,5 +1,5 @@
-export { SupplierCommercialTermsRepository } from "./supplierCormercialTerms.repository";
-export { SupplierCommercialTermsService } from "./supplierCormercialTerms.service";
-export { SupplierCommercialTermsController } from "./supplierCormercialTerms.controller";
-export { default as supplierCommercialRouter } from "./supplierCormercialTerms.route";
-export * from "./supplierCormercialTerms.schema";
+export { SupplierCommercialTermsRepository } from "./supplierCommercialTerms.repository";
+export { SupplierCommercialTermsService } from "./supplierCommercialTerms.service";
+export { SupplierCommercialTermsController } from "./supplierCommercialTerms.controller";
+export { default as supplierCommercialRouter } from "./supplierCommercialTerms.route";
+export * from "./supplierCommercialTerms.schema";

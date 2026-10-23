@@ -9,7 +9,7 @@ import {
   FIREBASE_PROJECT_ID,
   FIREBASE_CLIENT_EMAIL,
   FIREBASE_PRIVATE_KEY,
-} from "@utils/enviromentVariablesCheck.util";
+} from "@utils/environmentVariablesCheck.util";
 import { AppError } from "@utils/AppError.util";
 import { StatusCodes } from "http-status-codes";
 

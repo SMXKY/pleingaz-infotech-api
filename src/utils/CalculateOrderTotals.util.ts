@@ -7,7 +7,7 @@ import {
   AccessoryPurchaseOrderItem,
   Prisma,
 } from "src/generated/prisma";
-import { TransactionClient } from "src/modules/users/utilites/generateEmployeeId.util";
+import { TransactionClient } from "src/modules/users/utilities/generateEmployeeId.util";
 import convertCurrency from "./currencyConverter.util";
 import { Currency } from "@appTypes/preferences.type";
 

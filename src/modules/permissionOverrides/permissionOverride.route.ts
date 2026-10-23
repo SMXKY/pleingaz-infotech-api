@@ -3,7 +3,7 @@ import { PermissionOverrideController } from "./permissionOverride.controller";
 import getUserLanguage from "@middlewares/getUserLanguage.middleware";
 import protect from "@middlewares/protect.middleware";
 import restrictTo from "@middlewares/restrictTo.middleware";
-import allPermissionOverrides from "src/data/allPermiisons.data";
+import allPermissionOverrides from "src/data/allPermissions.data";
 
 const permissionOverrideRouter = Router();
 const controller = new PermissionOverrideController();

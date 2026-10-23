@@ -10,7 +10,7 @@ import { PrismaClient } from "./generated/prisma/client";
 import { app } from "./app";
 
 process.on("uncaughtException", (err) => {
-  console.log("Uncaught Excetion Error...❌❌");
+  console.log("Uncaught Exception Error...❌❌");
   console.log(err.name, err.message);
 });
 

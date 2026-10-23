@@ -3,7 +3,7 @@ import { AccessoryPurchaseOrderController } from "./accessoryPurchaseOrder.contr
 import getUserLanguage from "@middlewares/getUserLanguage.middleware";
 import protect from "@middlewares/protect.middleware";
 import restrictTo from "@middlewares/restrictTo.middleware";
-import allPermissions from "src/data/allPermiisons.data";
+import allPermissions from "src/data/allPermissions.data";
 
 const accessoryPurchaseOrderRouter = Router();
 const controller = new AccessoryPurchaseOrderController();

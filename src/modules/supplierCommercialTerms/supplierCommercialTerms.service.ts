@@ -1,9 +1,9 @@
 import { BaseService } from "src/base/BaseService";
-import { SupplierCommercialTermsRepository } from "./supplierCormercialTerms.repository";
+import { SupplierCommercialTermsRepository } from "./supplierCommercialTerms.repository";
 import {
   updateSupplierCommercialTermsSchema,
   UpdateSupplierCommercialTermsInput,
-} from "./supplierCormercialTerms.schema";
+} from "./supplierCommercialTerms.schema";
 import { AppError } from "@utils/AppError.util";
 import { StatusCodes } from "http-status-codes";
 import { ServiceContext } from "@appTypes/base.types";

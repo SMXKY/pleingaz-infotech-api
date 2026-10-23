@@ -14,7 +14,7 @@ import { StatusCodes } from "http-status-codes";
 import { ServiceContext } from "@appTypes/base.types";
 import { Permission, Status } from "src/generated/prisma";
 import { prisma } from "src";
-import { permissionCache } from "../users/utilites/getUserPermissions.util";
+import { permissionCache } from "../users/utilities/getUserPermissions.util";
 
 export class PermissionService extends BaseService<
   Permission,

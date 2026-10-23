@@ -1,7 +1,7 @@
 import {
   JWT_EXPIRES_IN,
   JWT_SECRET,
-} from "@utils/enviromentVariablesCheck.util";
+} from "@utils/environmentVariablesCheck.util";
 import * as jwt from "jsonwebtoken";
 
 const signToken = (userId: string) => {

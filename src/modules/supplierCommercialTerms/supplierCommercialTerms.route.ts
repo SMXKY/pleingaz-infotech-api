@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { SupplierCommercialTermsController } from "./supplierCormercialTerms.controller";
+import { SupplierCommercialTermsController } from "./supplierCommercialTerms.controller";
 import getUserLanguage from "@middlewares/getUserLanguage.middleware";
 import protect from "@middlewares/protect.middleware";
 import restrictTo from "@middlewares/restrictTo.middleware";
-import allPermissions from "src/data/allPermiisons.data";
+import allPermissions from "src/data/allPermissions.data";
 
 const supplierCommercialTermsRouter = Router();
 const controller = new SupplierCommercialTermsController();

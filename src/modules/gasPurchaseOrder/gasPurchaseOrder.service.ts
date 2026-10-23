@@ -27,7 +27,7 @@ import generateReference from "@utils/generateOrderReference.util";
 import CalculateOrderTotals from "@utils/CalculateOrderTotals.util";
 import { logUserActivity } from "@utils/logUserActivity.util";
 import { LogCategory, LogOperation } from "@appTypes/log.type";
-import { sendAndDispatch } from "@services/nofication/notification.dispatcher";
+import { sendAndDispatch } from "@services/notification/notification.dispatcher";
 import { recalculateSupplierMetrics } from "@utils/recalculateSupplierMetrics.util";
 
 const FULL_ORDER_INCLUDE = {

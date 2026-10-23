@@ -13,7 +13,7 @@ import { StatusCodes } from "http-status-codes";
 import { ServiceContext } from "@appTypes/base.types";
 import { Role, Status } from "src/generated/prisma";
 import { prisma } from "src";
-import { permissionCache } from "../users/utilites/getUserPermissions.util";
+import { permissionCache } from "../users/utilities/getUserPermissions.util";
 import { UserStatus } from "@appTypes/user.types";
 import { Request, Response } from "express";
 import { LogCategory, LogOperation } from "@appTypes/log.type";

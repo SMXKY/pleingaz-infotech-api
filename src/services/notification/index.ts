@@ -14,7 +14,7 @@ import {
   DEFAULT_PAGE_SIZE,
   MAX_PAGE_SIZE,
   MAX_BATCH_SIZE,
-} from "@utils/enviromentVariablesCheck.util";
+} from "@utils/environmentVariablesCheck.util";
 
 export type NotificationTarget =
   | { type: "user"; userId: string }

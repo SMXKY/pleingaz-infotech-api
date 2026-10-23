@@ -1,85 +1,85 @@
 if (!process.env.BASE_URL) {
-  throw new Error("Base url enviroment variable not set");
+  throw new Error("Base url environment variable not set");
 }
 
 if (!process.env.FRONTEND_URL) {
-  throw new Error("Frontend url enviroment variable not set");
+  throw new Error("Frontend url environment variable not set");
 }
 
 if (!process.env.ACCOUNT_LOGIN_WAIT_TIME_HOURS) {
-  throw new Error("ACCOUNT_LOGIN_WAIT_TIME_HOURS enviroment variable not set");
+  throw new Error("ACCOUNT_LOGIN_WAIT_TIME_HOURS environment variable not set");
 }
 
 if (!process.env.JWT_SECRET) {
-  throw new Error("JWT_SECRET enviroment variable not set");
+  throw new Error("JWT_SECRET environment variable not set");
 }
 
 if (!process.env.JWT_EXPIRES_IN) {
-  throw new Error("JWT_EXPIRES_IN enviroment variable not set");
+  throw new Error("JWT_EXPIRES_IN environment variable not set");
 }
 
 if (!process.env.PASSWORD_RESET_EXPIRES_IN) {
-  throw new Error("PASSWORD_RESET_EXPIRES_IN enviroment variable not set");
+  throw new Error("PASSWORD_RESET_EXPIRES_IN environment variable not set");
 }
 
 if (!process.env.EMAIL_VERIFICATION_EXPIRES_IN) {
-  throw new Error("EMAIL_VERIFICATION_EXPIRES_IN enviroment variable not set");
+  throw new Error("EMAIL_VERIFICATION_EXPIRES_IN environment variable not set");
 }
 
 if (!process.env.MAX_LOGIN_ATTEMPTS) {
-  throw new Error("MAX_LOGIN_ATTEMPTS enviroment variable not set");
+  throw new Error("MAX_LOGIN_ATTEMPTS environment variable not set");
 }
 
 if (!process.env.RESET_PASSWORD_LIMIT_HOURS) {
-  throw new Error("RESET_PASSWORD_LIMIT_HOURS enviroment variable not set");
+  throw new Error("RESET_PASSWORD_LIMIT_HOURS environment variable not set");
 }
 
 if (!process.env.FTP_BASE_URL) {
-  throw new Error("FTP_BASE_URL enviroment variable not set");
+  throw new Error("FTP_BASE_URL environment variable not set");
 }
 
 if (!process.env.SUPER_ADMIN_EMAIL) {
-  throw new Error("SUPER_ADMIN_EMAIL enviroment variable not set");
+  throw new Error("SUPER_ADMIN_EMAIL environment variable not set");
 }
 
 if (!process.env.UNIRATEAPI_KEY) {
-  throw new Error("UNIRATEAPI KEY enviroment variable not set");
+  throw new Error("UNIRATEAPI KEY environment variable not set");
 }
 
 if (!process.env.SOCKET_IO_PATH) {
-  throw new Error("SOCKET_IO_PATH enviroment variable not set");
+  throw new Error("SOCKET_IO_PATH environment variable not set");
 }
 
 if (!process.env.SOCKET_IO_CORS_ORIGIN) {
-  throw new Error("SOCKET_IO_CORS_ORIGIN enviroment variable not set");
+  throw new Error("SOCKET_IO_CORS_ORIGIN environment variable not set");
 }
 
 if (!process.env.DEFAULT_PAGE_SIZE) {
-  throw new Error("DEFAULT_PAGE_SIZE enviroment variable not set");
+  throw new Error("DEFAULT_PAGE_SIZE environment variable not set");
 }
 
 if (!process.env.MAX_PAGE_SIZE) {
-  throw new Error("MAX_PAGE_SIZE enviroment variable not set");
+  throw new Error("MAX_PAGE_SIZE environment variable not set");
 }
 
 if (!process.env.MAX_BATCH_SIZE) {
-  throw new Error("MAX_BATCH_SIZE enviroment variable not set");
+  throw new Error("MAX_BATCH_SIZE environment variable not set");
 }
 
 if (!process.env.FIREBASE_PROJECT_ID) {
-  throw new Error("FIREBASE_PROJECT_ID enviroment variable not set");
+  throw new Error("FIREBASE_PROJECT_ID environment variable not set");
 }
 
 if (!process.env.FIREBASE_PRIVATE_KEY) {
-  throw new Error("FIREBASE_PRIVATE_KEY enviroment variable not set");
+  throw new Error("FIREBASE_PRIVATE_KEY environment variable not set");
 }
 
 if (!process.env.FIREBASE_CLIENT_EMAIL) {
-  throw new Error("FIREBASE_CLIENT_EMAIL enviroment variable not set");
+  throw new Error("FIREBASE_CLIENT_EMAIL environment variable not set");
 }
 
 if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL enviroment variable not set");
+  throw new Error("DATABASE_URL environment variable not set");
 }
 
 export const baseUrl = process.env.BASE_URL;
