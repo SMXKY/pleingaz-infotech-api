@@ -1,7 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import swaggerUi from "swagger-ui-express";
 import { StatusCodes } from "http-status-codes";
-import cookieParser from "cookie-parser";
 import {
   exploitationSchemas,
   exploitationPaths,
@@ -54,35 +53,16 @@ import exploitationInvoiceRouter from "./modules/ExploitationInvoice/Exploitatio
 
 export const app = express();
 
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-//   );
-//   next();
-// });
+// Comma-separated list of allowed origins; falls back to "*" when unset.
+const corsOrigins = process.env.CORS_ORIGINS?.split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 
 const corsOptions: CorsOptions = {
-  origin: true, // This allows all origins - simpler than the callback
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  allowedHeaders: [
-    "Origin",
-    "X-Requested-With",
-    "Content-Type",
-    "Accept",
-    "Authorization",
-  ],
+  origin: corsOrigins?.length ? corsOrigins : "*",
+  credentials: false,
 };
-app.use(
-  cors({
-    origin: "*",
-    credentials: false,
-  })
-);
-// app.use(cookieParser());
+app.use(cors(corsOptions));
 
 app.set("trust proxy", true);
 
@@ -98,29 +78,6 @@ app.use(
     },
   })
 );
-
-const allowedIps = [
-  "123.45.67.89",
-  "98.76.54.32",
-  "127.0.0.1",
-  "31.97.113.198",
-];
-
-// app.use((req: Request, res: Response, next: NextFunction) => {
-//   const clientIp =
-//     req.ip || req.connection.remoteAddress || req.headers["x-forwarded-for"];
-
-//   const ip = (clientIp as string).replace("::ffff:", "");
-
-//   if (allowedIps.includes(ip)) {
-//     next();
-//   } else {
-//     res.status(403).json({
-//       status: "fail",
-//       message: `Your IP (${ip}) is not allowed to access this server.`,
-//     });
-//   }
-// });
 
 app.use("/assets", express.static(path.join(__dirname, "assets")));
 app.use(
