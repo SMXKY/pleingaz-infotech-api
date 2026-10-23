@@ -1,5 +1,5 @@
-export { GasBottlePurchaseOrderRepository } from "./accessoryPurchaseOrder.repository";
-export { GasBottlePurchaseOrderService } from "./accessoryPurchaseOrder.service";
-export { GasBottlePurchaseOrderController } from "./accessoryPurchaseOrder.controller";
-export { default as gasBottlePurchaseOrderRouter } from "./accessoryPurchaseOrder.route";
+export { AccessoryPurchaseOrderRepository } from "./accessoryPurchaseOrder.repository";
+export { AccessoryPurchaseOrderService } from "./accessoryPurchaseOrder.service";
+export { AccessoryPurchaseOrderController } from "./accessoryPurchaseOrder.controller";
+export { default as accessoryPurchaseOrderRouter } from "./accessoryPurchaseOrder.route";
 export * from "./accessoryPurchaseOrder.schema";
