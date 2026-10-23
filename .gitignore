@@ -1,5 +1,12 @@
 node_modules/
+dist/
 .env
-dist
-node_modules
+.env.*
+!.env.example
 
+# Prisma client is generated on install (see postinstall)
+src/generated/
+
+# Local tooling
+.claude/
+*.log
