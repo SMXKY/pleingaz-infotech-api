@@ -2,6 +2,7 @@
 
 > Production backend for an ERP system used by a gas distribution company in Cameroon: HR & access control, supplier management, purchasing workflows with multi-step approvals, payments, invoicing, and real-time notifications.
 
+[![CI](https://github.com/SMXKY/pleingaz-infotech-api/actions/workflows/ci.yml/badge.svg)](https://github.com/SMXKY/pleingaz-infotech-api/actions/workflows/ci.yml)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-Express%205-339933?logo=node.js&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Prisma-4169E1?logo=postgresql&logoColor=white)
@@ -122,7 +123,29 @@ On first boot the server seeds default departments, roles, permissions, finance 
 super-admin account from the `SUPER_ADMIN_*` variables.
 
 Third-party integrations (Firebase, Brevo, FTP, exchange-rate API) need their own credentials;
-see `.env.example`.
+see `.env.example`. Set `CORS_ORIGINS` to a comma-separated list of allowed origins; if it is
+unset, all origins are allowed.
+
+| Script | What it does |
+|---|---|
+| `npm run dev` | Start with hot reload |
+| `npm test` | Run the Jest test suite |
+| `npm run lint` | ESLint |
+| `npm run typecheck` | TypeScript type-check of `src` and `tests` |
+| `npm run build` / `npm start` | Production build and run |
+
+## Testing
+
+Tests live in `tests/` and run without a database: a lightweight Prisma mock
+(`tests/helpers/prismaMock.ts`) stands in for the client, and `$transaction` runs against it.
+
+- **Approval workflow:** role checks per step, advancing steps, final approval, rejection cancelling the order
+- **Order totals:** VAT, regulatory tax, shipping/freight/customs, and currency conversion with Decimal precision
+- **Error mapping:** Prisma and JWT errors to HTTP status codes
+- **Permissions:** the `restrictTo` middleware
+- **HTTP:** health check, OpenAPI spec, 404 handler, and JWT rejection, via Supertest
+
+GitHub Actions runs lint, type-check, tests, and the production build on every push and pull request.
 
 ## API documentation
 
@@ -155,8 +178,9 @@ src/
 
 ## What I'd do next
 
-- Add an automated test suite (Jest + Supertest) for the approval and payment workflows, and run it in CI.
-- Use PostgreSQL row-level locking for payment recording so concurrent requests can't double-count.
+- Extend tests to the payment and invoicing flow, and add integration tests against a real PostgreSQL in CI.
+- Lock the order row (`SELECT … FOR UPDATE`) when recording payments so concurrent requests can't double-count.
+- Consolidate the two Prisma client instances into a single shared module.
 - Move file storage from FTP to S3-compatible object storage.
 - Add structured logging and request tracing in place of `console.log`.
 
