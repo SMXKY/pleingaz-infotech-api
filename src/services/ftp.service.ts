@@ -461,7 +461,9 @@ export async function replaceFileDevelopment(
     if (fs.existsSync(oldFilePath)) {
       await fs.promises.unlink(oldFilePath);
     }
-  } catch {}
+  } catch {
+    // Best-effort: a missing old file shouldn't block the replacement.
+  }
   const newUrls = await handleFileUploadsDevelopment(request);
   return newUrls[0];
 }
@@ -544,7 +546,9 @@ export async function replaceFileProduction(
       if (fs.existsSync(tempFilePath)) {
         await fs.promises.unlink(tempFilePath);
       }
-    } catch {}
+    } catch {
+      // Best-effort cleanup of the temp file.
+    }
   }
 }
 

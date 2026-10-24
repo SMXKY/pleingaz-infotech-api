@@ -124,6 +124,7 @@ export class OrderEmailService extends BaseService<
         recipientEmail: contact.email,
         recipientName: contact.name,
         subject,
+        // eslint-disable-next-line no-control-regex -- encode every char outside Latin-1
         htmlBody: htmlBody.replace(/[^\x00-\xFF]/g, function (char) {
           return "&#" + char.charCodeAt(0) + ";";
         }),

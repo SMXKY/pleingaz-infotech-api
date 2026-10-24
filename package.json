@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "nodemon",
     "start": "node dist/index.js",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint .",
     "test": "jest",
     "postinstall": "npx prisma generate",
     "clean": "rimraf dist",
@@ -47,6 +47,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.5",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/ftp": "^0.3.36",
@@ -57,8 +58,6 @@
     "@types/pg": "^8.16.0",
     "@types/socket.io": "^3.0.1",
     "@types/swagger-ui-express": "^4.1.8",
-    "@typescript-eslint/eslint-plugin": "^8.55.0",
-    "@typescript-eslint/parser": "^8.55.0",
     "copyfiles": "^2.4.1",
     "cpy-cli": "^7.0.0",
     "eslint": "^9.39.2",
@@ -69,7 +68,8 @@
     "tsc-alias": "^1.8.16",
     "tsconfig-paths": "^4.2.0",
     "tsup": "^8.5.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.72.0"
   },
   "_moduleAliases": {
     "@": "dist",

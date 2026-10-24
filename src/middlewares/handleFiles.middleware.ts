@@ -11,7 +11,7 @@ export const handleFilesMiddleware = (
       file.originalname = file.originalname
         .split(" ")
         .join("")
-        .replace(/[^a-zA-Z0-9\-_\.~]/g, "");
+        .replace(/[^a-zA-Z0-9\-_.~]/g, "");
     });
   }
   next();
